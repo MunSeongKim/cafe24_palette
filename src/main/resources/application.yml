@@ -1,16 +1,18 @@
+# Commons properties
 spring:
+  # 실행 profile 설정
+  profiles:
+    active:
+    - dev
+
   datasource:
-    url: jdbc:mysql://localhost:3306/devbit005
     driver-class-name: com.mysql.jdbc.Driver
-    username: devbit005
-    password: devbit005
+    type: org.apache.tomcat.jdbc.pool.DataSource
 
   jpa:
-    show-sql: true
     database: MYSQL
     generate-ddl: true
-    hibernate:
-      ddl-auto: create
+    show-sql: true
 
   mvc:
     view:
@@ -21,30 +23,6 @@ logging:
   level:
     org:
       springframework:
-        web: DEBUG
-        http: DEBUG
-        security: DEBUG
-   
-cafe24:
-  client:
-    # App이 가진 클라이언트 아이디(사용자에게 노출)
-    clientId: 2c8TooPlOR4hPhiep0VCPB
-    # app이 가진 비밀키(노출되지 않음)
-    clientSecret: i6Qojk7sGhojhOSuzaLitC
-    # AccessToken 요청 URI
-    accessTokenUri: https://{{mall_id}}.cafe24api.com/api/v2/oauth/token
-    # ClientCode 요청 URI
-    userAuthorizationUri: https://{{mall_id}}.cafe24api.com/api/v2/oauth/authorize
-    # AccessToken 요청 방식: header, query
-    authorizationScheme: header
-    # ClientCode 요청 방식: header, form, query
-    clientAuthenticationScheme: header
-    # redirect_uri 파라미터 추가, default : true
-    useCurrentUri: false
-    # code 발급 후 redirect 되는 URI
-    preEstablishedRedirectUri: https://devbit005.cafe24.com/moonstar/oauth2
-    scope:
-      - mall.read_application,mall.write_application,mall.read_store,mall.write_store
-  resource:
-    #API 리소스 서버 uri
-    userInfoUri: https://{{mall_id}}.cafe24api.com/api/v2/admin/store
+        web: INFO
+        http: INFO
+        security: INFO

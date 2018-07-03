@@ -1,0 +1,34 @@
+# Properties for product
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/devbit005
+    username: devbit005
+    password: devbit005
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+
+cafe24:
+  client:
+    # App이 가진 클라이언트 아이디(사용자에게 노출)
+    clientId: 2c8TooPlOR4hPhiep0VCPB
+    # app이 가진 비밀키(노출되지 않음)
+    clientSecret: i6Qojk7sGhojhOSuzaLitC
+    # AccessToken 요청 URI
+    accessTokenUri: https://{{mall_id}}.cafe24api.com/api/v2/oauth/token
+    # ClientCode 요청 URI
+    userAuthorizationUri: https://{{mall_id}}.cafe24api.com/api/v2/oauth/authorize
+    # AccessToken 요청 방식: header, query
+    authorizationScheme: header
+    # ClientCode 요청 방식: header, form, query
+    clientAuthenticationScheme: header
+    # redirect_uri 파라미터 추가, default : true
+    useCurrentUri: false
+    # code 발급 후 redirect 되는 URI
+    preEstablishedRedirectUri: https://devbit005.cafe24.com/mammoth/oauth2
+    scope:
+      - mall.read_application,mall.write_application,mall.read_store,mall.write_store
+  resource:
+    #API 리소스 서버 uri
+    userInfoUri: https://{{mall_id}}.cafe24api.com/api/v2/admin/store

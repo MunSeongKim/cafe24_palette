@@ -1,0 +1,42 @@
+# Properties for develop
+spring:
+  datasource:
+    url: 
+    username: 
+    password: 
+
+  jpa:
+    hibernate:
+      ddl-auto: 
+
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG 
+        http: DEBUG
+        security: DEBUG
+   
+cafe24:
+  client:
+    # App이 가진 클라이언트 아이디(사용자에게 노출)
+    clientId: 
+    # app이 가진 비밀키(노출되지 않음)
+    clientSecret: 
+    # AccessToken 요청 URI
+    accessTokenUri: 
+    # ClientCode 요청 URI
+    userAuthorizationUri: 
+    # AccessToken 요청 방식: header, query
+    authorizationScheme: header
+    # ClientCode 요청 방식: header, form, query
+    clientAuthenticationScheme: header
+    # redirect_uri 파라미터 추가, default : true
+    useCurrentUri: false
+    # code 발급 후 redirect 되는 URI
+    preEstablishedRedirectUri: 
+    scope:
+      - 
+  resource:
+    #API 리소스 서버 uri
+    userInfoUri: 

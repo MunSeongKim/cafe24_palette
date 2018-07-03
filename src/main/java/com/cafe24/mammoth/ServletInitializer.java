@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ServletInitializer extends SpringBootServletInitializer {
 	
-	private static final String PROPERTIES = "spring.config.location=classpath:/application.yml";
+	private static final String PROPERTIES = "spring.config.location=classpath:/application*.*";
 	
 	public static void main(String[] args) {
 		// 특정 properties 파일을 지정하여 WebApp 실행을 위한 명령
