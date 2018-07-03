@@ -1,4 +1,4 @@
-package com.cafe24.mammoth.oauth2;
+package com.cafe24.mammoth.oauth2.oauth2;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -19,7 +19,7 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-import com.cafe24.mammoth.service.AuthService;
+import com.cafe24.mammoth.oauth2.service.AuthService;
 
 /**
  * 

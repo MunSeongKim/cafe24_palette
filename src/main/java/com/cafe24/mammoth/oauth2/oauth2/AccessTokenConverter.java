@@ -1,4 +1,4 @@
-package com.cafe24.mammoth.oauth2;
+package com.cafe24.mammoth.oauth2.oauth2;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -8,7 +8,7 @@ import java.util.Map;
 
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 
-import com.cafe24.mammoth.domain.Auth;
+import com.cafe24.mammoth.oauth2.domain.Auth;
 
 /**
  * Spring security Oauth2를 통해서 생성된 {@link OAuth2AccessToken}의 필드 값과 Cafe24가 돌려준<br>

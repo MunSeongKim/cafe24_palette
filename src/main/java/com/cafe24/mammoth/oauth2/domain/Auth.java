@@ -1,4 +1,4 @@
-package com.cafe24.mammoth.domain;
+package com.cafe24.mammoth.oauth2.domain;
 
 import java.util.Date;
 

@@ -1,4 +1,4 @@
-package com.cafe24.mammoth.configure;
+package com.cafe24.mammoth.oauth2.configure;
 
 import javax.servlet.Filter;
 import javax.sql.DataSource;
@@ -23,9 +23,9 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import com.cafe24.mammoth.oauth2.Cafe24AuthenticationSuccessHandler;
-import com.cafe24.mammoth.oauth2.Cafe24OAuth2ClientAuthenticationProcessingFilter;
-import com.cafe24.mammoth.service.AuthService;
+import com.cafe24.mammoth.oauth2.oauth2.Cafe24AuthenticationSuccessHandler;
+import com.cafe24.mammoth.oauth2.oauth2.Cafe24OAuth2ClientAuthenticationProcessingFilter;
+import com.cafe24.mammoth.oauth2.service.AuthService;
 
 /**
  * Spring Security 설정 테스트<br>

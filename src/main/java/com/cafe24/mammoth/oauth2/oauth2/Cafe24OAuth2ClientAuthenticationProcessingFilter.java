@@ -1,4 +1,4 @@
-package com.cafe24.mammoth.oauth2;
+package com.cafe24.mammoth.oauth2.oauth2;
 
 import java.io.IOException;
 

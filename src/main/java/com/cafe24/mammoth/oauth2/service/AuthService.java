@@ -1,4 +1,4 @@
-package com.cafe24.mammoth.service;
+package com.cafe24.mammoth.oauth2.service;
 
 import java.text.ParseException;
 import java.util.Optional;
@@ -11,9 +11,9 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Service;
 
-import com.cafe24.mammoth.domain.Auth;
-import com.cafe24.mammoth.oauth2.AccessTokenConverter;
-import com.cafe24.mammoth.repository.AuthRepository;
+import com.cafe24.mammoth.oauth2.domain.Auth;
+import com.cafe24.mammoth.oauth2.oauth2.AccessTokenConverter;
+import com.cafe24.mammoth.oauth2.repository.AuthRepository;
 
 /**
  * Token 발급 성공 후 Token 정보를 DB에 저장하기 위한 서비스<br>
