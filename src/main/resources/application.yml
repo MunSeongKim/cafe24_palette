@@ -7,7 +7,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    type: org.apache.tomcat.jdbc.pool.DataSource
+    #type: org.apache.tomcat.jdbc.pool.DataSource
 
   jpa:
     database: MYSQL
