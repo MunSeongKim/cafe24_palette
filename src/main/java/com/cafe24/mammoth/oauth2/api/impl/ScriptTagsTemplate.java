@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,8 @@ import com.cafe24.mammoth.oauth2.api.ScriptTagsOperations;
 import com.cafe24.mammoth.oauth2.api.Scripttags;
 import com.cafe24.mammoth.oauth2.api.support.Cafe24ApiHeaderBearerOAuth2RequestInterceptor;
 import com.cafe24.mammoth.oauth2.api.support.URIBuilder;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -47,111 +50,39 @@ public class ScriptTagsTemplate implements ScriptTagsOperations{
 	
 	private static final String SCRIPTTAGS_PATH = "/api/v2/admin/scripttags";
 	
-	private OAuth2ClientContext context;
 	private OAuth2AccessToken oAuth2AccessToken;
 	private String accessToken;
 	private RestTemplate usingApiRestTemplate;
 	private URI apiUrl;
 	private ObjectMapper objectMapper;
 	
+	// accessToken이 담긴 OAuth2ClientContext를 받을 때.
 	public ScriptTagsTemplate(OAuth2ClientContext context) {
-		this.context = context;
 		this.oAuth2AccessToken = context.getAccessToken();
 		this.accessToken = oAuth2AccessToken.getValue();
 		initallize();
 	}
 	
+	// accessToken을 String으로 직접 받을 때.
 	public ScriptTagsTemplate(String accessToken) {
 		this.accessToken = accessToken;
 		initallize();
 	}
 	
 	private void initallize() {
-		
-		//ClientHttpRequestFactory httpRequestFactory =  new HttpComponentsClientHttpRequestFactory();
-		
-		// [참고] - http://vnthf.logdown.com/posts/2016/03/13/633218
-		// HttpRequest는 java.net.HttpURLConenction에서 제공해주는 SimpleClientHttpRequest를 쓰고 있다.
 		usingApiRestTemplate = new RestTemplate(new SimpleClientHttpRequestFactory());
 		apiUrl = buildApiUri();
-		
 		List<ClientHttpRequestInterceptor> interceptors = new ArrayList<ClientHttpRequestInterceptor>();
 		interceptors.add(new Cafe24ApiHeaderBearerOAuth2RequestInterceptor(accessToken));
 		usingApiRestTemplate.setInterceptors(interceptors); 
-		
 		List<HttpMessageConverter<?>> list = usingApiRestTemplate.getMessageConverters();
-		
 		objectMapper = new ObjectMapper();
 		
-		/*  usingApiRestTemplate = new RestTemplate(); 일 때.
-			org.springframework.http.converter.ByteArrayHttpMessageConverter
-			org.springframework.http.converter.StringHttpMessageConverter
-			org.springframework.http.converter.ResourceHttpMessageConverter
-			org.springframework.http.converter.xml.SourceHttpMessageConverter
-			org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter
-			org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter
-			org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
-			
-			usingApiRestTemplate = new RestTemplate(new SimpleClientHttpRequestFactory()); 일 때.
-			org.springframework.http.converter.ByteArrayHttpMessageConverter
-			org.springframework.http.converter.StringHttpMessageConverter
-			org.springframework.http.converter.ResourceHttpMessageConverter
-			org.springframework.http.converter.xml.SourceHttpMessageConverter
-			org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter
-			org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter
-			org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
-			
-			별 차이 없음.
-		 */
 		// 등록된 messageConverter log
 		for(HttpMessageConverter<?> messageConverter : list) {
 			System.out.println(messageConverter.getClass().getName());
 		}
 		
-		// objectMapper에 모듈을 추가하여 원하는 형태로 json을 작성할 수 있음.
-		// 모듈을 선언함과 동시에 정의하는 구문.
-		/*SimpleModule simpleModule = new SimpleModule("Qyuee's Json Module", new Version(1, 0, 0, null, null, null));
-		simpleModule.addSerializer(Map.class, new JsonSerializer<Map>() {
-			@SuppressWarnings("unchecked")
-			@Override
-			public void serialize(Map map, JsonGenerator jp, SerializerProvider serializers) throws IOException {
-				 jp.writeStartObject();
-				 
-			     for (Object key : map.keySet()) {
-			    	 
-			    	 if(map.get(key) instanceof Map<?, ?>) {
-			    		 Map<String, Object> innerMap = (HashMap<String, Object>) map.get(key);
-			    		 for(Object innerkey : innerMap.keySet()) {
-				    		 if(innerMap.get(innerkey) instanceof Set<?>) {
-				    			 jp.writeFieldName(((String)innerkey).replaceAll(" ", ""));
-				    			 jp.writeStartArray();  // array 시작 '['
-				    			 
-				    			 Set<?> values = (Set<?>)innerMap.get(innerkey);
-				    			 
-				    			 Iterator<Object> iterator = (Iterator<Object>) values.iterator();
-				    			 while(iterator.hasNext()) {
-				    				 Object target = iterator.next();
-				    				 if(target instanceof Integer) {
-				    					 jp.writeString(String.valueOf((Integer)target));
-				    				 }else {
-				    					 jp.writeString((String)target);
-				    				 }
-				    			 }
-				    			 jp.writeEndArray();    // array 종료 ']'
-				    		 }else {
-				    			 jp.writeStringField(((String)innerkey).replaceAll(" ", ""), innerMap.get(innerkey).toString());
-				    		 }
-			    		 }
-			    	 }
-			     }
-			     
-			     jp.writeEndObject();
-			}
-			
-		});
-		
-		objectMapper.registerModule(new AfterburnerModule());
-		objectMapper.registerModule(simpleModule);*/
 	}
 	
 	/**
@@ -188,26 +119,6 @@ public class ScriptTagsTemplate implements ScriptTagsOperations{
 	 */
 	@Override
 	public Scripttags create(Scripttags scripttags) {
-		/*
-		 * MultiValueMap 객체를 넘기니 AllEncompassingFormHttpMessageConverter를 사용하여 requestBody에 writing 함.
-		 * String을 넘기면 StringHttpMessageConverter을 사용함.
-		 * 
-		 * headers.add("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-		 * 
-		 */
-		
-		// postForObject - 결과를 객체 형태로 받겠다는 것.
-		// 두번째 파라미터인 request에 String을 입력하면 StringHttpMessageConverter가 반응.
-		// Map 형태를 전달하면 AllEncompassingFormHttpMessageConverter가 반응.
-		// POJO 객체를 전달하면 MappingJackson2HttpMessageConverter가 반응하여 JSON형태로 변환함.
-		/* 
-		 * 400에러가 뜨던 이유 : header에 Content-type : application/json이 없었음.
-		 * getList(), get(), count() 같은 경우 requestbody에 파라미터를 전송하지 않고 querySring에 전송하기에
-		 * Content-type이 따로 명시되어 있지 않더라고 영향이 없었음.
-		 * 하지만, POST같은 경우 header에 전달할 값을 json 형태로 전달하기에 Content-type : application/json이 필요했음.
-		 * usingApiRestTemplate가 동작하기 전에 {@link Cafe24ApiHeaderBearerOAuth2RequestInterceptor}라는 인터셉터가 있음.
-		 * 이 인터셉터에서 header에 accesstoken 값을 추가하고 content-type도 추가함.
-		 */
 		HttpEntity<String> entity = prettyRequestBodyConverter(scripttags);
 		apiUrl = buildApiUri();
 		return usingApiRestTemplate.postForObject(apiUrl, entity, Scripttags.class);
@@ -249,6 +160,28 @@ public class ScriptTagsTemplate implements ScriptTagsOperations{
 	public List<Scripttags> getList() {
 		Scripttags scripttags = usingApiRestTemplate.getForObject(apiUrl, Scripttags.class);
 		return scripttags.getList();
+	}
+	
+	/**
+	 * 만능 parser 제작 base
+	 * @deprecated
+	 * @param json
+	 * @return null
+	 * @throws IOException
+	 */
+	public List<Scripttags> parse(String json) throws IOException  {
+		JsonFactory factory = new JsonFactory();
+		ObjectMapper mapper = new ObjectMapper(factory);
+		JsonNode rootNode = mapper.readTree(json);  
+		Iterator<Map.Entry<String,JsonNode>> fieldsIterator = rootNode.fields();
+		while (fieldsIterator.hasNext()) {
+			Map.Entry<String,JsonNode> field = fieldsIterator.next();
+			System.out.println("Key: " + field.getKey() + "\tValue:" + field.getValue());
+			
+			JsonNode node = field.getValue();
+		}
+		
+		return null;
 	}
 
 	/**
@@ -303,17 +236,11 @@ public class ScriptTagsTemplate implements ScriptTagsOperations{
 	 */
 	@Override 
 	public Scripttags delete(String scriptNo) {
-		
 		apiUrl = buildApiUri(scriptNo);
-		
 		LinkedMultiValueMap<String, String> deleteRequest = new LinkedMultiValueMap<String, String>();
 		deleteRequest.set("method", "delete");
-		// 반환 값이 필요하면 exchange() 사용
-		// 반환 값이 필요 없으면 delete() 사용
 		ResponseEntity<Scripttags> delResult =usingApiRestTemplate.exchange(apiUrl, HttpMethod.DELETE, null, Scripttags.class);
-		
 		Scripttags result = delResult.getBody();
-		
 		return result;
 	}
 
@@ -395,19 +322,14 @@ public class ScriptTagsTemplate implements ScriptTagsOperations{
 	private HttpEntity<String> prettyRequestBodyConverter(Scripttags scripttags) {
 		// 요청 body에서 {requset : {...}} 형태를 만들기 위해
 		Map<String, Object> target = new HashMap<>();
-		target.put("request", new Scripttags().getRequest(scripttags));
-		
+		target.put("request", scripttags);
 		String body = null;
 		try {
 			body = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(target);
-			//System.out.println(body);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 		HttpEntity<String> entity = new HttpEntity<>(body);
-		//System.out.println(entity.getBody());
-		
 		return entity;
 	}
 	

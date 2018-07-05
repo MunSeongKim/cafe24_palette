@@ -3,7 +3,9 @@ package com.cafe24.mammoth.oauth2.api;
 import java.util.List;
 import java.util.Set;
 
+import com.cafe24.mammoth.oauth2.api.impl.ScriptTagsTemplate;
 import com.cafe24.mammoth.oauth2.api.impl.json.ScriptTagsJsonDeserializer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
@@ -11,126 +13,52 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/*
- curl -X POST \
-  'https://{mallid}.cafe24api.com/api/v2/admin/scripttags' \
-  -H 'Authorization: Bearer {access_token}' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "shop_no": 1,
-    "request": {
-        "src": "https:\/\/js-aplenty.com\/bar.js",
-        "display_location": [
-            "PRODUCT_LIST",
-            "PRODUCT_DETAIL"
-        ],
-        "skin_no": [
-            3,
-            4
-        ]
-    }
- }'
+/**
+ * Scripttags Api 객체<br>
  * 
- * "scripttags": [
-        {
-            "shop_no": 1,
-            "script_no": "1509432821494844",
-            "client_id": "AMj8UZhBC9zsyTlFGI6PzC",
-            "src": "https:\/\/js-aplenty.com\/bar.js",
-            "display_location": [
-                "BOARD_FREE_LIST"
-            ],
-            "skin_no": [
-                1,
-                2
-            ],
-            "created_date": "2017-10-31T15:53:41+09:00",
-            "updated_date": "2017-11-03T18:05:32+09:00"
-        },
-        {
-            "shop_no": 1,
-            "script_no": "1509699932016345",
-            "client_id": "AMj8UZhBC9zsyTlFGI6PzC",
-            "src": "https:\/\/js-aplenty.com\/bar.js",
-            "display_location": [
-                "PRODUCT_LIST",
-                "PRODUCT_DETAIL"
-            ],
-            "skin_no": null,
-            "created_date": "2017-11-03T18:05:32+09:00",
-            "updated_date": "2017-11-03T18:05:32+09:00"
-        }
-    ]
+ * @JsonProperty으로 표기된 필드는 {@link ScriptTagsTemplate#create(Scripttags)} 메소드 사용시 <br>
+ * Cafe24 Api 서버에 전달해야 할 적절한 필드를 구분하기 위함.<br>
+ * src, display_location, skin_no를 전달하기 위함.<br>
+ * 
+ * @author qyuee
+ * @since 2018-07-05
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonDeserialize(using = ScriptTagsJsonDeserializer.class)
 public class Scripttags {
-	
+	@JsonIgnore
 	private String shopNo;
 	
+	@JsonIgnore
 	private String scriptNo;
 	
+	@JsonIgnore
 	private String clientId;
 	
+	@JsonProperty(value="src")
 	private String src;
 	
+	@JsonProperty(value="display_location")
 	private Set<String> displayLocation;
 	
+	@JsonProperty(value="skin_no")
 	private Set<String> skinNo;
 	
+	@JsonIgnore
 	private String createdDate;
 	
+	@JsonIgnore
 	private String updatedDate;
 	
+	@JsonIgnore
 	private int count;
-	
-	class Request{
-		@JsonProperty(value="src")
-		private String src;
-		
-		@JsonProperty(value="display_location")
-		private Set<String> displayLocation;
-		
-		@JsonProperty(value="skin_no")
-		private Set<String> skinNo;
-		
-		public String getSrc() {
-			return src;
-		}
-		public void setSrc(String src) {
-			this.src = src;
-		}
-		public Set<String> getDisplayLocation() {
-			return displayLocation;
-		}
-		public void setDisplayLocation(Set<String> displayLocation) {
-			this.displayLocation = displayLocation;
-		}
-		public Set<String> getSkinNo() {
-			return skinNo;
-		}
-		public void setSkinNo(Set<String> skinNo) {
-			this.skinNo = skinNo;
-		}
-		
-		public Request(Scripttags scripttags) {
-			//this.ShopNo = scripttags.getShopNo();
-			this.src = scripttags.getSrc();
-			this.displayLocation = scripttags.getDisplayLocation();
-			this.skinNo = scripttags.getSkinNo();
-		}
-	}
-	
-	public Request getRequest(Scripttags scripttags) {
-		return new Request(scripttags);
-	}
 	
 	/*// when create a Scripttags
 	// (String)src, (SET)display_loaction, (SET)skin_no
 	private Map<String, Object> request;*/
-	
+	@JsonIgnore
 	private List<Scripttags> list;
 
 	public String getShopNo() {

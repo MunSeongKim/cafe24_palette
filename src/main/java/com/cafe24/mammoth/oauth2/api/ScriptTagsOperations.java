@@ -1,5 +1,6 @@
 package com.cafe24.mammoth.oauth2.api;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ public interface ScriptTagsOperations {
 	
 	Scripttags get(String scriptNo);
 	
-	List<Scripttags> getList();
+	List<Scripttags> getList() throws IOException;
 	
 	Scripttags update(String scriptNo, Scripttags scripttags);
 	
