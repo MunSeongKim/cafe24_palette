@@ -5,80 +5,108 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.cafe24.mammoth.oauth2.api.Cafe24Template;
+import com.cafe24.mammoth.oauth2.api.ScriptTagsOperations;
 import com.cafe24.mammoth.oauth2.api.Scripttags;
-import com.cafe24.mammoth.oauth2.api.impl.ScriptTagsTemplate;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-/**
- * 
- * 2018-07-05 테스트 완료.
- * @author qyuee
- *
- */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ScriptTagsTemplateTest {
 	
+	private static final String accessToken = "EqtlfWleeJo10yvVp3Phmc";
+	private Cafe24Template cafe24Template = new Cafe24Template(accessToken);
+	private ScriptTagsOperations scriptTagsTemplate = cafe24Template.scriptTagsOperations();
+	
+	// getList -> ok!
 	@Test
-	public void contextLoads() throws IOException {
-		// getList -> ok!
-		ScriptTagsTemplate scriptTagsTemplate = new ScriptTagsTemplate("VwWNLZDjGNIr1skNMa0gqA");
+	//@Ignore
+	public void scripttagsGetListTest() throws IOException {
 		List<Scripttags> list = scriptTagsTemplate.getList();
-		
-		System.out.println("=========================================");
 		for(Scripttags scripttags : list) {
 			System.out.println(scripttags);
 		}
-		System.out.println("=========================================");
-		String scriptNo = list.get(0).getScriptNo();
-		System.out.println(scriptNo);
-		
-		// Get -> ok!
-		Scripttags s1 = scriptTagsTemplate.get(scriptNo);
+	}
+	
+	// Get -> ok!
+	@Test
+	@Ignore
+	public void scripttagsGetTest() {
+		Scripttags s1 = scriptTagsTemplate.get("");
 		System.out.println(s1);
-		
-		// count -> ok!
+	}
+	
+	// count -> ok!
+	@Test
+	@Ignore
+	public void scripttagsCountTest() {
 		int count = scriptTagsTemplate.count();
 		System.out.println("count : "+count);
-		
-		// delete -> ok!
-		Scripttags delete = scriptTagsTemplate.delete(scriptNo);
-		System.out.println(delete.getScriptNo());
-		
+	}
+	
+	// delete -> ok!
+	@Test
+	@Ignore
+	public void scripttagsDeleteTest() {
+		boolean result = scriptTagsTemplate.delete("");
+		System.out.println("삭제 결과 : "+result);
+	}
+	
+	// create -> ok!
+	@Test
+	@Ignore
+	public void scripttagsCreateTest() {
 		String src = "https://lee33397.cafe24.com/securityOAuth2/test.js";
-		
 		Set<String> displayLocation = new HashSet<String>();
 		displayLocation.add("MAIN");
 		
 		Set<String> skinNo = new HashSet<String>();
-		//skinNo.add("3");
-		//skinNo.add("4");
-		skinNo.add("5");
+		skinNo.add("3");
+		skinNo.add("4");
+		skinNo.add("6");
 		
-		// create -> ok!
 		//================== 위의 데이터를 모두 @RequestBody로 Scripttags 객체에 담았다고 치고.
 		Scripttags scripttags = new Scripttags();
 		scripttags.setDisplayLocation(displayLocation);
 		scripttags.setSkinNo(skinNo);
 		scripttags.setSrc(src);
 		
-		scriptTagsTemplate.create(scripttags);
+		Scripttags resultScripttags = scriptTagsTemplate.create(scripttags);
 		
-		// update -> ok! 
-		/*Scripttags updateValue = new Scripttags();
+		System.out.println("===================[create result]===================");
+		try {
+			System.out.println(new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(resultScripttags));
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		System.out.println("=====================================================");
+	}
+	
+	@Test
+	@Ignore
+	public void scripttagsUpdateTest() {
+		// update -> ok!
+		Set<String> displayLocation = new HashSet<String>();
+		Set<String> skinNo = new HashSet<String>();
+		
+		Scripttags updateValue = new Scripttags();
 		displayLocation.add("PRODUCT_LIST");      // PRODUCT_DETAILS 추가
 		updateValue.setDisplayLocation(displayLocation);
 		
-		skinNo.add("5");            // 5번 추가
+		skinNo.add("5");               // 5번 추가
 		updateValue.setSkinNo(skinNo);
 		
-		src = "https://lee33397.cafe24.com/securityOAuth2/helloScriptTags.js";
-		src = "https://test.com/testtest.js";
-		updateValue.setSrc(src);  // 변경
-		scriptTagsTemplate.update("1530720521366941", updateValue);*/
+		String src = "https://lee33397.cafe24.com/securityOAuth2/helloScriptTags.js";
+		updateValue.setSrc(src);    // 변경
+		
+		boolean result = scriptTagsTemplate.update("1530862601642794", updateValue);
+		System.out.println("수정 결과 : "+result);
 	}
 }

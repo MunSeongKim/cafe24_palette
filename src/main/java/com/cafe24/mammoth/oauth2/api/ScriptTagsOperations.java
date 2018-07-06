@@ -11,7 +11,7 @@ import java.util.List;
  * @author qyuee
  * @since 2018-07-05
  */
-public interface ScriptTagsOperations {
+public interface ScriptTagsOperations{
 	
 	Scripttags create(Scripttags scripttags);
 	
@@ -19,9 +19,13 @@ public interface ScriptTagsOperations {
 	
 	List<Scripttags> getList() throws IOException;
 	
-	Scripttags update(String scriptNo, Scripttags scripttags);
+	Scripttags updateDeprecated(String scriptNo, Scripttags scripttags);
 	
-	Scripttags delete(String scriptNo);
+	boolean update(String scriptNo, Scripttags scripttags);
+	
+	Scripttags deleteDeprecated(String scriptNo);
+	
+	boolean delete(String scriptNo);
 	
 	int count();
 }

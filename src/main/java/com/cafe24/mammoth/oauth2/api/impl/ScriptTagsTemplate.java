@@ -2,28 +2,21 @@ package com.cafe24.mammoth.oauth2.api.impl;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.ClientHttpRequestInterceptor;
-import org.springframework.http.client.SimpleClientHttpRequestFactory;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.security.oauth2.client.OAuth2ClientContext;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.cafe24.mammoth.oauth2.api.ScriptTagsOperations;
 import com.cafe24.mammoth.oauth2.api.Scripttags;
-import com.cafe24.mammoth.oauth2.api.support.Cafe24ApiHeaderBearerOAuth2RequestInterceptor;
+import com.cafe24.mammoth.oauth2.api.impl.json.Cafe24ApiJsonParser;
 import com.cafe24.mammoth.oauth2.api.support.URIBuilder;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -49,40 +42,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ScriptTagsTemplate implements ScriptTagsOperations{
 	
 	private static final String SCRIPTTAGS_PATH = "/api/v2/admin/scripttags";
-	
-	private OAuth2AccessToken oAuth2AccessToken;
-	private String accessToken;
 	private RestTemplate usingApiRestTemplate;
 	private URI apiUrl;
 	private ObjectMapper objectMapper;
 	
-	// accessToken이 담긴 OAuth2ClientContext를 받을 때.
-	public ScriptTagsTemplate(OAuth2ClientContext context) {
-		this.oAuth2AccessToken = context.getAccessToken();
-		this.accessToken = oAuth2AccessToken.getValue();
-		initallize();
-	}
-	
-	// accessToken을 String으로 직접 받을 때.
-	public ScriptTagsTemplate(String accessToken) {
-		this.accessToken = accessToken;
-		initallize();
-	}
-	
-	private void initallize() {
-		usingApiRestTemplate = new RestTemplate(new SimpleClientHttpRequestFactory());
-		apiUrl = buildApiUri();
-		List<ClientHttpRequestInterceptor> interceptors = new ArrayList<ClientHttpRequestInterceptor>();
-		interceptors.add(new Cafe24ApiHeaderBearerOAuth2RequestInterceptor(accessToken));
-		usingApiRestTemplate.setInterceptors(interceptors); 
-		List<HttpMessageConverter<?>> list = usingApiRestTemplate.getMessageConverters();
+	public ScriptTagsTemplate(RestTemplate usingApiRestTemplate) {
 		objectMapper = new ObjectMapper();
-		
-		// 등록된 messageConverter log
-		for(HttpMessageConverter<?> messageConverter : list) {
-			System.out.println(messageConverter.getClass().getName());
-		}
-		
+		this.usingApiRestTemplate = usingApiRestTemplate;
 	}
 	
 	/**
@@ -92,35 +58,32 @@ public class ScriptTagsTemplate implements ScriptTagsOperations{
 	 * 특정 경로(src)에 있는 script를 원하는 skin_no와 display_location에 위치시키기 위한 메소드. <br>
 	 * HttpMethod : POST<br>
 	 * 
-	 * <br>
-	 * [curl 요청 예]<br>
-	 * curl -X POST \<br>
-	 *  'https://{mallid}.cafe24api.com/api/v2/admin/scripttags' \<br>
-	 *  -H 'Authorization: Bearer {access_token}' \<br>
-	 *  -H 'Content-Type: application/json' \<br>
-	 *  -d '{<br>
-	 *    "shop_no": 1,<br>
-	 *    "request": {<br>
-	 *        "src": "https:\/\/js-aplenty.com\/bar.js",<br>
-	 *        "display_location": [<br>
-	 *            "PRODUCT_LIST",<br>
-	 *            "PRODUCT_DETAIL"<br>
-	 *        ],<br>
-	 *        "skin_no": [<br>
-	 *            3,<br>
-	 *            4<br>
-	 *        ]<br>
-	 *    }<br>
-	 * }'<br>
-	 * 
 	 * @param {@link Scripttags} scripttags
 	 * @since 2018-07-03
 	 * @author qyuee
 	 */
 	@Override
 	public Scripttags create(Scripttags scripttags) {
+		/*
+		 * MultiValueMap 객체를 넘기니 AllEncompassingFormHttpMessageConverter를 사용하여 requestBody에 writing 함.
+		 * String을 넘기면 StringHttpMessageConverter을 사용함.
+		 * headers.add("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+		 */
+		
+		// postForObject - 결과를 객체 형태로 받겠다는 것.
+		// 두번째 파라미터인 request에 String을 입력하면 StringHttpMessageConverter가 반응.
+		// Map 형태를 전달하면 AllEncompassingFormHttpMessageConverter가 반응.
+		// POJO 객체를 전달하면 MappingJackson2HttpMessageConverter가 반응하여 JSON형태로 변환함.
+		/* 
+		 * 400에러가 뜨던 이유 : header에 Content-type : application/json이 없었음.
+		 * getList(), get(), count() 같은 경우 requestbody에 파라미터를 전송하지 않고 querySring에 전송하기에
+		 * Content-type이 따로 명시되어 있지 않더라고 영향이 없었음.
+		 * 하지만, POST같은 경우 header에 전달할 값을 json 형태로 전달하기에 Content-type : application/json이 필요했음.
+		 * usingApiRestTemplate가 동작하기 전에 {@link Cafe24ApiHeaderBearerOAuth2RequestInterceptor}라는 인터셉터가 있음.
+		 * 이 인터셉터에서 header에 accesstoken 값을 추가하고 content-type도 추가함.
+		 */
+		apiUrl = URIBuilder.buildApiUri(SCRIPTTAGS_PATH);
 		HttpEntity<String> entity = prettyRequestBodyConverter(scripttags);
-		apiUrl = buildApiUri();
 		return usingApiRestTemplate.postForObject(apiUrl, entity, Scripttags.class);
 	}
 
@@ -129,18 +92,15 @@ public class ScriptTagsTemplate implements ScriptTagsOperations{
 	 * <br>
 	 * [참고] https://developer.cafe24.com/docs/api/admin/#get-a-scripttag<br>
 	 * <br>
-	 * [curl 요청 예]<br>
-	 * curl -X GET \<br>
-	 * 'https://{mallid}.cafe24api.com/api/v2/admin/scripttags/1509699932016345' \<br>
-	 * -H 'Authorization: Bearer {access_token}' \<br>
-	 * -H 'Content-Type: application/json'<br>
 	 * @since 2018-07-03
 	 * @author qyuee
 	 */
 	@Override
 	public Scripttags get(String scriptNo) {
-		apiUrl = buildApiUri(scriptNo);
-		return usingApiRestTemplate.getForObject(apiUrl, Scripttags.class);
+		apiUrl = URIBuilder.buildApiUri(SCRIPTTAGS_PATH, scriptNo);
+		String jsonStr = usingApiRestTemplate.getForObject(apiUrl, String.class);
+		Scripttags scripttags = Cafe24ApiJsonParser.parser(jsonStr, Scripttags.class);
+		return scripttags;
 	}
 
 	/**
@@ -148,17 +108,15 @@ public class ScriptTagsTemplate implements ScriptTagsOperations{
 	 * <br>
 	 * [참고] https://developer.cafe24.com/docs/api/admin/#list-all-scripttags<br>
 	 * <br>
-	 * [curl 요청 예]<br>
-	 * curl -X GET \<br>
-	 * 'https://{mallid}.cafe24api.com/api/v2/admin/scripttags' \<br>
-	 * -H 'Authorization: Bearer {access_token}' \<br>
-	 * -H 'Content-Type: application/json'<br>
 	 * @since 2018-07-03
 	 * @author qyuee
+	 * @throws IOException 
 	 */
 	@Override
-	public List<Scripttags> getList() {
-		Scripttags scripttags = usingApiRestTemplate.getForObject(apiUrl, Scripttags.class);
+	public List<Scripttags> getList() throws IOException {
+		apiUrl = URIBuilder.buildApiUri(SCRIPTTAGS_PATH);
+		String jsonStr = usingApiRestTemplate.getForObject(apiUrl, String.class);
+		Scripttags scripttags = Cafe24ApiJsonParser.parser(jsonStr, Scripttags.class);
 		return scripttags.getList();
 	}
 	
@@ -166,7 +124,7 @@ public class ScriptTagsTemplate implements ScriptTagsOperations{
 	 * 만능 parser 제작 base
 	 * @deprecated
 	 * @param json
-	 * @return null
+	 * @return 
 	 * @throws IOException
 	 */
 	public List<Scripttags> parse(String json) throws IOException  {
@@ -177,13 +135,31 @@ public class ScriptTagsTemplate implements ScriptTagsOperations{
 		while (fieldsIterator.hasNext()) {
 			Map.Entry<String,JsonNode> field = fieldsIterator.next();
 			System.out.println("Key: " + field.getKey() + "\tValue:" + field.getValue());
-			
-			JsonNode node = field.getValue();
 		}
 		
 		return null;
 	}
 
+	/**
+	 * @deprecated
+	 * 이미 등록되어 있는 script정보를 변경하는 메소드<br>
+	 * [변경 가능 한 변수]<br>
+	 * 1. src - 기본적인 uri 형식이여야 함. ex) https://xxx.com<br>
+	 * 2. display_location - "MAIN", "PRODUCT_LIST"...<br>
+	 * 3. skin_no - "1", "2" ...<br>
+	 * @param scriptNo, {@link Scripttags}
+	 * @return {@link Scripttags}
+	 * @since 2018-07-05
+	 * @author qyuee
+	 */
+	@Override
+	public Scripttags updateDeprecated(String scriptNo, Scripttags scripttags) {
+		apiUrl = URIBuilder.buildApiUri(SCRIPTTAGS_PATH, scriptNo);
+		HttpEntity<String> entity = prettyRequestBodyConverter(scripttags);
+		ResponseEntity<Scripttags> response = usingApiRestTemplate.exchange(apiUrl, HttpMethod.PUT, entity, Scripttags.class);
+		return response.getBody();
+	}
+	
 	/**
 	 * 이미 등록되어 있는 script정보를 변경하는 메소드<br>
 	 * [변경 가능 한 변수]<br>
@@ -191,57 +167,69 @@ public class ScriptTagsTemplate implements ScriptTagsOperations{
 	 * 2. display_location - "MAIN", "PRODUCT_LIST"...<br>
 	 * 3. skin_no - "1", "2" ...<br>
 	 * 
-	 * curl -X PUT \<br>
-	 * 'https://{mallid}.cafe24api.com/api/v2/admin/scripttags/1509699932016345' \<br>
-	 * -H 'Authorization: Bearer {access_token}' \<br>
-	 * -H 'Content-Type: application/json' \<br>
-	 * -d '{<br>
-	 *   "shop_no": 1,<br>
-	 *   "request": {<br>
-	 *       "display_location": [<br>
-	 *           "PRODUCT_LIST",<br>
-	 *           "PRODUCT_DETAIL"<br>
-	 *       ],<br>
-	 *       "skin_no": [<br>
-	 *           3,<br>
-	 *           4<br>
-	 *       ]<br>
-	 *   }<br>
-	 * }'<br>
-	 * @param scriptNo, {@link Scripttags}
-	 * @return {@link Scripttags}
-	 * @since 2018-07-05
-	 * @author qyuee
+	 * 상태 코드가 200이면 true를 리턴한다.<br>
+	 * 
+	 * scripttags 객체에는 변경 사항에 대한 값이 들어있음. (src, display_location, skin_no)<br>
+	 * 
+	 * @param String scriptNo
+	 * @since 2018-07-06
+	 * @return boolean
 	 */
 	@Override
-	public Scripttags update(String scriptNo, Scripttags scripttags) {
-		apiUrl = buildApiUri(scriptNo);
+	public boolean update(String scriptNo, Scripttags scripttags) {
+		apiUrl = URIBuilder.buildApiUri(SCRIPTTAGS_PATH, scriptNo);
 		HttpEntity<String> entity = prettyRequestBodyConverter(scripttags);
-		ResponseEntity<Scripttags> response = usingApiRestTemplate.exchange(apiUrl, HttpMethod.PUT, entity, Scripttags.class);
-		return response.getBody();
+		ResponseEntity<String> response = usingApiRestTemplate.exchange(apiUrl, HttpMethod.PUT, entity, String.class);
+		
+		if(response.getStatusCode() == HttpStatus.OK) {
+			return true;
+		}
+		
+		return false;
 	}
 	
 	/**
+	 * @deprecated
 	 * 등록된 script를 삭제하는 메소드. <br>
 	 * <br>
-	 * [curl 요청 예]<br>
-	 * curl -X DELETE \<br>
-	 * 'https://{mallid}.cafe24api.com/api/v2/admin/scripttags/1509699932016345' \<br>
-	 * -H 'Authorization: Bearer {access_token}' \<br>
-	 * -H 'Content-Type: application/json'<br>
 	 * @param scriptNo
 	 * @return {@link Scripttags}
 	 * @since 2019-07-03
 	 * @author qyuee
 	 */
 	@Override 
-	public Scripttags delete(String scriptNo) {
-		apiUrl = buildApiUri(scriptNo);
+	public Scripttags deleteDeprecated(String scriptNo) {
+		apiUrl = URIBuilder.buildApiUri(SCRIPTTAGS_PATH, scriptNo);
 		LinkedMultiValueMap<String, String> deleteRequest = new LinkedMultiValueMap<String, String>();
 		deleteRequest.set("method", "delete");
+		// 반환 값이 필요하면 exchange() 사용
+		// 반환 값이 필요 없으면 delete() 사용
 		ResponseEntity<Scripttags> delResult =usingApiRestTemplate.exchange(apiUrl, HttpMethod.DELETE, null, Scripttags.class);
 		Scripttags result = delResult.getBody();
 		return result;
+	}
+	
+	/**
+	 * scriptNo에 맞는 scripttag를 삭제하는 메소드 <br>
+	 * 상태 코드가 200이면 true를 리턴한다.<br>
+	 * @param String scriptNo
+	 * @since 2018-07-06
+	 * @return boolean
+	 */
+	@Override 
+	public boolean delete(String scriptNo) {
+		apiUrl = URIBuilder.buildApiUri(SCRIPTTAGS_PATH, scriptNo);
+		LinkedMultiValueMap<String, String> deleteRequest = new LinkedMultiValueMap<String, String>();
+		deleteRequest.set("method", "delete");
+		// 반환 값이 필요하면 exchange() 사용
+		// 반환 값이 필요 없으면 delete() 사용
+		ResponseEntity<String> response = usingApiRestTemplate.exchange(apiUrl, HttpMethod.DELETE, null, String.class);
+		
+		if(response.getStatusCode() == HttpStatus.OK) {
+			return true;
+		}
+		
+		return false;
 	}
 
 	/**
@@ -260,54 +248,10 @@ public class ScriptTagsTemplate implements ScriptTagsOperations{
 	 */
 	@Override
 	public int count() {
-		Scripttags scripttags = usingApiRestTemplate.getForObject(apiUrl, Scripttags.class);
+		apiUrl = URIBuilder.buildApiUri(SCRIPTTAGS_PATH, "count");
+		String jsonStr = usingApiRestTemplate.getForObject(apiUrl, String.class);
+		Scripttags scripttags = Cafe24ApiJsonParser.parser(jsonStr, Scripttags.class);
 		return scripttags.getCount();
-	}
-	
-	/**
-	 * 파라미터가 요청 주소에 추가 될 때.
-	 * @param path
-	 * @param parameters
-	 * @return {@link URI} 
-	 * @author qyuee
-	 * @since 2018-07-03
-	 */
-	@SuppressWarnings("unused")
-	private URI buildApiUri(MultiValueMap<String, String> parameters) {
-		return URIBuilder.fromUri("https://qyuee.cafe24.com" +SCRIPTTAGS_PATH).queryParams(parameters).build();
-	}
-	
-	/**
-	 * GET, DELETE, UPDATE Method 사용 시, Uri에 query String이 아닌 pathVariable 형태로 <br>
-	 * 값을 전달 할 때 사용하는 메소드. <br>
-	 * 
-	 * [결과 uri]<br>
-	 * ex) buildApiUri(str1, str2, str3)<br>
-	 * "https://ex1.cafe24.com/api/v2/admin/scripttags/value1/value2/value3" 의 형태.<br>
-	 * 
-	 * @param uriValues
-	 * @return {@link URI}
-	 * @author qyuee
-	 * @since 2018-07-05
-	 */
-	private URI buildApiUri(String...uriValues) {
-		List<String> uriValueList = new LinkedList<>();
-		for(int i=0; i<uriValues.length; i++) {
-			uriValueList.add("/"+(String)uriValues[i]);
-		}
-		String addtionalUriValue = String.join("", uriValueList);
-		return URIBuilder.fromUri("https://qyuee.cafe24.com"+SCRIPTTAGS_PATH+addtionalUriValue).build();
-	}
-	
-	/**
-	 * 요청 주소에 파라미터가 포함되지 않을 때.
-	 * @param path
-	 * @return {@link URI}
-	 * @author qyuee
-	 * @since 2018-07-03
-	 */
-	private URI buildApiUri() {
-		return URIBuilder.fromUri("https://qyuee.cafe24.com" +SCRIPTTAGS_PATH).build();
 	}
 	
 	/**
@@ -332,5 +276,4 @@ public class ScriptTagsTemplate implements ScriptTagsOperations{
 		HttpEntity<String> entity = new HttpEntity<>(body);
 		return entity;
 	}
-	
 }

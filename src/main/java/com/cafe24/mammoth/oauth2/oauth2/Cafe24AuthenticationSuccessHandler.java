@@ -48,11 +48,22 @@ public class Cafe24AuthenticationSuccessHandler implements AuthenticationSuccess
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 		
+		OAuth2ClientContext storeinfo = (OAuth2ClientContext) authentication;
+		
 		// OAuth2ClientContext에서 AccessToken 가져오기
 		OAuth2AccessToken accessToken = context.getAccessToken();
 		
 		// Auth 영속화.
+		// Auth 저장하고, member에도 저장.
 		authService.saveAuth(accessToken);
 		
+		// memberService.saveMember(mallId, mallUrl);
+		
+		String mallId = (String) accessToken.getAdditionalInformation().get("mall_id");
+		
+		request.getSession().setAttribute("mall_id", mallId);
+		// accessToken 발금 후 영속화 후 
+		// /{mall_id}로 리다이렉션
+		response.sendRedirect("/" + mallId);
 	}
 }

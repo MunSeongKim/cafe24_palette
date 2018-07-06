@@ -1,13 +1,11 @@
 package com.cafe24.mammoth.oauth2.api;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Set;
 
 import com.cafe24.mammoth.oauth2.api.impl.ScriptTagsTemplate;
-import com.cafe24.mammoth.oauth2.api.impl.json.ScriptTagsJsonDeserializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,15 +24,15 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonDeserialize(using = ScriptTagsJsonDeserializer.class)
-public class Scripttags {
-	@JsonIgnore
+//@JsonDeserialize(using = ScriptTagsJsonDeserializer.class)
+public class Scripttags implements EntityListStructure<Scripttags>{
+	@JsonProperty(value="shop_no")
 	private String shopNo;
 	
-	@JsonIgnore
+	@JsonProperty(value="script_no")
 	private String scriptNo;
 	
-	@JsonIgnore
+	@JsonProperty(value="client_id")
 	private String clientId;
 	
 	@JsonProperty(value="src")
@@ -46,10 +44,10 @@ public class Scripttags {
 	@JsonProperty(value="skin_no")
 	private Set<String> skinNo;
 	
-	@JsonIgnore
+	@JsonProperty(value="created_date")
 	private String createdDate;
-	
-	@JsonIgnore
+
+	@JsonProperty(value="updated_date")
 	private String updatedDate;
 	
 	@JsonIgnore
@@ -59,7 +57,7 @@ public class Scripttags {
 	// (String)src, (SET)display_loaction, (SET)skin_no
 	private Map<String, Object> request;*/
 	@JsonIgnore
-	private List<Scripttags> list;
+	private ArrayList<Scripttags> list;
 
 	public String getShopNo() {
 		return shopNo;
@@ -125,11 +123,11 @@ public class Scripttags {
 		this.updatedDate = updatedDate;
 	}
 
-	public List<Scripttags> getList() {
+	public ArrayList<Scripttags> getList() {
 		return list;
 	}
 
-	public void setList(List<Scripttags> list) {
+	public void setList(ArrayList<Scripttags> list) {
 		this.list = list;
 	}
 	
@@ -147,5 +145,7 @@ public class Scripttags {
 				+ ", displayLocation=" + displayLocation + ", skinNo=" + skinNo + ", createdDate=" + createdDate
 				+ ", updatedDate=" + updatedDate + "]";
 	}
+	
+	
 	
 }

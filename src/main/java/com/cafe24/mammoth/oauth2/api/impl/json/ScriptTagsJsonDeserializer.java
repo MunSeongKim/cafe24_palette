@@ -1,8 +1,7 @@
 package com.cafe24.mammoth.oauth2.api.impl.json;
 
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -33,7 +32,7 @@ public class ScriptTagsJsonDeserializer extends JsonDeserializer<Scripttags>{
 	public Scripttags deserialize(JsonParser p, DeserializationContext ctxt)
 			throws IOException, JsonProcessingException {
 		System.out.println("============[ScriptTagsJsonDeserializer is running!!]============");
-		List<Scripttags> list = new LinkedList<>();
+		ArrayList<Scripttags> list = new ArrayList<>();
 		Scripttags scripttags = new Scripttags();
 		
 		p.nextToken();
