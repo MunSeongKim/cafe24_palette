@@ -133,7 +133,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	 */
 	@Bean
 	public AuthenticationSuccessHandler Cafe24FilterSuccessHandler() {
-		return new Cafe24AuthenticationSuccessHandler(cafe24(), oauth2ClientContext, authService, cafe24Resource());
+		return new Cafe24AuthenticationSuccessHandler(oauth2ClientContext, authService);
 	}
 	
 	/**

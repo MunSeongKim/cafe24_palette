@@ -7,5 +7,5 @@ import com.cafe24.mammoth.oauth2.domain.Auth;
 
 @Repository
 public interface AuthRepository extends JpaRepository<Auth, String>{
-	
+	Auth findByMallId(String mallId);
 }
