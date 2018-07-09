@@ -50,17 +50,6 @@ public class MainController {
 		
 	}
 	
-	@RequestMapping(value="/example")
-	public String exam(@PathVariable("mid") String mid) {
-		
-		String URL = "";
-		
-		
-		return "example/cart";
-	}
-	
-
-	
 
 
 }

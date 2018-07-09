@@ -25,17 +25,16 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 import com.cafe24.mammoth.oauth2.oauth2.Cafe24AuthenticationSuccessHandler;
 import com.cafe24.mammoth.oauth2.oauth2.Cafe24OAuth2ClientAuthenticationProcessingFilter;
-import com.cafe24.mammoth.oauth2.service.AuthService;
 
 /**
  * Spring Security 설정 테스트<br>
  * <br>
  * 1차 설정 완료.<br>
  * <br>
- * 
- * @since <i>2018. 07. 02</i>
+ * <b>Update:</b><br>
+ * - AuthService 의존성 주입 부분을 SuccessHandler로 이전, SuccessHandler 생성자 변경 18-07-09, MoonStar<br> 
+ *
  * @since 2018. 06. 26
- * @author <i>MS Kim</i>
  * @author MS Kim
  *
  */
@@ -57,12 +56,6 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	 */
 	@Autowired
 	OAuth2ClientContext oauth2ClientContext;
-
-	/**
-	 * @since 2018-07-02
-	 */
-	@Autowired
-	AuthService authService;
 
 	/**
 	 * jdbcAuthentication - jdbc 지원 사용자 저장소를 이용한 사용자 인증 설정<br>
@@ -134,13 +127,14 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	 * <br>
 	 * 수정<br>
 	 * - 매개변수 타입: Cafe24ResourceDetails -> ResourceServerProperties<br>
+	 * - AuthService 인수 삭제
 	 * <br>
 	 * 
 	 * @return {@link AuthenticationSuccessHandler}
 	 */
 	@Bean
 	public AuthenticationSuccessHandler Cafe24FilterSuccessHandler() {
-		return new Cafe24AuthenticationSuccessHandler(oauth2ClientContext, authService);
+		return new Cafe24AuthenticationSuccessHandler(oauth2ClientContext);
 	}
 
 	/**

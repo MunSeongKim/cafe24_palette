@@ -31,6 +31,7 @@ public class ScriptService {
 
 		//적용 시 dp_location 데이터 저장
 		if (state == true) {
+			@SuppressWarnings("unchecked")
 			List<String> pages = (List<String>) requestData.get("data");
 			data = String.join(",", pages);
 			

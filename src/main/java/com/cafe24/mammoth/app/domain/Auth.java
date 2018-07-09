@@ -40,7 +40,7 @@ public class Auth {
 	private String refreshToken;
 
 	@Column(nullable = false, length = 150)
-	private String scope;
+	private String scopes;
 
 	@MapsId
 	@OneToOne
@@ -50,7 +50,7 @@ public class Auth {
 	@Override
 	public String toString() {
 		return "Auth [mallId=" + mallId + ", issuedDate=" + issuedDate + ", expireDate=" + expireDate + ", accessToken="
-				+ accessToken + ", refreshToken=" + refreshToken + ", scope=" + scope + "]";
+				+ accessToken + ", refreshToken=" + refreshToken + ", scopes=" + scopes + "]";
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.cafe24.mammoth.oauth2.oauth2;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -10,10 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import com.cafe24.mammoth.app.domain.Auth;
+import com.cafe24.mammoth.app.service.AuthService;
+import com.cafe24.mammoth.app.service.MemberService;
 import com.cafe24.mammoth.oauth2.api.impl.Cafe24Template;
-import com.cafe24.mammoth.oauth2.service.AuthService;
+
 
 /**
  * 
@@ -23,11 +28,10 @@ import com.cafe24.mammoth.oauth2.service.AuthService;
  * authService.saveAccessToken(resource, authentication, accessToken); 을 통해 DB에 영속화한다.<br>
  * <hr>
  * 수정내용<br>
- * - 클래스명 변경 : Cafe24FilterSuccessHandler -> Cafe24AuthenticationSuccessHandler<br>
+ * - 클래스명 변경 : Cafe24FilterSuccessHandler -> Cafe24AuthenticationSuccessHandler 18-07-02, MoonStar<br>
+ * - 생성자 변경: AuthService 매개변수 삭제하고 Authwired로 의존성 주입
  * <br>
- * @since <i>2018. 07. 02.<i>
  * @since 2018-07-02
- * @author <i>MS Kim</i>
  * @author qyuee, allery
  * 
  */
@@ -36,19 +40,22 @@ public class Cafe24AuthenticationSuccessHandler implements AuthenticationSuccess
 	
 	@Autowired
 	private Cafe24Template cafe24Template;
+
+	@Autowired
+	private MemberService memberService;
+	@Autowired
+	private AuthService authService;
 	
 	private OAuth2ClientContext context;
 	
-	private AuthService authService;
-	
-	public Cafe24AuthenticationSuccessHandler(OAuth2ClientContext context, AuthService authService) {
+	public Cafe24AuthenticationSuccessHandler(OAuth2ClientContext context) {
 		this.context=context;
-		this.authService=authService;
 	}
 	
 	/**
 	 * 동작 성공 후 수행되는 code
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
@@ -57,20 +64,23 @@ public class Cafe24AuthenticationSuccessHandler implements AuthenticationSuccess
 		
 		// OAuth2ClientContext에서 AccessToken 가져오기
 		OAuth2AccessToken accessToken = context.getAccessToken();
-		
-		// Auth 영속화.
-		// Auth 저장하고, member에도 저장.
-		authService.saveAuth(accessToken);
-		
+		Authentication userAuthentication = ((OAuth2Authentication) authentication).getUserAuthentication();
+		Map<String, Object> details = (Map<String, Object>) userAuthentication.getDetails();
+		Map<String, Object> storeDetails = (Map<String, Object>) details.get("store");
+		String mallUrl = (String) storeDetails.get("base_domain");
+		String mallId = (String) accessToken.getAdditionalInformation().get("mall_id");
+
 		// cafe24Template 초기화.
 		cafe24Template.init(accessToken);
 		
-		// memserService 구현 필요
-		// memberService.saveMember(mallId, mallUrl);
+		// Auth 영속화.
+		Auth auth = authService.save(accessToken);
+		// Member 영속화
+		memberService.save(mallId, mallUrl, auth);
 		
-		String mallId = (String) accessToken.getAdditionalInformation().get("mall_id");
 		// 왜 있을까...?
-		request.getSession().setAttribute("mall_id", mallId);
+		request.getSession().setAttribute("mallId", mallId);
+		request.getSession().setAttribute("mallUrl", mallUrl);
 		// accessToken 발금 후 영속화 후 /{mall_id}로 리다이렉션
 		response.sendRedirect("/" + mallId);
 	}

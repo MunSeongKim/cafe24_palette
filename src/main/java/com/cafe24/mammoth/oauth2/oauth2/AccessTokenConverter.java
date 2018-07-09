@@ -8,7 +8,7 @@ import java.util.Map;
 
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 
-import com.cafe24.mammoth.oauth2.domain.Auth;
+import com.cafe24.mammoth.app.domain.Auth;
 
 /**
  * Spring security Oauth2를 통해서 생성된 {@link OAuth2AccessToken}의 필드 값과 Cafe24가 돌려준<br>
@@ -40,8 +40,12 @@ import com.cafe24.mammoth.oauth2.domain.Auth;
  * expires_in -> expires_at <br>
  * scope -> scopes
  * <br>
- * @since 2018-07-02
- * @author qyuee
+ * <b>Update:</b><br>
+ * oauth2.domain.Auth -> app.domain.Auth로 도메인 객체 변경
+ * 기존 필드 issuedAt, expireAt 에서 issuedDate, expireDate로 필드명 다수 변경
+ * 
+ * @since 2018-07-02, <i>2018-07-09</i>
+ * @author qyuee, <i>MoonStar</i>
  *
  */
 public class AccessTokenConverter {
@@ -64,12 +68,12 @@ public class AccessTokenConverter {
 		// Auth에 변환하여 저장.
 		if (valueMap.containsKey("expires_at")) {
 			String expiresAt = (String) valueMap.get("expires_at");
-			auth.setExpiresAt(changeStringToDate(expiresAt));
+			auth.setExpireDate(changeStringToDate(expiresAt));
 		}
 
 		if (valueMap.containsKey("issued_at")) {
 			String issuedAt = (String) valueMap.get("issued_at");
-			auth.setIssuedAt(changeStringToDate(issuedAt));
+			auth.setIssuedDate(changeStringToDate(issuedAt));
 		}
 
 		if (valueMap.containsKey("scopes")) {
