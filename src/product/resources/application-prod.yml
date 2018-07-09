@@ -1,13 +1,21 @@
 # Properties for product
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/devbit005
-    username: devbit005
-    password: devbit005
+    url: jdbc:mysql://localhost:3306/palatte
+    username: palatte
+    password: palatte
 
   jpa:
     hibernate:
       ddl-auto: create
+
+logging:
+  level:
+    org:
+      springframework:
+        web: INFO
+        http: INFO
+        security: INFO
 
 cafe24:
   client:

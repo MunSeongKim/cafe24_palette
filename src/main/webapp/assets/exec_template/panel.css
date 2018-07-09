@@ -1,0 +1,74 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+#panel {
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  height:99.8%;
+  width: 17em;
+  border: 1px solid red;
+  background-color: yellow;
+  top: 0;
+  right: 0;
+}
+
+#panel.panel-closed {
+  right: -17em;
+}
+
+#panel-action {
+  position: relative;
+  top: 5em;
+  left: -4.7em;
+  width: 4.5em;
+  height: 4.5em;
+}
+
+#panel-action p {
+  margin: 0;
+}
+
+#panel-btn {
+  width: 100%;
+  height: 100%;
+  background-color: #111111;
+  color: #ffffff;
+  border: 0px;
+  font-size: 1em;
+  font-weight: bold;
+  text-align: center;
+}
+
+#panel-btn:hover {
+  box-shadow: 5px 5px 3px grey;
+}
+
+#panel-content {
+  margin: 0;
+  padding: 0;
+  width:100%;
+  height: 500px;
+  background-color: yellow;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 1px solid blue;
+}
+
+#panel-btn-icon {
+  font-size: 1.5em;
+}
+
+
+.func {
+  margin: 5px 1px;
+  border: 1px solid green;
+}

@@ -1,36 +1,66 @@
 package com.cafe24.mammoth.app.controller;
 
-import java.util.Map;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-/**
- * Cafe24 App Main Controller
- * 
- * @author MS Kim
- * @since 18.06.28
- */
-@Controller
+import com.cafe24.mammoth.app.domain.Panel;
+import com.cafe24.mammoth.app.service.PanelService;
+import com.cafe24.mammoth.app.service.ScriptService;
+
+// @RestController : data return
+// -> 객체를 반환하면 객체 데이터는 JSON/XML 형식의 HTTP 응답 작성
+// -> @Controller + @ResponseBody
+@Controller		// : view(화면) return
+@RequestMapping(value="/{mid}")
 public class MainController {
-	// OAuth2 AccessToken, AccessTokenRequest를 관리하는 Context 객체
-	@Autowired
-	OAuth2ClientContext clientContext;
 	
-	/**
-	 * AccessToken 발급 성공 시 실행, 발급 받은 토큰 값과 추가 정보 출력
-	 * @param model - data: AccessToken과 함께 추가로 응답된 데이터, token: AccessToken 값
-	 * @return jsp view name
-	 */
-	@GetMapping("/")
-	public String main(Model model) {
-		Map<String, Object> responseData = clientContext.getAccessToken().getAdditionalInformation();
-		String token = clientContext.getAccessToken().getValue();
-		model.addAttribute("data", responseData);
-		model.addAttribute("token", token);
-		return "main";
+	@Autowired
+	PanelService pservice;
+	@Autowired
+	ScriptService sservice;
+	
+	@RequestMapping(value= {"", "/"})
+	public String main(Model model, @PathVariable("mid") String mid) {
+		
+		List<Panel> list = pservice.getPanelList();
+		
+		model.addAttribute("mid", mid);
+		model.addAttribute("center", "main");
+		model.addAttribute("list", list);
+		return "index";	// /WEB-INF/views/index.jsp
 	}
+	
+	@RequestMapping(value="/save")
+	public String save(Model model, @PathVariable("mid") String mid) {
+		/*
+		 * temp_panel table -> panel table 데이터 이동
+		 */
+		return "redirect:/"+mid;	// /WEB-INF/views/index.jsp
+	}
+	
+	@RequestMapping(value="/{panelId}/update")
+	public String update(@PathVariable("panelId") Long panelId) {
+		
+		return "update";
+		
+	}
+	
+	@RequestMapping(value="/example")
+	public String exam(@PathVariable("mid") String mid) {
+		
+		String URL = "";
+		
+		
+		return "example/cart";
+	}
+	
+
+	
+
+
 }

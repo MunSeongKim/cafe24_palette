@@ -1,4 +1,4 @@
-package com.cafe24.mammoth.oauth2.configure;
+package com.cafe24.mammoth.configure;
 
 import javax.servlet.Filter;
 import javax.sql.DataSource;
@@ -32,6 +32,7 @@ import com.cafe24.mammoth.oauth2.service.AuthService;
  * <br>
  * 1차 설정 완료.<br>
  * <br>
+ * 
  * @since <i>2018. 07. 02</i>
  * @since 2018. 06. 26
  * @author <i>MS Kim</i>
@@ -48,14 +49,15 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	 */
 	@Autowired
 	DataSource dataSource;
-	
+
 	/**
-	 * OAuth2ClientContext 주입, 시큐리티 설정에 추가할 커스텀 인증 필터를 구성할 때 사용, OAuth2AccessToken을<br>
+	 * OAuth2ClientContext 주입, 시큐리티 설정에 추가할 커스텀 인증 필터를 구성할 때 사용,
+	 * OAuth2AccessToken을<br>
 	 * 관리하는 메소드를 지원하는 인터페이스 객체<br>
 	 */
 	@Autowired
 	OAuth2ClientContext oauth2ClientContext;
-	
+
 	/**
 	 * @since 2018-07-02
 	 */
@@ -65,6 +67,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	/**
 	 * jdbcAuthentication - jdbc 지원 사용자 저장소를 이용한 사용자 인증 설정<br>
 	 * <br>
+	 * 
 	 * @param AuthenticationManagerBuilder
 	 *            - 사용자 저장소 등 사용자에 대한 세부 서비스 설정을 지원하는 객체
 	 */
@@ -77,69 +80,74 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	 * 현재 상황: AccessToken 받는거 성공<br>
 	 * 설정: CSRF 설정, X-Frame-Option 해제, OAuth2ContextFilter 등록<br>
 	 * <br>
-	 * @param HttpSecurity - 인터셉터로 요청을 안전하게 보호하는 방법 설정
+	 * 
+	 * @param HttpSecurity
+	 *            - 인터셉터로 요청을 안전하게 보호하는 방법 설정
 	 * @since 18.06.28
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// iframe에서 요청이 발생할 때 X-Frame-Option에 대한 문제 발생 해당 값을 해제하여 문제 해결. 원인: 아직 모르겠음
 		http.headers().frameOptions().disable();
-		
+
 		// BasicAuthenticationFilter 이전에 cafe24Filter를 수행하도록 지정
-		// /oauth2, / 경로는 필터를 통해 인증받도록 설정, 그 외 경로는 접속 허용
-		http
-        	.authorizeRequests()
-        	.antMatchers("/oauth2", "/").permitAll()
-        .and()
-        	.addFilterBefore(cafe24Filter(), BasicAuthenticationFilter.class);
+		// /oauth2 경로는 필터를 통해 인증받도록 설정, 그 외 경로는 접속 허용
+		http.authorizeRequests().antMatchers("/oauth2").permitAll().and().addFilterBefore(cafe24Filter(),
+				BasicAuthenticationFilter.class);
 	}
-	
 
 	/**
 	 * 자원 경로에 대한 인증 해제 필요.<br>
 	 * 모든 경로에 대한 보호, 인증 해제 설정<br>
 	 * <br>
-	 * @param WebSecurity - 시큐리티의 필터 연결을 설정
+	 * 
+	 * @param WebSecurity
+	 *            - 시큐리티의 필터 연결을 설정
 	 */
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		//web.ignoring().antMatchers("/resources/**");
+		web.ignoring().antMatchers("/assets/**");
 	}
-	
+
 	/**
 	 * OAuth2 Access Token 발급 및 인증 절차를 수행 할 필터 생성<br>
-	 * {@code OAuth2ClientAuthenticationProcessingFilter}: FilterChain에 의해 동작 할 필터, OAuth2 Client 역할 및 사용자 인증 수행<br>
+	 * {@code OAuth2ClientAuthenticationProcessingFilter}: FilterChain에 의해 동작 할 필터,
+	 * OAuth2 Client 역할 및 사용자 인증 수행<br>
 	 * {@code OAuth2RestTemplate}: API 리소스 서버와 통신을 수행하는 역할<br>
 	 * <br>
+	 * 
 	 * @return {@link OAuth2ClientAuthenticationProcessingFilter}
 	 */
 	private Filter cafe24Filter() {
-		OAuth2ClientAuthenticationProcessingFilter cafe24Filter = new Cafe24OAuth2ClientAuthenticationProcessingFilter("/oauth2", cafe24(), cafe24Resource());
+		OAuth2ClientAuthenticationProcessingFilter cafe24Filter = new Cafe24OAuth2ClientAuthenticationProcessingFilter(
+				"/oauth2", cafe24(), cafe24Resource());
 		OAuth2RestTemplate cafe24Template = new OAuth2RestTemplate(cafe24(), oauth2ClientContext);
 		cafe24Filter.setRestTemplate(cafe24Template);
 		// 성공 후 동작 할 handler 등록.
 		cafe24Filter.setAuthenticationSuccessHandler(Cafe24FilterSuccessHandler());
-		
+
 		return cafe24Filter;
 	}
-	
+
 	/**
 	 * OAuth2 인증 성공 후 실행 될 핸들러 생성, 사용자 정보 저장 수행<br>
 	 * <br>
 	 * 수정<br>
 	 * - 매개변수 타입: Cafe24ResourceDetails -> ResourceServerProperties<br>
 	 * <br>
+	 * 
 	 * @return {@link AuthenticationSuccessHandler}
 	 */
 	@Bean
 	public AuthenticationSuccessHandler Cafe24FilterSuccessHandler() {
 		return new Cafe24AuthenticationSuccessHandler(oauth2ClientContext, authService);
 	}
-	
+
 	/**
 	 * AccessToken 발급에 필요한 정보를 읽어들여서 객체로 생성<br>
 	 * cafe24.client 하위의 속성을 읽어서 AuthorizationCodeResourceDetails 객체 생성<br>
 	 * <br>
+	 * 
 	 * @return {@link AuthrizationCodeResourceDetails}
 	 */
 	@Bean
@@ -162,11 +170,10 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	ResourceServerProperties cafe24Resource() {
 		return new ResourceServerProperties();
 	}
-	
+
 	/**
 	 * Cafe24OAuth2ClientContextFilter를 filter 등록 빈에 추가<br>
 	 * Root Context Loading때 filter를 빈으로 등록<br>
-	 * 
 	 */
 	@Bean
 	public FilterRegistrationBean<OAuth2ClientContextFilter> oauth2ClientFilterRegistration(
