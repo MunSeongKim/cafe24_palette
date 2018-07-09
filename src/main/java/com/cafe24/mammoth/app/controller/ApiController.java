@@ -1,4 +1,4 @@
-package com.cafe24.mammoth.oauth2.controller;
+package com.cafe24.mammoth.app.controller;
 
 import java.util.List;
 
@@ -7,9 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cafe24.mammoth.oauth2.api.Cafe24Template;
 import com.cafe24.mammoth.oauth2.api.Scripttags;
 import com.cafe24.mammoth.oauth2.api.Themes;
+import com.cafe24.mammoth.oauth2.api.impl.Cafe24Template;
 import com.cafe24.mammoth.oauth2.api.impl.ScriptTagsTemplate;
 import com.cafe24.mammoth.oauth2.api.impl.ThemesTemplate;
 

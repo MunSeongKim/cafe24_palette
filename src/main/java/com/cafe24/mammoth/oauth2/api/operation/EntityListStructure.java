@@ -1,4 +1,4 @@
-package com.cafe24.mammoth.oauth2.api;
+package com.cafe24.mammoth.oauth2.api.operation;
 
 import java.util.ArrayList;
 

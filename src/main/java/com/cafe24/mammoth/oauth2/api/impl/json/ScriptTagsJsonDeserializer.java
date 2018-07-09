@@ -26,6 +26,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
  * @since 2018-07-03
  * @author qyuee
  */
+@Deprecated
 public class ScriptTagsJsonDeserializer extends JsonDeserializer<Scripttags>{
 
 	@Override

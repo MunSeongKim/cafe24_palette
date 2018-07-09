@@ -14,9 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import com.cafe24.mammoth.oauth2.api.ScriptTagsOperations;
 import com.cafe24.mammoth.oauth2.api.Scripttags;
 import com.cafe24.mammoth.oauth2.api.impl.json.Cafe24ApiJsonParser;
+import com.cafe24.mammoth.oauth2.api.operation.ScriptTagsOperations;
 import com.cafe24.mammoth.oauth2.api.support.URIBuilder;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.JsonNode;

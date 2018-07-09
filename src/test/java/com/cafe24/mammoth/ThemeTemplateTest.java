@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.cafe24.mammoth.oauth2.api.Cafe24Template;
 import com.cafe24.mammoth.oauth2.api.Themes;
+import com.cafe24.mammoth.oauth2.api.impl.Cafe24Template;
 import com.cafe24.mammoth.oauth2.api.impl.ThemesTemplate;
 
 @RunWith(SpringRunner.class)

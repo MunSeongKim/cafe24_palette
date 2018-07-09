@@ -3,7 +3,6 @@ package com.cafe24.mammoth.oauth2.api.impl;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.Map;
-import java.util.Properties;
 
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
@@ -14,7 +13,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.cafe24.mammoth.oauth2.api.Store;
-import com.cafe24.mammoth.oauth2.api.StoreOperations;
+import com.cafe24.mammoth.oauth2.api.operation.StoreOperations;
 import com.cafe24.mammoth.oauth2.api.support.Cafe24ApiHeaderBearerOAuth2RequestInterceptor;
 import com.cafe24.mammoth.oauth2.api.support.URIBuilder;
 
@@ -40,10 +39,9 @@ public class StoreTemplate implements StoreOperations{
 		this.accessToken = accessToken;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public Store getStoreInfo() {
-		
-		Properties properties = System.getProperties();
 		
 		usingApiRestTemplate = new RestTemplate(new SimpleClientHttpRequestFactory());
 		usingApiRestTemplate.setInterceptors(Arrays.asList(new ClientHttpRequestInterceptor[]{new Cafe24ApiHeaderBearerOAuth2RequestInterceptor(accessToken)}));

@@ -1,4 +1,4 @@
-package com.cafe24.mammoth.oauth2.api;
+package com.cafe24.mammoth.oauth2.api.impl;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -28,9 +28,9 @@ public class Cafe24Template {
 	}
 	
 	// For test.
-	public Cafe24Template(String accessToken) {
-		this.accessToken = accessToken;
-	}
+//	public Cafe24Template(String accessToken) {
+//		this.accessToken = accessToken;
+//	}
 	
 	/**
 	 * 최초에 AccessToken 발급이 성공하고, SuccessHandler를 통해서 이 메소드가 호출 된다.<br>

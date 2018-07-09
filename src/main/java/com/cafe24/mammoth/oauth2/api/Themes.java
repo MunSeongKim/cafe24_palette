@@ -2,6 +2,7 @@ package com.cafe24.mammoth.oauth2.api;
 
 import java.util.ArrayList;
 
+import com.cafe24.mammoth.oauth2.api.operation.EntityListStructure;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

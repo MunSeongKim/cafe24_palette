@@ -10,7 +10,10 @@
 	<packaging>war</packaging>
 
 	<name>mammoth</name>
-	<description>Implemented OAuth2 Client based on Spring-Security-OAuth2</description>
+	<description>
+		Implemented OAuth2 Client based on Spring-Security-OAuth2\n
+		Implemented Application Logic
+	</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

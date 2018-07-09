@@ -8,8 +8,8 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.cafe24.mammoth.oauth2.api.Themes;
-import com.cafe24.mammoth.oauth2.api.ThemesOperations;
 import com.cafe24.mammoth.oauth2.api.impl.json.Cafe24ApiJsonParser;
+import com.cafe24.mammoth.oauth2.api.operation.ThemesOperations;
 import com.cafe24.mammoth.oauth2.api.support.URIBuilder;
 
 public class ThemesTemplate implements ThemesOperations{

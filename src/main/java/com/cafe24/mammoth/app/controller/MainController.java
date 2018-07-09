@@ -1,4 +1,4 @@
-package com.cafe24.mammoth.oauth2.controller;
+package com.cafe24.mammoth.app.controller;
 
 import java.util.Map;
 

@@ -1,7 +1,9 @@
-package com.cafe24.mammoth.oauth2.api;
+package com.cafe24.mammoth.oauth2.api.operation;
 
 import java.io.IOException;
 import java.util.List;
+
+import com.cafe24.mammoth.oauth2.api.Scripttags;
 
 /**
  * Spring social Facebook의 API 사용법을 따라 작성함.<br>

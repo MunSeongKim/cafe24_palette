@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 import com.cafe24.mammoth.oauth2.api.impl.ScriptTagsTemplate;
+import com.cafe24.mammoth.oauth2.api.operation.EntityListStructure;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

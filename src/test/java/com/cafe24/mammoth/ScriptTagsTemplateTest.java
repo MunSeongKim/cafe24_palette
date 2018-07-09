@@ -12,10 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.cafe24.mammoth.oauth2.api.Cafe24Template;
-import com.cafe24.mammoth.oauth2.api.ScriptTagsOperations;
 import com.cafe24.mammoth.oauth2.api.Scripttags;
+import com.cafe24.mammoth.oauth2.api.impl.Cafe24Template;
 import com.cafe24.mammoth.oauth2.api.impl.ScriptTagsTemplate;
+import com.cafe24.mammoth.oauth2.api.operation.ScriptTagsOperations;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -26,6 +26,7 @@ public class ScriptTagsTemplateTest {
 	@Autowired
 	Cafe24Template cafe24Template;
 	
+	@SuppressWarnings("unused")
 	private static final String accessToken = "Eewx5toeNkiHOOvF138K6K";
 	/*private Cafe24Template cafe24Template = new Cafe24Template(accessToken);*/
 	

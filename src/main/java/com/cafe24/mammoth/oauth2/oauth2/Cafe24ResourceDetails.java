@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceS
  * @Since <i>2018. 07. 02</i>
  * @author <i>MS Kim<i>
  */
+@Deprecated
 public class Cafe24ResourceDetails extends ResourceServerProperties{
 	private String admin;
 	private String front;

@@ -3,9 +3,9 @@
 # 다른 사람은 수정하여 사용하길 바람.
 spring:
   # 실행 profile 설정
-  profiles:
-    active:
-    - dev
+#  profiles:
+#    active:
+#    - dev
 
   datasource:
     url: jdbc:mysql://lee33397.cafe24.com:3306/devbit005

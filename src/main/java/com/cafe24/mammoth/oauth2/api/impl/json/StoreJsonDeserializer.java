@@ -9,6 +9,7 @@ import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 
+@Deprecated
 public class StoreJsonDeserializer extends JsonDeserializer<Store>{
 
 	@Override
