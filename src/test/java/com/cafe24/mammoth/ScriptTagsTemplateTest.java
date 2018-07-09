@@ -8,12 +8,14 @@ import java.util.Set;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.cafe24.mammoth.oauth2.api.Cafe24Template;
 import com.cafe24.mammoth.oauth2.api.ScriptTagsOperations;
 import com.cafe24.mammoth.oauth2.api.Scripttags;
+import com.cafe24.mammoth.oauth2.api.impl.ScriptTagsTemplate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -21,9 +23,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @SpringBootTest
 public class ScriptTagsTemplateTest {
 	
-	private static final String accessToken = "EqtlfWleeJo10yvVp3Phmc";
-	private Cafe24Template cafe24Template = new Cafe24Template(accessToken);
-	private ScriptTagsOperations scriptTagsTemplate = cafe24Template.scriptTagsOperations();
+	@Autowired
+	Cafe24Template cafe24Template;
+	
+	private static final String accessToken = "Eewx5toeNkiHOOvF138K6K";
+	/*private Cafe24Template cafe24Template = new Cafe24Template(accessToken);*/
+	
+	private ScriptTagsOperations scriptTagsTemplate = cafe24Template.getOperation(ScriptTagsTemplate.class);
 	
 	// getList -> ok!
 	@Test
@@ -55,7 +61,7 @@ public class ScriptTagsTemplateTest {
 	@Test
 	@Ignore
 	public void scripttagsDeleteTest() {
-		boolean result = scriptTagsTemplate.delete("");
+		boolean result = scriptTagsTemplate.delete("1530862881319004");
 		System.out.println("삭제 결과 : "+result);
 	}
 	

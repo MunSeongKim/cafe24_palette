@@ -14,7 +14,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 public class URIBuilder {
-
+	
 	private final String baseUri;
 
 	private MultiValueMap<String, String> parameters;
@@ -81,14 +81,13 @@ public class URIBuilder {
 	/**
 	 * 파라미터가 요청 주소에 추가 될 때.
 	 * @param path
-	 * @param parameters
+	 * @param apiUrl, parameters
 	 * @return {@link URI} 
 	 * @author qyuee
 	 * @since 2018-07-03
 	 */
-	@SuppressWarnings("unused")
-	public static URI buildApiUri(String apiPath, MultiValueMap<String, String> parameters) {
-		return URIBuilder.fromUri("https://qyuee.cafe24.com" +apiPath).queryParams(parameters).build();
+	public static URI buildApiUri(String apiUrl, MultiValueMap<String, String> parameters) {
+		return URIBuilder.fromUri(apiUrl).queryParams(parameters).build();
 	}
 	
 	/**
@@ -99,29 +98,29 @@ public class URIBuilder {
 	 * ex) buildApiUri(str1, str2, str3)<br>
 	 * "https://ex1.cafe24.com/api/v2/admin/scripttags/value1/value2/value3" 의 형태.<br>
 	 * 
-	 * @param uriValues
+	 * @param apiUrl, uriValues
 	 * @return {@link URI}
 	 * @author qyuee
 	 * @since 2018-07-05
 	 */
-	public static URI buildApiUri(String apiPath, String...uriValues) {
+	public static URI buildApiUri(String apiUrl, String...uriValues) {
 		List<String> uriValueList = new LinkedList<>();
 		for(int i=0; i<uriValues.length; i++) {
 			uriValueList.add("/"+(String)uriValues[i]);
 		}
 		String addtionalUriValue = String.join("", uriValueList);
-		return URIBuilder.fromUri("https://qyuee.cafe24.com"+apiPath+addtionalUriValue).build();
+		return URIBuilder.fromUri(apiUrl+addtionalUriValue).build();
 	}
 	
 	/**
 	 * 요청 주소에 파라미터가 포함되지 않을 때.
-	 * @param path
+	 * @param apiUrl
 	 * @return {@link URI}
 	 * @author qyuee
 	 * @since 2018-07-03
 	 */
-	public static URI buildApiUri(String apiPath) {
-		return URIBuilder.fromUri("https://qyuee.cafe24.com" +apiPath).build();
+	public static URI buildApiUri(String apiUrl) {
+		return URIBuilder.fromUri(apiUrl).build();
 	}
 	
 	
