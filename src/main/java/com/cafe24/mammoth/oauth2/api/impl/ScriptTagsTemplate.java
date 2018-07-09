@@ -40,13 +40,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  *
  */
 public class ScriptTagsTemplate implements ScriptTagsOperations{
-	
-	private static final String SCRIPTTAGS_PATH = "/api/v2/admin/scripttags";
-	private RestTemplate usingApiRestTemplate;
+	private final String SCRIPTTAGS_URL = "/api/v2/admin/scripttags";
 	private URI apiUrl;
+	private String baseUrl;
+	private RestTemplate usingApiRestTemplate;
+	
 	private ObjectMapper objectMapper;
 	
-	public ScriptTagsTemplate(RestTemplate usingApiRestTemplate) {
+	public ScriptTagsTemplate() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public ScriptTagsTemplate(RestTemplate usingApiRestTemplate, String baseUrl) {
+		this.baseUrl = baseUrl+SCRIPTTAGS_URL;
 		objectMapper = new ObjectMapper();
 		this.usingApiRestTemplate = usingApiRestTemplate;
 	}
@@ -82,7 +88,7 @@ public class ScriptTagsTemplate implements ScriptTagsOperations{
 		 * usingApiRestTemplate가 동작하기 전에 {@link Cafe24ApiHeaderBearerOAuth2RequestInterceptor}라는 인터셉터가 있음.
 		 * 이 인터셉터에서 header에 accesstoken 값을 추가하고 content-type도 추가함.
 		 */
-		apiUrl = URIBuilder.buildApiUri(SCRIPTTAGS_PATH);
+		apiUrl = URIBuilder.buildApiUri(baseUrl);
 		HttpEntity<String> entity = prettyRequestBodyConverter(scripttags);
 		return usingApiRestTemplate.postForObject(apiUrl, entity, Scripttags.class);
 	}
@@ -97,7 +103,7 @@ public class ScriptTagsTemplate implements ScriptTagsOperations{
 	 */
 	@Override
 	public Scripttags get(String scriptNo) {
-		apiUrl = URIBuilder.buildApiUri(SCRIPTTAGS_PATH, scriptNo);
+		apiUrl = URIBuilder.buildApiUri(baseUrl, scriptNo);
 		String jsonStr = usingApiRestTemplate.getForObject(apiUrl, String.class);
 		Scripttags scripttags = Cafe24ApiJsonParser.parser(jsonStr, Scripttags.class);
 		return scripttags;
@@ -113,8 +119,8 @@ public class ScriptTagsTemplate implements ScriptTagsOperations{
 	 * @throws IOException 
 	 */
 	@Override
-	public List<Scripttags> getList() throws IOException {
-		apiUrl = URIBuilder.buildApiUri(SCRIPTTAGS_PATH);
+	public List<Scripttags> getList() {
+		apiUrl = URIBuilder.buildApiUri(baseUrl);
 		String jsonStr = usingApiRestTemplate.getForObject(apiUrl, String.class);
 		Scripttags scripttags = Cafe24ApiJsonParser.parser(jsonStr, Scripttags.class);
 		return scripttags.getList();
@@ -154,7 +160,7 @@ public class ScriptTagsTemplate implements ScriptTagsOperations{
 	 */
 	@Override
 	public Scripttags updateDeprecated(String scriptNo, Scripttags scripttags) {
-		apiUrl = URIBuilder.buildApiUri(SCRIPTTAGS_PATH, scriptNo);
+		apiUrl = URIBuilder.buildApiUri(baseUrl, scriptNo);
 		HttpEntity<String> entity = prettyRequestBodyConverter(scripttags);
 		ResponseEntity<Scripttags> response = usingApiRestTemplate.exchange(apiUrl, HttpMethod.PUT, entity, Scripttags.class);
 		return response.getBody();
@@ -177,7 +183,7 @@ public class ScriptTagsTemplate implements ScriptTagsOperations{
 	 */
 	@Override
 	public boolean update(String scriptNo, Scripttags scripttags) {
-		apiUrl = URIBuilder.buildApiUri(SCRIPTTAGS_PATH, scriptNo);
+		apiUrl = URIBuilder.buildApiUri(baseUrl, scriptNo);
 		HttpEntity<String> entity = prettyRequestBodyConverter(scripttags);
 		ResponseEntity<String> response = usingApiRestTemplate.exchange(apiUrl, HttpMethod.PUT, entity, String.class);
 		
@@ -199,7 +205,7 @@ public class ScriptTagsTemplate implements ScriptTagsOperations{
 	 */
 	@Override 
 	public Scripttags deleteDeprecated(String scriptNo) {
-		apiUrl = URIBuilder.buildApiUri(SCRIPTTAGS_PATH, scriptNo);
+		apiUrl = URIBuilder.buildApiUri(baseUrl, scriptNo);
 		LinkedMultiValueMap<String, String> deleteRequest = new LinkedMultiValueMap<String, String>();
 		deleteRequest.set("method", "delete");
 		// 반환 값이 필요하면 exchange() 사용
@@ -218,7 +224,7 @@ public class ScriptTagsTemplate implements ScriptTagsOperations{
 	 */
 	@Override 
 	public boolean delete(String scriptNo) {
-		apiUrl = URIBuilder.buildApiUri(SCRIPTTAGS_PATH, scriptNo);
+		apiUrl = URIBuilder.buildApiUri(baseUrl, scriptNo);
 		LinkedMultiValueMap<String, String> deleteRequest = new LinkedMultiValueMap<String, String>();
 		deleteRequest.set("method", "delete");
 		// 반환 값이 필요하면 exchange() 사용
@@ -248,7 +254,7 @@ public class ScriptTagsTemplate implements ScriptTagsOperations{
 	 */
 	@Override
 	public int count() {
-		apiUrl = URIBuilder.buildApiUri(SCRIPTTAGS_PATH, "count");
+		apiUrl = URIBuilder.buildApiUri(baseUrl, "count");
 		String jsonStr = usingApiRestTemplate.getForObject(apiUrl, String.class);
 		Scripttags scripttags = Cafe24ApiJsonParser.parser(jsonStr, Scripttags.class);
 		return scripttags.getCount();

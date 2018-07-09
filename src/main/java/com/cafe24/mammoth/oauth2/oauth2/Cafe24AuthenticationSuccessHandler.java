@@ -6,11 +6,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import com.cafe24.mammoth.oauth2.api.Cafe24Template;
 import com.cafe24.mammoth.oauth2.service.AuthService;
 
 /**
@@ -31,6 +33,9 @@ import com.cafe24.mammoth.oauth2.service.AuthService;
  */
 
 public class Cafe24AuthenticationSuccessHandler implements AuthenticationSuccessHandler{
+	
+	@Autowired
+	private Cafe24Template cafe24Template;
 	
 	private OAuth2ClientContext context;
 	
@@ -62,6 +67,10 @@ public class Cafe24AuthenticationSuccessHandler implements AuthenticationSuccess
 		String mallId = (String) accessToken.getAdditionalInformation().get("mall_id");
 		
 		request.getSession().setAttribute("mall_id", mallId);
+		
+		// cafe24Template 초기화.
+		cafe24Template.init(accessToken);
+		
 		// accessToken 발금 후 영속화 후 
 		// /{mall_id}로 리다이렉션
 		response.sendRedirect("/" + mallId);

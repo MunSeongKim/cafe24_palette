@@ -2,6 +2,7 @@ package com.cafe24.mammoth.oauth2.api;
 
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
@@ -71,6 +72,7 @@ public class Themes implements EntityListStructure<Themes>{
 	@JsonProperty(value="updated_date")
 	private String updatedDate;
 	
+	@JsonIgnore
 	private ArrayList<Themes> list;
 	
 	public ArrayList<Themes> getList() {

@@ -17,9 +17,11 @@ public class ThemesTemplate implements ThemesOperations{
 	private static final String THEMES_PATH = "/api/v2/admin/themes";
 	private RestTemplate usingApiRestTemplate;
 	private URI apiUrl;
+	private String baseUrl;
 	
-	public ThemesTemplate(RestTemplate usingApiRestTemplate) {
+	public ThemesTemplate(RestTemplate usingApiRestTemplate, String baseUrl) {
 		this.usingApiRestTemplate = usingApiRestTemplate;
+		this.baseUrl = baseUrl+THEMES_PATH;
 	}
 	
 	/**
@@ -31,7 +33,7 @@ public class ThemesTemplate implements ThemesOperations{
 	public List<Themes> getList() {
 		MultiValueMap<String, String> addtionalParam = new LinkedMultiValueMap<>();
 		addtionalParam.add("type", "pc");
-		apiUrl = URIBuilder.buildApiUri(THEMES_PATH, addtionalParam);
+		apiUrl = URIBuilder.buildApiUri(baseUrl, addtionalParam);
 		String jsonStr = usingApiRestTemplate.getForObject(apiUrl, String.class);
 		Themes themes = Cafe24ApiJsonParser.parser(jsonStr, Themes.class);
 		return themes.getList();
@@ -44,7 +46,7 @@ public class ThemesTemplate implements ThemesOperations{
 	 */
 	@Override
 	public Themes get(String skinNo) {
-		apiUrl = URIBuilder.buildApiUri(THEMES_PATH, skinNo);
+		apiUrl = URIBuilder.buildApiUri(baseUrl, skinNo);
 		String jsonStr = usingApiRestTemplate.getForObject(apiUrl, String.class);
 		Themes themes = Cafe24ApiJsonParser.parser(jsonStr, Themes.class);
 		return themes;
