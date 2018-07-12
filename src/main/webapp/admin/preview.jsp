@@ -13,10 +13,10 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!-- Latest compiled JavaScript -->
-<script	src="${pageContext.servletContext.contextPath }/assets/js/bootstrap.min.js"></script>
+<script	src="${pageContext.servletContext.contextPath }/admin/assets/js/bootstrap.min.js"></script>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath }/assets/css/bootstrap.min.css">
+	href="${pageContext.servletContext.contextPath }/admin/assets/css/bootstrap.min.css">
 
 <style>
 * {
@@ -41,7 +41,7 @@
 	margin-top: 0.5em;
 }
 #row-statusbar span:first-child {
-	background: url('${pageContext.servletContext.contextPath}/assets/image/question-mark.png') 0 0 no-repeat;
+	background: url('${pageContext.servletContext.contextPath}/admin/assets/image/question-mark.png') 0 0 no-repeat;
 	background-size: 1.1em 1.1em;
 	padding-left: 1.2em;
 	font-size: 1.4em;
@@ -94,7 +94,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div id="div-preview-img">
-				<img src="${pageContext.servletContext.contextPath }/assets/image/preview.png" id="img-preview" />
+				<img src="${pageContext.servletContext.contextPath }/admin/assets/image/preview.png" id="img-preview" />
 			</div>
 			<!-- 실제 선택 옵션에 따른 패널의 결과가 들어갈 자리임.-->
 			<div id="div-preview-panel">REMOTE CONTROLLER</div>

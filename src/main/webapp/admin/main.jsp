@@ -19,10 +19,10 @@
 	href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!-- Latest compiled JavaScript -->
 <script
-	src="${pageContext.servletContext.contextPath }/assets/js/bootstrap.min.js"></script>
+	src="${pageContext.servletContext.contextPath }/admin/assets/js/bootstrap.min.js"></script>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath }/assets/css/bootstrap.min.css">
+	href="${pageContext.servletContext.contextPath }/admin/assets/css/bootstrap.min.css">
 
 
 <style>
@@ -48,7 +48,7 @@ table, table thead th {
 		<h1>Panel List</h1>
 		<div class="row">
 			<a href="${pageContext.servletContext.contextPath }/test" class="btn btn-primary pull-left">test</a>
-			<a href="${pageContext.servletContext.contextPath }/setting/create"
+			<a href="${pageContext.servletContext.contextPath }/settingtab/create"
 				class="btn btn-primary pull-right">만들기</a>
 		</div>
 		<div class="row">

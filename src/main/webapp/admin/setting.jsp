@@ -13,10 +13,10 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!-- Latest compiled JavaScript -->
-<script	src="${pageContext.servletContext.contextPath }/assets/js/bootstrap.min.js"></script>
+<script	src="${pageContext.servletContext.contextPath }/admin/assets/js/bootstrap.min.js"></script>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath }/assets/css/bootstrap.min.css">
+	href="${pageContext.servletContext.contextPath }/admin/assets/css/bootstrap.min.css">
 
 <style>
 * {
@@ -77,12 +77,12 @@ ul.nav li a {
 				<c:choose>
 					<c:when test="${tab_element.key == 1 }">
 						<div id="${stat.count }">
-							<jsp:include page="settings/${tab_element.value.jspFile }.jsp" flush="false" />	
+							<jsp:include page="settingstab/${tab_element.value.jspFile }.jsp" flush="false" />	
 						</div>
 					</c:when>
 					<c:otherwise>
 						<div id="${stat.count }">
-							<jsp:include page="settings/${tab_element.value.jspFile }.jsp" flush="false" />	
+							<jsp:include page="settingstab/${tab_element.value.jspFile }.jsp" flush="false" />	
 						</div>
 					</c:otherwise>
 				</c:choose>
