@@ -21,7 +21,7 @@ function includeTargetElement() {
   document.body.appendChild(element);
 }
 /* jquery js*/ 
-includeFile("//code.jquery.com/jquery-3.3.1.min.js", "js");
+includeFile("https://code.jquery.com/jquery-3.3.1.min.js", "js");
 includeFile("https://code.jquery.com/ui/1.12.1/jquery-ui.js", "js");
 
 /* css */
@@ -33,7 +33,6 @@ includeFile("/mammoth/template/panel.css", "css");
 includeFile("/mammoth/function/orderlist/orderlist_popuplayer.css", "css");
 
 setTimeout(() => {
-	
 	/* bootstrap */
 	includeFile("https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css", "css");
 	includeFile("https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js", "js");
