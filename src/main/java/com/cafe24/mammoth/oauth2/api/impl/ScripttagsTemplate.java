@@ -16,7 +16,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.cafe24.mammoth.oauth2.api.Scripttags;
 import com.cafe24.mammoth.oauth2.api.impl.json.Cafe24ApiJsonParser;
-import com.cafe24.mammoth.oauth2.api.operation.ScriptTagsOperations;
+import com.cafe24.mammoth.oauth2.api.operation.ScripttagsOperations;
 import com.cafe24.mammoth.oauth2.api.support.URIBuilder;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -27,19 +27,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * scripttags API를 사용하기 위한 restTemplate.<br>
  * 
  * [메소드 목록]<br>
- * 1. List all Scripttags -> {@link ScriptTagsTemplate#getList()} <br>
- * 2. Count all Scripttags -> {@link ScriptTagsTemplate#count()} <br>
- * 3. Get a Scripttags -> {@link ScriptTagsTemplate#get(String)} <br>
- * 4. Create a Scripttags -> {@link ScriptTagsTemplate#create(Scripttags)} <br>
- * 5. Update a Scripttags -> {@link ScriptTagsTemplate#update(String, Scripttags)} <br>
- * 6. Delete a Scripttags -> {@link ScriptTagsTemplate#delete(String)} <br>
+ * 1. List all Scripttags -> {@link ScripttagsTemplate#getList()} <br>
+ * 2. Count all Scripttags -> {@link ScripttagsTemplate#count()} <br>
+ * 3. Get a Scripttags -> {@link ScripttagsTemplate#get(String)} <br>
+ * 4. Create a Scripttags -> {@link ScripttagsTemplate#create(Scripttags)} <br>
+ * 5. Update a Scripttags -> {@link ScripttagsTemplate#update(String, Scripttags)} <br>
+ * 6. Delete a Scripttags -> {@link ScripttagsTemplate#delete(String)} <br>
  * 
  * @version 1.0
  * @since 2018-07-03
  * @author qyuee
  *
  */
-public class ScriptTagsTemplate implements ScriptTagsOperations{
+public class ScripttagsTemplate implements ScripttagsOperations{
 	private final String SCRIPTTAGS_URL = "/api/v2/admin/scripttags";
 	private URI apiUrl;
 	private String baseUrl;
@@ -47,11 +47,11 @@ public class ScriptTagsTemplate implements ScriptTagsOperations{
 	
 	private ObjectMapper objectMapper;
 	
-	public ScriptTagsTemplate() {
+	public ScripttagsTemplate() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public ScriptTagsTemplate(RestTemplate usingApiRestTemplate, String baseUrl) {
+	public ScripttagsTemplate(RestTemplate usingApiRestTemplate, String baseUrl) {
 		this.baseUrl = baseUrl+SCRIPTTAGS_URL;
 		objectMapper = new ObjectMapper();
 		this.usingApiRestTemplate = usingApiRestTemplate;

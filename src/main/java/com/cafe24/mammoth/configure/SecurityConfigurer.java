@@ -9,6 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -22,9 +23,13 @@ import org.springframework.security.oauth2.client.token.grant.code.Authorization
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.CorsUtils;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.cafe24.mammoth.oauth2.oauth2.Cafe24AuthenticationSuccessHandler;
-import com.cafe24.mammoth.oauth2.oauth2.Cafe24OAuth2ClientAuthenticationProcessingFilter;
+import com.cafe24.mammoth.oauth2.Cafe24AuthenticationSuccessHandler;
+import com.cafe24.mammoth.oauth2.Cafe24OAuth2ClientAuthenticationProcessingFilter;
 
 /**
  * Spring Security 설정 테스트<br>
@@ -33,7 +38,7 @@ import com.cafe24.mammoth.oauth2.oauth2.Cafe24OAuth2ClientAuthenticationProcessi
  * <br>
  * <b>Update:</b><br>
  * - AuthService 의존성 주입 부분을 SuccessHandler로 이전, SuccessHandler 생성자 변경 18-07-09, MoonStar<br> 
- *
+ * - CORS 적용: 자바스크립트 요청에 대해 Cross domain 문제 발생 해결 적용 18-07-11, MoonStar</br>
  * @since 2018. 06. 26
  * @author MS Kim
  *
@@ -82,11 +87,11 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		// iframe에서 요청이 발생할 때 X-Frame-Option에 대한 문제 발생 해당 값을 해제하여 문제 해결. 원인: 아직 모르겠음
 		http.headers().frameOptions().disable();
-
 		// BasicAuthenticationFilter 이전에 cafe24Filter를 수행하도록 지정
 		// /oauth2 경로는 필터를 통해 인증받도록 설정, 그 외 경로는 접속 허용
-		http.authorizeRequests().antMatchers("/oauth2").permitAll().and().addFilterBefore(cafe24Filter(),
-				BasicAuthenticationFilter.class);
+		http.authorizeRequests().requestMatchers(CorsUtils::isPreFlightRequest)
+		.permitAll().antMatchers("/oauth2").permitAll()
+		.and().addFilterBefore(cafe24Filter(), BasicAuthenticationFilter.class);
 	}
 
 	/**
@@ -176,6 +181,25 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 		registration.setFilter(filter);
 		registration.setOrder(-100);
 		return registration;
+	}
+	
+	/**
+	 * CORS 정책 설정<br>
+	 * 모든 도메인들의 GET 요청에 대해 CORS 허용, 최대 캐시 보관 시간 3600초 설정<br>
+	 * @return {@link CorsConfigurationSource}
+	 */
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		
+		configuration.addAllowedOrigin("*");
+		configuration.addAllowedMethod(HttpMethod.GET);
+		configuration.addAllowedHeader("*");
+		configuration.setAllowCredentials(false);
+		configuration.setMaxAge(3600L);
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
 	}
 
 }

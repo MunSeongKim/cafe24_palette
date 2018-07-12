@@ -4,8 +4,14 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.ehcache.EhCacheCacheManager;
+import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 
 /**
  * 외부 Tomcat에서 동작하기 위해 ServletInitializer를 상속한 main() 메소드를 갖는 클래스를 설정
@@ -18,6 +24,7 @@ import org.springframework.context.annotation.Configuration;
 @EnableAutoConfiguration
 @ComponentScan
 @Configuration
+@EnableCaching
 public class ServletInitializer extends SpringBootServletInitializer {
 	
 	private static final String PROPERTIES = "spring.config.location=classpath:/application.yml";
@@ -30,5 +37,18 @@ public class ServletInitializer extends SpringBootServletInitializer {
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(ServletInitializer.class);
+	}
+	
+	@Bean
+	public CacheManager cacheManager() {
+		return new EhCacheCacheManager(ehCacheManager().getObject());
+	}
+	
+	@Bean
+	public EhCacheManagerFactoryBean ehCacheManager() {
+		EhCacheManagerFactoryBean factory = new EhCacheManagerFactoryBean();
+		factory.setConfigLocation(new ClassPathResource("ehcache.xml"));
+		factory.setShared(true);
+		return factory;
 	}
 }

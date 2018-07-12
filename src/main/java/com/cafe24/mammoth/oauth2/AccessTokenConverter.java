@@ -1,4 +1,4 @@
-package com.cafe24.mammoth.oauth2.oauth2;
+package com.cafe24.mammoth.oauth2;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

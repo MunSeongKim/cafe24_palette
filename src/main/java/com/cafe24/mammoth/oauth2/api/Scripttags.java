@@ -3,7 +3,7 @@ package com.cafe24.mammoth.oauth2.api;
 import java.util.ArrayList;
 import java.util.Set;
 
-import com.cafe24.mammoth.oauth2.api.impl.ScriptTagsTemplate;
+import com.cafe24.mammoth.oauth2.api.impl.ScripttagsTemplate;
 import com.cafe24.mammoth.oauth2.api.operation.EntityListStructure;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 /**
  * Scripttags Api 객체<br>
  * 
- * @JsonProperty으로 표기된 필드는 {@link ScriptTagsTemplate#create(Scripttags)} 메소드 사용시 <br>
+ * @JsonProperty으로 표기된 필드는 {@link ScripttagsTemplate#create(Scripttags)} 메소드 사용시 <br>
  * Cafe24 Api 서버에 전달해야 할 적절한 필드를 구분하기 위함.<br>
  * src, display_location, skin_no를 전달하기 위함.<br>
  * 

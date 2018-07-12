@@ -1,4 +1,4 @@
-package com.cafe24.mammoth.oauth2.oauth2;
+package com.cafe24.mammoth.oauth2;
 
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 

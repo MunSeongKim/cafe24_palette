@@ -44,7 +44,14 @@ public class Script {
 				+ scripttagsNo + ", dpLocation=" + dpLocation + "]";
 	}
 
-//	public Panel getPanel() { return null; }
-	 
+	public void setPanel(Panel panel) {
+		this.panel = panel;
+
+		if(this.panel.getScript() != null) {
+			this.panel.setScript(null);
+		}
+		
+		this.panel.setScript(this);
+	}
 
 }

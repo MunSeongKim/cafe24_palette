@@ -5,8 +5,6 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -22,7 +20,7 @@ import lombok.Setter;
 public class Auth {
 
 	@Id
-	@Column(nullable = false, length = 50)
+	@Column(name="mall_id", nullable = false, length = 50)
 	private String mallId;
 
 	@Temporal(value = TemporalType.TIMESTAMP)
@@ -41,12 +39,10 @@ public class Auth {
 
 	@Column(nullable = false, length = 150)
 	private String scopes;
-
-	@MapsId
-	@OneToOne
-	@JoinColumn(name = "mall_id", insertable = false, updatable = false)
-	Member member;
-
+	
+	@OneToOne(mappedBy = "auth")
+	private Member member;
+	
 	@Override
 	public String toString() {
 		return "Auth [mallId=" + mallId + ", issuedDate=" + issuedDate + ", expireDate=" + expireDate + ", accessToken="

@@ -13,7 +13,7 @@ import com.cafe24.mammoth.oauth2.api.Scripttags;
  * @author qyuee
  * @since 2018-07-05
  */
-public interface ScriptTagsOperations{
+public interface ScripttagsOperations{
 	
 	Scripttags create(Scripttags scripttags);
 	

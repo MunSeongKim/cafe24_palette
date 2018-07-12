@@ -14,8 +14,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.cafe24.mammoth.oauth2.api.Scripttags;
 import com.cafe24.mammoth.oauth2.api.impl.Cafe24Template;
-import com.cafe24.mammoth.oauth2.api.impl.ScriptTagsTemplate;
-import com.cafe24.mammoth.oauth2.api.operation.ScriptTagsOperations;
+import com.cafe24.mammoth.oauth2.api.impl.ScripttagsTemplate;
+import com.cafe24.mammoth.oauth2.api.operation.ScripttagsOperations;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -30,7 +30,7 @@ public class ScriptTagsTemplateTest {
 	private static final String accessToken = "Eewx5toeNkiHOOvF138K6K";
 	/*private Cafe24Template cafe24Template = new Cafe24Template(accessToken);*/
 	
-	private ScriptTagsOperations scriptTagsTemplate = cafe24Template.getOperation(ScriptTagsTemplate.class);
+	private ScripttagsOperations scriptTagsTemplate = cafe24Template.getOperation(ScripttagsTemplate.class);
 	
 	// getList -> ok!
 	@Test

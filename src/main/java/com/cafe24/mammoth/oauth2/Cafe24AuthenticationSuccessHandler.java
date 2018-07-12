@@ -1,4 +1,4 @@
-package com.cafe24.mammoth.oauth2.oauth2;
+package com.cafe24.mammoth.oauth2;
 
 import java.io.IOException;
 import java.util.Map;
@@ -14,7 +14,6 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-import com.cafe24.mammoth.app.domain.Auth;
 import com.cafe24.mammoth.app.service.AuthService;
 import com.cafe24.mammoth.app.service.MemberService;
 import com.cafe24.mammoth.oauth2.api.impl.Cafe24Template;
@@ -29,8 +28,11 @@ import com.cafe24.mammoth.oauth2.api.impl.Cafe24Template;
  * <hr>
  * 수정내용<br>
  * - 클래스명 변경 : Cafe24FilterSuccessHandler -> Cafe24AuthenticationSuccessHandler 18-07-02, MoonStar<br>
- * - 생성자 변경: AuthService 매개변수 삭제하고 Authwired로 의존성 주입
+ * - 생성자 변경: AuthService 매개변수 삭제하고 Authwired로 의존성 주입 18-07-09, MoonStar<br>
+ * - Entity 영속화: MemberService 추가, Auth, Member 같이 저장 18-07-10, MoonStar<br>
+ * - Redirect URL 변경: /mammoth로 Redirect 경로 변경 18-07-10, MoonStar<br>
  * <br>
+ * 
  * @since 2018-07-02
  * @author qyuee, allery
  * 
@@ -40,11 +42,10 @@ public class Cafe24AuthenticationSuccessHandler implements AuthenticationSuccess
 	
 	@Autowired
 	private Cafe24Template cafe24Template;
-
-	@Autowired
-	private MemberService memberService;
 	@Autowired
 	private AuthService authService;
+	@Autowired
+	private MemberService memberService;
 	
 	private OAuth2ClientContext context;
 	
@@ -73,15 +74,14 @@ public class Cafe24AuthenticationSuccessHandler implements AuthenticationSuccess
 		// cafe24Template 초기화.
 		cafe24Template.init(accessToken);
 		
-		// Auth 영속화.
-		Auth auth = authService.save(accessToken);
-		// Member 영속화
-		memberService.save(mallId, mallUrl, auth);
+		// Auth, Member 영속화.
+		authService.save(accessToken);
+		memberService.save(mallUrl, mallId);
 		
-		// 왜 있을까...?
 		request.getSession().setAttribute("mallId", mallId);
 		request.getSession().setAttribute("mallUrl", mallUrl);
-		// accessToken 발금 후 영속화 후 /{mall_id}로 리다이렉션
-		response.sendRedirect("/" + mallId);
+		
+		// accessToken 발금 후 영속화 후 /로 리다이렉션
+		response.sendRedirect("/mammoth");
 	}
 }

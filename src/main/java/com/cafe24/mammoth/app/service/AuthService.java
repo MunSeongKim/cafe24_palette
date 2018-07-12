@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.cafe24.mammoth.app.domain.Auth;
 import com.cafe24.mammoth.app.repository.AuthRepository;
-import com.cafe24.mammoth.oauth2.oauth2.AccessTokenConverter;
+import com.cafe24.mammoth.oauth2.AccessTokenConverter;
 
 /**
  * Token 발급 성공 후 Token 정보를 DB에 저장하기 위한 서비스<br>
@@ -27,20 +27,20 @@ import com.cafe24.mammoth.oauth2.oauth2.AccessTokenConverter;
 public class AuthService{
 	
 	@Autowired
-	AuthRepository authRepository;
+	private AuthRepository authRepository;
 	
 	public Auth getOne(String mallId) {
 		return authRepository.findByMallId(mallId);
 	}
 	
-	public Auth save(OAuth2AccessToken accessToken) {
+	public boolean save(OAuth2AccessToken accessToken) {
 		Auth auth = new Auth();
 		try {
 			auth = new AccessTokenConverter().cafe24TokenConverter(accessToken, auth);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		return authRepository.save(auth);
+		return authRepository.save(auth) != null ? true : false;
 	}
 
 	public void removeAccessToken(OAuth2ProtectedResourceDetails resource, Authentication authentication) {
