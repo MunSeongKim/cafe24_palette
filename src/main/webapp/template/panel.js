@@ -13,15 +13,24 @@ $(document).keyup(function(e) {
 		closeNav();
 	}
 });
-$("#panel-btn").draggable({
-	axis : "y"
-});
-$("#panel-btn").click(function() {
-	openNav();
-});
-$("#panel-close-btn").click(function() {
-	if($('.popupLayer').css('display') == 'block') {
-		$('.popupLayer').css('display', 'none');
-	}
-	closeNav();
-});
+
+$(document).ready(function() {
+	$('#panel-area').load('/mammoth/template/panel.html', function(){
+		$('#panel-func-orderlist').load("/mammoth/function/orderlist/orderlist_popuplayer.html", function() {
+
+			$("#panel-btn").draggable({
+				axis : "y"
+			});
+			$("#panel-btn").click(function() {
+				openNav();
+			});
+			$("#panel-close-btn").click(function() {
+				if($('.popupLayer').css('display') == 'block') {
+					$('.popupLayer').css('display', 'none');
+				}
+				closeNav();
+			});
+		});
+	});
+		
+})

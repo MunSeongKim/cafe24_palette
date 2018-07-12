@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/palette
-    username: palette
-    password: palette
+    url: jdbc:mysql://localhost:3306/palatte
+    username: palatte
+    password: palatte
     driver-class-name: com.mysql.jdbc.Driver
     
   jpa:
@@ -16,8 +16,7 @@ spring:
 
   mvc:
     view:
-      prefix: /views/
-      suffix: .jsp
+      prefix: /
 
   cache:
     ehcache:
