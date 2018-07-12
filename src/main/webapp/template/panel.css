@@ -1,74 +1,59 @@
-html, body {
-  margin: 0;
-  padding: 0;
-  -webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-o-box-sizing: border-box;
-	-ms-box-sizing: border-box;
-	box-sizing: border-box;
-}
+@charset "UTF-8";
 
-#panel {
-  margin: 0;
-  padding: 0;
-  position: fixed;
-  height:99.8%;
-  width: 17em;
-  border: 1px solid red;
-  background-color: yellow;
-  top: 0;
-  right: 0;
-}
-
-#panel.panel-closed {
-  right: -17em;
-}
-
-#panel-action {
-  position: relative;
-  top: 5em;
-  left: -4.7em;
-  width: 4.5em;
-  height: 4.5em;
-}
-
-#panel-action p {
-  margin: 0;
-}
-
+/* panel-btn draggable / panel css */
 #panel-btn {
-  width: 100%;
-  height: 100%;
-  background-color: #111111;
-  color: #ffffff;
-  border: 0px;
-  font-size: 1em;
-  font-weight: bold;
-  text-align: center;
+	cursor: pointer;
+	width: 5em;
+	height: 5em;
+	padding: 0.5em;
+	margin: 0 0.625em 0.625em 0;
+	position: absolute;
+	right: 0;
+	top: 25%;
+	border: 1px solid black;
+	text-align: center;
+	line-height: 5em;
+}
+.panel {
+	height: 100%;
+	width: 0;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	right: 0;
+	background-color: lightgray;
+	overflow-x: hidden;
+	transition: 0.5s;
+	padding-top: 3.750em;
+}
+.panel a {
+	text-decoration: none;
+	font-size: 1.563em;
+	color: #818181;
+	display: block;
+	transition: 0.3s;
+}
+.panel a:hover {
+	color: #f1f1f1;
+}
+.panel #panel-close-btn {
+	position: absolute;
+	top: 0;
+	right: 5%;
+	font-size: 2.25em;
+	text-decoration: none;
+}
+@media screen and (max-height: 28.125em) {
+	.panel {
+		padding-top: 0.938em;
+	}
+	.panel a {
+		font-size: 1.125em;
+	}
 }
 
-#panel-btn:hover {
-  box-shadow: 5px 5px 3px grey;
+#panel .container .row > * {
+	margin: 0.313em auto;
+	
 }
 
-#panel-content {
-  margin: 0;
-  padding: 0;
-  width:100%;
-  height: 500px;
-  background-color: yellow;
-  position: absolute;
-  top: 0;
-  right: 0;
-  border: 1px solid blue;
-}
-
-#panel-btn-icon {
-  font-size: 1.5em;
-}
-
-
-.func {
-  margin: 5px 1px;
-  border: 1px solid green;
-}

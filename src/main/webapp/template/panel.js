@@ -1,28 +1,27 @@
-window.onload = function() {
-	includeFile(
-			"https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css",
-			"css");
-	includeFile(
-			"https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js",
-			"js");
-	
-	
-	
-	// insert js - hwi
-	includeTargetElement();
-	$(function(){
-		$('#panel').load("/template/panel.html", function(){
-			$('#func1').load('/function/scroll/scroll.html', function(){
-				$('[data-toggle="tooltip"]').tooltip();
-			});
-			$('#func2').load('/function/share/share.html');
-			//$('#func2').load('https://lee33398.cafe24.com/function/share/share.html');
-			// 추가 기능 - func3
-			// 추가 기능 - func4
-			
-			//$('#panel-content').load('/function/scroll/scroll.html');
-		});	
-	});
-	
-	
+function openNav() {
+	$('#panel').css('width', '25%');
 }
+function closeNav() {
+	$('#panel').css('width', '0');
+}
+$(document).keyup(function(e) {
+	if (e.keyCode == 27) { // escape key maps to keycode `27`
+		if($('.popupLayer').css('display') == 'block') {
+			$('.popupLayer').css('display', 'none');
+			return;
+		}
+		closeNav();
+	}
+});
+$("#panel-btn").draggable({
+	axis : "y"
+});
+$("#panel-btn").click(function() {
+	openNav();
+});
+$("#panel-close-btn").click(function() {
+	if($('.popupLayer').css('display') == 'block') {
+		$('.popupLayer').css('display', 'none');
+	}
+	closeNav();
+});

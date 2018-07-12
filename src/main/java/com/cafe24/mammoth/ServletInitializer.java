@@ -40,15 +40,17 @@ public class ServletInitializer extends SpringBootServletInitializer {
 	}
 	
 	@Bean
-	public CacheManager cacheManager() {
-		return new EhCacheCacheManager(ehCacheManager().getObject());
-	}
-	
-	@Bean
 	public EhCacheManagerFactoryBean ehCacheManager() {
 		EhCacheManagerFactoryBean factory = new EhCacheManagerFactoryBean();
 		factory.setConfigLocation(new ClassPathResource("ehcache.xml"));
 		factory.setShared(true);
 		return factory;
 	}
+	
+	@Bean
+	public CacheManager cacheManager() {
+		return new EhCacheCacheManager(ehCacheManager().getObject());
+	}
+	
+	
 }
