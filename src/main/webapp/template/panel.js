@@ -19,6 +19,9 @@ function closeNav() {
 	// 180713 hwi 추가 (패널 열었을 때 스크롤 맨 위, 아래 div도 밀어주기 위함)
 	$('.scroll_mm_div').css('right', '2.5em');
 }
+
+
+
 $(document).keyup(function(e) {
 	if (e.keyCode == 27) { // escape key maps to keycode `27`
 		if($('.popupLayer').css('display') == 'block') {
@@ -74,4 +77,4 @@ $(document).ready(function() {
 		$('#func2').load("/mammoth/function/share/share.html");
 	});
 		
-})
+});
