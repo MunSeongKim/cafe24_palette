@@ -1,0 +1,46 @@
+@charset "UTF-8";
+
+/* popup css */
+.popupLayer {
+	position: absolute;
+	display: none;
+	background-color: #ffffff;
+	border: solid 0.125em #d0d0d0;
+	width: 50%;
+	max-width: 37.5em;
+	height: 60%;
+	padding: 0.625em;
+}
+.popupLayer #popup-header {
+	height: 10%;
+	border-bottom: 0.063em solid #d0d0d0;
+	padding-bottom: 0.188em;
+}
+.popupLayer #popup-header .popup-header button{
+	font-size: 0.813em;
+}
+.popupLayer #popup-orderlist {
+	margin: 0 0;
+	margin-top: 0.625em;
+	height: 80%;
+    overflow: auto;
+    overflow-x: hidden;
+}
+.popupLayer #popup-close {
+	text-align: center;
+	height: 10%;
+}
+
+.popupLayer #popup-header #popup-chkbox,
+.popupLayer #popup-orderlist .container-layout .container .row,
+.popupLayer #popup-close button {
+	margin-top: 0.625em;
+}
+/* card css */
+.card .card-body {
+	font-size: 0.688em;
+	padding-top: 0px;
+}
+.card .card-body .order-product-info {
+	margin-top: 0.625em;
+}
