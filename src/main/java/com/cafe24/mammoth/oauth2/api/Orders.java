@@ -31,8 +31,9 @@ public class Orders implements EntityListStructure<Orders> {
 	@JsonProperty(value="items")
 	private List<Map<String, String>> items;
 	
+	
 	@JsonIgnore
-	private Integer count;
+	private int count;
 	
 	@JsonIgnore
 	private ArrayList<Orders> list;

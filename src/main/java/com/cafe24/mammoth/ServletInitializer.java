@@ -26,7 +26,6 @@ import org.springframework.core.io.ClassPathResource;
 @Configuration
 @EnableCaching
 public class ServletInitializer extends SpringBootServletInitializer {
-	
 	private static final String PROPERTIES = "spring.config.location=classpath:/application.yml";
 	
 	public static void main(String[] args) {
@@ -41,14 +40,15 @@ public class ServletInitializer extends SpringBootServletInitializer {
 	
 	@Bean
 	public CacheManager cacheManager() {
-		return new EhCacheCacheManager(ehCacheManager().getObject());
+		return new EhCacheCacheManager(ehCacheManagerFactory().getObject());
 	}
 	
 	@Bean
-	public EhCacheManagerFactoryBean ehCacheManager() {
+	public EhCacheManagerFactoryBean ehCacheManagerFactory() {
 		EhCacheManagerFactoryBean factory = new EhCacheManagerFactoryBean();
 		factory.setConfigLocation(new ClassPathResource("ehcache.xml"));
 		factory.setShared(true);
+		
 		return factory;
 	}
 }

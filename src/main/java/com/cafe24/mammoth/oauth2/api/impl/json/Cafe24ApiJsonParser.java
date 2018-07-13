@@ -84,7 +84,7 @@ public class Cafe24ApiJsonParser {
 				//System.out.println("pojo.getClass().getTypeName() : " + pojo.getClass().getTypeName());
 			}
 			
-			System.out.println(rootNode); // 전체 출력.
+			//System.out.println(rootNode); // 전체 출력.
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

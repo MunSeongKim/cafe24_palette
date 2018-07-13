@@ -70,7 +70,7 @@ public class Cafe24Template {
 	 * @since 2018-07-09
 	 */
 	private void initallize() {
-		logger.info("Cafe24Template's initallize() method is called.");
+		//logger.info("Cafe24Template's initallize() method is called.");
 		usingApiRestTemplate = new RestTemplate(new SimpleClientHttpRequestFactory());
 		List<ClientHttpRequestInterceptor> interceptors = new ArrayList<ClientHttpRequestInterceptor>();
 		interceptors.add(new Cafe24ApiHeaderBearerOAuth2RequestInterceptor(accessToken));

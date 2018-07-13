@@ -14,7 +14,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 public class URIBuilder {
-	
+
 	private final String baseUri;
 
 	private MultiValueMap<String, String> parameters;
@@ -77,43 +77,67 @@ public class URIBuilder {
 			throw new IllegalStateException(wontHappen);
 		}
 	}
-	
+
 	/**
 	 * 파라미터가 요청 주소에 추가 될 때.
+	 * 
 	 * @param path
-	 * @param apiUrl, parameters
-	 * @return {@link URI} 
+	 * @param apiUrl,
+	 *            parameters
+	 * @return {@link URI}
 	 * @author qyuee
 	 * @since 2018-07-03
 	 */
 	public static URI buildApiUri(String apiUrl, MultiValueMap<String, String> parameters) {
 		return URIBuilder.fromUri(apiUrl).queryParams(parameters).build();
 	}
-	
+
 	/**
 	 * GET, DELETE, UPDATE Method 사용 시, Uri에 query String이 아닌 pathVariable 형태로 <br>
 	 * 값을 전달 할 때 사용하는 메소드. <br>
 	 * 
 	 * [결과 uri]<br>
 	 * ex) buildApiUri(str1, str2, str3)<br>
-	 * "https://ex1.cafe24.com/api/v2/admin/scripttags/value1/value2/value3" 의 형태.<br>
+	 * "https://ex1.cafe24.com/api/v2/admin/scripttags/value1/value2/value3" 의
+	 * 형태.<br>
 	 * 
-	 * @param apiUrl, uriValues
+	 * @param apiUrl,
+	 *            uriValues
 	 * @return {@link URI}
 	 * @author qyuee
 	 * @since 2018-07-05
 	 */
-	public static URI buildApiUri(String apiUrl, String...uriValues) {
+	public static URI buildApiUri(String apiUrl, String... uriValues) {
 		List<String> uriValueList = new LinkedList<>();
-		for(int i=0; i<uriValues.length; i++) {
-			uriValueList.add("/"+(String)uriValues[i]);
+		for (int i = 0; i < uriValues.length; i++) {
+			uriValueList.add("/" + (String) uriValues[i]);
 		}
 		String addtionalUriValue = String.join("", uriValueList);
-		return URIBuilder.fromUri(apiUrl+addtionalUriValue).build();
+		return URIBuilder.fromUri(apiUrl + addtionalUriValue).build();
 	}
-	
+
+	/**
+	 * PathVariable + QueryString을 합쳐 URI 생성하는 메소드<br>
+	 * 
+	 * @param apiUrl
+	 * @param parameters
+	 * @param endpoint
+	 * @return {@link URI}
+	 * @author Moonstar
+	 * @since 2018-07-12
+	 */
+	public static URI buildApiUri(String apiUrl, MultiValueMap<String, String> parameters, String... endpoints) {
+		List<String> uriValueList = new LinkedList<>();
+		for (int i = 0; i < endpoints.length; i++) {
+			uriValueList.add("/" + (String) endpoints[i]);
+		}
+		String endpointsURLString = apiUrl + String.join("", uriValueList);
+		return URIBuilder.fromUri(endpointsURLString).queryParams(parameters).build();
+	}
+
 	/**
 	 * 요청 주소에 파라미터가 포함되지 않을 때.
+	 * 
 	 * @param apiUrl
 	 * @return {@link URI}
 	 * @author qyuee
@@ -122,6 +146,5 @@ public class URIBuilder {
 	public static URI buildApiUri(String apiUrl) {
 		return URIBuilder.fromUri(apiUrl).build();
 	}
-	
-	
+
 }
