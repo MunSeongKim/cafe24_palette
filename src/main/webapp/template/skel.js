@@ -15,13 +15,21 @@ function includeFile(path, type) {
   }
 }
 
+// append a element[palette area] on body
 function includeTargetElement() {
   var element = document.createElement("div");
   element.setAttribute("id", "panel-area");
   document.body.appendChild(element);
 }
+
+/*
+ * 파일 로드 순서는 건드리지 말아주셔여!
+ * 순서 꼬이면 뒤에 안불러지는 함수가 있습니다~ 혹시 바꾸시면 말해주세요
+ */
+
 /* jquery js*/ 
 includeFile("https://code.jquery.com/jquery-3.3.1.min.js", "js");
+/* jquery UI */
 includeFile("https://code.jquery.com/ui/1.12.1/jquery-ui.js", "js");
 
 /* css */
@@ -33,10 +41,10 @@ includeFile("/mammoth/template/panel.css", "css");
 includeFile("/mammoth/function/orderlist/orderlist_popuplayer.css", "css");
 
 setTimeout(() => {
-	/* bootstrap */
-	includeFile("https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css", "css");
 	includeFile("https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js", "js");
-	includeFile("https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js", "js");
+	/* bootstrap */
+	includeFile("https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css", "css");
+	includeFile("https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js", "js");
 }, 1);
 
 /* custom js */
