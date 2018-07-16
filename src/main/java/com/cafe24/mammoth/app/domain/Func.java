@@ -26,7 +26,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Func {
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long funcId;

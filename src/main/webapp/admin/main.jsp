@@ -48,8 +48,7 @@ table, table thead th {
 		<h1>Panel List</h1>
 		<div class="row">
 			<a href="${pageContext.servletContext.contextPath }/test" class="btn btn-primary pull-left">test</a>
-			<a href="${pageContext.servletContext.contextPath }/settingtab/create"
-				class="btn btn-primary pull-right">만들기</a>
+			<a href="${pageContext.servletContext.contextPath }/setting/create" class="btn btn-primary pull-right">만들기</a>
 		</div>
 		<div class="row">
 			<table id="tbl-panel-list" class="table table-striped">
