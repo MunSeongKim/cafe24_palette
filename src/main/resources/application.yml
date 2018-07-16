@@ -1,9 +1,17 @@
 spring:
+<<<<<<< src/main/resources/application.yml
   datasource:
     url: jdbc:mysql://localhost:3306/palatte
     username: root
     password: 1234
+=======
+  datasource:
+    url: jdbc:mysql://localhost:3306/palette
+    username: root  # For Test Qyuee's
+    password: 111111  # For Test Qyuee's !!!
+>>>>>>> src/main/resources/application.yml
     driver-class-name: com.mysql.jdbc.Driver
+    type : org.apache.tomcat.jdbc.pool.DataSource  # For Test Qyuee's
     
   jpa:
     database: MYSQL
@@ -16,7 +24,8 @@ spring:
 
   mvc:
     view:
-      prefix: /
+      prefix: /admin/ 
+      suffix: .jsp
 
   cache:
     ehcache:

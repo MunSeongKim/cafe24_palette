@@ -1,5 +1,10 @@
 package com.cafe24.mammoth.app.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.cafe24.mammoth.app.domain.Func;
 import com.cafe24.mammoth.app.support.SettingTab;
 
 @Controller
@@ -18,7 +24,19 @@ public class SettingController {
 
 	@GetMapping(value = "/create")
 	public String create(Model model) {
+		
+		List<Func> list = new ArrayList<>();
+		for(int i=0; i<5; i++) {
+			Func func = new Func();
+			func.setFuncId(1L);
+			func.setName("기능"+i);
+			list.add(func);
+		}
+		
+		
+		
 		model.addAttribute("tabs", new SettingTab());
+		model.addAttribute("funcs", list);
 		return "setting";
 	}
 	
