@@ -41,8 +41,8 @@ var files = [
 		'http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css',
 		'http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js',
 		'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js',
-		'https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css',
-		'https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js',
+		'https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css',
+		'https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js',
 ];
 
 

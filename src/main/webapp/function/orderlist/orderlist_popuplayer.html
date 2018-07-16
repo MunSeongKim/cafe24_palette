@@ -3,10 +3,12 @@
 <div class="popupLayer">
 	<div id="popup-header">
 		<div id="popup-period">
-			<button id="period-week">1주일</button>
-			<button id="period-month">1개월</button>
-			<button id="period-all">전체</button>
-			<br>
+			<button class="btn" id="period-week">1주일</button>
+			<button class="btn" id="period-month">1개월</button>
+			<button class="btn" id="period-all">전체</button>
+			<div id="popup-close">
+				<span onclick="closeLayer()">&times;</span>
+			</div>
 		</div>
 		<div id="popup-chkbox">
 			<input type="checkbox" name="ckbox" id="ckbox"> 현재와 동일한 카테고리
@@ -14,10 +16,14 @@
 		</div>
 
 	</div>
+	<hr>
 	<!-- 상품 리스트 START -->
 	<div id="popup-orderlist">
 		<div class="container-layout">
 			<div class="container">
+				<div class="row">
+					구매한 상품이 없습니다.
+				</div>
 				<!-- 특정 주문일에 주문한 상품 리스트 -->
 				<!-- <c:forEach begin="1" end="3" step="1">
 					<div class="row">
@@ -53,9 +59,7 @@
 	<!-- 상품 리스트 END -->
 
 	<div id="popup-close">
-		<div class="float-right">
-			<button onclick="closeLayer(this)">닫기</button>
-		</div>
+
 	</div>
 </div>
 <!-- 구매 목록  팝업 레이어 END -->
