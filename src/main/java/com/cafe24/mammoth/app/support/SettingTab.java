@@ -17,5 +17,5 @@ public class SettingTab {
 		map.put(2, new SettingElement("유형 설정", "type"));
 		map.put(3, new SettingElement("디자인 설정", "design"));
 		/*map.put(4, new SettingElement("동작 설정", "action"));*/
-	} 
+	}
 } 

@@ -10,11 +10,12 @@
 <!-- jQuery library --> 
 <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 
 <style>
 * {
@@ -38,12 +39,12 @@ body{
 }
 
 #title{
-	padding : 16px;
-	padding-bottom : 5px; 
+	padding : 15px;
+	padding-bottom : 0; 
 	background-color: #7952b3; 
 	border-top-left-radius : 10px;
 	border-top-right-radius : 10px;
-	color : #fff;
+	color : #fff; 
 } 
 
 #title>h1{
@@ -58,28 +59,14 @@ body{
 .inner {
 	width: 100%;  
 	/* height: 500px; */
-	padding: 20px; 
+	padding: 15px;
+	padding-bottom : 0px;
 	padding-top: 10px; 
 } 
-
-ul.setting_nav{
-	background-color: #fff;
-    border: 0px; 
-    border-color: #c5c5c5;
-    padding: 0px;
-    margin: auto 0px;
-}
 
 li{
 	border-color: #c5c5c5;
     background-color: #fff;
-}
-
-ul.setting_nav li a { 
-	/* color: #555555; */
-	pointer-events: none;
-	cursor: default;
-	border-color : #fff;
 }
 
 .button {
@@ -110,11 +97,11 @@ ul.setting_nav li a {
 
 .nav-tabs>li>a{
 	pointer-events: none;
-	border: 0px;
+	border: 0px; 
 	border-bottom : 2px solid #fff;
-	border-radius: 0px; 
+	border-radius: 0px;
 	color : #4285f4;
-	padding-left: 5px; 
+	padding-left: 5px;
 	z-index : 0;
 }
 
@@ -125,11 +112,10 @@ ul.setting_nav li a {
 }
 
 .nav-tabs>li>.active>a:focus{
-	background-color: #4285f4; 
+	background-color: #4285f4;
 }
 
 .nav-tabs>li.active>a:hover{
-	cursor : not-allowed; 
 	border: none; 
 	background-color: #4285f4; 
 	font-weight: normal;
@@ -141,13 +127,13 @@ ul.setting_nav li a {
 
 
 .nav-tabs>li.active>a:active{  
-	border: 0px;
+	border: 0px; 
 	background-color: #4285f4;
 }
 
 .nav-tabs>li.active>a:visited{
 	border: 0px;
-	background-color: #4285f4;
+	background-color: #4285f4; 
 }
 
 .nav-tabs>li>a:link{
@@ -220,11 +206,23 @@ ul.setting_nav li a {
 }
 
 .nav-pagination{
-	position: absolute;
+	/* position: absolute;
 	right: 0; 
-	top: 57px;
+	top: 57px; */
+	width: fit-content;
+	margin: 0px auto;
+	padding-bottom: 15px; 
 }
 
+.nav-pagination button{
+	padding: 0;
+	margin: 0; 
+}
+
+.nav-pagination i{
+	line-height: 0; 
+}
+ 
 </style> 
  
 <script type="text/javascript">
@@ -347,7 +345,7 @@ function pageRender(currentIdx, tabsMaxSize){
 
 
 function findCurrentTag(flag){
-	var aTag = $(".nav-link");
+	var aTag = $("#panel-tabs > ul > li > .nav-link");
 	// 현재 포커스 되고 있는 a태그의 위치 구하기.
 	for(var i=0; i<aTag.length; i++){
 		if($(aTag[i]).attr("aria-selected") == "true"){
@@ -401,15 +399,16 @@ function progressBarChange(currentIdx, tabsMaxSize){
 <div class="container-fluid" style="background-color: #fff; ">
 	 
 	<div id="title" class="row">
-		<h1>새 패널 만들기</h1>
+		<i class="fas fa-plus-square" style="font-size: 2em;"></i>
+		<h1>새 패널 만들기</h1> 
 	</div>
 
 	<!-- tab START -->
-	<div id="tabs" class="row fouc">
+	<div id="panel-tabs" class="row fouc">
 		<ul class="nav nav-tabs" id="myTab">
 			<c:forEach var="tab_element" items="${tabs.map }" varStatus="stat">
-				<c:choose>
-					<c:when test="${tab_element.key == 1 }"> 
+				<c:choose> 
+					<c:when test="${stat.index == 0 }"> 
 						<li class="nav-item active complete" id="tab-li-${stat.index}" style="padding-left: 0px;">
 							<a class="nav-link" id="${tab_element.value.jspFile }-tab" data-tabno=${stat.index } data-toggle="tab" role="tab" href="#${tab_element.value.jspFile }" aria-controls="${tab_element.value.jspFile }" aria-selected="true">
 								${tab_element.value.tabName }
@@ -430,15 +429,6 @@ function progressBarChange(currentIdx, tabsMaxSize){
 			</c:forEach>
 		</ul>
 		
-		<!-- Pager START -->
-		<div class="fouc nav-pagination">
-			<ul class="pagination"> 
-				<li><button type="button" class="btn btn-danger" id="pager-previous">Previous</button></li>
-				<li><button type="button" class="btn btn-primary" id="pager-next">Next</button></li> 
-				<li><button type="button" class="btn btn-success" id="pager-save">Save</button></li>
-			</ul>
-		</div>
-			
 		<div class="progress"> 
 			<div id="tabProgress" class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
 		</div>
@@ -446,10 +436,10 @@ function progressBarChange(currentIdx, tabsMaxSize){
 		<div class="tab-content" id="myTabContent">
 			<c:forEach var="tab_element" items="${tabs.map }" varStatus="stat">
 				<c:choose>
-					<c:when test="${tab_element.key == 1 }">
+					<c:when test="${stat.index == 0 }"> 
 						<div class="tab-pane fade show active" id="${tab_element.value.jspFile }" role="tabpanel" aria-labelledby="${tab_element.value.jspFile }-tab">
 							<c:import url="settingtab/${tab_element.value.jspFile }.jsp" charEncoding="UTF-8">
-									<c:param name="funcs" value="${funcs }"/>	
+									<c:param name="funcs" value="${funcs }"/> 
 							</c:import>		
 						</div>
 					</c:when>
@@ -458,13 +448,22 @@ function progressBarChange(currentIdx, tabsMaxSize){
 						<div class="tab-pane fade" id="${tab_element.value.jspFile }" role="tabpanel" aria-labelledby="${tab_element.value.jspFile }-tab">
 							<c:import url="settingtab/${tab_element.value.jspFile }.jsp" charEncoding="UTF-8">
 									<c:param name="funcs" value="${funcs }"/>	
-							</c:import>	
+							</c:import>
 						</div>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
 		</div>
-	</div>
+		
+		<!-- Pager START --> 
+		<div class="fouc nav-pagination"> 
+			<ul class="pagination">
+				<li><button type="button" class="btn btn-danger" id="pager-previous"><i class="fas fa-chevron-left"></i>Previous</button></li>
+				<li><button type="button" class="btn btn-primary" id="pager-next">Next<i class="fas fa-chevron-right"></i></button></li> 
+				<li><button type="button" class="btn btn-success" id="pager-save"><i class="fas fa-plus"></i>Save</button></li>
+			</ul>
+		</div>
+	</div> 
 	
 	<!-- tab END -->
 	<!-- Pager START -->
