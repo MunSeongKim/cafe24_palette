@@ -47,6 +47,7 @@
 				"position" : "fixed"
 			}).show();
 		} else if(action === 'close') {
+			alert('dsfsdfsdf')
 			this.hide();
 		} else {
 			return 0;
