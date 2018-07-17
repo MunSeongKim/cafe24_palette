@@ -41,9 +41,9 @@
 		popup : function(action) {
 			if(action === 'open') {
 				$('.popupLayer').css({
-					"top" : '20%',
+					"position" : "fixed",
 					"right" : $('#panel').width(),
-					"position" : "fixed"
+					"top" : '20%'
 				}).show();
 			} else if(action === 'close') {
 				$('.popupLayer').hide();
@@ -51,7 +51,7 @@
 				return 0;
 			}
 		}
-	}	
+	};
 }(jQuery));
 
 function closeLayer() {
@@ -70,17 +70,114 @@ $(document).ready(function() {
 		var datas = {
 				'start_date' : start_date,
 				'end_date' : end_date,
-				'member_id' : member_id,
-				'mall_url' : 'kimdudtj.cafe24.com'
+				'member_id' : member_id
 			};
 		
 		var orderIds = [];
 		var orderDates = [];
 		var items = [];
 		
+		var exampleData = [
+			{
+				"orderId": "20180712-0000045",
+				"orderDate": "2018-07-12T16:29:51+09:00",
+				"items": [
+					{
+						"itemNo": "4",
+						"productNo": "9",
+						"productName": "샘플상품 1",
+						"productPrice": "5000.00",
+						"optionValue": "색상=레드, 사이즈=S",
+						"quantity": "2",
+						"additionalDiscountPrice": "1000.00",
+						"products": {
+							"productNo": "9",
+							"smallImage": null,
+							"categories": [
+								{
+									"category_no": "29",
+									"recommend": "F",
+									"new": "F"
+								}
+							]
+						}
+					},
+					{
+						"itemNo": "5",
+						"productNo": "10",
+						"productName": "샘플상품 2",
+						"productPrice": "10000.00",
+						"optionValue": "",
+						"quantity": "2",
+						"additionalDiscountPrice": "2000.00",
+						"products": {
+							"productNo": "10",
+							"smallImage": null,
+							"categories": [
+								{
+									"category_no": "33",
+									"recommend": "F",
+									"new": "F"
+								},
+								{
+									"category_no": "38",
+									"recommend": "F",
+									"new": "F"
+								},
+								{
+									"category_no": "34",
+									"recommend": "F",
+									"new": "F"
+								},
+								{
+									"category_no": "29",
+									"recommend": "F",
+									"new": "F"
+								}
+							]
+						}
+					}
+				]
+			},
+			{
+				"orderId": "20180712-0000033",
+				"orderDate": "2018-07-12T16:17:29+09:00",
+				"items": [
+					{
+						"itemNo": "3",
+						"productNo": "9",
+						"productName": "샘플상품 1",
+						"productPrice": "5000.00",
+						"optionValue": "색상=레드, 사이즈=L",
+						"quantity": "1",
+						"additionalDiscountPrice": "500.00",
+						"products": {
+							"productNo": "9",
+							"smallImage": null,
+							"categories": [
+								{
+									"category_no": "29",
+									"recommend": "F",
+									"new": "F"
+								}
+							]
+						}
+					}
+				]
+			}
+		];
+		var datas = {};
+		datas['datas'] = exampleData;
+		
+		var template = $('#mustache-template').html();
+		Mustache.parse(template);
+		
+		var rendered = Mustache.render(template, datas);
+		console.log(rendered);
+		$('#mustache-result').append(rendered);
 		
 		$.orderlist.popup('open');
-		
+		/*
 		$.ajax({
 			url:'https://devbit005.cafe24.com/mammoth/api/cafe24/orders',
 			type: 'get',
@@ -88,8 +185,20 @@ $(document).ready(function() {
 			dataType: 'json',
 			data: datas,
 			success: function(response) {
+				console.log(response.data);
+				datas['datas'] = response.data;
+				
+				var template = $('#mustache-template').html();
+				Mustache.parse(template);
+				
+				var rendered = Mustache.render(template, datas);
+				console.log(rendered);
+				$('#mustache-result').html(rendered);
+				
 				$.each(response.data, function(index, data) {
+					
 					$.each(data, function(name, value) {
+						
 						if(name=='orderId') { orderIds.push(value)}
 						else if(name == 'orderDate') { orderDates.push(value) }
 						else { items.push(value)}
@@ -97,9 +206,13 @@ $(document).ready(function() {
 				});
 				console.log(orderIds);
 				console.log(orderDates);
-				console.log(items)
+				console.log(items);
+				
+				
 			}
 		});//ajax
+*/		
+		
 		
 	});
 });
