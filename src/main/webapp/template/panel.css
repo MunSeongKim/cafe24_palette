@@ -56,7 +56,7 @@
 	top:1em;
 	width: 2.5em;
 	height: 1.563em;
-	position: absolute;
+	position: fixed;
 	margin: 3.125em 0.313em;
 	right: 0;
 	-webkit-transform: rotate(0deg);
