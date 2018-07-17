@@ -2,7 +2,7 @@
 
 /* popup css */
 .popupLayer {
-	position: absolute;
+	position: fixed;
 	display: none;
 	background-color: #ffffff;
 	border: solid 0.125em #d0d0d0;
