@@ -46,7 +46,7 @@ $(document).ready(function() {
 	$('#panel-area').load('/mammoth/template/panel.html', function(){
 		$("#panel-btn").draggable({
 			axis : "y",
-			//containment:"window" // 180713 hwi 추가
+			containment:"window" // 180713 hwi 추가
 		});
 		$("#panel-btn").click(function() {
 			if($('#panel-btn').is('.open') == true) {
