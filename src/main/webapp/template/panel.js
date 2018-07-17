@@ -1,24 +1,30 @@
-function openNav() {
-	// 180713 hwi 수정 width % -> 고정값 수정 (합의 완료)
-	$('#panel-btn').toggleClass('open');
-	/*$('#panel-btn').addClass('opentest');*/
-	$('#panel-btn').css('right', '15.625em');
-	$('#panel-btn').css('left', '');
-	$('#panel').css('width', '15.625em');
-	
-	// 180713 hwi 추가 (패널 열었을 때 스크롤 맨 위, 아래 div도 밀어주기 위함)
-	$('.scroll_mm_div').css('right', '18.125em');
-}
-function closeNav() {
-	$('#panel').css('width', '0');
-	$('#panel-btn').css('right', '0');
-	$('#panel-btn').css('left', '');
-	// 180713 hwi 수정 removeClass -> toggleClass 토글 형식으로 꼈다 넣다 하기 때문에 toggle로 class를 삭제함
-	$('#panel-btn').toggleClass('open');
-	
-	// 180713 hwi 추가 (패널 열었을 때 스크롤 맨 위, 아래 div도 밀어주기 위함)
-	$('.scroll_mm_div').css('right', '2.5em');
-}
+(function($) {
+	$.panel = {
+		nav : function(action) {
+			$('#panel-btn').toggleClass('open');
+			if(action === 'open') {
+				$('#panel').css('width', '15.625em');
+				$('#panel-btn').css({
+					'right' : '15.625em',
+					'left' : ''
+				});
+				$('.scroll_mm_div').css('right', '18.125em');
+			} else if(action === 'close') {
+				$('#panel').css('width', '0');
+				$('#panel-btn').css({
+					'right' : '0',
+					'left' : ''
+				});
+				$('.scroll_mm_div').css({
+					'right' : '2.5em',
+					'left' : ''
+				});
+			} else {
+				return 0;
+			}
+		}
+	}
+}(jQuery));
 
 $(document).keyup(function(e) {
 	if (e.keyCode == 27) { // escape key maps to keycode `27`
@@ -26,7 +32,8 @@ $(document).keyup(function(e) {
 			$('.popupLayer').css('display', 'none');
 			return;
 		}
-		closeNav();
+		if(!$('#panel-btn').is('.open')) { return; }
+		$.panel.nav('close');
 	}
 });
 
@@ -40,7 +47,7 @@ $(document).ready(function() {
 	    isMobile = true; // when a user is using mobile
 	}
 	
-	alert('isMobile ==> ' + isMobile);
+	// alert('isMobile ==> ' + isMobile);
 	
 	/// end device check
 	
@@ -51,10 +58,10 @@ $(document).ready(function() {
 		});
 		$("#panel-btn").click(function() {
 			if($('#panel-btn').is('.open') == true) {
-				closeNav();
+				$.panel.nav('close');
 				return;
 			}
-			openNav();
+			$.panel.nav('open');
 		});
 		
 		/*
