@@ -41,9 +41,9 @@
 		popup : function(action) {
 			if(action === 'open') {
 				$('.popupLayer').css({
-					"top" : '20%',
+					"position" : "fixed",
 					"right" : $('#panel').width(),
-					"position" : "fixed"
+					"top" : '20%'
 				}).show();
 			} else if(action === 'close') {
 				$('.popupLayer').hide();
@@ -51,7 +51,7 @@
 				return 0;
 			}
 		}
-	}	
+	};
 }(jQuery));
 
 function closeLayer() {
