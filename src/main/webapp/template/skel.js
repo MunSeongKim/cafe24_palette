@@ -22,6 +22,14 @@ function includeTargetElement() {
   document.body.appendChild(element);
 }
 
+// failed
+// <meta http-equiv="Content-Security-Policy" content="block-all-mixed-content">
+/*var meta_element = document.createElement('meta');
+meta_element.httpEquiv = "Content-Security-Policy";
+meta_element.content = "block-all-mixed-content";
+document.getElementsByTagName('head')[0].appendChild(meta_element);*/
+
+
 /*
  * 파일 로드 순서는 건드리지 말아주셔여!
  * 순서 꼬이면 뒤에 안불러지는 함수가 있습니다~ 혹시 바꾸시면 말해주세요
@@ -29,17 +37,19 @@ function includeTargetElement() {
 
 /*
  *  properties만들어서 for문돌리기
+ *  Mixed Content: ~~~ This request has been blocked; the content must be served over HTTPS. error 발생
+ *  https통신을 하기 때문에 요청도 https로 해야됨. 다행히 모든 js cdn서버는 https제공. (solved)
  */
 var files = [
 		//'https://code.jquery.com/jquery-3.3.1.min.js',
-		'http://code.jquery.com/jquery-1.11.1.min.js',
+		'https://code.jquery.com/jquery-1.11.1.min.js',
 		'https://code.jquery.com/ui/1.12.1/jquery-ui.js',
+		'https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js',
+		'https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css',
 		'https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css',
 		'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
 		'/mammoth/template/panel.css',
 		'/mammoth/function/orderlist/orderlist_popuplayer.css',
-		'http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css',
-		'http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js',
 		'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js',
 		'https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css',
 		'https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js',
@@ -56,6 +66,7 @@ function loadScriptsSequential(scriptsToLoad) {
         var script;
         
         if( exe === '.js'){
+        	/* $ = jQuery; $인식할 수 있도록 jQuery담아주기 */
 	        script = document.createElement('script');
 	        script.type = 'text/javascript';
 	        script.src = src // grab next script off front of array
@@ -84,10 +95,12 @@ function loadScriptsSequential(scriptsToLoad) {
                 if (scriptsToLoad.length != 0) {
                     loadNextScript();
                 }else{
-                	window.onload = function() {
-    	        		includeTargetElement();
-    	        		includeFile("/mammoth/template/panel.js", "js");
-    	        	};
+                	// 170716 1:37 IE에서 여기 안들어오는 문제 발견. window.onload를 타지 못함.
+                	// 어짜피 마지막에 들어오는 부분이라 onload를 빼버림.
+                	//window.onload = function() {
+	        		includeTargetElement();
+	        		includeFile("/mammoth/template/panel.js", "js");
+    	        	//};
                 }
             }
         }
