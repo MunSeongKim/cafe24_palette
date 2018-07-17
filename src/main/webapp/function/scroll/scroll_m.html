@@ -32,12 +32,17 @@
 		display:none;
 	}
 	
+	.modal.scroll_m_question_popup {
+		top:0px;
+		left:0px;
+	}
+	
 	.modal-dialog.scroll_m_dialog{
 		width:350px;
 		max-width:350px;
 		margin:0px auto;
 		text-align: -webkit-center;
-		top:30%;
+		/*top:30%;*/
 	}
 	
 	.modal-content.scroll_m_content {
@@ -73,8 +78,30 @@
 </style>
 
 <script>
+	// center function 구현
+	jQuery.fn.center = function () {
+	    this.css("position","absolute");
+	    this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) + 
+	                                                $(window).scrollTop()) + "px");
+	    this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) + 
+	                                                $(window).scrollLeft()) + "px");
+	    return this;
+	}
+
 	// 스크롤 저장 클릭시
 	function save_button_click(){
+		$('.scroll_m_question_popup').position({
+			of: window,
+			my: 'center',
+			at: 'center',
+			collision: 'fit'
+		});
+		
+		$('.scroll_m_question_popup').css('top', '30%');
+		// modal 자체가 style로 때려 박기 때문에 다시 제거 해줘야됨.
+		$('.scroll_m_question_popup').css('left', '');
+		
+		//$('.scroll_m_question_popup').center();
 		$('.scroll_m_question_popup').fadeIn(200);
 	}
 	
@@ -90,7 +117,6 @@
 		$('.scroll_pop_chk_p').hide();
 		
 		if($('.scroll_pop_input').val() == ''){
-			console.log('testset');
 			$('.scroll_pop_chk_p').show();
 		}else{
 			var items = $('> a', $('.scroll_m_sel_btn'));

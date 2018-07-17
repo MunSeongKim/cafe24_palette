@@ -17,26 +17,20 @@
 	padding-top: 3.750em;
 }
 
-.panel a {
-	text-decoration: none;
-	font-size: 1.563em;
-	color: #818181;
-	display: block;
-	transition: 0.3s;
-}
-
-.panel a:hover {
-	color: #f1f1f1;
-}
-
-.panel #panel-close-btn {
+/* .panel #panel-close-btn {
 	position: absolute;
 	top: 0;
 	right: 5%;
 	font-size: 2.25em;
 	text-decoration: none;
+	color: #818181;
 }
-
+.panel #panel-close-btn:hover {
+	text-decoration: none;
+	color: #000;
+	transition: 0.3s;
+	cursor: pointer;	
+} */
 @media screen and (max-height: 28.125em) {
 	.panel {
 		padding-top: 0.938em;

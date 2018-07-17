@@ -26,6 +26,7 @@ $(document).keyup(function(e) {
 			$('.popupLayer').css('display', 'none');
 			return;
 		}
+		closeNav();
 	}
 });
 
@@ -91,6 +92,9 @@ $(document).ready(function() {
 		
 		// 180713 hwi share function add
 		$('#func2').load("/mammoth/function/share/share.html");
+		
+		// 180717 Add dongseok's function
+		$('#func3').load("/mammoth/function/recent/recent.html");
 	});
 		
 });
