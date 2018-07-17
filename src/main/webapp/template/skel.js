@@ -53,6 +53,7 @@ var files = [
 		'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js',
 		'https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css',
 		'https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js',
+		'https://devbit005.cafe24.com/mammoth/static/mustachejs/2.2.1/mustache.min.js'
 ];
 
 

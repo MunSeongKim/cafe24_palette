@@ -58,6 +58,9 @@ $(document).ready(function() {
 		});
 		$("#panel-btn").click(function() {
 			if($('#panel-btn').is('.open') == true) {
+				if($('.popupLayer').css('display') == 'block') {
+					$('.popupLayer').css('display', 'none');
+				}
 				$.panel.nav('close');
 				return;
 			}
