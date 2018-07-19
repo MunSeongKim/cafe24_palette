@@ -13,11 +13,11 @@ import org.springframework.http.client.ClientHttpResponse;
  * @author qyuee
  *
  */
-public class Cafe24ApiHeaderBearerOAuth2RequestInterceptor implements ClientHttpRequestInterceptor{
+public class Cafe24APIHeaderBearerOAuth2RequestInterceptor implements ClientHttpRequestInterceptor{
 		
 		private String accessToken;
 		
-		public Cafe24ApiHeaderBearerOAuth2RequestInterceptor(String accessToken) {
+		public Cafe24APIHeaderBearerOAuth2RequestInterceptor(String accessToken) {
 			this.accessToken = accessToken;
 		}
 		

@@ -27,12 +27,13 @@ logging:
   level:
     org:
       springframework:
-        web: INFO
-        http: INFO
-        security: INFO
+        web: DEBUG
+        http: DEBUG
+        security: DEBUG
 
 cafe24:
   client:
+    mallId: {{mall_id}}
     # App이 가진 클라이언트 아이디(사용자에게 노출)
     clientId: 2c8TooPlOR4hPhiep0VCPB
     # app이 가진 비밀키(노출되지 않음)

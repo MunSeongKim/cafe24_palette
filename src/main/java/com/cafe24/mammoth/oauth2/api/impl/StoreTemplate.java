@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.cafe24.mammoth.oauth2.api.Store;
 import com.cafe24.mammoth.oauth2.api.operation.StoreOperations;
-import com.cafe24.mammoth.oauth2.api.support.Cafe24ApiHeaderBearerOAuth2RequestInterceptor;
+import com.cafe24.mammoth.oauth2.api.support.Cafe24APIHeaderBearerOAuth2RequestInterceptor;
 import com.cafe24.mammoth.oauth2.api.support.URIBuilder;
 
 /**
@@ -44,7 +44,7 @@ public class StoreTemplate implements StoreOperations{
 	public Store getStoreInfo() {
 		
 		usingApiRestTemplate = new RestTemplate(new SimpleClientHttpRequestFactory());
-		usingApiRestTemplate.setInterceptors(Arrays.asList(new ClientHttpRequestInterceptor[]{new Cafe24ApiHeaderBearerOAuth2RequestInterceptor(accessToken)}));
+		usingApiRestTemplate.setInterceptors(Arrays.asList(new ClientHttpRequestInterceptor[]{new Cafe24APIHeaderBearerOAuth2RequestInterceptor(accessToken)}));
 		
 		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
 		parameters.add("shop_no", "1");

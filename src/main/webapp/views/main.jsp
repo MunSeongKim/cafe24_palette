@@ -12,18 +12,19 @@
 <meta name="_csrf_header" content="${_csrf.headerName}" />
 
 <!-- jQuery library -->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="${pageContext.servletContext.contextPath }/static/jquery/1.11.1/jquery.min.js"></script>
+<script src="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.min.js"></script>
 
 <link rel="stylesheet"
-	href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	href="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.theme.min.css">
 <!-- Latest compiled JavaScript -->
 <script
-	src="${pageContext.servletContext.contextPath }/assets/js/bootstrap.min.js"></script>
+	src="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath }/assets/css/bootstrap.min.css">
-
+	href="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/css/bootstrap.min.css">
+<script
+	src="${pageContext.servletContext.contextPath }/static/mustachejs/2.2.1/bootstrap.min.js"></script>
 
 <style>
 * {

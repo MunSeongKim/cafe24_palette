@@ -33,9 +33,15 @@ public class Func {
 
 	@Column(nullable = false, length = 50)
 	private String name;
+	
+	@Column(nullable = false, length = 50)
+	private String nameEng;
 
 	@Column(nullable = false, length = 255)
-	private String filepath;
+	private String filePath;
+	
+	@Column(nullable = true, length = 255)
+	private String imgPath;
 
 	@Column(nullable = true, length = 255)
 	private String desciption;
@@ -54,8 +60,9 @@ public class Func {
 
 	@Override
 	public String toString() {
-		return "Func [funcId=" + funcId + ", name=" + name + ", filepath=" + filepath + ", desciption=" + desciption
-				+ ", updatedDate=" + updatedDate + ", createdDate=" + createdDate + "]";
+		return "Func [funcId=" + funcId + ", name=" + name + ", nameEng=" + nameEng + ", filePath=" + filePath
+				+ ", imgPath=" + imgPath + ", desciption=" + desciption + ", updatedDate=" + updatedDate
+				+ ", createdDate=" + createdDate + "]";
 	}
 
 }
