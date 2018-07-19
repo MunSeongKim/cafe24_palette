@@ -51,4 +51,5 @@ public class ServletInitializer extends SpringBootServletInitializer {
 		
 		return factory;
 	}
+	
 }

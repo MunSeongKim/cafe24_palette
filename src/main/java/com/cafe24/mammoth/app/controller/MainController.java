@@ -19,7 +19,7 @@ import com.cafe24.mammoth.app.service.ScriptService;
 // -> @Controller + @ResponseBody
 @Controller // : view(화면) return
 @RequestMapping(value = "/")
-@SessionAttributes({ "mallId" })
+/*@SessionAttributes({ "mallId" })*/
 public class MainController {
 
 	@Autowired
@@ -28,11 +28,11 @@ public class MainController {
 	ScriptService scriptService;
 
 	@GetMapping(value = { "", "/" })
-	public String main(Model model, @ModelAttribute("mallId") String mallId) {
+	public String main(Model model/*, @ModelAttribute("mallId") String mallId*/) {
 
 		List<Panel> list = panelService.getPanelList();
 
-		model.addAttribute("mallId", mallId);
+		//model.addAttribute("mallId", mallId);
 		model.addAttribute("list", list);
 		return "main";
 	}
