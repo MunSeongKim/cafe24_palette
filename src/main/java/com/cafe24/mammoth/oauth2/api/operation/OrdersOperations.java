@@ -8,7 +8,7 @@ import com.cafe24.mammoth.oauth2.api.Orders;
 
 public interface OrdersOperations {
 	List<Orders> getList(MultiValueMap<String, String> params);
-	int count(MultiValueMap<String, String> params);
+	Integer count(MultiValueMap<String, String> params);
 	
 	
 }

@@ -12,7 +12,7 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import com.cafe24.mammoth.oauth2.api.support.Cafe24ApiHeaderBearerOAuth2RequestInterceptor;
+import com.cafe24.mammoth.oauth2.api.support.Cafe24APIHeaderBearerOAuth2RequestInterceptor;
 
 @Component
 public class Cafe24Template {
@@ -70,11 +70,27 @@ public class Cafe24Template {
 	 * @since 2018-07-09
 	 */
 	private void initallize() {
-		logger.info("Cafe24Template's initallize() method is called.");
+		//logger.info("Cafe24Template's initallize() method is called.");
 		usingApiRestTemplate = new RestTemplate(new SimpleClientHttpRequestFactory());
 		List<ClientHttpRequestInterceptor> interceptors = new ArrayList<ClientHttpRequestInterceptor>();
-		interceptors.add(new Cafe24ApiHeaderBearerOAuth2RequestInterceptor(accessToken));
+		interceptors.add(new Cafe24APIHeaderBearerOAuth2RequestInterceptor(accessToken));
 		usingApiRestTemplate.setInterceptors(interceptors);
+	}
+
+	public String getMallId() {
+		return mallId;
+	}
+
+	public void setMallId(String mallId) {
+		this.mallId = mallId;
+	}
+
+	public String getAccessToken() {
+		return accessToken;
+	}
+
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
 	}
 
 }

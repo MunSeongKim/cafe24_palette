@@ -1,5 +1,7 @@
 package com.cafe24.mammoth.configure;
 
+import java.util.Arrays;
+
 import javax.servlet.Filter;
 import javax.sql.DataSource;
 
@@ -19,7 +21,9 @@ import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticationProcessingFilter;
 import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
-import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
+import org.springframework.security.oauth2.client.token.AccessTokenProviderChain;
+import org.springframework.security.oauth2.client.token.JdbcClientTokenServices;
+import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeAccessTokenProvider;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
@@ -28,8 +32,11 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.cafe24.mammoth.oauth2.Cafe24AuthenticationSuccessHandler;
+import com.cafe24.mammoth.oauth2.Cafe24AuthorizationCodeResourceDetails;
 import com.cafe24.mammoth.oauth2.Cafe24OAuth2ClientAuthenticationProcessingFilter;
+import com.cafe24.mammoth.oauth2.support.Cafe24AuthenticationSuccessHandler;
+import com.cafe24.mammoth.oauth2.support.Cafe24ClientTokenServices;
+import com.cafe24.mammoth.oauth2.support.Cafe24OAuth2AccessTokenMessageConverter;
 
 /**
  * Spring Security 설정 테스트<br>
@@ -39,6 +46,7 @@ import com.cafe24.mammoth.oauth2.Cafe24OAuth2ClientAuthenticationProcessingFilte
  * <b>Update:</b><br>
  * - AuthService 의존성 주입 부분을 SuccessHandler로 이전, SuccessHandler 생성자 변경 18-07-09, MoonStar<br> 
  * - CORS 적용: 자바스크립트 요청에 대해 Cross domain 문제 발생 해결 적용 18-07-11, MoonStar</br>
+ * - Resource 경로 제외: static resource에 대한 경로 제외 설정 18-07-16, MoonStar
  * @since 2018. 06. 26
  * @author MS Kim
  *
@@ -89,8 +97,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 		http.headers().frameOptions().disable();
 		// BasicAuthenticationFilter 이전에 cafe24Filter를 수행하도록 지정
 		// /oauth2 경로는 필터를 통해 인증받도록 설정, 그 외 경로는 접속 허용
-		http.authorizeRequests().requestMatchers(CorsUtils::isPreFlightRequest)
-		.permitAll().antMatchers("/oauth2").permitAll()
+		http.authorizeRequests().requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+		.antMatchers("/oauth2").permitAll()
 		.and().addFilterBefore(cafe24Filter(), BasicAuthenticationFilter.class);
 	}
 
@@ -104,7 +112,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/assets/**");
+		web.ignoring().antMatchers("/assets/**", "/webjars/**", "/resources/**", "/static/**");
 	}
 
 	/**
@@ -119,14 +127,45 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	private Filter cafe24Filter() {
 		OAuth2ClientAuthenticationProcessingFilter cafe24Filter = new Cafe24OAuth2ClientAuthenticationProcessingFilter(
 				"/oauth2", cafe24(), cafe24Resource());
-		OAuth2RestTemplate cafe24Template = new OAuth2RestTemplate(cafe24(), oauth2ClientContext);
+		
+		// MessageConverter 등록, Custom AccessToken 객체로 Converting
+		AuthorizationCodeAccessTokenProvider accessTokenProvider = new AuthorizationCodeAccessTokenProvider();
+		accessTokenProvider.setMessageConverters(Arrays.asList(new Cafe24OAuth2AccessTokenMessageConverter()));
+		
+		// ClientTokenServices 등록, AccessToken, Authentication를 DB에 저장, 추출
+		AccessTokenProviderChain provider = new AccessTokenProviderChain(Arrays.asList(accessTokenProvider));
+		provider.setClientTokenServices(cafe24ClientTokenServices());
+		// TokenProvider 등록, 위에서 생성한 TokenProvider 등록한 OAuth2RestTemplate 빈
+		OAuth2RestTemplate cafe24Template = oauth2RestTemplate();
+		cafe24Template.setAccessTokenProvider(provider);
+		// 필터에 OAuth2RestTemplate 빈 등록
 		cafe24Filter.setRestTemplate(cafe24Template);
-		// 성공 후 동작 할 handler 등록.
-		cafe24Filter.setAuthenticationSuccessHandler(Cafe24FilterSuccessHandler());
+		// 성공 후 동작 할 handler 등록
+		cafe24Filter.setAuthenticationSuccessHandler(cafe24FilterSuccessHandler());
 
 		return cafe24Filter;
 	}
-
+	
+	/**
+	 * AccessToken 발급을 위한 통신 client 역할을 하는 OAuth2RestTemplate 객체를 빈에 등록
+	 * @return {@link OAuth2RestTemplate}
+	 */
+	@Bean
+	public OAuth2RestTemplate oauth2RestTemplate() {
+		OAuth2RestTemplate oauth2RestTemplate = new OAuth2RestTemplate(cafe24(), oauth2ClientContext);
+		return oauth2RestTemplate;
+	}
+	
+	
+	/**
+	 * AccessToken의 영속화 관리를 위한 서비스 빈 설정
+	 * @return {@link JdbcClientTokenServices}
+	 */
+	@Bean
+	public Cafe24ClientTokenServices cafe24ClientTokenServices() {
+		return new Cafe24ClientTokenServices(dataSource);
+	}
+	
 	/**
 	 * OAuth2 인증 성공 후 실행 될 핸들러 생성, 사용자 정보 저장 수행<br>
 	 * <br>
@@ -138,7 +177,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	 * @return {@link AuthenticationSuccessHandler}
 	 */
 	@Bean
-	public AuthenticationSuccessHandler Cafe24FilterSuccessHandler() {
+	public AuthenticationSuccessHandler cafe24FilterSuccessHandler() {
 		return new Cafe24AuthenticationSuccessHandler(oauth2ClientContext);
 	}
 
@@ -151,8 +190,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	 */
 	@Bean
 	@ConfigurationProperties("cafe24.client")
-	AuthorizationCodeResourceDetails cafe24() {
-		return new AuthorizationCodeResourceDetails();
+	Cafe24AuthorizationCodeResourceDetails cafe24() {
+		return new Cafe24AuthorizationCodeResourceDetails();
 	}
 
 	/**
@@ -191,7 +230,6 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		
 		configuration.addAllowedOrigin("*");
 		configuration.addAllowedMethod(HttpMethod.GET);
 		configuration.addAllowedHeader("*");

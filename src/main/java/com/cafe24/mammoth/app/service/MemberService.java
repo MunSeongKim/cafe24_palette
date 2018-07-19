@@ -7,9 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cafe24.mammoth.app.domain.Auth;
 import com.cafe24.mammoth.app.domain.Member;
-import com.cafe24.mammoth.app.repository.AuthRepository;
 import com.cafe24.mammoth.app.repository.MemberRepository;
 
 @Service
@@ -19,24 +17,32 @@ public class MemberService {
 	@Autowired
 	private MemberRepository memberRepository;
 	
-	@Autowired
-	private AuthRepository authRepository;
-	
-	public boolean save(String mallUrl, String mallId) {
+	public boolean save(String baseDomain, String primaryDomain, String mallUrl, String mallId) {
 		Optional<Member> savedMember = memberRepository.findById(mallId);
-		Member member;
-		
-		if ( !savedMember.isPresent() ) {
-			member = new Member();
-		} else {
+		Member member = null;
+		if ( savedMember.isPresent() ) {
 			member = savedMember.get();
+			member.setPanelUsed(false);
+			member.setBaseDomain(baseDomain);
+			member.setPrimaryDomain(primaryDomain);
+			member.setMallUrl(mallUrl);
 		}
 		
-		Auth auth = authRepository.findOne(mallId);
-		member.setPanelUsed(false);
-		member.setMallUrl(mallUrl);
-		member.setAuth(auth);
-		
-		return memberRepository.save(member) == null ? false : true;
+		return member != null ? true : false;    
+	}
+	
+	public boolean save(String mallId) {
+		Member member = new Member();
+		member.setMallId(mallId);
+		System.out.println("memberService.save(): " + member);
+		return memberRepository.save(member) != null ? true : false;
+	}
+
+	public Member getOneByMallUrl(String mallUrl) {
+		return memberRepository.findByMallUrl(mallUrl);
+	}
+
+	public boolean isExist(String mallId) {
+		return memberRepository.existsById(mallId);
 	}	
 }

@@ -13,11 +13,11 @@ import org.springframework.http.client.ClientHttpResponse;
  * @author qyuee
  *
  */
-public class Cafe24ApiHeaderBearerOAuth2RequestInterceptor implements ClientHttpRequestInterceptor{
+public class Cafe24APIHeaderBearerOAuth2RequestInterceptor implements ClientHttpRequestInterceptor{
 		
 		private String accessToken;
 		
-		public Cafe24ApiHeaderBearerOAuth2RequestInterceptor(String accessToken) {
+		public Cafe24APIHeaderBearerOAuth2RequestInterceptor(String accessToken) {
 			this.accessToken = accessToken;
 		}
 		
@@ -25,7 +25,7 @@ public class Cafe24ApiHeaderBearerOAuth2RequestInterceptor implements ClientHttp
 		public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution)
 				throws IOException {
 			
-			System.out.println(" >>> restTemplate 수행 전 동작하는 인터셉터!!");
+			//System.out.println(" >>> restTemplate 수행 전 동작하는 인터셉터!!");
 			
 			HttpRequest protectedResourceRequest = new HttpRequestDecorator(request);
 			protectedResourceRequest.getHeaders().set("Authorization", "Bearer " + accessToken);

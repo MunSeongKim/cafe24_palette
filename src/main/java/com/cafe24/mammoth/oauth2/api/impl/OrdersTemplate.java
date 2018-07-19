@@ -39,17 +39,14 @@ public class OrdersTemplate implements OrdersOperations {
 	@Override
 	public List<Orders> getList(MultiValueMap<String, String> params){
 		apiUrl = URIBuilder.buildApiUri(baseUrl, params);
-		System.out.println(apiUrl);
 		String jsonResult = usingApiRestTemplate.getForObject(apiUrl, String.class);
-		System.out.println("------ response string");
-		System.out.println(jsonResult);
 		Orders orders = Cafe24ApiJsonParser.parser(jsonResult, Orders.class);
 		return orders.getList();
 	}
 
 	@Override
-	public int count(MultiValueMap<String, String> params) {
-		apiUrl = URIBuilder.buildApiUri(baseUrl, params);
+	public Integer count(MultiValueMap<String, String> params) {
+		apiUrl = URIBuilder.buildApiUri(baseUrl, params, "count");
 		String jsonResult = usingApiRestTemplate.getForObject(apiUrl, String.class);
 		Orders orders = Cafe24ApiJsonParser.parser(jsonResult, Orders.class);
 		return orders.getCount();

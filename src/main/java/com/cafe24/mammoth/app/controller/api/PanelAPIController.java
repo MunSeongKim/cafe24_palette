@@ -16,7 +16,7 @@ import com.cafe24.mammoth.app.service.ScriptService;
 import com.cafe24.mammoth.app.support.JSONResult;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/app")
 public class PanelAPIController {
 	@Autowired
 	ScriptService sservice;

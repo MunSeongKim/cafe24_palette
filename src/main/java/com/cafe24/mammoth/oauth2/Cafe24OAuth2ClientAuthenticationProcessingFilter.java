@@ -2,6 +2,7 @@ package com.cafe24.mammoth.oauth2;
 
 import java.io.IOException;
 
+import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +16,11 @@ import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticationProcessingFilter;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
+import com.cafe24.mammoth.app.service.MemberService;
+import com.cafe24.mammoth.oauth2.support.Cafe24APIURLGenerater;
 
 /**
  * OAuth2 토근 발급 및 사용자 인증 전 파라마티 처리를 위한 클래스<br>
@@ -29,16 +35,11 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
  *
  */
 public class Cafe24OAuth2ClientAuthenticationProcessingFilter extends OAuth2ClientAuthenticationProcessingFilter {
+	
 	// Access Token 발급을 위한 속성 정보, User 정보 요청을 위한 리소스 속성 정보를 저장하는 객체
 	private AuthorizationCodeResourceDetails details;
 	private ResourceServerProperties resource;
-
-	// URL을 생성하기 위한 URL prefix, suffix 리터럴
-	private static final String PREFIX_URL = "https://";
-	private static final String CLIENT_CODE_URL = "cafe24api.com/api/v2/oauth/authorize";
-	private static final String ACCESS_TOKEN_URL = "cafe24api.com/api/v2/oauth/token";
-	private static final String STORE_API_URL = "cafe24api.com/api/v2/admin/store";
-
+	
 	/**
 	 * Filter 실행 후 details와 resource를 Bean으로 유지하기 위한 생성자<br>
 	 * <br>
@@ -61,6 +62,7 @@ public class Cafe24OAuth2ClientAuthenticationProcessingFilter extends OAuth2Clie
 	 * <br>
 	 * 접속한 사용자의 mall_id와 토큰을 발급했던 mall_id가 다를 경우 세션 초기화를 통해 토큰 재발급<br>
 	 * <br>
+	 * 
 	 * @since <i>2018. 07. 02.</i>
 	 * @author <i>MS Kim</i>
 	 */
@@ -68,32 +70,55 @@ public class Cafe24OAuth2ClientAuthenticationProcessingFilter extends OAuth2Clie
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException, IOException, ServletException {
 		// mall_id 추출 후 URL 생성
+		HttpSession session = request.getSession();
 		String mallId = request.getParameter("mall_id");
+		if( mallId != null ) {
+			session.setAttribute("mallId", mallId);
+		} else {
+			mallId = (String) session.getAttribute("mallId");
+		}
+		
 		if (mallId != null) {
-			String clientCodeUrlByUser = PREFIX_URL + mallId + "." + CLIENT_CODE_URL;
-			String accessTokenUrlByUser = PREFIX_URL + mallId + "." + ACCESS_TOKEN_URL;
-			String storeAPIByUser = PREFIX_URL + mallId + "." + STORE_API_URL;
-
-			details.setUserAuthorizationUri(clientCodeUrlByUser);
-			details.setAccessTokenUri(accessTokenUrlByUser);
-			resource.setUserInfoUri(storeAPIByUser);
+			Cafe24APIURLGenerater.generateForAccessTokenUrl(details, mallId);
+			Cafe24APIURLGenerater.generateForResourceUrl(resource, mallId);
+			((Cafe24AuthorizationCodeResourceDetails) details).setMallId(mallId);
+			
 			setTokenServices(new UserInfoTokenServices(resource.getUserInfoUri(), details.getClientId()));
 		}
+		System.out.println("================ Cafe24OAuth2ClientAuthenticationProcessingFilter ==========");
 
+		
+		// Session에서 WebApplicationContext를 가져온 후 MemberService 빈을 강제로 가져옴
+		WebApplicationContext wContext = WebApplicationContextUtils
+				.getWebApplicationContext(session.getServletContext());
+		MemberService memberService = wContext.getBean("memberService", MemberService.class);
+		if (!memberService.isExist(mallId)) {
+			memberService.save(mallId);
+		}
+		
 		// 접속한 사용자의 mall_id와 토큰을 발급한 mall_id가 다르면 세션 초기화 후 토큰 재발급
-		HttpSession session = request.getSession();
-		OAuth2ClientContext clientContext = (OAuth2ClientContext) session.getAttribute("scopedTarget.oauth2ClientContext");
+		OAuth2ClientContext clientContext = (OAuth2ClientContext) session
+				.getAttribute("scopedTarget.oauth2ClientContext");
 		if (clientContext != null) {
 			OAuth2AccessToken token = clientContext.getAccessToken();
 			if (token != null) {
 				String tokenMallId = (String) token.getAdditionalInformation().get("mall_id");
-				if(mallId != tokenMallId) {
+				if (mallId != tokenMallId) {
 					session.invalidate();
 				}
 			}
 		}
-		
+
 		return super.attemptAuthentication(request, response);
 	}
 
+	@Override
+	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
+			Authentication authResult) throws IOException, ServletException {
+		System.out.println("================= Filter: successfualAuthentication ================");
+		super.successfulAuthentication(request, response, chain, authResult);
+	}
+
+	
+	
 }
