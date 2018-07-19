@@ -30,7 +30,7 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-</head> 
+</head>
 <body>
 	<jsp:include page="include/${center }.jsp" flush="false" />
 </body>
