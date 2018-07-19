@@ -104,8 +104,8 @@ i{
 
 /* 기능 상세 설명 div */
 .func-detail-text-div{
-	padding: 15px;
 	padding-top: 0;
+	padding-bottom: 10px;
 }
 
 /* 기능 이미지 div */
@@ -118,7 +118,7 @@ i{
 }
 
 .func-detail-image{
-	max-height: 500px;
+	max-height: 520px;
 }
 
 /* sort li element */

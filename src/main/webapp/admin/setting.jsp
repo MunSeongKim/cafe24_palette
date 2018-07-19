@@ -28,7 +28,7 @@
 
 /* width */
 .theme-list-div::-webkit-scrollbar {
-    width: 4px; 
+    width: 4px;
 }
 
 /* Track */
@@ -44,7 +44,9 @@
 } 
 
 body{
-	background: rgb(220, 220, 220);
+	padding-left : 30px;
+	padding-right : 30px;
+	background: rgb(255, 255, 255);
 }
 
 /* scrollbar 없애기 단, scroll 기능 가능 */
@@ -67,8 +69,8 @@ body::-webkit-scrollbar{
 	display: none;
 }
 
-#panel-tabs{ 
-	background-color: #fff; 
+#panel-tabs{
+	background-color: #ededed; 
 	
 }
 
@@ -95,13 +97,41 @@ body::-webkit-scrollbar{
 	height : 10px; 
 }
 
-.inner {
-	width: 100%;  
-	height: 600px;
-	padding: 15px;
-	padding-bottom : 0px;
-	padding-top: 10px; 
-} 
+/* width가 570이하 일 때 css */
+@media(max-width:570px){
+	.inner {
+		width: 100%;  
+		height: auto;
+		padding: 15px;
+		padding-bottom : 0px;
+		padding-top: 10px; 
+	}
+	
+	.nav-pagination{
+		position: absolute;
+		top : 29px;
+		right: 0;
+	}
+	
+	.nav-pagination ul{
+		width: 100%;
+	}
+	 
+	.custom-pagination-ul{
+		width: 100%;
+	}
+}
+
+/* width가 최소 570 일 때  (570보다 클 때)*/
+@media(min-width:570px){
+	.inner {
+		width: 100%; 
+		height: 600px; 
+		padding: 15px;
+		padding-bottom : 0px;
+		padding-top: 10px; 
+	}
+}
 
 li{
 	border-color: #c5c5c5;
@@ -146,39 +176,18 @@ li{
 
 .nav-tabs>li.active>a{
 	border: 0px;
-	background-color: #4285f4;
+	background-color: #58C9B9;
 	border-radius: 0px;
 }
 
-.nav-tabs>li>.active>a:focus{
-	background-color: #4285f4;
-}
-
-.nav-tabs>li.active>a:hover{
-	border: none; 
-	background-color: #4285f4; 
-	font-weight: normal;
-	font-variant : normal;
-	font-size : 1em;
-	font-stretch: normal;
-	font-weight: normal;
-}
-
-
-.nav-tabs>li.active>a:active{   
-	border: 0px; 
-	/* background-color: #4285f4; */
-}
-
-.nav-tabs>li.active>a:visited{
-	border: 0px;
-	/* background-color: #4285f4; */ 
-}
-
+/* a태그 방문 전 링크 상태 */
 .nav-tabs>li>a:link{
-	border-radius: 0px; 
+	border-radius: 0px;
 	border: 0px;
-	margin : 0px; 
+	margin : 0px;
+	font-weight: 500;
+	padding-top: 3px;
+	padding-bottom: 3px;
 }
  
 .nav-tabs>li{ 
@@ -199,10 +208,10 @@ li{
 }
 
 .chevron{
-	border: 20px solid transparent;
+	border: 15px solid transparent;
     border-left: 17px solid #c5c5c5;
     border-right: 0;  
-    content: "";
+    content: ""; 
     display: block;  
     position: absolute; 
     right: -18px; 
@@ -211,18 +220,18 @@ li{
 }
 
 .chevron:before {
-	border: 20px solid transparent;
+	border: 15px solid transparent;
 	border-left: 17px solid #ededed;
 	border-right:0; 
 	right: 1px; 
-	top: -20px;
+	top: -15px;
 	display:block;
 	position:absolute; 
 	content: ""; 
 }
 
 .chevron.complete{
-	border: 20px solid transparent;
+	border: 15px solid transparent;
     border-left: 17px solid #c5c5c5;
     border-right: 0;  
     content: "";
@@ -231,35 +240,39 @@ li{
     right: -18px; 
     top: 0px;   
     z-index : 1; 
-}
+} 
 
 .chevron.complete:before{
-	border: 20px solid transparent; 
-	border-left: 17px solid #4285f4;
+	border: 15px solid transparent; 
+	border-left: 17px solid #58C9B9;  /* 현재 탭의 삼각형 색 */
 	border-right:0; 
 	right: 1px; 
-	top: -20px;
+	top: -15px; 
 	display:block;
 	position:absolute;
 	content: "";
 }
 
 .nav-pagination{
-	padding-bottom: 15px; 
+	padding-bottom: 15px;
 }
 
 .nav-pagination button{
 	padding: 0;
-	margin: 0; 
+	margin: 0;
 }
 
 .nav-pagination i{
 	line-height: 0; 
 }
 
-.nav-pagination ul{
+.nav-pagination ul li{
+	border-radius: .25rem; 
+}
+
+.custom-pagination-ul{
 	width: 0%;
-	margin: 0px auto;
+	margin: 0px auto; 
 }
 
 .palette-modal-header{
@@ -347,8 +360,8 @@ li{
 		</div>
 		 
 		<!-- Pager START -->
-		<div class="fouc nav-pagination"> 
-			<ul class="pagination">
+		<div class="fouc nav-pagination">
+			<ul class="pagination custom-pagination-ul">
 				<li><button type="button" class="btn btn-danger" id="pager-previous"><i class="fas fa-chevron-left"></i>Previous</button></li>
 				<li><button type="button" class="btn btn-primary" id="pager-next">Next<i class="fas fa-chevron-right"></i></button></li> 
 				<li><button type="button" class="btn btn-success" id="pager-save"><i class="fas fa-plus"></i>Save</button></li>
@@ -366,7 +379,7 @@ li{
 					</button>
 				</div>
 				<div class="modal-body">
-					<p>기능을 1개 이상 선택하세요.</p>
+					<p></p>
 				</div>
 				<div class="palette-modal-footer modal-footer">
 					<button type="button" class="palette-modal-btn btn btn-secondary bg-danger" data-dismiss="modal">Close</button>
@@ -391,7 +404,14 @@ if(hash=='' || hash==null){
 $('#myTab a[href="'+hash+'"]').tab('show');
 
 $('#myTab a').on('shown.bs.tab', function(event){
-	$(".fouc").show();
+	$(".toggle-on").css({
+		"padding-left" : "12px",
+		"font-weight" : "600"
+	})
+	$(".toggle-off").css({
+		"padding-right" : "12px"
+	})
+	$(".fouc").show(); 
 });
 
 //페이지 초기화
@@ -420,7 +440,7 @@ function pageRender(currentIdx, tabsMaxSize, hash){
 		$(this).children("span").addClass("chevron complete");
 		
 		$(this).css({
-			"background-color" : "#4285f4"
+			"background-color" : "#58C9B9" /* 현재 탭의 li 태그 백 그라운드 색상 */
 		});
 	});
 	
@@ -429,6 +449,7 @@ function pageRender(currentIdx, tabsMaxSize, hash){
 		$("#pager-previous").hide();
 	}else if(currentLocation.is(':last-child')){
 		$("#pager-next").hide();
+		$("#pager-previous").show();
 	}else{
 		$("#pager-save").hide();
 	}
@@ -453,6 +474,7 @@ $(document).ready(function(){
 	// 이미지를 포함한 모든 요소가 로드가 되고 실행.
 	/* alert("window.ready"); */
 	console.log('1')
+	console.log("tabsMaxSize"+tabsMaxSize);
 	
 	// Next 버튼 클릭 시.
 	$("#pager-next").click(function(event){
@@ -480,8 +502,8 @@ $(document).ready(function(){
 		currentTag.attr("aria-selected", "false");
 		nextTag.attr("aria-selected", "true");
 		
-		// 다음 태그 배경 색, 글자 색 변경  
-		nextTag.parent().css("background-color", "#4285f4");
+		// 다음 태그 배경 색, 글자 색 변경 
+		nextTag.parent().css("background-color", "#58C9B9");
 		nextTag.css("color", "#fff"); 
 		nextTag.siblings("span").addClass("chevron complete"); 
 		
@@ -493,11 +515,14 @@ $(document).ready(function(){
 		$("#"+currentPage).removeClass("show active");
 		$("#"+nextPage).addClass("show active");
 		
+		console.log("currentIdx :" +currentIdx);
+		
 		if(currentIdx != tabsMaxSize-1) {
 			$("#pager-previous").show();
 			$("#pager-next").show();
 			$("#pager-save").hide();
-		} else { 
+		} else {
+			$("#pager-previous").show();
 			$("#pager-next").hide();
 			$("#pager-save").show();
 		}
@@ -505,6 +530,9 @@ $(document).ready(function(){
 		// 프로그래스 바 변경.
 		progressBarChange(currentIdx, tabsMaxSize);
 		
+		// 다음 페이지 hash값 변경
+		var id = $(nextTag).attr("href").substr(1);
+		window.location.hash = id; 
 	});
 	
 	// Previous 버튼 클릭 시
@@ -539,9 +567,6 @@ $(document).ready(function(){
 		$("#"+currentPage).removeClass("show active");
 		$("#"+previousPage).addClass("show active");
 		
-		// 프로그래스 바 변경. 
-		progressBarChange(currentIdx, tabsMaxSize);
-		
 		if(currentIdx == 0) {
 			$("#pager-previous").hide();
 			$("#pager-next").show();
@@ -550,6 +575,13 @@ $(document).ready(function(){
 			$("#pager-next").show();
 			$("#pager-save").hide();
 		}
+		
+		// 프로그래스 바 변경. 
+		progressBarChange(currentIdx, tabsMaxSize);
+		
+		// 다음 페이지 hash값 변경
+		var id = $(previousTag).attr("href").substr(1);
+		window.location.hash = id; 
 	});
 });
 
@@ -572,10 +604,6 @@ function findCurrentTag(flag){
 			}
 		}
 	}
-	 
-	var id = $(otherTag).attr("href").substr(1);
-	window.location.hash = id;
-	console.log(id);
 	
 	return {
 		currentTag : currentTag,
@@ -610,7 +638,9 @@ function progressBarChange(currentIdx, tabsMaxSize){
 
 /* 미리보기 임시 데이터 쿠키저장 */
 function funcNextProcess(currentPage){
-	if(currentPage == "func"){
+	var data = [];
+	
+	if(currentPage == "func"){ /* 기능 결정 페이지 next 할 때. */
 		var $li = $("#sortable").children("li");
 		var count = 0;
 		$li.each(function(){
@@ -620,25 +650,47 @@ function funcNextProcess(currentPage){
 		});
 		
 		if(count==$li.length){
+			$(".modal-body").text("기능을 1개 이상 선택하세요.");
 			$("#confirmModal").modal('show');
 			return false;
-		}else{
-			var data = [];
-			$("#sortable").children("li").each(function(index){
-				if($(this).hasClass("ui-state-disabled") == false){
-					id = $(this).data("funcid");
-					name = $(this).data("funcname");
-					order = $(this).attr("funcorder");
-					func = {"funcid" : id, "funcname" : name, "funcorder" : order};
-					data.push(func);
-				}
-			});
 		}
+		
+		$("#sortable").children("li").each(function(index){
+			if($(this).hasClass("ui-state-disabled") == false){
+				id = $(this).data("funcid");
+				name = $(this).data("funcname");
+				order = $(this).attr("funcorder");
+				func = {"funcid" : id, "funcname" : name, "funcorder" : order};
+				data.push(func);
+			}
+		});
+		
+		/* 쿠키 저장 */
+		Cookies.set(currentPage, data, {path : ''});
+	}else if(currentPage=="theme"){  /* 테마 결정 페이지에서 next 할 때 */
+		var seletedTheme = false;
+		
+		$(".card").each(function(){
+			if($(this).hasClass("seleted")){
+				seletedTheme = $(this);
+			}
+		});
+		
+		if(seletedTheme == false){
+			$(".modal-body").text("테마를 선택하세요.");
+			$("#confirmModal").modal('show');
+			return false;
+		}
+		
+		var themeNo = $(seletedTheme).data("themeno");
+		var themeTitle = $(seletedTheme).data("themetitle");
+		var theme = {"themeNo" : themeNo, "themeTitle" : themeTitle}
+		data.push(theme);
+		
+		/* 쿠키 저장 */
+		Cookies.set(currentPage, data, {path : ''});
 	}
-	/* 쿠키 저장 */
-	Cookies.set(currentPage, data, {path : ''});
 	
-	console.log(Cookies.get(currentPage)); 
 } 
 </script>
 </html>
