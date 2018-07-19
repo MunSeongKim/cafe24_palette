@@ -1,4 +1,7 @@
 <script src="/mammoth/function/orderlist/orderlist_popuplayer.js"></script>
+<style>
+.hide { display:none; }
+</style>
 <!-- 구매 목록 팝업 레이어  -->
 <div class="popupLayer">
 	<div id="popup-header">
@@ -21,38 +24,43 @@
 	<div id="popup-orderlist">
 		<div class="container-layout">
 			<div class="container">
-				<div class="row">
-					구매한 상품이 없습니다.
-				</div>
+				<div id="mustache-result"></div>
 				<!-- 특정 주문일에 주문한 상품 리스트 -->
-				<!-- <c:forEach begin="1" end="3" step="1">
+				<div id="mustache-template" type="x-tmpl-mustache" class="hide">
+				{{^datas}}
+					<div class="row">
+					구매한 상품이 없습니다.
+					</div>
+				{{/datas}}
+				{{#datas}}
 					<div class="row">
 						<div class="col-md-12">
 							<div class="card border-dark mb-3">
-								<div class="card-header">주문일자</div>
+								<div class="card-header">{{orderDate }}</div>
+								{{#items}}
 								<div class="card-body">
-									상품 이미지/사이즈
-									<c:forEach begin="1" end="3" step="1">
 										<div class="row order-product-info">
 											<div class="col-md-6">
-												<img class="img-fluid d-block"
-													src="/assets/image/imvely.jpg">
+												<!-- <img class="img-fluid d-block"
+														src={{products.smallImage}}> -->
+											
 											</div>
 											<div class="col-md-6">
-												<p>상품1</p>
-												<p>가격 : 40000</p>
-												<p>색상 : red</p>
+												<p>{{productName}}</p>
+												<p>가격 : {{productPrice}}</p>
+												<p>색상 : {{optionValue}}</p>
 												<p>사이즈 : S</p>
 												<button>사이즈 상세보기</button>
 											</div>
 										</div>
-									</c:forEach>
 								</div>
+								{{/items}}
 							</div>
 						</div>
 					</div>
-				</c:forEach> -->
-
+				{{/datas}}	
+				</div>
+					
 			</div>
 		</div>
 	</div>
