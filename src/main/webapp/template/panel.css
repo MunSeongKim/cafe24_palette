@@ -8,29 +8,11 @@
 	z-index: 1;
 	top: 0;
 	right: 0;
-	/*background-color: rgba(0, 0, 0, 0.4); 원래색*/
-	/* 180713 hwi 회색 잘 안보여서 일단 이걸로 변경해둠. (bg and border)*/
-	background-color: rgba(255, 255, 255, 0.4);
-	border: 1px solid black;
 	overflow-x: hidden;
 	transition: 0.5s;
 	padding-top: 3.750em;
 }
 
-/* .panel #panel-close-btn {
-	position: absolute;
-	top: 0;
-	right: 5%;
-	font-size: 2.25em;
-	text-decoration: none;
-	color: #818181;
-}
-.panel #panel-close-btn:hover {
-	text-decoration: none;
-	color: #000;
-	transition: 0.3s;
-	cursor: pointer;	
-} */
 @media screen and (max-height: 28.125em) {
 	.panel {
 		padding-top: 0.938em;
@@ -45,7 +27,7 @@
 }
 
 /* panel button */
-#panel-btn {
+#panel-draggable-btn {
 	/* 180713 hwi top 추가 */
 	top:1em;
 	width: 2.5em;
@@ -64,7 +46,7 @@
 	cursor: pointer;
 }
 
-#panel-btn span {
+#panel-draggable-btn span {
 	display: block;
 	position: absolute;
 	height: 0.5em;
@@ -83,35 +65,36 @@
 	transition: .25s ease-in-out;
 }
 
-#panel-btn span:nth-child(1) {
+#panel-draggable-btn span:nth-child(1) {
 	top: 0px;
 }
 
-#panel-btn span:nth-child(2), #panel-btn span:nth-child(3) {
+#panel-draggable-btn span:nth-child(2), #panel-draggable-btn span:nth-child(3) {
 	top: 0.7em;
 }
 
-#panel-btn span:nth-child(4) {
+#panel-draggable-btn span:nth-child(4) {
 	top: 1.4em;
 }
 
-#panel-btn.open span:nth-child(1), #panel-btn.open span:nth-child(4) {
+#panel-draggable-btn.open span:nth-child(1), #panel-draggable-btn.open span:nth-child(4) {
 	top: 1.125em;
 	width: 0%;
 }
 
-#panel-btn.open span:nth-child(2) {
+#panel-draggable-btn.open span:nth-child(2) {
 	-webkit-transform: rotate(45deg);
 	-moz-transform: rotate(45deg);
 	-o-transform: rotate(45deg);
 	transform: rotate(45deg);
 }
 
-#panel-btn.open span:nth-child(3) {
+#panel-draggable-btn.open span:nth-child(3) {
 	-webkit-transform: rotate(-45deg);
 	-moz-transform: rotate(-45deg);
 	-o-transform: rotate(-45deg);
 	transform: rotate(-45deg);
+	bor
 }
 
 /*

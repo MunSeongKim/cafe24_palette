@@ -31,19 +31,18 @@
 }
 
 /* 복사 input box */
-.form-control.scroll_text_url{
-	display:inline;
+.form-control.scroll_text_url {
+	display: inline;
 	border: 0px;
 	width: 40%;
 	height: 100%;
 	vertical-align: middle;
-	
 }
--->
-/* 복사 버튼 */
+
+--> /* 복사 버튼 */
 .btn-info {
 	font-size: 15px;
-	padding:3px;
+	padding: 3px;
 	width: 65%;
 	height: 100%;
 }
@@ -57,16 +56,16 @@
 
 /* copied popup */
 .scroll_copied_popup {
-	background-color:white;
-	border-radius:15%;
-	z-index:1000;
-	display:none;
-	position:absolute;
+	background-color: white;
+	border-radius: 15%;
+	z-index: 1000;
+	display: none;
+	position: absolute;
 	/*top:-420%;*/
 	/*left:-120%;*/
-	width:70px;
-	height:100%;
-	border:1px solid black;
+	width: 70px;
+	height: 100%;
+	border: 1px solid black;
 }
 
 .scroll_question_div {
@@ -75,16 +74,16 @@
 
 /* .scroll_question_button {
 	width: 26%;*/
-	
-	/* IE11 환경에서 얘가 없어야 정상작동. height: 100%;*/
-	/*vertical-align: text-top;
+
+/* IE11 환경에서 얘가 없어야 정상작동. height: 100%;*/
+/*vertical-align: text-top;
 	background: url(/assets/images/question_mark.png) no-repeat;
 	border: none;
 } */
 
 /* 도움말 태그 */
 .far.fa-question-circle {
-	font-size:25px;
+	font-size: 25px;
 	width: 26%;
 	vertical-align: text-top;
 }
@@ -105,7 +104,7 @@
 
 /*도움말 클릭시 뜨는 팝업 밑에 글*/
 .scroll_question_popup p {
-	font-size:12px;
+	font-size: 12px;
 	color: black;
 }
 
@@ -114,12 +113,12 @@
 	position: absolute;
 	right: 15px;
 	top: 22px;
-	font-size:20px;
+	font-size: 20px;
 }
 
 /* 모달 타이틀 정렬 */
-.modal-title{
-	margin-left:64px;
+.modal-title {
+	margin-left: 64px;
 }
 
 .scroll_pop_layer .scroll_pop_container {
@@ -143,11 +142,11 @@
 .modal.scroll_pop_layer {
 	display: none;
 	position: fixed;
-	bottom:auto;
+	bottom: auto;
 	top: 40%;
 	left: 50%;
 	width: 226px;
-	margin-top:-50px;
+	margin-top: -50px;
 	/*height: auto;*/
 	/*background-color: #fff;
 	border: 5px solid #3571B5;*/
@@ -180,11 +179,12 @@ a.scroll_pop_layerSave {
 
 /* bootstrap ul */
 .list-group {
-	display:block;
+	display: block;
 }
 
 /* keyword popup */
-.scroll_btn_ul [class^='keyword_popup'], .scroll_btn_ul [class*='keyword_popup']{
+.scroll_btn_ul [class^='keyword_popup'], .scroll_btn_ul [class*='keyword_popup']
+	{
 	z-index: 999;
 	position: absolute;
 	width: 120px;
@@ -197,7 +197,6 @@ a.scroll_pop_layerSave {
 	display: none;
 	/*top:-10px;*/
 	transition: opacity 0.3s;
-	
 	padding: 0px;
 	-webkit-border-radius: 7px;
 	-moz-border-radius: 7px;
@@ -206,7 +205,8 @@ a.scroll_pop_layerSave {
 }
 
 /* keyword popup */
-.scroll_btn_ul [class^='keyword_popup']:after, .scroll_btn_ul [class*='keyword_popup']:after{
+.scroll_btn_ul [class^='keyword_popup']:after, .scroll_btn_ul [class*='keyword_popup']:after
+	{
 	content: '';
 	position: absolute;
 	border-style: solid;
@@ -220,7 +220,8 @@ a.scroll_pop_layerSave {
 }
 
 /* keyword popup */
-.scroll_btn_ul [class^='keyword_popup']:before, .scroll_btn_ul [class*='keyword_popup']:before{
+.scroll_btn_ul [class^='keyword_popup']:before, .scroll_btn_ul [class*='keyword_popup']:before
+	{
 	content: '';
 	position: absolute;
 	border-style: solid;
@@ -241,13 +242,13 @@ a.scroll_pop_layerClose:hover {
 
 /* input tpye중 text이면서 disabled인 놈들 */
 input[type="text"]:disabled {
-    background: #FFF;
+	background: #FFF;
 }
 
 /* 키워드 입력 부분*/
 .scroll_pop_input {
-	width:125px;
-	margin-left:30px;
+	width: 125px;
+	margin-left: 30px;
 	-webkit-transition: 0.5s; /* focus 받았을 때 시간을 두기 위함.*/
 	transition: 0.5s;
 	border: none;
@@ -264,8 +265,8 @@ input[type="text"]:disabled {
 .scroll_pop_chk_p {
 	display: none;
 	font-color: red;
-	font-size:12px;
-	padding:10px;
+	font-size: 12px;
+	padding: 10px;
 }
 
 /* 저장 버튼 부분 */
@@ -313,8 +314,8 @@ input[type="text"]:disabled {
 	height: 2.5em;
 	-moz-border-radius: 100%;
 	-webkit-border-radius: 100%;
-	border-radius:100%;
-	padding:0.125em;
+	border-radius: 100%;
+	padding: 0.125em;
 }
 
 .scroll_infiniteCarousel ul a img {
@@ -353,7 +354,7 @@ input[type="text"]:disabled {
 }
 
 .scroll_infiniteCarousel .arrow {
-	font-size:1.563em;
+	font-size: 1.563em;
 	display: block;
 	height: 36px;
 	width: 37px;
@@ -387,12 +388,14 @@ input[type="text"]:disabled {
 	<!-- 첫 줄(링크input, 복사하기 버튼, 도움말, 도움말 팝업) -->
 	<div class="header_part">
 		<!-- link관련 요소들 (input, 복사하기 버튼) -->
-		<input type="text" class="form-control scroll_text_url" id="scroll_text_url" readonly />
+		<input type="text" class="form-control scroll_text_url"
+			id="scroll_text_url" readonly />
 		<div class="scroll_copy_div">
-			<button type="button" class="btn btn-secondary scroll_copy_button" id="scroll_copy_button" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="">
-			  copy
-			</button>
-		
+			<span class="plt-pn-btn-inverse scroll_copy_button"
+				id="scroll_copy_button" data-toggle="tooltip"
+				data-placement="bottom" title="" data-original-title="">
+				copy</span>
+
 			<!-- 복사하기 버튼 -->
 			<!-- <button type="button" class="btn btn-info" id="scroll_copy_button"
 				value="copy">copy
@@ -402,7 +405,7 @@ input[type="text"]:disabled {
 				<p>copied</p>
 			</div> -->
 			<!-- 복사완료 팝업 -->
-			
+
 			<!-- 도움말 버튼 -->
 			<i class="far fa-question-circle scroll_question_button"></i>
 			<!-- <input type="button" class="scroll_question_button" /> -->
@@ -418,28 +421,31 @@ input[type="text"]:disabled {
 			</div> -->
 			<!-- 180711 boot modal로 변경 -->
 			<div class="modal scroll_question_popup" tabindex="-1" role="dialog">
-			  <div class="modal-dialog" role="document">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title">[도움말]</h5>
-				        <div class="scroll_question_popup_close">
-							<i class="far fa-window-close"></i>
-						</div>
-			        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">[도움말]</h5>
+							<div class="scroll_question_popup_close">
+								<i class="far fa-window-close"></i>
+							</div>
+							<!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			          <span aria-hidden="true">&times;</span>
 			        </button> -->
-			      </div>
-			      <div class="modal-body">
-			        <p>1. copy버튼을 눌러서 위치가 담긴<br>페이지의 url을 저장할 수 있습니다.<br>
-					   2. 'r' 키를 누르면 현재 페이지 위치를 저장할 수 있습니다.</p>
-			      </div>
-			     <!-- <div class="modal-footer">
+						</div>
+						<div class="modal-body">
+							<p>
+								1. copy버튼을 눌러서 위치가 담긴<br>페이지의 url을 저장할 수 있습니다.<br> 2.
+								'r' 키를 누르면 현재 페이지 위치를 저장할 수 있습니다.
+							</p>
+						</div>
+						<!-- <div class="modal-footer">
 			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 			        <button type="button" class="btn btn-primary">Save changes</button>
 			      </div>-->
-			    </div>
-			  </div>
-			</div> <!-- end modal -->
+					</div>
+				</div>
+			</div>
+			<!-- end modal -->
 		</div>
 	</div>
 
@@ -457,24 +463,27 @@ input[type="text"]:disabled {
 </div>
 
 <!-- <div class="modal scroll_pop_layer" id="layer1" tabindex="-1" role="dialog"> -->
-<div class="modal scroll_pop_layer" id="layer1" tabindex="-1" role="dialog">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-body">
-	        <p class="ctxt mb20">키워드를 입력해주세요</p>
-			<input type="text" class="scroll_pop_input" />
-			<p class="scroll_pop_chk_p">키워드를 입력하셔야 저장할 수 있습니다.</p>
-			<!-- <div class="btn-r">
+<div class="modal scroll_pop_layer" id="layer1" tabindex="-1"
+	role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-body">
+				<p class="ctxt mb20">키워드를 입력해주세요</p>
+				<input type="text" class="scroll_pop_input" />
+				<p class="scroll_pop_chk_p">키워드를 입력하셔야 저장할 수 있습니다.</p>
+				<!-- <div class="btn-r">
 				<a href="#" class="scroll_pop_layerSave">저장</a> <a href="#"
 					class="scroll_pop_layerClose">닫기</a>
 			</div> -->
-	      </div>
-	     <div class="modal-footer">
-	     	<button type="button" class="btn btn-primary scroll_pop_layerSave">저장</button>
-	        <button type="button" class="btn btn-secondary scroll_pop_layerClose" data-dismiss="modal">취소</button>
-	      </div>
-	    </div>
-	  </div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary scroll_pop_layerSave">저장</button>
+				<button type="button"
+					class="btn btn-secondary scroll_pop_layerClose"
+					data-dismiss="modal">취소</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 <!-- <div id="layer1" class="scroll_pop_layer">
@@ -558,7 +567,7 @@ $.fn.infiniteCarousel = function () {
 			
 			//$wrapper.after('<a class="arrow scroll_back"></a><a class="arrow scroll_forward"></a>');
 			// 180711 화살표 i태그로 수정
-			$wrapper.after('<i class="fas fa-arrow-circle-left arrow scroll_back"></i><i class="fas fa-arrow-circle-right arrow scroll_forward"></i>');
+			$wrapper.after('<i class="fas fa-arrow-circle-left arrow scroll_back plt-pn-i"></i><i class="fas fa-arrow-circle-right arrow scroll_forward plt-pn-i"></i>');
 			
 			// 5. Bind to the forward and back buttons
 			$('.scroll_back', this).off().click(function () {
@@ -669,7 +678,7 @@ function layer_popup(el){
 			
 		//$('#scroll_btn_ul').append('<li class="list-group-item" value='+items.length+'><a href=#"></a><div class="keyword_popup'+items.length+'">난 키워드야</div><div class="scroll_items'+items.length+'">'+items.length+'</div></li>');
 		// 수정 작업 고고
-		$('#scroll_btn_ul').append('<li value='+items.length+'><a href=#"></a><div class="keyword_popup'+items.length+'">난 키워드야</div><div class="scroll_items'+items.length+'">'+items.length+'</div></li>');
+		$('#scroll_btn_ul').append('<li value='+items.length+'><a href=#"></a><div class="keyword_popup'+items.length+'">난 키워드야</div><div class="scroll_items'+items.length+' plt-pn-li">'+items.length+'</div></li>');
 		
 		// 현재 페이지 url
 		var current_page = location.href;
@@ -727,7 +736,7 @@ function chk_sessionStorage(){
 		session_value = sessionStorage.getItem(storage_key);
 		
 		if(session_value != null)
-			$('#scroll_btn_ul').append('<li value='+idx+'><a href=#"></a><div class="keyword_popup'+idx+'">난 키워드야</div><div class="scroll_items'+idx+'">'+idx+'</div></li>');
+			$('#scroll_btn_ul').append('<li value='+idx+'><a href=#"></a><div class="keyword_popup'+idx+'">난 키워드야</div><div class="scroll_items'+idx+' plt-pn-li">'+idx+'</div></li>');
 			
 		idx++;
 	}
