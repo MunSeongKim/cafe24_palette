@@ -1,5 +1,6 @@
 package com.cafe24.mammoth.app.support;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -45,7 +46,7 @@ public class APITokenInterceptor implements HandlerInterceptor {
 		}
 		Member storedMember = memberService.getOneByMallUrl(mallUrl);
 		String mallId = storedMember.getMallId();
-
+		
 		
 		System.out.println("================ API Interceptor Start ================");
 		
