@@ -145,8 +145,8 @@
 	bottom: auto;
 	top: 40%;
 	left: 50%;
-	width: 226px;
-	margin-top: -50px;
+	width: 14.125em;
+	margin-top: -3.125em;
 	/*height: auto;*/
 	/*background-color: #fff;
 	border: 5px solid #3571B5;*/
@@ -156,20 +156,20 @@
 /* keyword popup close 버튼 */
 a.scroll_pop_layerClose {
 	display: inline-block;
-	height: 25px;
-	padding: 0 14px 0;
-	border: 1px solid #304a8a;
+	height: 1.563em;
+	padding: 0 0.875em 0;
+	border: 0.063em solid #304a8a;
 	background-color: #3f5a9d;
-	font-size: 13px;
+	font-size: 0.813em;
 	color: #fff;
-	line-height: 25px;
+	line-height: 1.563em;
 }
 
 /* keyword popup save 버튼 */
 a.scroll_pop_layerSave {
 	display: inline-block;
-	height: 25px;
-	padding: 0 14px 0;
+	height: 0.56em;
+	padding: 0 0.875em 0;
 	border: 1px solid #304a8a;
 	background-color: #3f5a9d;
 	font-size: 13px;
@@ -187,8 +187,9 @@ a.scroll_pop_layerSave {
 	{
 	z-index: 999;
 	position: absolute;
-	width: 120px;
-	height: 28px;
+	width: 7.5em;
+	line-height:1.25em;
+	/*height: 28px;*/
 	/*border: 1px solid black;*/
 	/* ul 밑에 바로 꼽을 경우 */
 	margin-top: -1.875em;
@@ -198,10 +199,10 @@ a.scroll_pop_layerSave {
 	/*top:-10px;*/
 	transition: opacity 0.3s;
 	padding: 0px;
-	-webkit-border-radius: 7px;
-	-moz-border-radius: 7px;
-	border-radius: 7px;
-	border: #7F7F7F solid 4px;
+	-webkit-border-radius: 0.438em;
+	-moz-border-radius: 0.438em;
+	border-radius: 0.438em;
+	border: #dcdcdc solid 0.25em;
 }
 
 /* keyword popup */
@@ -295,10 +296,10 @@ input[type="text"]:disabled {
 }
 
 .scroll_infiniteCarousel .scroll_wrapper {
-	width: 9.8em;
+	width: 10.9em;
 	overflow: auto;
 	min-height: 7em;
-	margin: 0 1.875em;
+	margin: 0 2em;
 	position: absolute;
 	top: 0;
 }
@@ -315,7 +316,7 @@ input[type="text"]:disabled {
 	-moz-border-radius: 100%;
 	-webkit-border-radius: 100%;
 	border-radius: 100%;
-	padding: 0.125em;
+	padding: 0.4em;
 }
 
 .scroll_infiniteCarousel ul a img {
@@ -346,7 +347,7 @@ input[type="text"]:disabled {
 	display: block;
 	float: left;
 	height: 3em;
-	width: 3.4em;
+	width: 3.64em;
 }
 
 .scroll_infiniteCarousel ul li a img {
@@ -382,6 +383,13 @@ input[type="text"]:disabled {
 .scroll_infiniteCarousel .scroll_back:hover {
 	background-position: 0 -108px;
 }
+
+/* copy 버튼 css */
+.scroll_copy_button {
+	padding-bottom:0.6em;
+	padding-left:0.8em;
+	padding-right:0.8em;
+}
 </style>
 <!-- 내 기능 전체 묶음 -->
 <div class="scroll_function">
@@ -407,7 +415,7 @@ input[type="text"]:disabled {
 			<!-- 복사완료 팝업 -->
 
 			<!-- 도움말 버튼 -->
-			<i class="far fa-question-circle scroll_question_button"></i>
+			<i class="plt-pn-i far fa-question-circle scroll_question_button"></i>
 			<!-- <input type="button" class="scroll_question_button" /> -->
 			<!-- 도움말 팝업 -->
 			<!-- <div class="scroll_question_popup">
