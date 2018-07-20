@@ -299,7 +299,7 @@ input[type="text"]:disabled {
 	width: 10.9em;
 	overflow: auto;
 	min-height: 7em;
-	margin: 0 2em;
+	margin: 0 2.1em;
 	position: absolute;
 	top: 0;
 }
@@ -340,7 +340,7 @@ input[type="text"]:disabled {
 	display: block;
 	float: left;
 	height: 3.3em;
-	width: 3.3em;
+	width: 3.31em;
 }
 
 .scroll_infiniteCarousel ul .cloned {
@@ -358,7 +358,7 @@ input[type="text"]:disabled {
 	font-size: 1.563em;
 	display: block;
 	height: 36px;
-	width: 37px;
+	width: 50px;
 	/*background: url(/assets/images/arrow.png) no-repeat 0 0;*/
 	/*text-indent: -999px;*/
 	position: absolute;
@@ -536,6 +536,8 @@ $.fn.infiniteCarousel = function () {
 			console.log('pages ==> ' + pages);
 			console.log('visible ==> ' + visible);
 		
+			$wrapper.after('<i class="fas fa-arrow-circle-left arrow scroll_back plt-pn-i"></i><i class="fas fa-arrow-circle-right arrow scroll_forward plt-pn-i"></i>');
+			
 		// li가 1개라도 있어야 실행.
 		if($items.length != 0){
 
