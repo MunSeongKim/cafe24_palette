@@ -527,9 +527,14 @@ $.fn.infiniteCarousel = function () {
 			$items = $slider.find('> li'),
 			$single = $items.filter(':first'), // 결국 div안에 ul안에 li안에 첫번째 요소를 찾기 위함.
 			singleWidth = $single.outerWidth(), // outerWidth는 maring, border값을 포함한 너비
-			visible = Math.ceil($wrapper.innerWidth() / singleWidth), // note: doesn't include padding or border
+			visible = Math.floor($wrapper.innerWidth() / singleWidth), // note: doesn't include padding or border
 			currentPage = 1,
 			pages = Math.ceil($items.length / visible);  // 11 / 3 => 3
+			
+			console.log('$wrapper.innerWidth() ==> ' + $wrapper.innerWidth());
+			console.log('singleWidth ==> ' + singleWidth);
+			console.log('pages ==> ' + pages);
+			console.log('visible ==> ' + visible);
 		
 		// li가 1개라도 있어야 실행.
 		if($items.length != 0){
