@@ -3,7 +3,6 @@ package com.cafe24.mammoth.app.controller;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.cafe24.mammoth.app.support.JSONResult;
 
 @Controller
 @RequestMapping("/funcupload")
@@ -86,7 +83,6 @@ public class FuncUploadController {
 	@PostMapping(value = "/multi")
 	public ResponseEntity<?> fileMultiUpload(@RequestParam("file") MultipartFile[] files) {
 		String fileName = null;
-		String msg = "";
 		
 		if(files != null && files.length > 0) {
 			for(int i=0; i < files.length; i++) {
@@ -98,7 +94,6 @@ public class FuncUploadController {
 							new BufferedOutputStream(new FileOutputStream(new File(UPLOAD_DIR_PATH + "/" + fileName)));
 					buffStream.write(bytes);
 					buffStream.close();
-					msg += "success";
 				} catch (Exception e) {
 					e.printStackTrace();
 					return new ResponseEntity<>("success", HttpStatus.BAD_REQUEST);
