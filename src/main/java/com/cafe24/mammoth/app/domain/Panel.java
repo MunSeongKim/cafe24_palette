@@ -9,7 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,7 +42,7 @@ public class Panel {
 	private String name;
 
 	// 15.625em, 50%, 100%
-	@Column(nullable = false, length=20, columnDefinition="VARCHAR(20) DEFAULT 15.625em")
+	@Column(nullable = true, length=20, columnDefinition="VARCHAR(20) DEFAULT '15.625em'")
 	private String width;
 
 	@Enumerated(EnumType.STRING)
@@ -59,7 +58,7 @@ public class Panel {
 	@Column(name = "created_date", nullable = false)
 	private Date createdDate;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "mall_id", insertable = false, updatable = false)
 	private Member member;
 

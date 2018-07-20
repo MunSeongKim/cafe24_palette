@@ -10,27 +10,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.cafe24.mammoth.app.domain.Panel;
 import com.cafe24.mammoth.app.service.PanelService;
-import com.cafe24.mammoth.app.service.ScriptService;
 
 // @RestController : data return
 // -> 객체를 반환하면 객체 데이터는 JSON/XML 형식의 HTTP 응답 작성
 // -> @Controller + @ResponseBody
 @Controller // : view(화면) return
 @RequestMapping(value = "/")
-/*@SessionAttributes({ "mallId" })*/
 public class MainController {
 
 	@Autowired
-	PanelService panelService;
-	@Autowired
-	ScriptService scriptService;
-
+	private PanelService panelService;
+	
 	@GetMapping(value = { "", "/" })
-	public String main(Model model/*, @ModelAttribute("mallId") String mallId*/) {
-
+	public String main(Model model) {
+		
 		List<Panel> list = panelService.getPanelList();
 
-		//model.addAttribute("mallId", mallId);
 		model.addAttribute("list", list);
 		return "main";
 	}

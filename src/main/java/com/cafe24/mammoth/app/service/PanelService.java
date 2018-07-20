@@ -23,6 +23,11 @@ public class PanelService {
 	public Panel getPanelById(Long id) {
 		return repo.findOne(id);
 	}
+	
+	public boolean savePanel(Panel panel) {
+		return repo.save(panel) != null ? true : false;
+		
+	}
 	public void removePanel(Long id) {
 		repo.deleteById(id);
 	}

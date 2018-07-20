@@ -41,6 +41,14 @@ public class MemberService {
 	public Member getOneByMallUrl(String mallUrl) {
 		return memberRepository.findByMallUrl(mallUrl);
 	}
+	
+	public Member getOne(String mallId) {
+		Optional<Member> storedMember = memberRepository.findById(mallId);
+		if( storedMember.isPresent() ) {
+			return storedMember.get();
+		}
+		return null;
+	}
 
 	public boolean isExist(String mallId) {
 		return memberRepository.existsById(mallId);
