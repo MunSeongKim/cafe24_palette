@@ -26,7 +26,19 @@ import org.springframework.util.Assert;
 
 import com.cafe24.mammoth.oauth2.Cafe24AuthorizationCodeResourceDetails;
 import com.cafe24.mammoth.oauth2.Cafe24OAuth2AccessToken;
-
+/**
+ * Cafe24OAuth2AccessToken과 Authentication 객체에 대한 영속성 관리를 위한 서비스<br>
+ * <hr>
+ * Cafe24ClientTokenServices(Datasource): 빈 등록때 실행되어 DB에 테이블 생성 및 외래키 설정 실행<br>
+ * String getMallIdForKey(OAuth2ProtectedResourceDetails, Authentication): Authentication 또는 resource에서 mall_id를 추출<br>
+ * boolean isExistsAccessToken(String): AccessToken의 존재 여부 반환<br>
+ * void setAuthenticationToSecurityContext(String): 해당 mall_id를 가진 Authentication을 찾아 SecurityContext에 등록<br>
+ * OAuth2Authentication getAuthentication(String): 해당 mall_id를 가진 Authentication 객체 반환
+ * 
+ * @since 18-07-19
+ * @author MoonStar
+ *
+ */
 public class Cafe24ClientTokenServices implements ClientTokenServices {
 	private static final Log LOG = LogFactory.getLog(JdbcClientTokenServices.class);
 
@@ -97,34 +109,19 @@ public class Cafe24ClientTokenServices implements ClientTokenServices {
 	public OAuth2AccessToken getAccessToken(OAuth2ProtectedResourceDetails resource, Authentication authentication) {
 
 		OAuth2AccessToken accessToken = null;
-		
-		System.out.println("==================== Cafe24ClientTokenServices.getAccessToken() =================");
-		System.out.println("Authentication: " + authentication);
-		System.out.println("---------------------------------------------------------------------------------");
-		
 		String mallId = getMallIdForKey(resource, authentication);
-		
 		try {
 			accessToken = jdbcTemplate.queryForObject(selectAccessTokenSql, new RowMapper<OAuth2AccessToken>() {
 				public OAuth2AccessToken mapRow(ResultSet rs, int rowNum) throws SQLException {
 					return SerializationUtils.deserialize(rs.getBytes(2));
 				}
 			}, mallId);
-			System.out.println("accessToken extends " + accessToken.getClass());
-			System.out.println("accessToken: " + accessToken);
-			System.out.println("---------------------------------------------------------------------------------");
-			System.out.println("accessToken.getValue(): " + accessToken.getValue());
-			System.out.println("---------------------------------------------------------------------------------");
-			System.out.println("accessToken.isExpired():" + accessToken.isExpired());
-			System.out.println("---------------------------------------------------------------------------------");
-			System.out.println("accessToken.getAdditionalInformation():" + accessToken.getAdditionalInformation());
 		}
 		catch (EmptyResultDataAccessException e) {
 			if (LOG.isInfoEnabled()) {
 				LOG.debug("Failed to find access token for authentication " + authentication);
 			}
 		}
-		System.out.println("================================================================");
 		return accessToken;
 	}
 	
@@ -132,23 +129,17 @@ public class Cafe24ClientTokenServices implements ClientTokenServices {
 	public void saveAccessToken(OAuth2ProtectedResourceDetails resource, Authentication authentication,
 			OAuth2AccessToken accessToken) {
 		removeAccessToken(resource, authentication);
-		System.out.println("==================== Cafe24ClientTokenServices.saveAccessToken() =================");
-		System.out.println("Authentication: " + authentication);
 		Cafe24OAuth2AccessToken cafe24Token = (Cafe24OAuth2AccessToken) accessToken;
-		//DefaultOAuth2AccessToken token = new DefaultOAuth2AccessToken(accessToken);
-		// String name = authentication==null ? null : authentication.getName();
 		jdbcTemplate.update(
 				insertAccessTokenSql,
 				new Object[] { cafe24Token.getMallId(), cafe24Token.getValue(), resource.getClientId(),
 						new SqlLobValue(SerializationUtils.serialize(accessToken)),
 						new SqlLobValue(SerializationUtils.serialize(authentication)) },
 				new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.BLOB, Types.BLOB });
-		System.out.println("================================================================");
 	}
 
 	@Override
 	public void removeAccessToken(OAuth2ProtectedResourceDetails resource, Authentication authentication) {
-		System.out.println("==================== removing token =====================");
 		String mallId = getMallIdForKey(resource, authentication);
 		jdbcTemplate.update(deleteAccessTokenSql, mallId);
 	}

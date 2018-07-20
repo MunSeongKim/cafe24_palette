@@ -112,7 +112,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/assets/**", "/webjars/**", "/resources/**", "/static/**");
+		web.ignoring().antMatchers("/assets/**", "/**/assets/**", "/webjars/**", "/resources/**", "/static/**");
 	}
 
 	/**
@@ -131,7 +131,6 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 		// MessageConverter 등록, Custom AccessToken 객체로 Converting
 		AuthorizationCodeAccessTokenProvider accessTokenProvider = new AuthorizationCodeAccessTokenProvider();
 		accessTokenProvider.setMessageConverters(Arrays.asList(new Cafe24OAuth2AccessTokenMessageConverter()));
-		
 		// ClientTokenServices 등록, AccessToken, Authentication를 DB에 저장, 추출
 		AccessTokenProviderChain provider = new AccessTokenProviderChain(Arrays.asList(accessTokenProvider));
 		provider.setClientTokenServices(cafe24ClientTokenServices());
@@ -184,7 +183,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	/**
 	 * AccessToken 발급에 필요한 정보를 읽어들여서 객체로 생성<br>
 	 * cafe24.client 하위의 속성을 읽어서 AuthorizationCodeResourceDetails 객체 생성<br>
-	 * <br>
+	 * mallId의 보관과 수정, isClientOnly() 메소드 수정을 위해 {@link AuthorizationCodeResourceDetails} 객체를 상속받아 구현<br>
 	 * 
 	 * @return {@link AuthrizationCodeResourceDetails}
 	 */

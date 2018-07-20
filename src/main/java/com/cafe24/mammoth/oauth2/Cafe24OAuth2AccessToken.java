@@ -21,6 +21,14 @@ import com.cafe24.mammoth.oauth2.support.Cafe24OAuth2AccessTokenJackson2Deserial
 //@com.fasterxml.jackson.databind.annotation.JsonSerialize(using = OAuth2AccessTokenJackson2Serializer.class)
 @com.fasterxml.jackson.databind.annotation.JsonDeserialize(using = Cafe24OAuth2AccessTokenJackson2Deserializer.class)
 
+/**
+ * Cafe24에서 발급하는 AccessToken 양식에 맞춰 정보를 담는 객체 <br>
+ * OAuth2AccessToken을 참조하여 구현<br>
+ * 
+ * @since 18-07-19
+ * @author MoonStar
+ *
+ */
 public class Cafe24OAuth2AccessToken implements Serializable, OAuth2AccessToken {
 
 	/**
@@ -37,6 +45,9 @@ public class Cafe24OAuth2AccessToken implements Serializable, OAuth2AccessToken 
 	public static String MALL_ID = "mall_id";
 	public static String CLIENT_ID = "client_id";
 	
+	/**
+	 * Original field in {@link DefaultOAuth2AccessToken}
+	 */
 	// Access token value
 	private String value;
 	// Access token type name
@@ -157,6 +168,7 @@ public class Cafe24OAuth2AccessToken implements Serializable, OAuth2AccessToken 
 		return this.expiresAt;
 	}
 
+	// expiresAt을 기반으로 토근 만료까지 남은 시간을 초단위로 변환
 	@Override
 	public int getExpiresIn() {
 		return expiresAt != null ? Long.valueOf((expiresAt.getTime() - System.currentTimeMillis()) / 1000L).intValue()
@@ -235,6 +247,8 @@ public class Cafe24OAuth2AccessToken implements Serializable, OAuth2AccessToken 
 		return result;
 	}
 
+	
+	
 	@Override
 	public boolean equals(Object obj) {
 		return obj != null && toString().equals(obj.toString());

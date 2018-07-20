@@ -21,6 +21,14 @@ import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 
+/**
+ * Cafe24AccessTokenMessageConverter가 실행되어 Cafe24OAuth2AccessToken의 JavaType이 생성될 때 실행<br>
+ * AccessToken 발급 후 Response body를 해석하여 Cafe24OAuth2AccessToken 객체로 생성해주는 역할<br>
+ * 
+ * @since 18-07-19
+ * @author MoonStar
+ *
+ */
 @SuppressWarnings("serial")
 public class Cafe24OAuth2AccessTokenJackson2Deserializer extends StdDeserializer<OAuth2AccessToken> {
 
@@ -51,13 +59,7 @@ public class Cafe24OAuth2AccessTokenJackson2Deserializer extends StdDeserializer
 				tokenType = p.getText();
 			} else if (OAuth2AccessToken.REFRESH_TOKEN.equals(name)) {
 				refreshToken = p.getText();
-			}
-			/*
-			 * else if (OAuth2AccessToken.EXPIRES_IN.equals(name)) { try { expiresIn =
-			 * p.getLongValue(); } catch (JsonParseException e) { expiresIn =
-			 * Long.valueOf(p.getText()); } }
-			 */
-			else if (Cafe24OAuth2AccessToken.SCOPES.equals(name)) {
+			} else if (Cafe24OAuth2AccessToken.SCOPES.equals(name)) {
 				scope = parseScope(p);
 			} else if (Cafe24OAuth2AccessToken.EXPIRES_AT.equals(name)) {
 				expiresAt = convertStringToDate(p.getText());
