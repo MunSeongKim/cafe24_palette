@@ -1,17 +1,17 @@
 (function($) {
 	$.panel = {
 		nav : function(action) {
-			$('#panel-btn').toggleClass('open');
+			$('#panel-draggable-btn').toggleClass('open');
 			if(action === 'open') {
 				$('#panel').css('width', '15.625em');
-				$('#panel-btn').css({
+				$('#panel-draggable-btn').css({
 					'right' : '15.625em',
 					'left' : ''
 				});
 				$('.scroll_mm_div').css('right', '18.125em');
 			} else if(action === 'close') {
 				$('#panel').css('width', '0');
-				$('#panel-btn').css({
+				$('#panel-draggable-btn').css({
 					'right' : '0',
 					'left' : ''
 				});
@@ -32,7 +32,7 @@ $(document).keyup(function(e) {
 			$('.popupLayer').css('display', 'none');
 			return;
 		}
-		if(!$('#panel-btn').is('.open')) { return; }
+		if(!$('#panel-draggable-btn').is('.open')) { return; }
 		$.panel.nav('close');
 	}
 });
@@ -51,13 +51,13 @@ $(document).ready(function() {
 	
 	/// end device check
 	
-	$('#panel-area').load('/mammoth/template/panel.html', function(){
-		$("#panel-btn").draggable({
+	$('#panel-area').load('/mammoth/template/panel.jsp', function(){
+		$("#panel-draggable-btn").draggable({
 			axis : "y",
-			containment:"window" // 180713 hwi 추가
+			containment : "window" // 180713 hwi 추가
 		});
-		$("#panel-btn").click(function() {
-			if($('#panel-btn').is('.open') == true) {
+		$("#panel-draggable-btn").click(function() {
+			if($('#panel-draggable-btn').is('.open') == true) {
 				if($('.popupLayer').css('display') == 'block') {
 					$('.popupLayer').css('display', 'none');
 				}
