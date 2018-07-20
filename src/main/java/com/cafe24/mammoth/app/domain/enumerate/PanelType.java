@@ -1,5 +1,5 @@
 package com.cafe24.mammoth.app.domain.enumerate;
 
-public enum PType {
+public enum PanelType {
 	STICK, ISLAND, FULL
 }

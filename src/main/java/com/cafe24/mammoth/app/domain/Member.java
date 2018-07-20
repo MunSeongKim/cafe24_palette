@@ -22,7 +22,7 @@ public class Member {
 	@Column(name="mall_id", nullable = false, length = 50)
 	private String mallId;
 
-	@Column(nullable = true)
+	@Column(nullable = false)
 	private Boolean panelUsed;
 
 	@Column(name = "base_domain", nullable = true, length = 200)

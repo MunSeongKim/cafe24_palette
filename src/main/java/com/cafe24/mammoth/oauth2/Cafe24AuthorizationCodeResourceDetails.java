@@ -2,8 +2,13 @@ package com.cafe24.mammoth.oauth2;
 
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 
+/**
+ * mallId 저장, 
+ * @author bit
+ *
+ */
 public class Cafe24AuthorizationCodeResourceDetails extends AuthorizationCodeResourceDetails {
-
+	//
 	public String mallId;
 
 	public String getMallId() {

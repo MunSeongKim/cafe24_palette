@@ -22,7 +22,6 @@ public class MemberService {
 		Member member = null;
 		if ( savedMember.isPresent() ) {
 			member = savedMember.get();
-			member.setPanelUsed(false);
 			member.setBaseDomain(baseDomain);
 			member.setPrimaryDomain(primaryDomain);
 			member.setMallUrl(mallUrl);
@@ -34,6 +33,7 @@ public class MemberService {
 	public boolean save(String mallId) {
 		Member member = new Member();
 		member.setMallId(mallId);
+		member.setPanelUsed(false);
 		System.out.println("memberService.save(): " + member);
 		return memberRepository.save(member) != null ? true : false;
 	}
