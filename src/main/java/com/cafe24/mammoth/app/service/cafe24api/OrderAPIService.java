@@ -59,7 +59,7 @@ public class OrderAPIService {
 			order.setOrderId(o.getOrderId());
 			order.setOrderDate(o.getOrderDate());
 			for(Map<String, String> i: o.getItems()) {
-				// 수동 캐시작업
+				// 수동 캐시작업 - Cache 동작은 AOP 기반으로 동작하기 때문에 내부에서 호출하는 메소드에는 캐시가 적용될 수 없음
 				Product product = cache.get(i.get("product_no"), Product.class);
 				// 캐시에 없으면 product 정보 요청
 				if( product == null) {
@@ -102,8 +102,8 @@ public class OrderAPIService {
 		product.setProductNo(products.getProductNo());
 		product.setSmallImage(product.getSmallImage());
 		product.setCategories(products.getCategories());
-		System.out.println("--------------product API called ------------------");
-		System.out.println(product);
+		
+		// 캐시에 데이터 삽입
 		cacheManager.getCache("products").put(productNo, product);
 		return product;
 	}
