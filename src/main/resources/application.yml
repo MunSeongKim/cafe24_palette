@@ -29,7 +29,7 @@ logging:
       springframework:
         web: INFO
         http: INFO
-        security: INFO
+        security: DEBUG
 
 cafe24:
   client:
