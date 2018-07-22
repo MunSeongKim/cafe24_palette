@@ -12,10 +12,8 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
@@ -24,6 +22,7 @@ import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilt
 import org.springframework.security.oauth2.client.token.AccessTokenProviderChain;
 import org.springframework.security.oauth2.client.token.JdbcClientTokenServices;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeAccessTokenProvider;
+import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
@@ -52,7 +51,6 @@ import com.cafe24.mammoth.oauth2.support.Cafe24OAuth2AccessTokenMessageConverter
  *
  */
 @Configuration
-@EnableWebSecurity
 @EnableOAuth2Client
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
@@ -71,18 +69,6 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	OAuth2ClientContext oauth2ClientContext;
 
 	/**
-	 * jdbcAuthentication - jdbc 지원 사용자 저장소를 이용한 사용자 인증 설정<br>
-	 * <br>
-	 * 
-	 * @param AuthenticationManagerBuilder
-	 *            - 사용자 저장소 등 사용자에 대한 세부 서비스 설정을 지원하는 객체
-	 */
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.jdbcAuthentication().dataSource(dataSource);
-	}
-
-	/**
 	 * 현재 상황: AccessToken 받는거 성공<br>
 	 * 설정: CSRF 설정, X-Frame-Option 해제, OAuth2ContextFilter 등록<br>
 	 * <br>
@@ -93,6 +79,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		http.httpBasic().disable();
 		// iframe에서 요청이 발생할 때 X-Frame-Option에 대한 문제 발생 해당 값을 해제하여 문제 해결. 원인: 아직 모르겠음
 		http.headers().frameOptions().disable();
 		// BasicAuthenticationFilter 이전에 cafe24Filter를 수행하도록 지정

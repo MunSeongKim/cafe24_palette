@@ -63,6 +63,7 @@ public class WebConfigurer extends WebMvcConfigurationSupport {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/").resourceChain(true);
+		registry.addResourceHandler("/**/assets/**").addResourceLocations("/**/assets/").resourceChain(true);
 		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/").resourceChain(true);
 		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/META-INF/resources/webjars/")
 				.setCacheControl(CacheControl.maxAge(3L, TimeUnit.HOURS).cachePublic()).resourceChain(true);

@@ -2,6 +2,7 @@ package com.cafe24.mammoth;
 
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cache.CacheManager;
@@ -21,7 +22,8 @@ import org.springframework.core.io.ClassPathResource;
  * @since 18.06.28
  */
 @SpringBootConfiguration
-@EnableAutoConfiguration
+@EnableAutoConfiguration(exclude = {
+        SecurityAutoConfiguration.class})
 @ComponentScan
 @Configuration
 @EnableCaching
