@@ -57,7 +57,7 @@ public class WebConfigurer extends WebMvcConfigurationSupport {
 	protected void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(apiTokenInterceptor()).addPathPatterns("/api/test/**");
 	}
-
+	
 	// ResourceHandler 등록
 	// 정적 자원에 대한 처리 등록
 	@Override

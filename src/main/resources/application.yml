@@ -1,7 +1,7 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/palette?useUnicode=true&characterEncoding=utf8
-    username: palette 
+    url: jdbc:mysql://localhost:3306/palette
+    username: palette
     password: palette
     driver-class-name: com.mysql.jdbc.Driver
     

@@ -196,7 +196,44 @@ $(function() {
 	    /* sort가 모두 일어난 후 동작 */
 	    update: function(e, ui) {
 	    	/* 현재 클릭 된 li의 부모 ul element */
-	    	var $ul = $(ui.item.context).parent();
+			var selectedElement = $(ui.item.context);
+	    	var funcName = selectedElement.data("funcname");
+	    	var $ul = selectedElement.parent();
+	    	var $previewPanel = $(".preview_panel .preview_func_div");
+	    	
+	    	/* drag & drop 후 순서 정보 */
+	    	var orderInfo = $("#sortable").sortable('toArray');
+	    	
+	    	console.log(orderInfo); 
+	    	
+	    	/* 움직인 li와 funcname이 같은 기능 패널 사라짐 */
+	    	$(".preview_panel > div[data-panelfuncname="+funcName+"]").fadeOut(300, function(){
+	    		tmpElement = $(this); 
+	    		//$(this).detach();  /* 같은 funcname 가진 기능 패널 Element 삭제 */ 
+	    		
+	    		console.log(tmpElement); 
+	    		prevFuncName = selectedElement.prev().data("funcname");
+	    		console.log("prevFuncName : "+prevFuncName);
+	    		
+	    		$(".preview_panel > div").each(function(){
+	    			if($(this).data("panelfuncname") == prevFuncName){
+	    				console.log($(this)); 
+	    				$(this).after(tmpElement);
+	    				tmpElement.fadeIn(300);
+	    			}else if(prevFuncName == undefined){
+	    				/* 기능 순서를 맨앞으로 했을 때. prevFuncName == 'undefinded' 인 상황. */
+	    				$(this).parent().prepend(tmpElement);  
+	    				tmpElement.fadeIn(300); 
+	    			}
+	    		})
+	    		
+	    	});
+	    	
+	    	for(var i=0; i<orderInfo.length; i++){
+	    		console.log(i+", "+orderInfo[i]);
+	    		
+	    	}
+	    	
 	    	// Determine the priority.
 	    	determineOrder($ul);
 	    },
@@ -252,6 +289,7 @@ $(function() {
 	$(document).on('click', '.func-sort-btn > div', function(){
 		$li = $(this).closest("li");    /* 가까이 있는 li 탐색 */
 		$ul = $(this).closest("ul");    /* 가까이 있는 ul 탐색 */
+		var funcname = $li.data("funcname"); 
 		if($(this).hasClass("off")==true){  // 버튼을 눌렀는데 off라는 class를 가지고 있지 않다 -> off하는 상황.
 			$li.addClass("ui-state-disabled"); 	 /* li 비활성화 */
 			
@@ -262,11 +300,28 @@ $(function() {
 			/* li내의 버튼 이벤트는 활성화 */
 			$(this).css({"pointer-events" : "all"});
 			
-		}else{
-			$(this).closest("li").removeClass("ui-state-disabled");
+			$(".preview_panel div").each(function(){
+				if($(this).data("panelfuncname") == funcname){
+					$(this).fadeOut(300);
+				}
+			});
+			
+		}else{ /* 버튼을 눌러서 기능을 On하는 상황. */
+			$li.removeClass("ui-state-disabled");
 			$li.detach();				/* 해당 버튼이 있는 li 제거 */
 			$li.prependTo($ul);
 			$li.attr("funcorder", "0");
+			
+			/* drag & drop 후 순서 정보 */
+	    	var orderInfo = $("#sortable").sortable('toArray');
+			
+			$(".preview_panel div").each(function(){
+				if($(this).data("panelfuncname") == funcname){
+					var tmpElement = $(this);
+					$(this).parent().prepend(tmpElement);
+					$(this).fadeIn(300);
+				}  
+			});
 		} 
 		
 		// determine Order
@@ -324,9 +379,9 @@ $(function() {
 		<div class="sortdiv col-sm-6 col-md-6 col-xl-6"> 
 			<i class="custom-i fas fa-sort" data-toggle="popover"> 기능 순서</i>
 			<hr class="custom-hr"> 
-			<ul class="nav nav-tabs" id="sortable" role="tablist"> 
+			<ul class="nav nav-tabs" id="sortable" class="funcsort" role="tablist"> 
 			<c:forEach var="func" items="${funcs }" varStatus="stat">
-				<li class="func-element nav-item ui-state-default ui-state-disabled" data-funcname="${func.nameEng }" data-funcid="${func.funcId }" funcorder=${stat.index }>
+				<li class="func-element nav-item ui-state-default ui-state-disabled" id="${func.nameEng }" data-funcname="${func.nameEng }" data-funcid="${func.funcId }" funcorder=${stat.index }>
 					<span class="ui-icon ui-icon-arrowthick-2-n-s"></span> 
 					<!-- ui-state-disabled -->
 					<div class="func-sort">

@@ -60,7 +60,11 @@ $(document).ready(function(){
 		$(this).addClass("seleted");
 		$(this).css({
 			"border" : "2px solid #000" 
-		})
+		});
+		
+		var cssFilePath = $(this).data("cssfilepath");
+		
+		includeFile(cssFilePath, "css"); 
 		
 		// 사진 교체
 		previewImgPath = $(this).data("previewpath");
@@ -76,8 +80,8 @@ $(document).ready(function(){
 			<i class="custom-i fas fa-comment-alt"> 테마목록</i>
 			<hr class="custom-hr">
 			<c:forEach var="theme" items="${themes }" varStatus="stat">
-				<div class="card" data-previewpath = "${theme.previewImgPath }" data-themeno = ${theme.id } data-themetitle = ${theme.title }> 
-			 		<img class="card-img-top" src="${pageContext.servletContext.contextPath }${theme.titleImgPath }" alt="Card image cap">
+				<div class="card" data-previewpath = "${theme.previewImgPath }" data-themeno = ${theme.id } data-themetitle = ${theme.title }>
+			 		<img class="card-img-top" src="${pageContext.servletContext.contextPath }${theme.titleImgPath }" data-cssfilepath=${theme.cssFilePath } alt="Card image cap">
 			  		<div class="card-body">
 			    		<p class="card-title">테마명:${theme.title }</p> 
 			  		</div>

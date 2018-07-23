@@ -61,14 +61,14 @@ public class SettingController {
 		Theme theme1 = new Theme();
 		theme1.setTitle("theme1");
 		theme1.setDescription("theme1!!");
-		theme1.setCssFilePath("theme1 file location!!");
+		theme1.setCssFilePath("/assets/admin/template/testTheme1.css");
 		theme1.setTitleImgPath("/assets/admin/image/beige.PNG");
 		theme1.setPreviewImgPath("/assets/admin/image/theme_white_orange.png");
 		 
 		Theme theme2 = new Theme();
 		theme2.setTitle("theme2");
-		theme2.setDescription("theme2!!!");
-		theme2.setCssFilePath("theme2 file location!!");
+		theme2.setDescription("theme2!!!"); 
+		theme2.setCssFilePath("/assets/admin/template/testTheme2.css");
 		theme2.setTitleImgPath("/assets/admin/image/strawberry.PNG");
 		theme2.setPreviewImgPath("/assets/admin/image/theme_black_red.png");
 		

@@ -134,8 +134,7 @@ jQuery library
 </body>
 
 <script type="text/javascript">
-console.log('2')
-var tabsMaxSize = ${fn:length(tabs.map)}; 
+var tabsMaxSize = ${fn:length(tabs.map)};
 var hash = window.location.hash;  // ex) /create#func
 
 if(hash=='' || hash==null){
@@ -229,9 +228,8 @@ function resizeDone(){
 })(); */
 
 
+/* DOM이 모두 준비되고 */
 $(document).ready(function(){
-	
-	//$("#panel").css("width", "15.625em");
 	
 	$(window).on('resize', function(){
 		var timer = null;
