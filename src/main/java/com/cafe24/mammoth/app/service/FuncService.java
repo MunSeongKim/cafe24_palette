@@ -13,6 +13,7 @@ public class FuncService {
 	private FuncRepository funcRepository;
 	
 	public boolean save(Func func) {
-		return funcRepository.save(func)!= null ? true : false;
+		System.out.println(func);
+		return funcRepository.save(func) != null ? true : false;
 	}
 }

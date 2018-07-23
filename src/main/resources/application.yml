@@ -4,7 +4,7 @@ spring:
     username: root  # For Test Qyuee's
     password: 111111  # For Test Qyuee's !!!
     driver-class-name: com.mysql.jdbc.Driver
-    # type : org.apache.tomcat.jdbc.pool.DataSource  # For Test Qyuee's
+    type : org.apache.tomcat.jdbc.pool.DataSource  # For Test Qyuee's
     
   jpa:
     database: MYSQL
@@ -13,7 +13,7 @@ spring:
     show-sql: true
     open-in-view: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create 
 
   mvc:
     view:

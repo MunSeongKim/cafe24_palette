@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.cafe24.mammoth.app.domain.Func;
 
 @Repository
-public interface FuncRepository extends JpaRepository<Func, String>{
+public interface FuncRepository extends JpaRepository<Func, Long>{
 	
 }
