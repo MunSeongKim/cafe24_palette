@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,8 +23,10 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.cafe24.mammoth.app.domain.enumerate.PanelType;
-import com.cafe24.mammoth.app.domain.enumerate.Position;
+import com.cafe24.mammoth.app.domain.enumerate.Action;
+import com.cafe24.mammoth.app.domain.enumerate.PType;
+import com.cafe24.mammoth.app.domain.enumerate.Position1;
+import com.cafe24.mammoth.app.domain.enumerate.Position2;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -41,32 +44,43 @@ public class Panel {
 	@Column(nullable = false, length = 100)
 	private String name;
 
-	// 15.625em, 50%, 100%
-	@Column(nullable = true, length=20, columnDefinition="VARCHAR(20) DEFAULT '15.625em'")
+	@Column(length=6)
 	private String width;
+	
+	@Column(length=6)
+	private String height;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "position", nullable = false, columnDefinition = "enum('LEFT','BOTTOM','RIGHT')")
-	private Position position;
+	@Column(name = "p_action", nullable = false, columnDefinition = "enum('STATIC', 'TOGGLE')")
+	private Action pAction;
+
+	@Column(columnDefinition = "varchar(7) default '#FFFFFF'")
+	private String bgColor;
+
+	@Column(columnDefinition = "varchar(7) default '#000000'")
+	private String textColor;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "panel_type", nullable = true, columnDefinition = "enum('STICK', 'ISLAND', 'FULL')")
-	private PanelType panelType;
+	@Column(name = "position1", nullable = false, columnDefinition = "enum('LEFT','BOTTOM','RIGHT')")
+	private Position1 position1;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "position2", nullable = true, columnDefinition = "enum('TOP', 'CENTER', 'BOTTOM')")
+	private Position2 position2;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "p_type", nullable = false, columnDefinition = "enum('STICK', 'ISLAND', 'FULL')")
+	private PType pType;
 
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_date", nullable = false)
 	private Date createdDate;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "mall_id", insertable = false, updatable = false)
 	private Member member;
 
-	// 요거 수정해야함
-	@ManyToOne(optional=true)
-	@JoinColumn(name="theme_id", nullable=true)
-	private Theme theme;
-	
 	@OneToOne(mappedBy = "panel", cascade = CascadeType.REMOVE)
 	private Script script;
 
@@ -82,11 +96,12 @@ public class Panel {
 			member.getPanels().add(this);
 		}
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Panel [panelId=" + panelId + ", name=" + name + ", width=" + width + ", position=" + position
-				+ ", panelType=" + panelType + ", createdDate=" + createdDate + "]";
+		return "Panel [panelId=" + panelId + ", name=" + name + ", width=" + width + ", height=" + height + ", pAction="
+				+ pAction + ", bgColor=" + bgColor + ", textColor=" + textColor + ", position1=" + position1
+				+ ", position2=" + position2 + ", pType=" + pType + ", createdDate=" + createdDate + "]";
 	}
 
 }

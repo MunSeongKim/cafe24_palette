@@ -2,7 +2,6 @@ package com.cafe24.mammoth.oauth2;
 
 import java.io.IOException;
 
-import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,10 +25,11 @@ import com.cafe24.mammoth.oauth2.support.Cafe24APIURLGenerater;
  * OAuth2 토근 발급 및 사용자 인증 전 파라마티 처리를 위한 클래스<br>
  * OAuth2ClientAuthenticationProcessingFilter를 상속받아 구현<br>
  * <br>
- * mall_id를 파라미터에서 추출 후 Client Code 발급, Access Token 발급, User 정보 요청 URL 생성 후
- * Filter 실행<br>
+ * mall_id를 파라미터에서 추출 후 Client Code 발급, Access Token 발급, User 정보 요청 URL 생성 후 Filter 실행<br>
  * <br>
- * 
+ * 수정내용:
+ * - 첫 접속시 Member Entity를 생성하기 위해 WebApplicationContext에서 MemberService 빈을 가져오는 로직 추가,<br>
+ * Member Entity 영속화 로직 추가 18-07-19, MoonStar <br>
  * @since <i>2018. 07. 02.</i>
  * @author <i>MS Kim</i>
  *
@@ -85,8 +85,6 @@ public class Cafe24OAuth2ClientAuthenticationProcessingFilter extends OAuth2Clie
 			
 			setTokenServices(new UserInfoTokenServices(resource.getUserInfoUri(), details.getClientId()));
 		}
-		System.out.println("================ Cafe24OAuth2ClientAuthenticationProcessingFilter ==========");
-
 		
 		// Session에서 WebApplicationContext를 가져온 후 MemberService 빈을 강제로 가져옴
 		WebApplicationContext wContext = WebApplicationContextUtils
@@ -111,14 +109,5 @@ public class Cafe24OAuth2ClientAuthenticationProcessingFilter extends OAuth2Clie
 
 		return super.attemptAuthentication(request, response);
 	}
-
-	@Override
-	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
-			Authentication authResult) throws IOException, ServletException {
-		System.out.println("================= Filter: successfualAuthentication ================");
-		super.successfulAuthentication(request, response, chain, authResult);
-	}
-
-	
 	
 }

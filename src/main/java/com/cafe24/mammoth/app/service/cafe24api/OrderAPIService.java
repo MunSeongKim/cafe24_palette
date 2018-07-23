@@ -7,7 +7,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -60,9 +59,8 @@ public class OrderAPIService {
 			order.setOrderId(o.getOrderId());
 			order.setOrderDate(o.getOrderDate());
 			for(Map<String, String> i: o.getItems()) {
-				String productNo = i.get("product_no");
-				// 수동 캐시작업
-				Product product = cache.get(productNo, Product.class);
+				// 수동 캐시작업 - Cache 동작은 AOP 기반으로 동작하기 때문에 내부에서 호출하는 메소드에는 캐시가 적용될 수 없음
+				Product product = cache.get(i.get("product_no"), Product.class);
 				// 캐시에 없으면 product 정보 요청
 				if( product == null) {
 					product = getProduct(i.get("product_no"));
@@ -91,7 +89,6 @@ public class OrderAPIService {
 	}
 	
 	// product 정보 요청
-	@Cacheable(value="products",key="#productNo")
 	private Product getProduct(String productNo) {
 		//Request Parameters
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
@@ -105,8 +102,8 @@ public class OrderAPIService {
 		product.setProductNo(products.getProductNo());
 		product.setSmallImage(product.getSmallImage());
 		product.setCategories(products.getCategories());
-		System.out.println("--------------product API called ------------------");
-		System.out.println(product);
+		
+		// 캐시에 데이터 삽입
 		cacheManager.getCache("products").put(productNo, product);
 		return product;
 	}

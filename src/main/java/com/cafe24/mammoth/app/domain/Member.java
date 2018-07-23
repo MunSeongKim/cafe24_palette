@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -22,7 +23,7 @@ public class Member {
 	@Column(name="mall_id", nullable = false, length = 50)
 	private String mallId;
 
-	@Column(nullable = true)
+	@Column(nullable = false)
 	private Boolean panelUsed;
 
 	@Column(name = "base_domain", nullable = true, length = 200)
@@ -34,7 +35,7 @@ public class Member {
 	@Column(name = "mall_url", nullable = true, length = 200)
 	private String mallUrl;
 
-	@OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	private List<Panel> panels;
 
 	@Override
