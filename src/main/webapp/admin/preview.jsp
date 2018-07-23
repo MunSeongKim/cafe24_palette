@@ -18,6 +18,9 @@
 <link rel="stylesheet"
 	href="${pageContext.servletContext.contextPath }/admin/assets/css/bootstrap.min.css">
 
+<link rel="stylesheet"
+	href="${theme.path}">
+
 <style>
 * {
 	margin: 0;
@@ -101,6 +104,8 @@
 
 		</div>
 	</div>
+	
+	
 
 	<script>
 		$(function() {

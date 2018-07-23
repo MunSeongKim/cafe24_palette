@@ -50,7 +50,7 @@ cafe24:
     useCurrentUri: false
     # code 발급 후 redirect 되는 URI
     preEstablishedRedirectUri: https://devbit005.cafe24.com/mammoth/oauth2
-    scope:
+    scope: 
       - mall.read_application,mall.write_application,mall.read_store,mall.write_store,mall.read_order,mall.write_order,mall.read_product
   resource:
     #API 리소스 서버 uri

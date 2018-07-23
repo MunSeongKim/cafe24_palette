@@ -48,12 +48,14 @@ var files = [
 		'https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css',
 		'https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css',
 		'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
-		'/mammoth/template/panel.css',
+		'/mammoth/template/theme1.css',
+		//'/mammoth/template/panel.css',
 		'/mammoth/function/orderlist/orderlist_popuplayer.css',
 		'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js',
 		'https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css',
 		'https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js',
-		'https://devbit005.cafe24.com/mammoth/static/mustachejs/2.2.1/mustache.min.js'
+		/*'https://devbit005.cafe24.com/mammoth/static/mustachejs/2.2.1/mustache.min.js'*/
+		'https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.js' 
 ];
 
 

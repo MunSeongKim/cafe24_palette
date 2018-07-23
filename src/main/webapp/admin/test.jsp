@@ -15,30 +15,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div class="">
-		<ul class="nav nav-tabs" role="tablist">
-			<li class="nav-item"> 
-		    	<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
-		  	</li>
-		  	<li class="nav-item">
-		    	<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
-		  	</li>
-		  	<li class="nav-item">
-		   		<a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
-		  	</li>
-		</ul> 
-	
-		<div class="tab-content">
-			<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-				<h1>AAAA</h1>
-			</div>
-		 	<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-		 		<h1>BBBB</h1>
-		 	</div>
-		  	<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-		  		<h1>CCCC</h1>
-		  	</div>
-		</div>
+	<div class="" style="width: 100%; height: 1000px; ">
+		<iframe style="width: 100%; height: 1000px;" src="http://localhost:8080/mammoth/setting/create"></iframe>
 	</div>
 </body>
 </html>

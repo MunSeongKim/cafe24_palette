@@ -11,21 +11,27 @@
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}" />
 
+<link rel="stylesheet"
+	href="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.theme.min.css">
+<link rel="stylesheet"
+	href="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="${pageContext.servletContext.contextPath }/static/bootstrap-toggle/2.2.2/css/bootstrap-toogle.min.css"/>
+<link rel="stylesheet"
+	href="${pageContext.servletContext.contextPath }/static/font-awesome/5.1.0/css/all.css"/> 
+
 <!-- jQuery library -->
-<!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
 <script src="${pageContext.servletContext.contextPath }/static/jquery/1.11.1/jquery.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-<link rel="stylesheet"
-	href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<!-- Latest compiled JavaScript -->
+<script src="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.min.js"></script>
 <script
-	src="${pageContext.servletContext.contextPath }/admin/assets/js/bootstrap.min.js"></script>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath }/admin/assets/css/bootstrap.min.css">
-
-
+	src="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script
+	src="${pageContext.servletContext.contextPath }/static/mustachejs/2.2.1/mustache.min.js"></script>
+<script
+	src="${pageContext.servletContext.contextPath }/static/popper.js/1.14.1/popper.min.js"></script>
+<script
+	src="${pageConetxt.servletContext.contextPath }/static/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+	
 <style>
 * {
 	margin: 0;
@@ -48,8 +54,10 @@ table, table thead th {
 	<div class="container">
 		<h1>Panel List</h1>
 		<div class="row">
-			<a href="${pageContext.servletContext.contextPath }/api/test/orders" class="btn btn-primary pull-left">test</a>
-			<a href="${pageContext.servletContext.contextPath }/setting/create" class="btn btn-primary pull-right">만들기</a>
+
+			<a href="${pageContext.servletContext.contextPath }/test" class="btn btn-primary pull-left">test</a>
+			<a href="${pageContext.servletContext.contextPath }/setting/create"
+				class="btn btn-primary pull-right">만들기</a>
 		</div>
 		<div class="row">
 			<table id="tbl-panel-list" class="table table-striped">

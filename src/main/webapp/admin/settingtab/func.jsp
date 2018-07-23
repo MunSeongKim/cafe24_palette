@@ -123,7 +123,7 @@ i{
 
 /* sort li element */
 .func-element{
-	
+	pointer-events : all;
 }
 
 .func-sort-title > a:link{
@@ -178,7 +178,7 @@ $(function() {
 		var ariaDescribedby = $(this).attr("aria-describedby");
 		$('#'+ariaDescribedby).css({  
 			"max-width" : "600px"
-		});
+		}); 
 		
 		var innerHTML = "<ul><li>기능 배치의 순서를 drap & drop 방식으로 조절하세요!</li><li>버튼을 통해 기능을 간단히 ON/OFF 하세요!</li></ul>";
 		$(".popover-header").prepend('<i class="custom-i fas fa-question-circle"></i>');
@@ -196,7 +196,44 @@ $(function() {
 	    /* sort가 모두 일어난 후 동작 */
 	    update: function(e, ui) {
 	    	/* 현재 클릭 된 li의 부모 ul element */
-	    	var $ul = $(ui.item.context).parent();
+			var selectedElement = $(ui.item.context);
+	    	var funcName = selectedElement.data("funcname");
+	    	var $ul = selectedElement.parent();
+	    	var $previewPanel = $(".preview_panel .preview_func_div");
+	    	
+	    	/* drag & drop 후 순서 정보 */
+	    	var orderInfo = $("#sortable").sortable('toArray');
+	    	
+	    	console.log(orderInfo); 
+	    	
+	    	/* 움직인 li와 funcname이 같은 기능 패널 사라짐 */
+	    	$(".preview_panel > div[data-panelfuncname="+funcName+"]").fadeOut(300, function(){
+	    		tmpElement = $(this); 
+	    		//$(this).detach();  /* 같은 funcname 가진 기능 패널 Element 삭제 */ 
+	    		
+	    		console.log(tmpElement); 
+	    		prevFuncName = selectedElement.prev().data("funcname");
+	    		console.log("prevFuncName : "+prevFuncName);
+	    		
+	    		$(".preview_panel > div").each(function(){
+	    			if($(this).data("panelfuncname") == prevFuncName){
+	    				console.log($(this)); 
+	    				$(this).after(tmpElement);
+	    				tmpElement.fadeIn(300);
+	    			}else if(prevFuncName == undefined){
+	    				/* 기능 순서를 맨앞으로 했을 때. prevFuncName == 'undefinded' 인 상황. */
+	    				$(this).parent().prepend(tmpElement);  
+	    				tmpElement.fadeIn(300); 
+	    			}
+	    		})
+	    		
+	    	});
+	    	
+	    	for(var i=0; i<orderInfo.length; i++){
+	    		console.log(i+", "+orderInfo[i]);
+	    		
+	    	}
+	    	
 	    	// Determine the priority.
 	    	determineOrder($ul);
 	    },
@@ -252,6 +289,7 @@ $(function() {
 	$(document).on('click', '.func-sort-btn > div', function(){
 		$li = $(this).closest("li");    /* 가까이 있는 li 탐색 */
 		$ul = $(this).closest("ul");    /* 가까이 있는 ul 탐색 */
+		var funcname = $li.data("funcname"); 
 		if($(this).hasClass("off")==true){  // 버튼을 눌렀는데 off라는 class를 가지고 있지 않다 -> off하는 상황.
 			$li.addClass("ui-state-disabled"); 	 /* li 비활성화 */
 			
@@ -262,11 +300,28 @@ $(function() {
 			/* li내의 버튼 이벤트는 활성화 */
 			$(this).css({"pointer-events" : "all"});
 			
-		}else{
-			$(this).closest("li").removeClass("ui-state-disabled");
+			$(".preview_panel div").each(function(){
+				if($(this).data("panelfuncname") == funcname){
+					$(this).fadeOut(300);
+				}
+			});
+			
+		}else{ /* 버튼을 눌러서 기능을 On하는 상황. */
+			$li.removeClass("ui-state-disabled");
 			$li.detach();				/* 해당 버튼이 있는 li 제거 */
 			$li.prependTo($ul);
 			$li.attr("funcorder", "0");
+			
+			/* drag & drop 후 순서 정보 */
+	    	var orderInfo = $("#sortable").sortable('toArray');
+			
+			$(".preview_panel div").each(function(){
+				if($(this).data("panelfuncname") == funcname){
+					var tmpElement = $(this);
+					$(this).parent().prepend(tmpElement);
+					$(this).fadeIn(300);
+				}  
+			});
 		} 
 		
 		// determine Order
@@ -280,7 +335,7 @@ $(function() {
 	<!-- step-content -->
 	<div class="row" style="height: 100%; padding: 5px;">
 		<!-- 기능에 마우스 오버 시 상세 한 설명이 나오는 공간. -->
-		<div class="tab-content col-sm-4 col-md-4 col-xl-4"> 
+		<div class="tab-content col-sm-6 col-md-6 col-xl-6">  
 			<c:forEach var="func" items="${funcs }" varStatus="stat"> 
 				<c:choose>
 					<c:when test="${stat.index == 0 }">
@@ -314,77 +369,55 @@ $(function() {
 								<div class="progress">
 									<div class="progress-bar" role="progressbar" style="width: 70%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">70%</div>
 								</div>
-							</div> 
+							</div>
 						</div>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
 		 </div> 
-		 
-		<div class="sortdiv col-sm-4 col-md-4 col-xl-4">
+		  
+		<div class="sortdiv col-sm-6 col-md-6 col-xl-6"> 
 			<i class="custom-i fas fa-sort" data-toggle="popover"> 기능 순서</i>
 			<hr class="custom-hr"> 
-			<ul class="nav nav-tabs" id="sortable" role="tablist"> 
-				<c:forEach var="func" items="${funcs }" varStatus="stat">
-					<c:choose>
-						<c:when test="${stat.index == 0 }">
-							<li class="func-element nav-item ui-state-default" data-funcname="${func.nameEng }" data-funcid="${func.funcId }" funcorder=${stat.index }>
-								<span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
-								<!-- ui-state-disabled -->  
-								<div class="func-sort">
-									<div class="func-sort-title"> 
-										<a class="nav-link active show" id="${func.nameEng}-sort-tab" data-funcname="${func.nameEng }" data-toggle="tab" role="tab" href="#${func.nameEng}-sort" aria-controls="${func.nameEng}-sort" aria-selected="true">
-											${func.name }
-										</a>
-									</div>
-									  
-									<div class="func-sort-btn"> 
-										<input type="checkbox" checked="checked" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" data-height="20" data-size="small">
-									</div>
-								</div>
-							</li>
-						</c:when>
+			<ul class="nav nav-tabs" id="sortable" class="funcsort" role="tablist"> 
+			<c:forEach var="func" items="${funcs }" varStatus="stat">
+				<li class="func-element nav-item ui-state-default ui-state-disabled" id="${func.nameEng }" data-funcname="${func.nameEng }" data-funcid="${func.funcId }" funcorder=${stat.index }>
+					<span class="ui-icon ui-icon-arrowthick-2-n-s"></span> 
+					<!-- ui-state-disabled -->
+					<div class="func-sort">
+						<div class="func-sort-title"> 
+							<a class="nav-link active show" id="${func.nameEng}-sort-tab" data-funcname="${func.nameEng }" data-toggle="tab" role="tab" href="#${func.nameEng}-sort" aria-controls="${func.nameEng}-sort" aria-selected="true">
+								${func.name }
+							</a>
+						</div>
 						
-						<c:otherwise>
-							<li class="func-element nav-item ui-state-default" data-funcname="${func.nameEng }" data-funcid="${func.funcId }" funcorder=${stat.index }>
-								<span class="ui-icon ui-icon-arrowthick-2-n-s"></span> 
-								<!-- ui-state-disabled -->
-								<div class="func-sort">
-									<div class="func-sort-title">
-										<a class="nav-link" id="${func.nameEng }-sort-tab" data-funcname="${func.nameEng }" data-toggle="tab" role="tab" href="#${func.nameEng}-sort" aria-controls="${func.nameEng}-sort" aria-selected="false">
-											${func.name }
-										</a>
-									</div>
-									
-									<div class="func-sort-btn"> 
-										<input type="checkbox" checked="checked" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" data-height="20" data-size="small">
-									</div>
-								</div>
-							</li>
-						</c:otherwise>
-					</c:choose>
-				</c:forEach>
+						<div class="func-sort-btn">  
+							<input type="checkbox" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" data-height="20" data-size="small">
+						</div>
+					</div>
+				</li>
+			</c:forEach>
 			</ul> 
 		</div>
 		
-		<div class="func-detail-image-div tab-content col-sm-4 col-lg-4 col-xl-4">
+		<%-- <div class="func-detail-image-div tab-content col-sm-4 col-lg-4 col-xl-4">
 			<i class="custom-i fas fa-images"> 기능 미리보기</i>
 			<hr class="custom-hr">
 			<c:forEach var="func" items="${funcs}" varStatus="stat"> 
 				<c:choose>
 					<c:when test="${stat.index == 0 }">
 						<div class="tab-pane fade show active" style="text-align: center;" data-funcname="${func.nameEng}">
-							<img class="func-detail-image img-fluid" alt="${func.name } 이미지" src="${func.imgpath }">
+							<img class="func-detail-image img-fluid" alt="${func.name } 이미지" src="${pageContext.servletContext.contextPath }${func.imgPath }">
 						</div> 
 					</c:when>
 					 
 					<c:otherwise>
 						<div class="tab-pane fade" style="text-align: center;" data-funcname="${func.nameEng}">
-							<img class="func-detail-image img-fluid" alt="${func.name } 이미지" src="${func.imgpath }">
-						</div> 
-					</c:otherwise>
+							<img class="func-detail-image img-fluid" alt="${func.name } 이미지" src="${pageContext.servletContext.contextPath }${func.imgPath }">
+						</div>
+					</c:otherwise> 
 				</c:choose>
 			</c:forEach>
-		</div>
+		</div> --%> 
 	</div>
 </div>

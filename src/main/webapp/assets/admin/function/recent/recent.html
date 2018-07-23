@@ -1,0 +1,205 @@
+<!-- 단무지 버전 -->
+<style>
+.recent_main_div {
+	border: 1px solid #000;
+	background-color: #ececec;
+	width: 60%;
+	margin-left: 20%;
+	margin-right: 20%;
+	border-radius: 10px;
+}
+
+.recent_left_arrow {
+	display: block;
+	position: absolute;
+	left : 2px;
+	width: 75%;
+	height: 120px;
+	cursor: pointer;
+	padding-top: 50px;
+}
+
+.recent_left_arrow:hover{
+	text-decoration: none;
+}
+
+.recent_left_arrow:before{
+	color : black;
+	font-size: 1.5em;
+}
+
+.recent_right_arrow {
+	display: block;
+	position: absolute;
+	left: 17px;
+	width: 75%;
+	height: 120px;
+	cursor: pointer; 
+	padding-top: 50px;
+	font-size: 1em;
+}
+
+.recent_right_arrow:hover{
+	text-decoration: none; 
+}
+
+.recent_right_arrow:before{
+	color : black;
+	font-size: 1.5em;
+}
+
+.recent_product_title {
+	color: #000;
+	font-size: 0.7em;
+	font-style: normal;
+	font-weight: bolder;
+}
+
+.recent_hr {
+	margin: 10px;
+}
+
+.recent_btn_list {
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+
+.recent_content {
+	padding: 0px;
+	margin-left: 25px;
+	margin: 0px auto;
+	cursor: pointer;
+}
+
+.recent-link-btn{
+	padding-top: 0.375rem;
+    padding-right: 0.75rem;
+    padding-bottom: 0.375rem;
+    padding-left: 0.75rem;
+}
+
+.card-text{
+	font-size: 8px;
+	overflow : hidden;
+	text-overflow: ellipsis;
+	-webkit-line-clamp : 4;
+	-webkit-box-orient: vertical;
+	word-wrap:break-word;
+	display: -webkit-box;
+}
+
+.recent_preview_option_info{
+	font-size : 10px;
+}
+ 
+</style>
+
+<!-- 180717 hwi 경로 수정 파일 load error나서 -->
+<script type="text/javascript" src="/mammoth/assets/admin/function/recent/js/recent.js"></script>
+
+<script> 
+$(document).ready(function() {
+	
+	console.log("recent script is load!!");
+	
+	$.recent.init({  
+		isPreview : true,  // 미리보기 기능 사용 여부
+		interval : 3000,   // 슬라이드 자동 넘기기 속도
+		preview : {
+			layoutWidth : 200,  // 미리보기 레이아웃 크기 (px)
+			layoutBorderRadius : 0,   // 미리보기 레이아웃 border-radius 정도 (px)
+			imgHeight : 200,    // 미리보기 사진 높이 (px)
+		}
+	});
+});
+</script>
+
+<div class="recent_main_div container">
+	<div class="row-sm" style="text-align: center;">
+		<a class="recent_product_title"
+			href="/product/recent_view_product.html">최근 본 상품</a>
+			<span class="recent_count badge badge-light">4</span>
+		<hr class="recent_hr">
+	</div>
+
+	<div class="row-sm" style="height: inherit;">
+		<div class="col-2" style="float: left;">
+			<a class="recent_left_arrow fas fa-angle-left" href="#myCarousel" role="button" data-slide="prev"></a>
+		</div>
+
+		<div class="col-2" style="float: right;">
+			<a class="recent_right_arrow fas fa-angle-right" href="#myCarousel" role="button" data-slide="next"></a>
+		</div>
+
+		<div class="col-8 recent_content">
+			<div style="max-width: 148px; margin: 0px auto;">
+				<!-- <img alt="test" src="../function/recent/images/recent_product1.gif" style="height: 120px; width: 100%;"> -->
+				<div id="myCarousel" class="carousel slide" data-ride="carousel">
+					<!-- Indicators -->
+
+					<!-- Wrapper for slides -->
+					<div class="carousel-inner">
+					
+					<!-- recentList()에서 Mustache Template를 사용하여 태그 생성하여 삽입 -->
+					<script type="text/x-mustache" id="recent-template">
+						{{#imgs}}
+							<div class="carousel-item" style="height: 120px;">
+								<img src="{{imgSrc}}" data-iProductNo="{{iProductNo}}" style="width: 100%;">
+							</div>
+						{{/imgs}}
+					</script>
+						
+						<!-- 마우스 오버 시 확대 출력. -->
+						<div class="recent_preview_layout card" style="display: none; padding: 10px;">
+							<!-- CAFE24API.init('BrIfqEKoP.......'); //App Key 
+								 CAFE24API.get('/api/v2/products/7/hits/count', function(err, res){
+								    console.log(res);
+							     });
+							-->
+							<img class="recent_preview_img card-img-top" alt="상품 이미지">
+							<hr class="recent_hr" style="margin-top: 0px;">
+							<div>
+								<!-- 상품에 대한 조회 수 정보 -->
+								<!-- Front API 필요 -->
+								<div>
+									<i class="fas fa-eye" style="font-size: 12px;">1777회</i> 
+								</div>
+								<p class="card-title">상품명 :  
+									<span class="recent_preview_title"></span>
+								</p>
+								
+								<!-- Front API 필요 -->
+								<p class="recent_preview_option_info">
+									<span>
+										옵션 정보 : S, M, L, XL
+									</span>
+								</p>
+
+								<!-- Front API 필요 -->								
+								<p class="card-text">
+									<span class="recent_preview_content">
+										이 상품은 엄~청 잘 나가는 상품 입니다. 지금 안사면 후회 하실 겁니다. 색상은 ~~~가 있고, 소재는 ~~~입니다.
+										이 상품은 엄~청 잘 나가는 상품 입니다.
+										지금 안사면 후회 하실 겁니다. 색상은 ~~~가 있고, 소재는 ~~~입니다.이 상품은 엄~청 잘 나가는 상품 입니다.
+										지금 안사면 후회 하실 겁니다. 색상은 ~~~가 있고, 소재는 ~~~입니다.이 상품은 엄~청 잘 나가는 상품 입니다.
+										지금 안사면 후회 하실 겁니다. 색상은 ~~~가 있고, 소
+									</span> 
+								</p> 
+								<a href="#" class="recent-link-btn btn btn-primary btn-sm btn-block">상품 페이지 이동</a>
+							</div>
+						</div>
+					</div>
+				</div> 
+			</div>
+		</div>
+	</div>
+
+	<div class="row-sm recent_btn_list" style="text-align: center;">
+		<button type="button" class="btn btn-light btn-sm">
+			<span style="font-size: 5px;">고객센터</span>
+		</button>
+		<button type="button" class="btn btn-light btn-sm">
+			<span style="font-size: 5px;">1:1문의</span>
+		</button>
+	</div>
+</div>

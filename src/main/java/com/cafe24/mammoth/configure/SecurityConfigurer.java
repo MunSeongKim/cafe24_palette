@@ -52,8 +52,8 @@ import com.cafe24.mammoth.oauth2.Cafe24OAuth2ClientAuthenticationProcessingFilte
  *
  */
 @Configuration
-@EnableWebSecurity
 @EnableOAuth2Client
+@EnableWebSecurity
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
 	/**

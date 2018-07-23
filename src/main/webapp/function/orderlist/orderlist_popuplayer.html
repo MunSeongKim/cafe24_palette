@@ -1,25 +1,25 @@
 <script src="/mammoth/function/orderlist/orderlist_popuplayer.js"></script>
+
 <style>
 .hide { display:none; }
 </style>
 <!-- 구매 목록 팝업 레이어  -->
-<div class="popupLayer">
+<div class="popupLayer plt-pn">
 	<div id="popup-header">
 		<div id="popup-period">
-			<button class="btn" id="period-week">1주일</button>
-			<button class="btn" id="period-month">1개월</button>
-			<button class="btn" id="period-all">전체</button>
+			<span class="plt-pn-btn-default plt-pn-font-l plt-pn-font-n" id="period-week ">1주일</span>
+			<span class="plt-pn-btn-default plt-pn-font-l plt-pn-font-n" id="period-month">1개월</span>
+			<span class="plt-pn-btn-default plt-pn-font-l plt-pn-font-n" id="period-all">전체</span>
 			<div id="popup-close">
 				<span onclick="closeLayer()">&times;</span>
 			</div>
 		</div>
-		<div id="popup-chkbox">
+		<div id="popup-chkbox" class="plt-pn-font-s">
 			<input type="checkbox" name="ckbox" id="ckbox"> 현재와 동일한 카테고리
 			상품 구매 내역 보기
 		</div>
-
+		<hr class="plt-pn-hr-thin plt-pn-hr-space-s">
 	</div>
-	<hr>
 	<!-- 상품 리스트 START -->
 	<div id="popup-orderlist">
 		<div class="container-layout">
@@ -35,8 +35,8 @@
 				{{#datas}}
 					<div class="row">
 						<div class="col-md-12">
-							<div class="card border-dark mb-3">
-								<div class="card-header">{{orderDate }}</div>
+							<div class="card plt-pn-border-dotted mb-3">
+								<div class="card-header plt-pn-bg">{{orderDate }}</div>
 								{{#items}}
 								<div class="card-body">
 										<div class="row order-product-info">
@@ -50,7 +50,7 @@
 												<p>가격 : {{productPrice}}</p>
 												<p>색상 : {{optionValue}}</p>
 												<p>사이즈 : S</p>
-												<button>사이즈 상세보기</button>
+												<a class="plt-pn-btn-inverse">사이즈 상세보기</a>
 											</div>
 										</div>
 								</div>

@@ -53,7 +53,7 @@ public class Theme {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false)
 	private Date createdDate;
-
+	
 	@OneToMany(mappedBy = "theme")
 	private List<Panel> panel;
 
