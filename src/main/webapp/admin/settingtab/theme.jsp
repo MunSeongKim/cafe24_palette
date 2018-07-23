@@ -64,11 +64,11 @@ $(document).ready(function(){
 		
 		// 사진 교체
 		previewImgPath = $(this).data("previewpath");
-		$(".theme-detail-image").attr("src", previewImgPath).fadeIn();
+		$(".theme-detail-image").attr("src", "${pageContext.servletContext.contextPath }"+previewImgPath).fadeIn();
 	});
 	
 });
-</script> 
+</script>  
 <div class="inner">
 	<div class="row" style="height: 100%; padding: 5px;">
 		<!-- 테마 선택 card 형태 grid 배치 -->
@@ -77,19 +77,19 @@ $(document).ready(function(){
 			<hr class="custom-hr">
 			<c:forEach var="theme" items="${themes }" varStatus="stat">
 				<div class="card" data-previewpath = "${theme.previewImgPath }" data-themeno = ${theme.id } data-themetitle = ${theme.title }> 
-			 		<img class="card-img-top" src="${theme.titleImgPath }" alt="Card image cap">
+			 		<img class="card-img-top" src="${pageContext.servletContext.contextPath }${theme.titleImgPath }" alt="Card image cap">
 			  		<div class="card-body">
 			    		<p class="card-title">테마명:${theme.title }</p> 
 			  		</div>
 				</div>
-			</c:forEach>
+			</c:forEach> 
 		</div> 
 		 
 		<div class="theme-detail-image-div tab-content col-sm-6 col-md-5 col-lg-4 col-xl-3">
 			<i class="custom-i fas fa-images"> 테마 이미지</i>  
 			<hr class="custom-hr">
 			<div class="theme-detail-image-inner-div">
-				<img class="theme-detail-image img-fluid" alt="theme 예시 이미지" src="../admin/assets/image/theme_none.PNG">
+				<img class="theme-detail-image img-fluid" alt="theme 예시 이미지" src="${pageContext.servletContext.contextPath }/assets/admin/image/theme_none.PNG">
 			</div>
 		</div>
 	</div>

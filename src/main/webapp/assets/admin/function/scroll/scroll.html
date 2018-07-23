@@ -1,0 +1,921 @@
+<!-- bootstrap css는 이전에 써놔야 내 css가 나중 처리되서 custom된 것을 이용할 수 있다. -->
+<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>-->
+<!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>-->
+
+<style>
+.remote-body {
+	border: 1px solid black;
+	background-color: white;
+	position: fixed;
+	top: 150px;
+	right: 30px;
+	height: 150px;
+	width: 250px;
+}
+
+/* 스크롤 전체 function */
+.scroll_function {
+	width: 100%;
+	height: 80%;
+	display: table;
+}
+
+.header_part {
+	width: 100%;
+	height: 30%;
+	position: relative;
+	text-align: center;
+	padding-top: 5px;
+}
+
+/* 복사 input box */
+.form-control.scroll_text_url{
+	display:inline;
+	border: 0px;
+	width: 40%;
+	height: 100%;
+	vertical-align: middle;
+	
+}
+-->
+/* 복사 버튼 */
+.btn-info {
+	font-size: 15px;
+	padding:3px;
+	width: 65%;
+	height: 100%;
+}
+
+.scroll_copy_div {
+	width: 40%;
+	height: 100%;
+	position: relative;
+	display: inline-block;
+}
+
+/* copied popup */
+.scroll_copied_popup {
+	background-color:white;
+	border-radius:15%;
+	z-index:1000;
+	display:none;
+	position:absolute;
+	/*top:-420%;*/
+	/*left:-120%;*/
+	width:70px;
+	height:100%;
+	border:1px solid black;
+}
+
+.scroll_question_div {
+	
+}
+
+/* .scroll_question_button {
+	width: 26%;*/
+	
+	/* IE11 환경에서 얘가 없어야 정상작동. height: 100%;*/
+	/*vertical-align: text-top;
+	background: url(/assets/images/question_mark.png) no-repeat;
+	border: none;
+} */
+
+/* 도움말 태그 */
+.far.fa-question-circle {
+	font-size:25px;
+	width: 26%;
+	vertical-align: text-top;
+}
+
+/*도움말 클릭시 뜨는 팝업*/
+.scroll_question_popup {
+	/*background-color: white;
+	border-radius: 5%;*/
+	z-index: 1000;
+	display: none;
+	position: absolute;
+	/*top:-420%;*/
+	left: -110%;
+	width: 235px;
+	height: 600%;
+	/*border: 1px solid black;*/
+}
+
+/*도움말 클릭시 뜨는 팝업 밑에 글*/
+.scroll_question_popup p {
+	font-size:12px;
+	color: black;
+}
+
+/* 도움말 팝업 닫기 버튼*/
+.scroll_question_popup_close {
+	position: absolute;
+	right: 15px;
+	top: 22px;
+	font-size:20px;
+}
+
+/* 모달 타이틀 정렬 */
+.modal-title{
+	margin-left:64px;
+}
+
+.scroll_pop_layer .scroll_pop_container {
+	padding: 20px 25px;
+}
+
+.scroll_pop_layer p.ctxt {
+	color: #666;
+	line-height: 25px;
+}
+
+.scroll_pop_layer .btn-r {
+	width: 100%;
+	margin: 10px 0 10px;
+	padding-top: 10px;
+	/*border-top: 1px solid #DDD;*/
+	text-align: right;
+}
+
+/*도움말 클릭시*/
+.modal.scroll_pop_layer {
+	display: none;
+	position: fixed;
+	bottom:auto;
+	top: 40%;
+	left: 50%;
+	width: 226px;
+	margin-top:-50px;
+	/*height: auto;*/
+	/*background-color: #fff;
+	border: 5px solid #3571B5;*/
+	z-index: 10;
+}
+
+/* keyword popup close 버튼 */
+a.scroll_pop_layerClose {
+	display: inline-block;
+	height: 25px;
+	padding: 0 14px 0;
+	border: 1px solid #304a8a;
+	background-color: #3f5a9d;
+	font-size: 13px;
+	color: #fff;
+	line-height: 25px;
+}
+
+/* keyword popup save 버튼 */
+a.scroll_pop_layerSave {
+	display: inline-block;
+	height: 25px;
+	padding: 0 14px 0;
+	border: 1px solid #304a8a;
+	background-color: #3f5a9d;
+	font-size: 13px;
+	color: #fff;
+	line-height: 25px;
+}
+
+/* bootstrap ul */
+.list-group {
+	display:block;
+}
+
+/* keyword popup */
+.scroll_btn_ul [class^='keyword_popup'], .scroll_btn_ul [class*='keyword_popup']{
+	z-index: 999;
+	position: absolute;
+	width: 120px;
+	height: 28px;
+	/*border: 1px solid black;*/
+	/* ul 밑에 바로 꼽을 경우 */
+	margin-top: -1.875em;
+	margin-left: -2.375em;
+	/*margin:-32 32px; 얘는 li 안에 있을 경우*/
+	display: none;
+	/*top:-10px;*/
+	transition: opacity 0.3s;
+	
+	padding: 0px;
+	-webkit-border-radius: 7px;
+	-moz-border-radius: 7px;
+	border-radius: 7px;
+	border: #7F7F7F solid 4px;
+}
+
+/* keyword popup */
+.scroll_btn_ul [class^='keyword_popup']:after, .scroll_btn_ul [class*='keyword_popup']:after{
+	content: '';
+	position: absolute;
+	border-style: solid;
+	border-width: 0px 0px 0;
+	border-color: #FFFFFF transparent;
+	display: block;
+	width: 0;
+	z-index: 1;
+	bottom: -0px;
+	left: 0px;
+}
+
+/* keyword popup */
+.scroll_btn_ul [class^='keyword_popup']:before, .scroll_btn_ul [class*='keyword_popup']:before{
+	content: '';
+	position: absolute;
+	border-style: solid;
+	border-width: 3px 0px 0;
+	border-color: #7F7F7F transparent;
+	display: none;
+	width: -0px;
+	z-index: 0;
+	bottom: -7px;
+	left: 0px;
+}
+
+a.scroll_pop_layerClose:hover {
+	border: 1px solid #091940;
+	background-color: #1f326a;
+	color: #fff;
+}
+
+/* input tpye중 text이면서 disabled인 놈들 */
+input[type="text"]:disabled {
+    background: #FFF;
+}
+
+/* 키워드 입력 부분*/
+.scroll_pop_input {
+	width:125px;
+	margin-left:30px;
+	-webkit-transition: 0.5s; /* focus 받았을 때 시간을 두기 위함.*/
+	transition: 0.5s;
+	border: none;
+	outline: none; /* chrome 기본 focus event를 제거하기 위함 */
+	border-bottom: 2px solid #2872BC;
+}
+
+/* 키워드 입력 부분 focus 이벤트 받았을 때 */
+.scroll_pop_input:focus {
+	border-bottom: 3px solid #070294;
+}
+
+/* 키워드 입력 안됬을 때 보이는 input */
+.scroll_pop_chk_p {
+	display: none;
+	font-color: red;
+	font-size:12px;
+	padding:10px;
+}
+
+/* 저장 버튼 부분 */
+.save_button_part {
+	/*margin-top:15px;*/
+	width: 100%;
+	height: 7em;
+	text-align: -webkit-center;
+	text-align: center;
+}
+
+/* 동그라미 css */
+.circle1 {
+	margin: 0 auto;
+	relative: absolute;
+	background-color: #609;
+	width: 3em;
+	height: 3em;
+	border-radius: 100%;
+}
+
+/* carousel css */
+.scroll_infiniteCarousel {
+	width: 100%;
+	position: relative;
+}
+
+.scroll_infiniteCarousel .scroll_wrapper {
+	width: 9.8em;
+	overflow: auto;
+	min-height: 7em;
+	margin: 0 1.875em;
+	position: absolute;
+	top: 0;
+}
+
+/*
+				class^="" ==> ""으로 시작하는 class,
+				class*="" ==> ""이 포함되어 있는 class
+			*/
+.scroll_infiniteCarousel [class^='scroll_items'],
+	.scroll_infiniteCarousel [class*='scroll_items'] {
+	border: 5px solid #000;
+	width: 2.5em;
+	height: 2.5em;
+	-moz-border-radius: 100%;
+	-webkit-border-radius: 100%;
+	border-radius:100%;
+	padding:0.125em;
+}
+
+.scroll_infiniteCarousel ul a img {
+	border: 5px solid #000;
+	-moz-border-radius: 100%;
+	-webkit-border-radius: 100%;
+}
+
+.scroll_infiniteCarousel .scroll_wrapper ul {
+	width: 9999px;
+	list-style-image: none;
+	list-style-position: outside;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	top: 35px;
+}
+
+.scroll_infiniteCarousel ul li {
+	display: block;
+	float: left;
+	height: 3.3em;
+	width: 3.3em;
+}
+
+.scroll_infiniteCarousel ul .cloned {
+	display: block;
+	float: left;
+	height: 3em;
+	width: 3.4em;
+}
+
+.scroll_infiniteCarousel ul li a img {
+	display: block;
+}
+
+.scroll_infiniteCarousel .arrow {
+	font-size:1.563em;
+	display: block;
+	height: 36px;
+	width: 37px;
+	/*background: url(/assets/images/arrow.png) no-repeat 0 0;*/
+	/*text-indent: -999px;*/
+	position: absolute;
+	top: 43px;
+	cursor: pointer;
+}
+
+.scroll_infiniteCarousel .scroll_forward {
+	background-position: 0 0;
+	right: 0;
+}
+
+.scroll_infiniteCarousel .scroll_back {
+	background-position: 0 -72px;
+	left: 0;
+}
+
+.scroll_infiniteCarousel .scroll_forward:hover {
+	background-position: 0 -36px;
+}
+
+.scroll_infiniteCarousel .scroll_back:hover {
+	background-position: 0 -108px;
+}
+</style>
+<!-- 내 기능 전체 묶음 -->
+<div class="scroll_function">
+	<!-- 첫 줄(링크input, 복사하기 버튼, 도움말, 도움말 팝업) -->
+	<div class="header_part">
+		<!-- link관련 요소들 (input, 복사하기 버튼) -->
+		<input type="text" class="form-control scroll_text_url" id="scroll_text_url" readonly />
+		<div class="scroll_copy_div">
+			<button type="button" class="btn btn-secondary scroll_copy_button" id="scroll_copy_button" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="">
+			  copy
+			</button>
+		
+			<!-- 복사하기 버튼 -->
+			<!-- <button type="button" class="btn btn-info" id="scroll_copy_button"
+				value="copy">copy
+				<span class="scroll_copy_span" id="scroll_copy_span"></span>
+			</button>
+			<div class="scroll_copied_popup">
+				<p>copied</p>
+			</div> -->
+			<!-- 복사완료 팝업 -->
+			
+			<!-- 도움말 버튼 -->
+			<i class="far fa-question-circle scroll_question_button"></i>
+			<!-- <input type="button" class="scroll_question_button" /> -->
+			<!-- 도움말 팝업 -->
+			<!-- <div class="scroll_question_popup">
+				<div class="scroll_question_popup_close">
+					<i class="far fa-window-close"></i>
+				</div>
+				<p>
+					[[도움말]]<br><br> 1. copy버튼을 눌러서 위치가 담긴 페이지의 url을 저장할 수 있습니다.<br>
+					2. 'r' 키를 누르면 현재 페이지 위치를 저장할 수 있습니다.
+				</p>
+			</div> -->
+			<!-- 180711 boot modal로 변경 -->
+			<div class="modal scroll_question_popup" tabindex="-1" role="dialog">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title">[도움말]</h5>
+				        <div class="scroll_question_popup_close">
+							<i class="far fa-window-close"></i>
+						</div>
+			        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button> -->
+			      </div>
+			      <div class="modal-body">
+			        <p>1. copy버튼을 눌러서 위치가 담긴<br>페이지의 url을 저장할 수 있습니다.<br>
+					   2. 'r' 키를 누르면 현재 페이지 위치를 저장할 수 있습니다.</p>
+			      </div>
+			     <!-- <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			        <button type="button" class="btn btn-primary">Save changes</button>
+			      </div>-->
+			    </div>
+			  </div>
+			</div> <!-- end modal -->
+		</div>
+	</div>
+
+	<!-- 스크롤 저장 버튼 -->
+	<div class="save_button_part">
+		<!-- 저장 버튼 회전 div -->
+		<div class="scroll_infiniteCarousel">
+			<div class="scroll_wrapper">
+				<ul class="list-group scroll_btn_ul" id="scroll_btn_ul">
+					<!-- 이 ul안으로 li들이 들어올꺼임 -->
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- <div class="modal scroll_pop_layer" id="layer1" tabindex="-1" role="dialog"> -->
+<div class="modal scroll_pop_layer" id="layer1" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-body">
+	        <p class="ctxt mb20">키워드를 입력해주세요</p>
+			<input type="text" class="scroll_pop_input" />
+			<p class="scroll_pop_chk_p">키워드를 입력하셔야 저장할 수 있습니다.</p>
+			<!-- <div class="btn-r">
+				<a href="#" class="scroll_pop_layerSave">저장</a> <a href="#"
+					class="scroll_pop_layerClose">닫기</a>
+			</div> -->
+	      </div>
+	     <div class="modal-footer">
+	     	<button type="button" class="btn btn-primary scroll_pop_layerSave">저장</button>
+	        <button type="button" class="btn btn-secondary scroll_pop_layerClose" data-dismiss="modal">취소</button>
+	      </div>
+	    </div>
+	  </div>
+</div>
+
+<!-- <div id="layer1" class="scroll_pop_layer">
+	<div class="scroll_pop_container">
+		<div class="scroll_pop_contents">
+			content //
+			<p class="ctxt mb20">키워드를 입력해주세요</p>
+			<input type="text" class="scroll_pop_input" />
+			<p class="scroll_pop_chk_p">키워드를 입력하셔야 저장할 수 있습니다.</p>
+			<div class="btn-r">
+				<a href="#" class="scroll_pop_layerSave">저장</a> <a href="#"
+					class="scroll_pop_layerClose">닫기</a>
+			</div>
+			// content
+		</div>
+	</div>
+</div> -->
+
+<script>
+// click event 중복 방지 handle
+var scroll_copy_btn_handle = null;	
+////////////////////////////////////////////////////////////////////carousel
+$.fn.infiniteCarousel = function () {
+
+	function repeat(str, num) {
+		return new Array( num + 1 ).join( str );
+	}
+  
+	return this.each(function () {
+		// 스크롤 버튼 감싸는 요소 wrapper의 overflow값을 hidden처리
+		var $wrapper = $('> div', this).css('overflow', 'hidden'),
+			$slider = $wrapper.find('> ul'),
+			$items = $slider.find('> li'),
+			$single = $items.filter(':first'), // 결국 div안에 ul안에 li안에 첫번째 요소를 찾기 위함.
+			singleWidth = $single.outerWidth(), // outerWidth는 maring, border값을 포함한 너비
+			visible = Math.ceil($wrapper.innerWidth() / singleWidth), // note: doesn't include padding or border
+			currentPage = 1,
+			pages = Math.ceil($items.length / visible);  // 11 / 3 => 3
+		
+		// li가 1개라도 있어야 실행.
+		if($items.length != 0){
+
+			// 1. Pad so that 'visible' number will always be seen, otherwise create empty items
+			if (($items.length % visible) != 0) { // 마지막이 1개나 2개일 경우는 visible값도 1 또는 2
+				//li value에 -1을 준 이유는 마우스 오버 피하기 위해서 ==> IE 환경에서 -1을 0으로 자동변경 ==> value 9999로 변경.
+				$slider.append(repeat('<li value="9999" class="empty" />', visible - ($items.length % visible))); // empty class추가 3 - (11 % 3)
+				$items = $slider.find('> li'); // 다음 li요소로 이동
+			}
+
+			// 2. Top and tail the list with 'visible' number of items, top has the last section, and tail has the first
+			$items.filter(':first').before($items.slice(- visible).clone().addClass('cloned'));
+			$items.filter(':last').after($items.slice(0, visible).clone().addClass('cloned'));
+			$items = $slider.find('> li'); // reselect
+			
+			// 3. Set the left position to the first 'real' item
+			$wrapper.scrollLeft(singleWidth * visible);
+			
+			// 4. paging function
+			function gotoPage(page) {
+				var dir = page < currentPage ? -1 : 1,  // false 일 경우 -1
+					n = Math.abs(currentPage - page), 
+					left = singleWidth * dir * visible * n;
+				
+				$wrapper.filter(':not(:animated)').animate({
+					scrollLeft : '+=' + left
+				}, 500, function () {
+					if (page == 0) {
+						$wrapper.scrollLeft(singleWidth * visible * pages);
+						page = pages;
+					} else if (page > pages) {
+						$wrapper.scrollLeft(singleWidth * visible);
+						// reset back to start position
+						page = 1;
+					} 
+
+					currentPage = page;
+				});                
+				
+				return false;
+			}
+			
+			//$wrapper.after('<a class="arrow scroll_back"></a><a class="arrow scroll_forward"></a>');
+			// 180711 화살표 i태그로 수정
+			$wrapper.after('<i class="fas fa-arrow-circle-left arrow scroll_back"></i><i class="fas fa-arrow-circle-right arrow scroll_forward"></i>');
+			
+			// 5. Bind to the forward and back buttons
+			$('.scroll_back', this).off().click(function () {
+				return gotoPage(currentPage - 1);                
+			});
+			
+			$('.scroll_forward', this).off().click(function () {
+				return gotoPage(currentPage + 1);
+			});
+			
+			// create a public interface to move to a specific page
+			$(this).bind('goto', function (event, page) {
+				gotoPage(page);
+			});
+			
+			// get li value (it means li's value) (event)
+			// and visible true keyword div
+			$('.scroll_btn_ul li').off().on("mouseover", function(event){
+				var myindex =  $(this).val();
+				
+				// 여기에 마우스 올렸을 때 이벤트 추가!
+				// 9999는 empty박스라서 event에서 제외
+				if(myindex != 9999){
+					var keyword = sessionStorage.getItem('scroll_item_keyword'+myindex);
+					//alert(keyword);
+					$('.keyword_popup'+myindex).text(keyword);
+					if(myindex % 3 == 0)
+						$('.keyword_popup'+myindex).css("margin-left", "0.938em");
+					else if(myindex % 3 == 2)
+						$('.keyword_popup'+myindex).css("margin-left", "-5.750em");
+					$('.keyword_popup'+myindex).show();
+				}
+			});	
+
+			// mouse out event
+			$('.scroll_btn_ul li').on("mouseout", function(event){
+				var myindex =  $(this).val();
+				console.log(myindex);
+				
+				// 여기에 마우스 올렸을 때 이벤트 추가!
+				// $('.keyword_popup').css('display', 'show');
+				// 9999는 empty박스라서 event에서 제외
+				if(myindex != 9999){
+					$('.keyword_popup'+myindex).hide();
+				}
+			});					
+		
+			// mouse click event
+			$('.scroll_btn_ul li').on("click", function(event){
+				var myindex =  $(this).val();
+				
+				// 9999는 empty박스라서 event에서 제외
+				if( myindex != 9999){
+					var scroll_url = sessionStorage.getItem('scroll_item_url'+myindex);
+					
+					if(scroll_url.split('?')[0] == (location.href).split('?')[0])
+						url_parser(scroll_url);
+					else
+						window.location.replace(scroll_url);
+				}
+			});
+		
+		} // end if
+	}); 				
+};
+
+// keyword input popup function
+function layer_popup(el){
+	// 원래는 background dim처리하는 기술이 있어서 소스를 보다보면 fadeIn을 시키는 경우가 있음.
+	// 하지만 상관없는 소스라는 것을 명심.
+	var $el = $(el);        //레이어의 id를 $el 변수에 저장
+	var isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
+
+	isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
+
+	var $elWidth = ~~($el.outerWidth()), // ~~의 의미는 Math.floor()
+		$elHeight = ~~($el.outerHeight()),
+		docWidth = $(document).width(),
+		docHeight = $(document).height();
+
+	// 화면의 중앙에 레이어를 띄운다.
+	if ($elHeight < docHeight || $elWidth < docWidth) {
+		$el.css({
+			marginTop: -$elHeight /2,
+			marginLeft: -$elWidth/2
+		})
+	} else {
+		$el.css({top: 0, left: 0});
+	}
+	
+	// 키워드 입력 팝업 저장 버튼 이벤트
+	// off()를 사용한 이유는 event가 refresh되지 않고 중복되서 off로 막아줬다. 안해주면 1,2,4,8... 으로 이벤트 발생.
+	$('.scroll_pop_layerSave').off().click(function(){
+		if($('.scroll_pop_input').val() == '') {
+			//$('.scroll_pop_chk_p').css('display', 'show');
+			$('.scroll_pop_chk_p').show();
+			return false;
+		}
+		
+		// 버튼을 동적으로 추가하기 위해 사전에 추가된 li을 삭제한다.
+		$('#scroll_btn_ul li.cloned').remove();
+		$('#scroll_btn_ul li.empty cloned').remove();
+		$('#scroll_btn_ul li.empty').remove();
+		
+		var wrapper = $('> div', $('.scroll_infiniteCarousel')),
+			slider = wrapper.find('> ul'),
+			items = slider.find('> li');
+			
+		//$('#scroll_btn_ul').append('<li class="list-group-item" value='+items.length+'><a href=#"></a><div class="keyword_popup'+items.length+'">난 키워드야</div><div class="scroll_items'+items.length+'">'+items.length+'</div></li>');
+		// 수정 작업 고고
+		$('#scroll_btn_ul').append('<li value='+items.length+'><a href=#"></a><div class="keyword_popup'+items.length+'">난 키워드야</div><div class="scroll_items'+items.length+'">'+items.length+'</div></li>');
+		
+		// 현재 페이지 url
+		var current_page = location.href;
+		// 현재 스크롤 위치
+		var current_scrollY = window.pageYOffset;
+		// 사용자가 입력한 키워드 값
+		var user_input = $('.scroll_pop_input').val();
+		
+		var url_chk_params = current_page.split('?');
+		
+		// url에 이미 파라미터 값이 있을 경우
+		if(url_chk_params.length > 1){
+			item_url = current_page + '&scrollY=' + window.pageYOffset;
+		}else{ // url에 파라미터가 없는 경우
+			item_url = current_page + '?scrollY=' + window.pageYOffset;
+		}
+		
+		// item_url == 현재 페이지 + scrollY value
+		//var item_url = current_page + '?scrollY=' + current_scrollY;
+		
+		// save at sessionStorage (key = itemID, value = item_url)
+		sessionStorage.setItem("scroll_item_url"+items.length, item_url);
+		// save at sessionStorage (keyword = user input value)
+		sessionStorage.setItem("scroll_item_keyword"+items.length, user_input);
+		
+		
+		$('.scroll_infiniteCarousel').infiniteCarousel();
+		isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+		return false;
+	});
+	
+	// 키워드 입력 팝업 닫기 버튼 이벤트
+	$('.scroll_pop_layerClose').off().click(function(){
+		console.log('취소');
+		isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+		return false;
+	});
+
+	$('.layer .dimBg').click(function(){
+		$('.dim-layer').fadeOut();
+		return false;
+	});
+
+}
+
+// check sessionStorage
+function chk_sessionStorage(){
+	
+	console.log('cheking sessionStorage...');
+	var session_value = '1'; // 값이 null이 아닐 때까지 돌려주기 위해 임시 값 저장
+	var idx = 0; // index value
+	while(session_value != null){ //session에 없는 key로 요청을 할 경우 null을 반환받는다.
+		var storage_key = 'scroll_item_url' + idx;
+		console.log(sessionStorage.getItem(storage_key));
+		session_value = sessionStorage.getItem(storage_key);
+		
+		if(session_value != null)
+			$('#scroll_btn_ul').append('<li value='+idx+'><a href=#"></a><div class="keyword_popup'+idx+'">난 키워드야</div><div class="scroll_items'+idx+'">'+idx+'</div></li>');
+			
+		idx++;
+	}
+}
+
+// scrollY파라미터 체킹하는 함수
+function url_parser(url_scrollY){
+	// 파라미터가 담길 배열
+	function getParams(){
+		var param = new Array();
+	 
+		// 현재 페이지의 url
+		var url = decodeURIComponent(url_scrollY);
+		// url이 encodeURIComponent 로 인코딩 되었을때는 다시 디코딩 해준다.
+		url = decodeURIComponent(url);
+		
+		console.log('url ==> ' + url);
+	 
+		var params;
+		// url에서 '?' 문자 이후의 파라미터 문자열까지 자르기
+		params = url.substring( url.indexOf('?')+1, url.length );
+		// 파라미터 구분자("&") 로 분리
+		params = params.split("&");
+		console.log('params==> ' + params);
+		// params 배열을 다시 "=" 구분자로 분리하여 param 배열에 key = value 로 담는다.
+		var size = params.length;
+		console.log(size);
+		var key, value;
+		
+		// scrollY값을 제외하고 다른 파라미터를 붙이기 위한 변수 준비
+		var ex_scroll_params = ' ';
+		
+		if(params[0].split("=")[1] != 'undefined' && params[0].split("=")[1] != null){
+			for(var j=0 ; j < size ; j++) {
+				key = params[j].split("=")[0];
+				value = params[j].split("=")[1];
+				
+				// scrollY값에 엄청 큰 값을 입력했을 때 막기 위해서.
+				// 현재 페이지에서 가장 하단 부분 Yvalue를 구해준다.
+				var max_yvalue = $(document).height() - $(window).height();
+				
+				// 파라미터에 scrollY값이 있을 경우
+				if(key == 'scrollY'){
+					
+					// 현재 파라미터로 붙은 Y값이 최대값보다 클 경우
+					if(value > max_yvalue){
+						console.log('max_yvalue ==> ' + max_yvalue);
+						value = max_yvalue;
+					}
+					
+					// scrollY위치로 이동.
+					$('html').animate({scrollTop: value}, 200);
+					
+					// scrollY파라미터는 없애줌.
+					history.pushState({}, null, location.pathname);
+				}else{
+					console.log('else ==> ');
+					if(j == 0){
+						ex_scroll_params += '?' + key + '=' + value;
+					}else if(j >= 1){
+						// 첫 번째 파라미터가 scrollY일 경우 -- 그럴리는 없지만 혹시나해서 만들어놓음
+						var qu_mark_chk = ex_scroll_params.split("?");
+						if(qu_mark_chk.length < 2)
+							ex_scroll_params += '?' + key + '=' + value;
+						else
+							ex_scroll_params += '&' + key + '=' + value;
+					}
+				}
+				history.pushState({}, null, ex_scroll_params);
+			} // end for
+		}
+		//console.log('ex_scroll_params ==> ' + ex_scroll_params);
+		// scrollY파라미터 삭제하기 위해서. 클래스 패스만 남음.
+		history.pushState({}, null, ex_scroll_params);
+		
+	}
+	
+	// url parse function
+	getParams();
+}
+
+// setInterval 이벤트 종료시키기
+function stopInterval(){
+	clearInterval(scroll_copy_btn_handle);
+	scroll_copy_btn_handle = null;
+}
+
+// copy 버튼 눌렀을 때 발생하는 이벤트
+function startInterval(el){
+	//$('.scroll_copied_popup').fadeIn();
+	el.attr('data-original-title', 'copied').tooltip('show');
+	
+	scroll_copy_btn_handle = setInterval(function(){
+		//$('.scroll_copied_popup').fadeOut();
+		el.attr('data-original-title', '').tooltip('hide');
+	}, 500);
+}
+
+
+///// start jQuery
+$(document).ready(function(){
+	// tooltip 초기화
+	$('.scroll_copy_button').tooltip();
+	
+	url_parser(location.href);
+	
+	// chk sessionStorage
+	chk_sessionStorage();
+	
+	// carousel start
+	$('.scroll_infiniteCarousel').infiniteCarousel();	
+			
+	// ==> 이 크기를 기준으로 나의 기능 사이즈가 잡힌다.
+	// 내 기능의 전체 사이즈
+	var scroll_width = $('#remote-body').width();
+	var scroll_height = $('#remote-body').height() * 0.25;
+	
+	// 사이즈 속성 삽입
+	//$('.scroll_function').css({
+	//	width:scroll_width,
+	//	height:scroll_height
+	//});
+	
+	// 각 기능(복사, 스크롤 저장)의 높이 사이즈
+	var scroll_ef_height = scroll_height * 0.5;
+	
+	$('#scroll_text_url').val(location.href);
+	// 복사 버튼 클릭시
+	$('.scroll_copy_button').off().click(function(){
+		var scroll_copy_text = $('#scroll_text_url');
+		
+		// 현재 페이지에 scrollY값 붙여주기.
+		var url_chk_params = (location.href).split('?');
+		var scrollY = window.pageYOffset;
+		
+		// url에 이미 파라미터 값이 있을 경우
+		if(url_chk_params.length > 1){
+			$('#scroll_text_url').val(location.href + '&scrollY=' + window.pageYOffset );
+		}else{ // url에 파라미터가 없는 경우
+			$('#scroll_text_url').val(location.href + '?scrollY=' + window.pageYOffset );
+		}
+		
+		// input text에 있는 값 drag효과		
+		scroll_copy_text.select();
+		// clipboard로 text값 복사
+		document.execCommand("copy");
+		
+		// 1.5초 뒤에 visibility 값 hidden으로
+		///////////////////////////////////////////////////////문제 mouseout일 때 이상하게 돌아감.
+		// 중복 이벤트 제거
+		// 원래 버튼에 사용하던 div 팝업 이벤트 
+		var el = $(this);
+		
+		if(scroll_copy_btn_handle == null){
+			startInterval(el);
+		}else{
+			stopInterval();
+			startInterval(el);
+		} 
+		// 180711 tooltip으로 수정
+		//var el = $(this);
+		//console.log(el);
+		//$(this).attr('data-original-title', 'copied').tooltip();
+	}); //end #scroll_text_url click function
+	
+	//////////////////////////////////////////////////////////////// 도움말 버튼 클릭시
+	$('.far.scroll_question_button').off().click(function(){
+		if($('.scroll_question_popup').css('display') == 'none' ){
+			$('.scroll_question_popup').fadeIn(500);
+		}
+	});
+	
+	$('.scroll_question_popup_close').off().click(function(){
+		if($('.scroll_question_popup').css('display') == 'block'){
+			$('.scroll_question_popup').fadeOut();
+		}
+	});
+	
+	////////////////////////////////////////////////////////////////
+	
+	//////////////////////////////////////////////////////////////// 스크롤 저장 버튼을 누를 경우
+	$(document).keydown(function(event) {
+	  if (event.keyCode == '114' || event.keyCode == '82') {
+		$('.scroll_pop_chk_p').hide(); // 키워드 저장 경고문 하이드
+		$('.scroll_pop_input').val(''); // 이전 키워드 입력값 초기화
+		layer_popup($('.scroll_pop_layer'));
+	  }
+	});
+	////////////////////////////////////////////////////////////////
+});
+</script>

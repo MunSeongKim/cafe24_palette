@@ -52,7 +52,7 @@ public class WebConfigurer extends WebMvcConfigurationSupport {
 		servletContext.addListener(RequestContextListener.class);
 	}
 
-	// Interceptor 등록
+	// Interceptor 등록 
 	@Override
 	protected void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(apiTokenInterceptor()).addPathPatterns("/api/test/**");
@@ -62,6 +62,12 @@ public class WebConfigurer extends WebMvcConfigurationSupport {
 	// 정적 자원에 대한 처리 등록
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		// classpath:/static --> src/main/resources/static
+		// 
+		
+		// ${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/js/bootstrap.min.js
+		// /META-INF/resources/webjars/bootstrap/4.1.1/js/bootstrap.min.js 
+		registry.addResourceHandler("/assets/**").addResourceLocations("/assets/").resourceChain(true);
 		registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/").resourceChain(true);
 		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/").resourceChain(true);
 		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/META-INF/resources/webjars/")

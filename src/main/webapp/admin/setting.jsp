@@ -6,308 +6,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<!-- jQuery library --> 
-<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="../admin/assets/js/cookie.js"></script>
-<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script> <!-- 토글 버튼 라이브러리 -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.min.css">
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"/>
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/font-awesome/5.1.0/css/all.css"/>
+
+<script src="${pageContext.servletContext.contextPath }/static/jquery/1.11.1/jquery.min.js"></script>
+<script src="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.js"></script>
+<script	src="${pageContext.servletContext.contextPath }/static/popper.js/1.14.3/dist/umd/popper.min.js"></script>
+<script	src="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script> <!-- 토글 버튼 라이브러리 -->
+<script	src="${pageContext.servletContext.contextPath }/static/mustachejs/2.2.1/mustache.min.js"></script>
+<script src="${pageContext.servletContext.contextPath }/assets/admin/js/cookie.js"></script>
+<script type="text/javascript" src="${pageContext.servletContext.contextPath }/assets/admin/template/skel.js"></script>
+<%-- <script src="${pageConetxt.servletContext.contextPath }/static/bootstrap-toggle/2.2.2/js/bootstrap-toggle.js" type="text/javascript"></script> --%>
+
+<!-- <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 
-<style>
-* {
-	margin: 0;
-	padding: 0;
-}
+jQuery library 
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script> 토글 버튼 라이브러리
+<script src="../admin/assets/js/cookie.js"></script> -->
 
-/* width */
-.theme-list-div::-webkit-scrollbar {
-    width: 4px;
-}
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/assets/admin/css/setting.css">
 
-/* Track */
-.theme-list-div::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px grey; 
-    border-radius: 10px;
-}
- 
-/* Handle */
-.theme-list-div::-webkit-scrollbar-thumb {
-    background: #563d7c;; 
-    border-radius: 10px;
-} 
-
-body{
-	padding-left : 30px;
-	padding-right : 30px;
-	background: rgb(255, 255, 255);
-}
-
-/* scrollbar 없애기 단, scroll 기능 가능 */
-body::-webkit-scrollbar{
-	display: none;
-}
-
-.container {
-	background-color: #fff;
-	margin-top: 50px; 
-	position: relative;
-	border-radius: 10px;
-}
-
-.container-fluid{
-	height: -webkit-fill-available;
-}
-
-.fouc{
-	display: none;
-}
-
-#panel-tabs{
-	background-color: #ededed; 
-	
-}
-
-.palette-title{
-	padding : 15px;
-	padding-bottom : 0; 
-	background-color: #563d7c;  
-	border-top-left-radius : 10px;
-	border-top-right-radius : 10px;
-	color : #fff;
-} 
-
-.palette-title > h1{
-	font-size : 1.5rem;
-	padding-left: 10px;
-	font-weight: 500; 
-}
-
-.palette-title > i{
-	font-size: 1.8em;
-}
-
-.progress{
-	height : 10px; 
-}
-
-/* width가 570이하 일 때 css */
-@media(max-width:570px){
-	.inner {
-		width: 100%;  
-		height: auto;
-		padding: 15px;
-		padding-bottom : 0px;
-		padding-top: 10px; 
-	}
-	
-	.nav-pagination{
-		position: absolute;
-		top : 29px;
-		right: 0;
-	}
-	
-	.nav-pagination ul{
-		width: 100%;
-	}
-	 
-	.custom-pagination-ul{
-		width: 100%;
-	}
-}
-
-/* width가 최소 570 일 때  (570보다 클 때)*/
-@media(min-width:570px){
-	.inner {
-		width: 100%; 
-		height: 600px; 
-		padding: 15px;
-		padding-bottom : 0px;
-		padding-top: 10px; 
-	}
-}
-
-li{
-	border-color: #c5c5c5;
-    background-color: #fff;
-}
-
-.button {
-	background-color: white; /* Green */
-	border: 2px solid #555555;
-	color: black;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 16px;
-}
-
-.button:hover {
-	background-color: #555555;
-	color: white;
-}
-
-.button:hover::after {
-	background-color: #555555;
-	color: white;
-	content: 'test';
-}
-
-/* Tab 비활성화 */
-.disable{
-	cursor: not-allowed;
-}
-
-.nav-tabs>li>a{
-	pointer-events: none;
-	border: 0px; 
-	border-bottom : 2px solid #fff;
-	border-radius: 0px;
-	color : #4285f4;
-	padding-left: 5px;
-	z-index : 0;
-}
-
-.nav-tabs>li.active>a{
-	border: 0px;
-	background-color: #58C9B9;
-	border-radius: 0px;
-}
-
-/* a태그 방문 전 링크 상태 */
-.nav-tabs>li>a:link{
-	border-radius: 0px;
-	border: 0px;
-	margin : 0px;
-	font-weight: 500;
-	padding-top: 3px;
-	padding-bottom: 3px;
-}
- 
-.nav-tabs>li{ 
-    float: left;
-    position: relative;
-	margin: 0px;
-	padding-left : 17px; 
-} 
-
-.nav-tabs>li.complete{ 
-	padding-left: 0px;
-	border : none; 
-	padding-left: 17px;
-}
-
-.nav-tabs>li.step{
-	background-color: #ededed;
-}
-
-.chevron{
-	border: 15px solid transparent;
-    border-left: 17px solid #c5c5c5;
-    border-right: 0;  
-    content: ""; 
-    display: block;  
-    position: absolute; 
-    right: -18px; 
-    top: 0px;   
-    z-index : 1;
-}
-
-.chevron:before {
-	border: 15px solid transparent;
-	border-left: 17px solid #ededed;
-	border-right:0; 
-	right: 1px; 
-	top: -15px;
-	display:block;
-	position:absolute; 
-	content: ""; 
-}
-
-.chevron.complete{
-	border: 15px solid transparent;
-    border-left: 17px solid #c5c5c5;
-    border-right: 0;  
-    content: "";
-    display: block;
-    position: absolute; 
-    right: -18px; 
-    top: 0px;   
-    z-index : 1; 
-} 
-
-.chevron.complete:before{
-	border: 15px solid transparent; 
-	border-left: 17px solid #58C9B9;  /* 현재 탭의 삼각형 색 */
-	border-right:0; 
-	right: 1px; 
-	top: -15px; 
-	display:block;
-	position:absolute;
-	content: "";
-}
-
-.nav-pagination{
-	padding-bottom: 15px;
-}
-
-.nav-pagination button{
-	padding: 0;
-	margin: 0;
-}
-
-.nav-pagination i{
-	line-height: 0; 
-}
-
-.nav-pagination ul li{
-	border-radius: .25rem; 
-}
-
-.custom-pagination-ul{
-	width: 0%;
-	margin: 0px auto; 
-}
-
-.palette-modal-header{
-	padding: 0; 
-	background-color: #563d7c;
-}
-
-.palette-modal-title{
-	padding-top : 5px;
-	padding-left : 10px;
-	color : #fff;
-	border-top-left-radius: 12px;
-}
-
-.palette-modal-footer{
-	padding: 5px;
-}
-
-.palette-modal-btn{
-	padding: 0; 
-}
-
-</style> 
- 
 <title>새 패널 만들기</title>
 </head>
 <body>
-<div class="container-fluid"> 
+<div class="container-fluid">
+	<input type="hidden" class="panel-division-type" name="admin" value="admin">
 	 
 	<div class="palette-title row">
 		<i class="fas fa-plus-square"></i>
 		<h1>새 패널 만들기</h1> 
 	</div>
 
-	<!-- tab START --> 
+	<!-- tab START -->
 	<div id="panel-tabs" class="row fouc"> 
 		<ul class="nav nav-tabs" id="myTab">
 			<c:forEach var="tab_element" items="${tabs.map }" varStatus="stat">
@@ -388,6 +130,7 @@ li{
 		</div>
 	</div>
 </div>
+
 </body>
 
 <script type="text/javascript">
@@ -418,7 +161,10 @@ $('#myTab a').on('shown.bs.tab', function(event){
 pageRender(0, tabsMaxSize, hash);
 
 //페이지 초기화 메소드 
-function pageRender(currentIdx, tabsMaxSize, hash){ 
+function pageRender(currentIdx, tabsMaxSize, hash){
+	// 페이지 크기 조정 함수. 
+	resizeDone();
+	
 	var currentLocation = null;
 	
 	$("#myTab").children().each(function(index){
@@ -457,20 +203,42 @@ function pageRender(currentIdx, tabsMaxSize, hash){
 	progressBarChange(currentIdx, tabsMaxSize);
 }
 
+
 window.onload = function(){
-	console.log('3');
+	
 }
 
-$(function(){
+function resizeDone(){
+	var currentWidth = window.innerWidth;
+	var rate = ((currentWidth - 250)/currentWidth)*100;
+	$("#panel-tabs").css({
+		"width" : rate+"%"
+	});
+	
+	$(".palette-title").css({
+		"width" : rate+"%"
+	});
+}
+
+/* $(function(){
 	console.log('4');
 });
 
 ;(function(){
 	console.log('5');
-})();
+})(); */
 
 
 $(document).ready(function(){
+	
+	//$("#panel").css("width", "15.625em");
+	
+	$(window).on('resize', function(){
+		var timer = null;
+		clearTimeout(timer);
+		timer = setTimeout(resizeDone, 150);
+	});
+	
 	// 이미지를 포함한 모든 요소가 로드가 되고 실행.
 	/* alert("window.ready"); */
 	console.log('1')
