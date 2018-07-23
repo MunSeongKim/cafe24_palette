@@ -12,7 +12,8 @@
 <meta name="_csrf_header" content="${_csrf.headerName}" />
 
 <!-- jQuery library -->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
+<script src="${pageContext.servletContext.contextPath }/static/jquery/1.11.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <link rel="stylesheet"
@@ -47,7 +48,7 @@ table, table thead th {
 	<div class="container">
 		<h1>Panel List</h1>
 		<div class="row">
-			<a href="${pageContext.servletContext.contextPath }/test" class="btn btn-primary pull-left">test</a>
+			<a href="${pageContext.servletContext.contextPath }/api/test/orders" class="btn btn-primary pull-left">test</a>
 			<a href="${pageContext.servletContext.contextPath }/setting/create" class="btn btn-primary pull-right">만들기</a>
 		</div>
 		<div class="row">

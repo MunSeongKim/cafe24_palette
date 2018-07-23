@@ -6,6 +6,7 @@ import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.CacheControl;
 import org.springframework.web.context.request.RequestContextListener;
@@ -25,6 +26,7 @@ import com.cafe24.mammoth.app.support.APITokenInterceptor;
  *
  */
 @Configuration
+@ComponentScan(basePackageClasses = { WebConfigurer.class })
 public class WebConfigurer extends WebMvcConfigurationSupport {
 
 	@Value("${spring.mvc.view.prefix}")
@@ -56,14 +58,16 @@ public class WebConfigurer extends WebMvcConfigurationSupport {
 	@Override
 	protected void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(apiTokenInterceptor()).addPathPatterns("/api/test/**");
+		registry.addInterceptor(apiTokenInterceptor()).addPathPatterns("/api/cafe24/**");
 	}
 
 	// ResourceHandler 등록
 	// 정적 자원에 대한 처리 등록
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/**/assets/**").addResourceLocations("classpath:/**/assets/").resourceChain(true);
+		
 		registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/").resourceChain(true);
-		registry.addResourceHandler("/**/assets/**").addResourceLocations("/**/assets/").resourceChain(true);
 		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/").resourceChain(true);
 		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/META-INF/resources/webjars/")
 				.setCacheControl(CacheControl.maxAge(3L, TimeUnit.HOURS).cachePublic()).resourceChain(true);

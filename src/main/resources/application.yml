@@ -27,8 +27,8 @@ logging:
   level:
     org:
       springframework:
-        web: INFO
-        http: INFO
+        web: DEBUG
+        http: DEBUG
         security: DEBUG
 
 cafe24:

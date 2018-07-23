@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
 
-import org.springframework.security.oauth2.common.DefaultOAuth2RefreshToken;
+import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2RefreshToken;
 
@@ -79,11 +79,13 @@ public class Cafe24OAuth2AccessToken implements Serializable, OAuth2AccessToken 
 
 	public Cafe24OAuth2AccessToken(OAuth2AccessToken accessToken) {
 		this(accessToken.getValue());
-		setAdditionalInformation(accessToken.getAdditionalInformation());
+		
 		setRefreshToken(accessToken.getRefreshToken());
 		setExpiresAt(accessToken.getExpiration());
 		setScope(accessToken.getScope());
 		setTokenType(accessToken.getTokenType());
+		
+		setValues(accessToken.getAdditionalInformation());
 	}
 
 	public Date getExpiresAt() {
@@ -180,46 +182,33 @@ public class Cafe24OAuth2AccessToken implements Serializable, OAuth2AccessToken 
 		return this.value;
 	}
 
-	public static OAuth2AccessToken valueOf(Map<String, String> tokenParams) {
-		Cafe24OAuth2AccessToken token = new Cafe24OAuth2AccessToken(tokenParams.get(ACCESS_TOKEN));
+	private void setValues(Map<String, Object> map) {
+		System.out.println("=================== Cafe24OAuth2AccessToken.setValues() =====================");
 
-		System.out.println("=================== Cafe24OAuth2AccessToken.valueOf() =====================");
-		if (tokenParams.containsKey(REFRESH_TOKEN)) {
-			String refresh = tokenParams.get(REFRESH_TOKEN);
-			DefaultOAuth2RefreshToken refreshToken = new DefaultOAuth2RefreshToken(refresh);
-			token.setRefreshToken(refreshToken);
-		}
-
-		if (tokenParams.containsKey(SCOPES)) {
+		if (map.containsKey(SCOPES)) {
 			Set<String> scope = new TreeSet<String>();
-			for (StringTokenizer tokenizer = new StringTokenizer(tokenParams.get(SCOPE), " ,"); tokenizer
+			for (StringTokenizer tokenizer = new StringTokenizer((String) map.get(SCOPE), " ,"); tokenizer
 					.hasMoreTokens();) {
 				scope.add(tokenizer.nextToken());
 			}
-			token.setScope(scope);
+			this.setScope(scope);
 		}
 
-		if (tokenParams.containsKey(TOKEN_TYPE)) {
-			token.setTokenType(tokenParams.get(TOKEN_TYPE));
-		}
-
-		if (tokenParams.containsKey(EXPIRES_AT)) {
-			String expiresAtString = tokenParams.get(EXPIRES_AT);
-			Date expiresAt = convertStringToDate(expiresAtString);
-			token.setExpiresAt(expiresAt);
-		}
-
-		if (tokenParams.containsKey(ISSUED_AT)) {
-			String issuedAtString = tokenParams.get(ISSUED_AT);
+		if (map.containsKey(ISSUED_AT)) {
+			String issuedAtString = (String) map.get(ISSUED_AT);
 			Date issuedAt = convertStringToDate(issuedAtString);
-			token.setIssuedAt(issuedAt);
+			this.setIssuedAt(issuedAt);
 		}
 
-		if (tokenParams.containsKey(MALL_ID)) {
-			token.setMallId(tokenParams.get(MALL_ID));
+		if (map.containsKey(MALL_ID)) {
+			this.setMallId((String) map.get(MALL_ID));
 		}
-
-		return token;
+		
+		if (map.containsKey(CLIENT_ID)) {
+			this.setClientId((String) map.get(CLIENT_ID));
+		}
+		
+		this.setAdditionalInformation(map);
 	}
 
 	/**

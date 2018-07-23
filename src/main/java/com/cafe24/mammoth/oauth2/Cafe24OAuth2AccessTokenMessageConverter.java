@@ -1,4 +1,4 @@
-package com.cafe24.mammoth.oauth2.support;
+package com.cafe24.mammoth.oauth2;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -10,7 +10,6 @@ import org.springframework.http.converter.json.AbstractJackson2HttpMessageConver
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 
-import com.cafe24.mammoth.oauth2.Cafe24OAuth2AccessToken;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**

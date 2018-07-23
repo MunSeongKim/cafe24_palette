@@ -143,5 +143,30 @@
 		</dependency>
 	</dependencies>
 
-	
+	<build>
+		<resources>
+			<resource>
+				<directory>${project.basedir}/src/main/resources</directory>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>tomcat-maven-plugin</artifactId>
+				<configuration>
+					<url>https://devbit005.cafe24.com/manager/text</url>
+					<path>/mammoth</path>
+					<username>devbit005_palette</username>
+					<password>d2vbit005@palette</password>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

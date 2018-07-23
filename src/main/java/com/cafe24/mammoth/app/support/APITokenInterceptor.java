@@ -11,8 +11,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.cafe24.mammoth.app.domain.Member;
 import com.cafe24.mammoth.app.service.MemberService;
+import com.cafe24.mammoth.oauth2.Cafe24ClientTokenServices;
 import com.cafe24.mammoth.oauth2.api.impl.Cafe24Template;
-import com.cafe24.mammoth.oauth2.support.Cafe24ClientTokenServices;
 
 /**
  * Cafe24 API 사용 전 AccessToken 확인을 위한 인터셉터<br>
@@ -44,6 +44,7 @@ public class APITokenInterceptor implements HandlerInterceptor {
 		if(mallUrl.contains("localhost")) {
 			mallUrl = request.getParameter("mall_url");
 		}
+		
 		Member storedMember = memberService.getOneByMallUrl(mallUrl);
 		String mallId = storedMember.getMallId();
 		
@@ -55,7 +56,6 @@ public class APITokenInterceptor implements HandlerInterceptor {
 		// 있으면 DB에 저장된 토근을 반환
 		// Token refreshing은 RestTemplate 안에서 자동으로 이루어짐.
 		OAuth2AccessToken accessToken = oauth2RestTemplate.getAccessToken();
-
 		// API를 사용하기 위해 Cafe24Template에 mallId와 accessToken을 설정
 		cafe24Template.setAccessToken(accessToken.getValue());
 		cafe24Template.setMallId(mallId);

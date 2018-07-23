@@ -14,12 +14,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticationProcessingFilter;
 import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
-import org.springframework.security.oauth2.client.token.AccessTokenProviderChain;
 import org.springframework.security.oauth2.client.token.JdbcClientTokenServices;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeAccessTokenProvider;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
@@ -31,11 +31,12 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.cafe24.mammoth.oauth2.Cafe24AccessTokenProviderChain;
+import com.cafe24.mammoth.oauth2.Cafe24AuthenticationSuccessHandler;
 import com.cafe24.mammoth.oauth2.Cafe24AuthorizationCodeResourceDetails;
+import com.cafe24.mammoth.oauth2.Cafe24ClientTokenServices;
+import com.cafe24.mammoth.oauth2.Cafe24OAuth2AccessTokenMessageConverter;
 import com.cafe24.mammoth.oauth2.Cafe24OAuth2ClientAuthenticationProcessingFilter;
-import com.cafe24.mammoth.oauth2.support.Cafe24AuthenticationSuccessHandler;
-import com.cafe24.mammoth.oauth2.support.Cafe24ClientTokenServices;
-import com.cafe24.mammoth.oauth2.support.Cafe24OAuth2AccessTokenMessageConverter;
 
 /**
  * Spring Security 설정 테스트<br>
@@ -51,6 +52,7 @@ import com.cafe24.mammoth.oauth2.support.Cafe24OAuth2AccessTokenMessageConverter
  *
  */
 @Configuration
+@EnableWebSecurity
 @EnableOAuth2Client
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
@@ -68,6 +70,20 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	@Autowired
 	OAuth2ClientContext oauth2ClientContext;
 
+	/**
+	 * 자원 경로에 대한 인증 해제 필요.<br>
+	 * 모든 경로에 대한 보호, 인증 해제 설정<br>
+	 * <br>
+	 * 
+	 * @param WebSecurity
+	 *            - 시큐리티의 필터 연결을 설정
+	 */
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+		web.ignoring().antMatchers("/api/**", "/**/assets/**", "/webjars/**", "/resources/**", "/static/**");
+	}
+	
+	
 	/**
 	 * 현재 상황: AccessToken 받는거 성공<br>
 	 * 설정: CSRF 설정, X-Frame-Option 해제, OAuth2ContextFilter 등록<br>
@@ -88,19 +104,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 		.antMatchers("/oauth2").permitAll()
 		.and().addFilterBefore(cafe24Filter(), BasicAuthenticationFilter.class);
 	}
-
-	/**
-	 * 자원 경로에 대한 인증 해제 필요.<br>
-	 * 모든 경로에 대한 보호, 인증 해제 설정<br>
-	 * <br>
-	 * 
-	 * @param WebSecurity
-	 *            - 시큐리티의 필터 연결을 설정
-	 */
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/assets/**", "/**/assets/**", "/webjars/**", "/resources/**", "/static/**");
-	}
+	
 
 	/**
 	 * OAuth2 Access Token 발급 및 인증 절차를 수행 할 필터 생성<br>
@@ -114,18 +118,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	private Filter cafe24Filter() {
 		OAuth2ClientAuthenticationProcessingFilter cafe24Filter = new Cafe24OAuth2ClientAuthenticationProcessingFilter(
 				"/oauth2", cafe24(), cafe24Resource());
-		
-		// MessageConverter 등록, Custom AccessToken 객체로 Converting
-		AuthorizationCodeAccessTokenProvider accessTokenProvider = new AuthorizationCodeAccessTokenProvider();
-		accessTokenProvider.setMessageConverters(Arrays.asList(new Cafe24OAuth2AccessTokenMessageConverter()));
-		// ClientTokenServices 등록, AccessToken, Authentication를 DB에 저장, 추출
-		AccessTokenProviderChain provider = new AccessTokenProviderChain(Arrays.asList(accessTokenProvider));
-		provider.setClientTokenServices(cafe24ClientTokenServices());
-		// TokenProvider 등록, 위에서 생성한 TokenProvider 등록한 OAuth2RestTemplate 빈
-		OAuth2RestTemplate cafe24Template = oauth2RestTemplate();
-		cafe24Template.setAccessTokenProvider(provider);
 		// 필터에 OAuth2RestTemplate 빈 등록
-		cafe24Filter.setRestTemplate(cafe24Template);
+		cafe24Filter.setRestTemplate(oauth2RestTemplate());
 		// 성공 후 동작 할 handler 등록
 		cafe24Filter.setAuthenticationSuccessHandler(cafe24FilterSuccessHandler());
 
@@ -138,7 +132,15 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	 */
 	@Bean
 	public OAuth2RestTemplate oauth2RestTemplate() {
+		// MessageConverter 등록, Custom AccessToken 객체로 Converting
+		AuthorizationCodeAccessTokenProvider accessTokenProvider = new AuthorizationCodeAccessTokenProvider();
+		accessTokenProvider.setMessageConverters(Arrays.asList(new Cafe24OAuth2AccessTokenMessageConverter()));
+		// ClientTokenServices 등록, AccessToken, Authentication를 DB에 저장, 추출
+		Cafe24AccessTokenProviderChain providerChain = new Cafe24AccessTokenProviderChain(Arrays.asList(accessTokenProvider));
+		providerChain.setClientTokenServices(cafe24ClientTokenServices());
+		// TokenProvider 등록, 위에서 생성한 TokenProvider 등록한 OAuth2RestTemplate 빈
 		OAuth2RestTemplate oauth2RestTemplate = new OAuth2RestTemplate(cafe24(), oauth2ClientContext);
+		oauth2RestTemplate.setAccessTokenProvider(providerChain);
 		return oauth2RestTemplate;
 	}
 	
