@@ -17,21 +17,21 @@
 
 <div id="panel" class="panel plt-pn ">
 	<div class="container">
-		<c:forEach var="func" items="${funclist }">
+		<c:forEach var="func" items="${funcs }"> 
 			<div class="row">
-				<c:choose>
-					<c:when test="${func.isBtn eq true }">
-						<button>
+				<c:choose> 
+					<c:when test="${func.isButton eq true}">
+						<div>
 							<button id="panel-btn-${func.nameEng }" class="btn func-${func.nameEng }">${func.name }</button>
 							<div id="paenl-div-${func.nameEng }" class="func-${func.nameEng }">
-								<jsp:include page="${func.filePath }" />
+								<c:import url="${func.filePath }"></c:import>
 							</div>
-						</button>
+						</div> 
 					</c:when>
 					
 					<c:otherwise>
 						<div id="panel-div-${func.nameEng }" class="func-${func.nameEng }">
-							<jsp:include page="${func.filePath }" />
+							<c:import url="${func.filePath }"></c:import>
 						</div>
 					</c:otherwise>
 				</c:choose>

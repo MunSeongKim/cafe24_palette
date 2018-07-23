@@ -1,7 +1,7 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/palette
-    username: palette
+    url: jdbc:mysql://localhost:3306/palette?useUnicode=true&characterEncoding=utf8
+    username: palette 
     password: palette
     driver-class-name: com.mysql.jdbc.Driver
     
@@ -12,7 +12,7 @@ spring:
     show-sql: true
     open-in-view: true
     hibernate:
-      ddl-auto: create 
+      ddl-auto: update
 
   mvc:
     view:
@@ -50,7 +50,7 @@ cafe24:
     useCurrentUri: false
     # code 발급 후 redirect 되는 URI
     preEstablishedRedirectUri: https://devbit005.cafe24.com/mammoth/oauth2
-    scope:
+    scope: 
       - mall.read_application,mall.write_application,mall.read_store,mall.write_store,mall.read_order,mall.write_order,mall.read_product
   resource:
     #API 리소스 서버 uri

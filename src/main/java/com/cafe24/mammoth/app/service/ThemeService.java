@@ -1,5 +1,7 @@
 package com.cafe24.mammoth.app.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,10 @@ public class ThemeService {
 	
 	public void removeTheme(Long id) {
 		themeRepository.deleteById(id);
+	}
+	
+	public List<Theme> getThemeList(){
+		return themeRepository.findAll();
 	}
 
 }

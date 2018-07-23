@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
@@ -52,6 +53,7 @@ import com.cafe24.mammoth.oauth2.support.Cafe24OAuth2AccessTokenMessageConverter
  */
 @Configuration
 @EnableOAuth2Client
+@EnableWebSecurity
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
 	/**
