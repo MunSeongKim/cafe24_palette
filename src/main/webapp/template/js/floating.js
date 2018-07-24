@@ -31,6 +31,7 @@ $('.zoom-btn-sm').click(function() {
 $(document).ready(function() {
 	var find_li = $('.zoom-menu').find('> li');
 	console.log('item_length' + find_li.length);
+	var id = $('li').data('func-id')
 	
 	find_li.click(function(e) {
 		//alert($(this).attr('class'));

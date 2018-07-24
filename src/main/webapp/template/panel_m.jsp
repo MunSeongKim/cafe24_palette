@@ -29,7 +29,7 @@
 		<!-- 일단 기능 2개 있다고 가정 -->
 		<!-- 얘는 function idx로 활용한다. -->
 		<c:forEach begin="0" end="1" varStatus="status" step="1">
-			<li class="${status.index}">
+			<li class="${status.index}" data-func-id="${id }">
 				<div class="zoom-card scale-transition scale-out" id="func${status.index + 1}"></div>
 				<a class="zoom-fab zoom-btn-sm zoom-btn-person scale-transition scale-out">
 				<i class="fa fa-user"></i>
