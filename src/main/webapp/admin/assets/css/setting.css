@@ -85,7 +85,7 @@
 .theme-list-div::-webkit-scrollbar-thumb {
     background: #563d7c;; 
     border-radius: 10px;
-}
+} 
 
 body{
 	background: rgb(255, 255, 255);
@@ -301,4 +301,13 @@ li{
 
 .palette-modal-btn{
 	padding: 0; 
+}
+
+/*===================== preview_panel ==============================*/
+#preview_sortable{
+	list-style: none;
+}
+
+.preview_func_div{
+	display: none;
 }

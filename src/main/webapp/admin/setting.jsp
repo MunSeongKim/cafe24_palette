@@ -12,31 +12,18 @@
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"/>
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/font-awesome/5.1.0/css/all.css"/>
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/admin/assets/css/setting.css">
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/template/panel.css">
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/template/theme1.css">
 
 <script src="${pageContext.servletContext.contextPath }/static/jquery/1.11.1/jquery.min.js"></script>
 <script src="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.js"></script>
 <script	src="${pageContext.servletContext.contextPath }/static/popper.js/1.14.3/dist/umd/popper.min.js"></script>
 <script	src="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script> <!-- 토글 버튼 라이브러리 -->
-<script	src="${pageContext.servletContext.contextPath }/static/mustachejs/2.2.1/mustache.min.js"></script>
-<script src="${pageContext.servletContext.contextPath }/assets/admin/js/cookie.js"></script>
-<script type="text/javascript" src="${pageContext.servletContext.contextPath }/assets/admin/template/skel.js"></script>
+<script	src="${pageContext.servletContext.contextPath }/static/mustachejs/2.2.1/mustache.min.js"></script> 
+<script type="text/javascript" src="${pageContext.servletContext.contextPath }/admin/assets/js/preview_panel.js"></script>
 <%-- <script src="${pageConetxt.servletContext.contextPath }/static/bootstrap-toggle/2.2.2/js/bootstrap-toggle.js" type="text/javascript"></script> --%>
-
-<!-- <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
-
-jQuery library 
-<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script> 토글 버튼 라이브러리
-<script src="../admin/assets/js/cookie.js"></script> -->
-
-<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/assets/admin/css/setting.css">
 
 <title>새 패널 만들기</title>
 </head>
@@ -142,13 +129,21 @@ jQuery library
 </body>
 
 <script type="text/javascript">
+
+function includeTargetElement() {
+  	var element = document.createElement("div");
+  	element.setAttribute("id", "panel-area");
+  	document.body.appendChild(element);
+}
+
+
 var tabsMaxSize = ${fn:length(tabs.map)};
 var hash = window.location.hash;  // ex) /create#func
 
 if(hash=='' || hash==null){
 	window.location = "#func";
 	hash = "#func";
-}
+} 
 
 /* hash 위치에 맞는 탭 출력 */
 $('#myTab a[href="'+hash+'"]').tab('show');
@@ -169,7 +164,10 @@ pageRender(0, tabsMaxSize, hash);
 
 //페이지 초기화 메소드 
 function pageRender(currentIdx, tabsMaxSize, hash){
-	// 페이지 크기 조정 함수. 
+	// 패널 미리보기 div 생성 
+	includeTargetElement();
+	
+	// 페이지 크기 조정 함수.
 	resizeDone();
 	
 	var currentLocation = null;

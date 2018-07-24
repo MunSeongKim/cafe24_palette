@@ -1,5 +1,6 @@
 package com.cafe24.mammoth.app.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.cafe24.mammoth.app.domain.Func;
 import com.cafe24.mammoth.app.domain.Theme;
+import com.cafe24.mammoth.app.domain.enumerate.PanelType;
 import com.cafe24.mammoth.app.service.FuncService;
 import com.cafe24.mammoth.app.service.PanelService;
 import com.cafe24.mammoth.app.service.ThemeService;
@@ -32,7 +34,7 @@ public class SettingController {
 		func1.setNameEng("recent"); 
 		func1.setDesciption("recent");
 		func1.setImgPath("/assets/admin/image/test.gif");
-		func1.setFilePath("/assets/admin/function/recent/recent.html");
+		func1.setFilePath("/function/recent/recent.html");
 		func1.setIsButton(false);
 		func1.setPreviewPath("/tmp");
 		
@@ -89,8 +91,9 @@ public class SettingController {
 	public String create(Model model) {
 		List<Func> funcs = funcService.getFuncList();
 		List<Theme> themeList = themeService.getThemeList();
+		List<PanelType> panelTypes = Arrays.asList(PanelType.values());
 		
-		model.addAttribute("types", "");
+		model.addAttribute("panelTypes", panelTypes);
 		model.addAttribute("tabs", new SettingTab());
 		model.addAttribute("funcs", funcs);
 		model.addAttribute("themes", themeList);
@@ -127,7 +130,7 @@ public class SettingController {
 	@GetMapping(value ="/update/{panelId}")
 	public String update(Model model, @ModelAttribute("mallId") String mallId,
 			@PathVariable("panelId") Long panelId) {
-		model.addAttribute("tabs", new SettingTab());
+		model.addAttribute("tabs", new SettingTab()); 
 		// Get data of panel
 		return "setting";
 	}
@@ -135,6 +138,9 @@ public class SettingController {
 	// 새 패널 만들기 - 패널 미리보기
 	@GetMapping(value="/preview")
 	public String preview(Model model) {
+		
+		System.out.println("[HELLO!!]");
+		
 		// funclist
 		List<Func> funcs = funcService.getFuncList();
 		model.addAttribute("funcs", funcs);
