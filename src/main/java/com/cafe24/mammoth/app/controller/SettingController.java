@@ -34,7 +34,7 @@ public class SettingController {
 		func1.setNameEng("recent"); 
 		func1.setDesciption("recent");
 		func1.setImgPath("/assets/admin/image/test.gif");
-		func1.setFilePath("/assets/admin/function/recent/recent.html");
+		func1.setFilePath("/function/recent/recent.html");
 		func1.setIsButton(false);
 		func1.setPreviewPath("/tmp");
 		
@@ -130,7 +130,7 @@ public class SettingController {
 	@GetMapping(value ="/update/{panelId}")
 	public String update(Model model, @ModelAttribute("mallId") String mallId,
 			@PathVariable("panelId") Long panelId) {
-		model.addAttribute("tabs", new SettingTab());
+		model.addAttribute("tabs", new SettingTab()); 
 		// Get data of panel
 		return "setting";
 	}
@@ -138,6 +138,9 @@ public class SettingController {
 	// 새 패널 만들기 - 패널 미리보기
 	@GetMapping(value="/preview")
 	public String preview(Model model) {
+		
+		System.out.println("[HELLO!!]");
+		
 		// funclist
 		List<Func> funcs = funcService.getFuncList();
 		model.addAttribute("funcs", funcs);

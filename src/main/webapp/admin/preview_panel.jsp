@@ -3,15 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
-<script>
-/* preview 패널에 대한 JS */ 
-/* $("#preview_sortable").sortable({
-	revert : 200
-});
-
-$("#preview_sortable").disableSelection(); */
-</script>
-
 <div class="scroll_mm_div">
 	<i class="fas fa-arrow-alt-circle-up scroll_top"></i>
 	<i class="fas fa-arrow-alt-circle-down scroll_bottom"></i>			
@@ -36,7 +27,7 @@ $("#preview_sortable").disableSelection(); */
 							<div id="paenl-div-${func.nameEng }" class="func-${func.nameEng }">
 								<c:import url="${func.filePath }"></c:import>
 							</div>
-						</div> 
+						</div>
 					</c:when>
 					
 					<c:otherwise>

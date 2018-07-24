@@ -72,6 +72,7 @@ public class WebConfigurer extends WebMvcConfigurationSupport  {
 		registry.addResourceHandler("/**/*.css").addResourceLocations("/");
 		registry.addResourceHandler("/**/*.jpg").addResourceLocations("/");
 		registry.addResourceHandler("/**/*.png").addResourceLocations("/");
+		registry.addResourceHandler("/**/*.html").addResourceLocations("/");
 		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/").resourceChain(true);
 		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/META-INF/resources/webjars/")
 				.setCacheControl(CacheControl.maxAge(3L, TimeUnit.HOURS).cachePublic()).resourceChain(true);
