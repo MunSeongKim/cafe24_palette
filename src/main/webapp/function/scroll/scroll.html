@@ -299,7 +299,7 @@ input[type="text"]:disabled {
 	width: 10.9em;
 	overflow: auto;
 	min-height: 7em;
-	margin: 0 2em;
+	margin: 0 2.1em;
 	position: absolute;
 	top: 0;
 }
@@ -310,6 +310,7 @@ input[type="text"]:disabled {
 			*/
 .scroll_infiniteCarousel [class^='scroll_items'],
 	.scroll_infiniteCarousel [class*='scroll_items'] {
+	color:white;
 	border: 5px solid #000;
 	width: 2.5em;
 	height: 2.5em;
@@ -340,7 +341,7 @@ input[type="text"]:disabled {
 	display: block;
 	float: left;
 	height: 3.3em;
-	width: 3.3em;
+	width: 3.31em;
 }
 
 .scroll_infiniteCarousel ul .cloned {
@@ -358,7 +359,7 @@ input[type="text"]:disabled {
 	font-size: 1.563em;
 	display: block;
 	height: 36px;
-	width: 37px;
+	width: 50px;
 	/*background: url(/assets/images/arrow.png) no-repeat 0 0;*/
 	/*text-indent: -999px;*/
 	position: absolute;
@@ -396,7 +397,7 @@ input[type="text"]:disabled {
 	<!-- 첫 줄(링크input, 복사하기 버튼, 도움말, 도움말 팝업) -->
 	<div class="header_part">
 		<!-- link관련 요소들 (input, 복사하기 버튼) -->
-		<input type="text" class="form-control scroll_text_url"
+		<input type="text" class="form-control scroll_text_url plt-pn-btn-default"
 			id="scroll_text_url" readonly />
 		<div class="scroll_copy_div">
 			<span class="plt-pn-btn-inverse scroll_copy_button"
@@ -527,10 +528,17 @@ $.fn.infiniteCarousel = function () {
 			$items = $slider.find('> li'),
 			$single = $items.filter(':first'), // 결국 div안에 ul안에 li안에 첫번째 요소를 찾기 위함.
 			singleWidth = $single.outerWidth(), // outerWidth는 maring, border값을 포함한 너비
-			visible = Math.ceil($wrapper.innerWidth() / singleWidth), // note: doesn't include padding or border
+			visible = Math.floor($wrapper.innerWidth() / singleWidth), // note: doesn't include padding or border
 			currentPage = 1,
 			pages = Math.ceil($items.length / visible);  // 11 / 3 => 3
+			
+			console.log('$wrapper.innerWidth() ==> ' + $wrapper.innerWidth());
+			console.log('singleWidth ==> ' + singleWidth);
+			console.log('pages ==> ' + pages);
+			console.log('visible ==> ' + visible);
 		
+			$wrapper.after('<i class="fas fa-arrow-circle-left arrow scroll_back plt-pn-i"></i><i class="fas fa-arrow-circle-right arrow scroll_forward plt-pn-i"></i>');
+			
 		// li가 1개라도 있어야 실행.
 		if($items.length != 0){
 
