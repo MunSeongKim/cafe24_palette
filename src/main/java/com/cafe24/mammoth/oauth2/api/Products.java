@@ -19,6 +19,8 @@ public class Products implements EntityListStructure<Products> {
 	@JsonProperty(value="product_no")
 	private String productNo;
 	
+	@JsonProperty(value="product_tag")
+	private String productTag;
 	
 	@JsonProperty(value="small_image")
 	private String smallImage;

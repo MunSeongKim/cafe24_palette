@@ -19,5 +19,6 @@ public class Product implements Serializable {
 	private static final long serialVersionUID = -3802502049417564539L;
 	private String productNo;
 	private String smallImage;
+	private String tags;
 	private List<Map<String, String>> categories;
 }

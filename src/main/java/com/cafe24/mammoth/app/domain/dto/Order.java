@@ -50,7 +50,7 @@ public class Order {
 		private String optionValue;
 		private String quantity;
 		private String additionalDiscountPrice;
-		private Product products;
+		private Product product;
 
 		// public void addProduct(Product product) {
 		// this.products.add(product);
