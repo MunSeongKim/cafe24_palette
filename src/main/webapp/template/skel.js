@@ -37,7 +37,7 @@ var readyToExe = (function() {
       var element;
 
       if (type === ".js") { //if filename is a external JavaScript file
-         element = document.createElement('script');
+        element = document.createElement('script');
          element.type = 'text/javascript';
          element.src = path; // grab next script off front of array
       } else if (type === ".css") { //if filename is an external CSS file
@@ -47,12 +47,17 @@ var readyToExe = (function() {
          element.href = path;
       }
 
+      //readyToExe.scriptLoaded(element);
+      // readyToExe.scriptLoaded(element);
       element.onreadystatechange = function() {
          if (this.readyState == 'complete' || this.readyState == 'loaded') {
             readyToExe.scriptLoaded(element);
          }
       }
+      //element.onreadystatechange = readyToExe.handler(element);
       element.onload = readyToExe.scriptLoaded;
+      
+      head.appendChild(element);
    }
 
    return {
@@ -63,9 +68,9 @@ var readyToExe = (function() {
       }, // end include File function
 
       includeTargetElement : function() {
-         var element = document.createElement("div");
-         element.setAttribute("id", "panel-area");
-         document.body.appendChild(element);
+         var element1 = document.createElement("div");
+         element1.setAttribute("id", "panel-area");
+         document.body.appendChild(element1);
       }, // end TargetElement function
       loadNextScript : function() {
          var src = files.shift();
@@ -79,7 +84,7 @@ var readyToExe = (function() {
          // check done variable to make sure we aren't getting notified more than once on the same script
          if (!done) {
             element.onreadystatechange = element.onload = null; // kill memory leak in IE
-            //done = true; 원래 여기에 true있는데 패턴 변경한 순간... 로직이 바뀐듯 나중에 확인해보자.
+            // done = true; //원래 여기에 true있는데 패턴 변경한 순간... 로직이 바뀐듯 나중에 확인해보자.
             if (files.length != 0) {
                if (files.length == 1) {
                   //createElement div
@@ -87,7 +92,7 @@ var readyToExe = (function() {
                }
                readyToExe.loadNextScript(files);
             } else {
-            	if(isMobile == true)
+            	if(isMobile == false)
             		$('#panel-area').load('/mammoth/template/panel.jsp');
             	else
             		$('#panel-area').load('/mammoth/template/panel_m.jsp');
