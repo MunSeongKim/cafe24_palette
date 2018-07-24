@@ -2,8 +2,6 @@ package com.cafe24.mammoth.app.controller;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,11 +10,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.cafe24.mammoth.app.domain.Func;
 import com.cafe24.mammoth.app.domain.Theme;
 import com.cafe24.mammoth.app.service.FuncService;
+import com.cafe24.mammoth.app.service.PanelService;
 import com.cafe24.mammoth.app.service.ThemeService;
 import com.cafe24.mammoth.app.support.SettingTab;
 
@@ -25,7 +25,7 @@ import com.cafe24.mammoth.app.support.SettingTab;
 @SessionAttributes({"mallId", "mallUrl"})
 public class SettingController {
 	
-	@PostConstruct
+	/*@PostConstruct
 	public void init() {
 		Func func1 = new Func();
 		func1.setName("recent"); 
@@ -74,23 +74,49 @@ public class SettingController {
 		
 		themeService.saveTheme(theme1);
 		themeService.saveTheme(theme2);
-	}
+	}*/
 	
 	@Autowired
 	private FuncService funcService;
 	
 	@Autowired
 	private ThemeService themeService;
+	
+	@Autowired
+	private PanelService panelService;
 
 	@GetMapping(value = "/create")
 	public String create(Model model) {
 		List<Func> funcs = funcService.getFuncList();
 		List<Theme> themeList = themeService.getThemeList();
 		
+		model.addAttribute("types", "");
 		model.addAttribute("tabs", new SettingTab());
 		model.addAttribute("funcs", funcs);
 		model.addAttribute("themes", themeList);
 		return "setting";
+	}
+	
+	@PostMapping(value = "/create")
+	public String createPersist(
+			@RequestParam("funcid") List<Long> funcId,
+			@RequestParam("funcorder") List<Long> funcOrder,
+			@RequestParam("themeid") Long themeId) {
+		System.out.println("createPersist is called!!");
+		// @RequestParam - primitive type의 값만 받을 수 있음. map이나 다른 형태 불가.-> 되는데?
+		
+		panelService.createPanel(funcId, funcOrder, themeId);
+		
+		/*for(int i=0; i<funcid.size(); i++) {
+			System.out.println("funcid : "+funcid.get(i)+", funcorder : "+funcorder.get(i));
+		}*/
+		
+		/*for(Entry<?, ?> entry : selectedFuncInfo.entrySet()) {
+			System.out.println(entry.getKey());
+			System.out.println(entry.getValue());
+		}*/
+		
+		return "redirect:/"; 
 	}
 	
 	@GetMapping(value="/testPage")
@@ -115,11 +141,4 @@ public class SettingController {
 		return "preview_panel";
 	}
 
-	@PostMapping(value = "/save")
-	public String save(Model model, @ModelAttribute("mallId") String mallId) {
-		/*
-		 * temp_panel table -> panel table 데이터 이동
-		 */
-		return "redirect:/"; // /WEB-INF/views/index.jsp
-	}
 }

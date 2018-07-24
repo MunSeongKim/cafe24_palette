@@ -310,7 +310,7 @@ $(function() {
 			$li.removeClass("ui-state-disabled");
 			$li.detach();				/* 해당 버튼이 있는 li 제거 */
 			$li.prependTo($ul);
-			$li.attr("funcorder", "0");
+			$li.attr("funcorder", "0"); 
 			
 			/* drag & drop 후 순서 정보 */
 	    	var orderInfo = $("#sortable").sortable('toArray');
@@ -381,7 +381,7 @@ $(function() {
 			<hr class="custom-hr"> 
 			<ul class="nav nav-tabs" id="sortable" class="funcsort" role="tablist"> 
 			<c:forEach var="func" items="${funcs }" varStatus="stat">
-				<li class="func-element nav-item ui-state-default ui-state-disabled" id="${func.nameEng }" data-funcname="${func.nameEng }" data-funcid="${func.funcId }" funcorder=${stat.index }>
+				<li class="func-element nav-item ui-state-default ui-state-disabled" id="${func.nameEng }" data-funcname="${func.nameEng }" data-funcid="${func.funcId }">
 					<span class="ui-icon ui-icon-arrowthick-2-n-s"></span> 
 					<!-- ui-state-disabled -->
 					<div class="func-sort">

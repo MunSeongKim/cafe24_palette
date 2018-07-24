@@ -13,10 +13,17 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <title>Insert title here</title>
+
+<style type="text/css">
+html, body{
+	height: 100%;
+}
+</style>
+
 </head>
 <body>
-	<div class="" style="width: 100%; height: 1000px; ">
-		<iframe style="width: 100%; height: 1000px;" src="http://localhost:8080/mammoth/setting/create"></iframe>
+	<div class="" style="width: 100%; height: 100%; ">
+		<iframe style="width: 100%; height: 100%;" src="http://localhost:8080/mammoth/"></iframe>
 	</div>
 </body>
 </html>

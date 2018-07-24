@@ -61,7 +61,7 @@ public class Panel {
 	@ManyToOne
 	@JoinColumn(name = "mall_id", insertable = false, updatable = false)
 	private Member member;
-
+	
 	// 요거 수정해야함
 	@ManyToOne(optional=true)
 	@JoinColumn(name="theme_id", nullable=true)
