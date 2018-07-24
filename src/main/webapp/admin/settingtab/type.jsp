@@ -11,14 +11,13 @@
 </script> 
 <div class="inner">
 	<div class="row" style="height: 100%; padding: 5px;">
-		<div class="tab-content col-sm-6 col-md-6 col-xl-6">  
-			<c:forEach var="func" items="${funcs }" varStatus="stat"> 
+		<div class="tab-content col-sm-6 col-md-6 col-xl-6">
+			<i class="custom-i fas fa-comment-alt"> 유형선택</i>
+			<hr class="custom-hr">
+			<c:forEach var="panelType" items="${panelTypes }" varStatus="stat"> 
 				<c:choose>
 					<c:when test="${stat.index == 0 }">
 						<div class="tab-pane fade show active func-detail-text-div" id="${func.nameEng }-sort" role="tabpanel" aria-labelledby="${func.nameEng }-sort-tab">
-							<i class="custom-i fas fa-comment-alt"> 기능소개</i>
-							<hr class="custom-hr">
-							
 							<!-- name -->
 							<p>기능 명 : ${func.name }</p>
 							<!-- description -->

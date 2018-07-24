@@ -19,8 +19,7 @@
 <script	src="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script> <!-- 토글 버튼 라이브러리 -->
 <script	src="${pageContext.servletContext.contextPath }/static/mustachejs/2.2.1/mustache.min.js"></script>
-<script src="${pageContext.servletContext.contextPath }/assets/admin/js/cookie.js"></script>
-<script type="text/javascript" src="${pageContext.servletContext.contextPath }/assets/admin/template/skel.js"></script>
+<script type="text/javascript" src="${pageContext.servletContext.contextPath }/assets/assets/template/skel.js"></script>
 <%-- <script src="${pageConetxt.servletContext.contextPath }/static/bootstrap-toggle/2.2.2/js/bootstrap-toggle.js" type="text/javascript"></script> --%>
 
 <!-- <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
@@ -28,7 +27,7 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 
-jQuery library 
+jQuery library
 <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
@@ -36,7 +35,7 @@ jQuery library
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script> 토글 버튼 라이브러리
 <script src="../admin/assets/js/cookie.js"></script> -->
 
-<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/assets/admin/css/setting.css">
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/admin/assets/css/setting.css">
 
 <title>새 패널 만들기</title>
 </head>
@@ -148,7 +147,7 @@ var hash = window.location.hash;  // ex) /create#func
 if(hash=='' || hash==null){
 	window.location = "#func";
 	hash = "#func";
-}
+} 
 
 /* hash 위치에 맞는 탭 출력 */
 $('#myTab a[href="'+hash+'"]').tab('show');
