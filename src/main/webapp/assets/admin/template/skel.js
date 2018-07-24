@@ -10,6 +10,7 @@ function includeFile(path, type) {
     element.setAttribute("href", path);
   }
 
+  // element 잘 생성이 안되었을 때.
   if (typeof element != "undefined") {
     document.head.appendChild(element);
   }

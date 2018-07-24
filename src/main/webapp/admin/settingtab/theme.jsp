@@ -21,8 +21,7 @@
 }
  
 .theme-list-div{
-	border-right: 1px solid #c5c5c5;
-	overflow: scroll;
+	overflow: scroll; 
 	overflow-x : hidden;
 	max-height: 575px;
 }
@@ -37,6 +36,35 @@
 
 </style>
 <script>
+
+/* theme 선택 css file 변경 */
+function includeThemeFile(path) {
+	var themeFlag = 0;
+	$("head > link").each(function(){
+		if($(this).attr("id")=="themeEx"){
+			// href만 갈아끼우기
+			$(this).attr("href", path);
+			themeFlag = 1;
+			return false; // break;
+		}
+	}); 
+	
+	if(themeFlag == 1){
+		return;
+	}
+	
+	var element = document.createElement("link");
+	$(element).attr("id", "themeEx");
+	$(element).attr("rel", "stylesheet"); 
+	$(element).attr("type", "text/css");
+	$(element).attr("href", path);
+	
+  	// element 잘 생성이 안되었을 때.
+  	if (typeof element != "undefined") {
+    	$("head").append(element);
+  	}
+}
+
 $(document).ready(function(){
 	$(".card").hover(
 		/* function(){
@@ -49,7 +77,7 @@ $(document).ready(function(){
 			$(this).css({
 				"border" : "1px solid rgba(0,0,0,.125)"
 			})
-		} */ 
+		} */
 	);
 	
 	$(".card").click(function(){
@@ -64,7 +92,7 @@ $(document).ready(function(){
 		
 		var cssFilePath = $(this).data("cssfilepath");
 		
-		includeFile(cssFilePath, "css"); 
+		includeThemeFile(cssFilePath, "css"); 
 		
 		// 사진 교체
 		previewImgPath = $(this).data("previewpath");
@@ -76,25 +104,25 @@ $(document).ready(function(){
 <div class="inner">
 	<div class="row" style="height: 100%; padding: 5px;">
 		<!-- 테마 선택 card 형태 grid 배치 -->
-		<div class="theme-list-div col-sm-6 col-md-7 col-lg-8 col-xl-9">
+		<div class="theme-list-div col-sm-12 col-md-12 col-lg-12 col-xl-12">
 			<i class="custom-i fas fa-comment-alt"> 테마목록</i>
 			<hr class="custom-hr">
-			<c:forEach var="theme" items="${themes }" varStatus="stat">
-				<div class="card" data-previewpath = "${theme.previewImgPath }" data-themeno = ${theme.id } data-themetitle = ${theme.title }>
-			 		<img class="card-img-top" src="${pageContext.servletContext.contextPath }${theme.titleImgPath }" data-cssfilepath=${theme.cssFilePath } alt="Card image cap">
+			<c:forEach var="theme" items="${themes }" varStatus="stat"> 
+				<div class="card" data-cssfilepath=${pageContext.servletContext.contextPath }${theme.cssFilePath } data-previewpath = "${theme.previewImgPath }" data-themeid = ${theme.id } data-themetitle = ${theme.title }>
+			 		<img class="card-img-top" src="${pageContext.servletContext.contextPath }${theme.titleImgPath }" alt="Card image cap">
 			  		<div class="card-body">
 			    		<p class="card-title">테마명:${theme.title }</p> 
 			  		</div>
 				</div>
 			</c:forEach> 
-		</div> 
+		</div>
 		 
-		<div class="theme-detail-image-div tab-content col-sm-6 col-md-5 col-lg-4 col-xl-3">
+		<%-- <div class="theme-detail-image-div tab-content col-sm-6 col-md-5 col-lg-4 col-xl-3">
 			<i class="custom-i fas fa-images"> 테마 이미지</i>  
 			<hr class="custom-hr">
 			<div class="theme-detail-image-inner-div">
 				<img class="theme-detail-image img-fluid" alt="theme 예시 이미지" src="${pageContext.servletContext.contextPath }/assets/admin/image/theme_none.PNG">
 			</div>
-		</div>
+		</div> --%>
 	</div>
 </div>

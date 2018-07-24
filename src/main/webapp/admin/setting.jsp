@@ -79,6 +79,14 @@ jQuery library
 			<div id="tabProgress" class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 2%"></div> 
 		</div>
 		
+		<!-- 설정 값을 넘기기 위한 hidden form -->
+		<form id="saveform" method="POST" action="${pageContext.servletContext.contextPath }/setting/create">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }" />
+			<!-- 
+				"funcid" , "funcorder" 
+			-->
+		</form>
+		
 		<div class="tab-content fouc" id="myTabContent">
 			<c:forEach var="tab_element" items="${tabs.map }" varStatus="stat">
 				<c:choose>
@@ -202,11 +210,6 @@ function pageRender(currentIdx, tabsMaxSize, hash){
 	progressBarChange(currentIdx, tabsMaxSize);
 }
 
-
-window.onload = function(){
-	
-}
-
 function resizeDone(){
 	var currentWidth = window.innerWidth;
 	var rate = ((currentWidth - 250)/currentWidth)*100;
@@ -218,15 +221,6 @@ function resizeDone(){
 		"width" : rate+"%"
 	});
 }
-
-/* $(function(){
-	console.log('4');
-});
-
-;(function(){
-	console.log('5');
-})(); */
-
 
 /* DOM이 모두 준비되고 */
 $(document).ready(function(){
@@ -257,7 +251,7 @@ $(document).ready(function(){
 			currentIdx = tabsMaxSize-1;
 		} 
 		
-		/* 현재 페이지가 기능선택 페이지라면 다음 구문 수행 */
+		/* 다음 단계로 넘어갈때 검사 필터 */
 		if(funcNextProcess(currentPage)==false){
 			return;
 		}
@@ -349,6 +343,35 @@ $(document).ready(function(){
 		var id = $(previousTag).attr("href").substr(1);
 		window.location.hash = id; 
 	});
+	
+	/* save 버튼 누를 때 */
+	$("#pager-save").click(function(){
+		var values = findCurrentTag("previous");      // 현재 탭 정보 얻어오기.
+		var currentPage = values.currentPage;
+		
+		/* 다음 단계로 넘어갈때 검사 필터 */
+		if(funcNextProcess(currentPage)==false){
+			console.log(currentPage);
+			return;
+		}
+		
+		// form 수정
+		// ui-state-disabled가 없는 li --> 선택 된 li Element
+		$($("#sortable").children("li").siblings().not(".ui-state-disabled")).each(function(){
+			var funcid = $(this).data("funcid");
+			var funcorder = $(this).attr("funcorder");
+			console.log(funcid +", "+funcorder); 
+			
+			appendHiddenElement($("#saveform"), "funcid", funcid);
+			appendHiddenElement($("#saveform"), "funcorder", funcorder);
+		});
+		
+		/* form에 선택된 themeid 정보 추가 */
+		appendHiddenElement($("#saveform"), "themeid", $(".card.seleted").data("themeid"));
+		
+		/* form 제출 */
+		$("#saveform").submit();
+	})
 });
 
 /* 현재 탭 위치정보 및 다음/이전 탭 정보를 구하는 메소드 */
@@ -370,7 +393,6 @@ function findCurrentTag(flag){
 			}
 		}
 	}
-	
 	return {
 		currentTag : currentTag,
 		currentIdx : currentIdx,
@@ -402,7 +424,7 @@ function progressBarChange(currentIdx, tabsMaxSize){
 	}).removeClass($("#tabProgress").attr('class').split(" ").pop()).addClass(bgColor);
 }
 
-/* 미리보기 임시 데이터 쿠키저장 */
+/* 다음 단계 넘어갈 때 처리 */
 function funcNextProcess(currentPage){
 	var data = [];
 	
@@ -420,19 +442,6 @@ function funcNextProcess(currentPage){
 			$("#confirmModal").modal('show');
 			return false;
 		}
-		
-		$("#sortable").children("li").each(function(index){
-			if($(this).hasClass("ui-state-disabled") == false){
-				id = $(this).data("funcid");
-				name = $(this).data("funcname");
-				order = $(this).attr("funcorder");
-				func = {"funcid" : id, "funcname" : name, "funcorder" : order};
-				data.push(func);
-			}
-		});
-		
-		/* 쿠키 저장 */
-		Cookies.set(currentPage, data, {path : ''});
 	}else if(currentPage=="theme"){  /* 테마 결정 페이지에서 next 할 때 */
 		var seletedTheme = false;
 		
@@ -447,16 +456,16 @@ function funcNextProcess(currentPage){
 			$("#confirmModal").modal('show');
 			return false;
 		}
-		
-		var themeNo = $(seletedTheme).data("themeno");
-		var themeTitle = $(seletedTheme).data("themetitle");
-		var theme = {"themeNo" : themeNo, "themeTitle" : themeTitle}
-		data.push(theme);
-		
-		/* 쿠키 저장 */
-		Cookies.set(currentPage, data, {path : ''});
 	}
-	
-} 
+}
+
+/* form input element 동적 추가 */
+function appendHiddenElement(form, name, value){
+	var element = document.createElement("input");
+	element.type = "hidden";
+	element.name = name;
+	element.value = value;
+	form.append(element);
+}
 </script>
 </html>
