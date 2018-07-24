@@ -1,4 +1,5 @@
 <script src="/mammoth/function/orderlist/orderlist_popuplayer.js"></script>
+<link rel="stylesheet" type="text/css" href="/mammoth/function/orderlist/orderlist_popuplayer.css" />
 
 <style>
 .hide { display:none; }
@@ -7,11 +8,11 @@
 <div class="popupLayer plt-pn">
 	<div id="popup-header">
 		<div id="popup-period">
-			<span class="plt-pn-btn-default plt-pn-font-l plt-pn-font-n" id="period-week ">1주일</span>
-			<span class="plt-pn-btn-default plt-pn-font-l plt-pn-font-n" id="period-month">1개월</span>
-			<span class="plt-pn-btn-default plt-pn-font-l plt-pn-font-n" id="period-all">전체</span>
+			<span class="plt-pn-btn-default plt-pn-font-l plt-pn-font-n span-period" data-period="week">1주일</span>
+			<span class="plt-pn-btn-simple plt-pn-font-l plt-pn-font-n span-period" data-period="month">1개월</span>
+			<span class="plt-pn-btn-simple plt-pn-font-l plt-pn-font-n span-period" data-period="sixmonths">6개월</span>
 			<div id="popup-close">
-				<span onclick="closeLayer()">&times;</span>
+				<span>&times;</span>
 			</div>
 		</div>
 		<div id="popup-chkbox" class="plt-pn-font-s">
@@ -26,7 +27,7 @@
 			<div class="container">
 				<div id="mustache-result"></div>
 				<!-- 특정 주문일에 주문한 상품 리스트 -->
-				<div id="mustache-template" type="x-tmpl-mustache" class="hide">
+				<script id="mustache-template" type="text/template">
 				{{^datas}}
 					<div class="row">
 					구매한 상품이 없습니다.
@@ -36,21 +37,19 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="card plt-pn-border-dotted mb-3">
-								<div class="card-header plt-pn-bg">{{orderDate }}</div>
+								<div class="card-header plt-pn-bg">{{#cut}}{{orderDate }}{{/cut}}</div>
 								{{#items}}
 								<div class="card-body">
 										<div class="row order-product-info">
 											<div class="col-md-6">
-												<!-- <img class="img-fluid d-block"
-														src={{products.smallImage}}> -->
-											
+    											<img class="img-fluid d-block" src="{{product.smallImage}}" style="height:70%" />
 											</div>
 											<div class="col-md-6">
 												<p>{{productName}}</p>
 												<p>가격 : {{productPrice}}</p>
 												<p>색상 : {{optionValue}}</p>
 												<p>사이즈 : S</p>
-												<a class="plt-pn-btn-inverse">사이즈 상세보기</a>
+												<a href="/product/detail.html?product_no={{productNo}}" class="plt-pn-btn-default">상품 상세보기</a>
 											</div>
 										</div>
 								</div>
@@ -59,7 +58,11 @@
 						</div>
 					</div>
 				{{/datas}}	
-				</div>
+
+				</script>
+				<!-- <div id="mustache-template" type="x-tmpl-mustache" class="hide">
+				
+				</div> -->
 					
 			</div>
 		</div>
