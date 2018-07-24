@@ -3,7 +3,6 @@ package com.cafe24.mammoth.oauth2;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -22,6 +21,8 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.util.SerializationUtils;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.util.Assert;
+
+import com.cafe24.mammoth.oauth2.support.Cafe24APIGenerater;
 
 /**
  * Cafe24OAuth2AccessToken과 Authentication 객체에 대한 영속성 관리를 위한 서비스<br>
@@ -69,7 +70,7 @@ public class Cafe24ClientTokenServices implements ClientTokenServices {
 
 	// Authentication accessing
 	public void saveAuthentication(Authentication authentication) {
-		String mallId = getMallIdForKey(null, authentication);
+		String mallId = Cafe24APIGenerater.getMallIdByAuthentication(null, authentication);
 		OAuth2Authentication oauth2Authentication = (OAuth2Authentication) authentication;
 		jdbcTemplate.update(updateAuthenticationSql,
 				new Object[] { new SqlLobValue(SerializationUtils.serialize(oauth2Authentication)), mallId },
@@ -106,7 +107,7 @@ public class Cafe24ClientTokenServices implements ClientTokenServices {
 				public Cafe24OAuth2AccessToken mapRow(ResultSet rs, int rowNum) throws SQLException {
 					return SerializationUtils.deserialize(rs.getBytes(2));
 				}
-			}, getMallIdForKey(resource, authentication));
+			}, Cafe24APIGenerater.getMallIdByAuthentication(resource, authentication));
 		} catch (EmptyResultDataAccessException e) {
 			if (LOG.isInfoEnabled()) {
 				LOG.debug("Failed to find access token for authentication " + authentication);
@@ -130,7 +131,7 @@ public class Cafe24ClientTokenServices implements ClientTokenServices {
 
 	@Override
 	public void removeAccessToken(OAuth2ProtectedResourceDetails resource, Authentication authentication) {
-		String mallId = getMallIdForKey(resource, authentication);
+		String mallId = Cafe24APIGenerater.getMallIdByAuthentication(resource, authentication);
 		jdbcTemplate.update(deleteAccessTokenSql, mallId);
 	}
 
@@ -138,16 +139,6 @@ public class Cafe24ClientTokenServices implements ClientTokenServices {
 		return jdbcTemplate.queryForObject(selectExistTokenSql, new Object[] { mallId }, Boolean.class);
 	}
 
-	@SuppressWarnings("unchecked")
-	private String getMallIdForKey(OAuth2ProtectedResourceDetails resource, Authentication authentication) {
-		if (authentication == null) {
-			return ((Cafe24AuthorizationCodeResourceDetails) resource).getMallId();
-		} else {
-			Authentication userAuthentication = ((OAuth2Authentication) authentication).getUserAuthentication();
-			Map<String, Object> storeDetails = (Map<String, Object>) ((Map<String, Object>) userAuthentication
-					.getDetails()).get("store");
-			return (String) storeDetails.get("mall_id");
-		}
-	}
+	
 
 }

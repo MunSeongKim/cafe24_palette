@@ -43,6 +43,7 @@ public class Cafe24OAuth2AccessToken implements Serializable, OAuth2AccessToken 
 	public static String EXPIRES_AT = "expires_at";
 	public static String ISSUED_AT = "issued_at";
 	public static String MALL_ID = "mall_id";
+	public static String USER_ID = "user_id";
 	public static String CLIENT_ID = "client_id";
 	
 	/**
@@ -79,12 +80,10 @@ public class Cafe24OAuth2AccessToken implements Serializable, OAuth2AccessToken 
 
 	public Cafe24OAuth2AccessToken(OAuth2AccessToken accessToken) {
 		this(accessToken.getValue());
-		
 		setRefreshToken(accessToken.getRefreshToken());
 		setExpiresAt(accessToken.getExpiration());
 		setScope(accessToken.getScope());
 		setTokenType(accessToken.getTokenType());
-		
 		setValues(accessToken.getAdditionalInformation());
 	}
 
@@ -183,8 +182,6 @@ public class Cafe24OAuth2AccessToken implements Serializable, OAuth2AccessToken 
 	}
 
 	private void setValues(Map<String, Object> map) {
-		System.out.println("=================== Cafe24OAuth2AccessToken.setValues() =====================");
-
 		if (map.containsKey(SCOPES)) {
 			Set<String> scope = new TreeSet<String>();
 			for (StringTokenizer tokenizer = new StringTokenizer((String) map.get(SCOPE), " ,"); tokenizer

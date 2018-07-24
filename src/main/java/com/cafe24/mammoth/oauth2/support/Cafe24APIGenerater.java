@@ -1,7 +1,14 @@
 package com.cafe24.mammoth.oauth2.support;
 
+import java.util.Map;
+
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+
+import com.cafe24.mammoth.oauth2.Cafe24AuthorizationCodeResourceDetails;
 
 /**
  * mall_id 기반 AccessToken 발급 URL, Store API 사용 URL 생성하는 클래스
@@ -10,7 +17,7 @@ import org.springframework.security.oauth2.client.token.grant.code.Authorization
  * @author MoonStar
  *
  */
-public class Cafe24APIURLGenerater {
+public class Cafe24APIGenerater {
 	// URL을 생성하기 위한 URL prefix, suffix 리터럴
 	private static final String PREFIX_URL = "https://";
 	private static final String CLIENT_CODE_URL = "cafe24api.com/api/v2/oauth/authorize";
@@ -38,6 +45,25 @@ public class Cafe24APIURLGenerater {
 	public static void generateForResourceUrl(ResourceServerProperties resource, String mallId) {
 		String storeAPIByUser = PREFIX_URL + mallId + "." + STORE_API_URL + "?" + STORE_API_FIELDS_PARAMETER;
 		resource.setUserInfoUri(storeAPIByUser);	
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static String getMallIdByAuthentication(OAuth2ProtectedResourceDetails resource, Authentication authentication) {
+		if (authentication == null) {
+			return ((Cafe24AuthorizationCodeResourceDetails) resource).getMallId();
+		} else {
+			Authentication userAuthentication = ((OAuth2Authentication) authentication).getUserAuthentication();
+			Map<String, Object> storeDetails = (Map<String, Object>) ((Map<String, Object>) userAuthentication
+					.getDetails()).get("store");
+			return (String) storeDetails.get("mall_id");
+		}
+	}
+	
+	public static void setMallIdInResourceDetails(OAuth2ProtectedResourceDetails resource, Authentication authentication) {
+		if(authentication != null) {
+			String mallId = Cafe24APIGenerater.getMallIdByAuthentication(resource, authentication);
+			Cafe24APIGenerater.generateForAccessTokenUrl((AuthorizationCodeResourceDetails) resource, mallId);
+		}
 	}
 	
 }

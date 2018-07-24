@@ -9,7 +9,7 @@ import org.springframework.security.oauth2.client.token.grant.code.Authorization
  */
 public class Cafe24AuthorizationCodeResourceDetails extends AuthorizationCodeResourceDetails {
 	//
-	public String mallId;
+	private String mallId;
 
 	public String getMallId() {
 		return mallId;

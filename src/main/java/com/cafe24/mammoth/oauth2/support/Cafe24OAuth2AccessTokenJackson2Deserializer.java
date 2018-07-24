@@ -65,7 +65,7 @@ public class Cafe24OAuth2AccessTokenJackson2Deserializer extends StdDeserializer
 				expiresAt = convertStringToDate(p.getText());
 			} else if (Cafe24OAuth2AccessToken.ISSUED_AT.equals(name)) {
 				issuedAt = convertStringToDate(p.getText());
-			} else if (Cafe24OAuth2AccessToken.MALL_ID.equals(name)) {
+			} else if (Cafe24OAuth2AccessToken.USER_ID.equals(name)) {
 				mallId = p.getText();
 			} else if (Cafe24OAuth2AccessToken.CLIENT_ID.equals(name)) {
 				clientId = p.getText();

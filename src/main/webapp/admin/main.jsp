@@ -30,8 +30,10 @@
 <script
 	src="${pageContext.servletContext.contextPath }/static/popper.js/1.14.1/popper.min.js"></script>
 <script
-	src="${pageConetxt.servletContext.contextPath }/static/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-	
+	src="${pageContext.servletContext.contextPath }/static/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+<script src="${pageContext.servletContext.contextPath }/admin/assets/js/cookie.js"></script>
+
 <style>
 * {
 	margin: 0;

@@ -19,7 +19,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.cafe24.mammoth.app.service.MemberService;
-import com.cafe24.mammoth.oauth2.support.Cafe24APIURLGenerater;
+import com.cafe24.mammoth.oauth2.support.Cafe24APIGenerater;
 
 /**
  * OAuth2 토근 발급 및 사용자 인증 전 파라마티 처리를 위한 클래스<br>
@@ -79,8 +79,8 @@ public class Cafe24OAuth2ClientAuthenticationProcessingFilter extends OAuth2Clie
 		}
 		
 		if (mallId != null) {
-			Cafe24APIURLGenerater.generateForAccessTokenUrl(details, mallId);
-			Cafe24APIURLGenerater.generateForResourceUrl(resource, mallId);
+			Cafe24APIGenerater.generateForAccessTokenUrl(details, mallId);
+			Cafe24APIGenerater.generateForResourceUrl(resource, mallId);
 			((Cafe24AuthorizationCodeResourceDetails) details).setMallId(mallId);
 			
 			setTokenServices(new UserInfoTokenServices(resource.getUserInfoUri(), details.getClientId()));
@@ -94,18 +94,18 @@ public class Cafe24OAuth2ClientAuthenticationProcessingFilter extends OAuth2Clie
 			memberService.save(mallId);
 		}
 		
-		// 접속한 사용자의 mall_id와 토큰을 발급한 mall_id가 다르면 세션 초기화 후 토큰 재발급
-		OAuth2ClientContext clientContext = (OAuth2ClientContext) session
-				.getAttribute("scopedTarget.oauth2ClientContext");
-		if (clientContext != null) {
-			OAuth2AccessToken token = clientContext.getAccessToken();
-			if (token != null) {
-				String tokenMallId = (String) token.getAdditionalInformation().get("mall_id");
-				if (mallId != tokenMallId) {
-					session.invalidate();
-				}
-			}
-		}
+//		// 접속한 사용자의 mall_id와 토큰을 발급한 mall_id가 다르면 세션 초기화 후 토큰 재발급
+//		OAuth2ClientContext clientContext = (OAuth2ClientContext) session
+//				.getAttribute("scopedTarget.oauth2ClientContext");
+//		if (clientContext != null) {
+//			OAuth2AccessToken token = clientContext.getAccessToken();
+//			if (token != null) {
+//				String tokenMallId = (String) token.getAdditionalInformation().get("mall_id");
+//				if (mallId != tokenMallId) {
+//					session.invalidate();
+//				}
+//			}
+//		}
 
 		return super.attemptAuthentication(request, response);
 	}

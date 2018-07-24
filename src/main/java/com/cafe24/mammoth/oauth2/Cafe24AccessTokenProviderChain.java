@@ -12,12 +12,15 @@ import org.springframework.security.oauth2.client.resource.OAuth2AccessDeniedExc
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 import org.springframework.security.oauth2.client.resource.UserRedirectRequiredException;
 import org.springframework.security.oauth2.client.token.AccessTokenProvider;
+import org.springframework.security.oauth2.client.token.AccessTokenProviderChain;
 import org.springframework.security.oauth2.client.token.AccessTokenRequest;
 import org.springframework.security.oauth2.client.token.ClientTokenServices;
 import org.springframework.security.oauth2.client.token.OAuth2AccessTokenSupport;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2RefreshToken;
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
+
+import com.cafe24.mammoth.oauth2.support.Cafe24APIGenerater;
 
 /**
  * {@link AccessTokenProviderChain}을 복사한 클래스<br>
@@ -71,7 +74,9 @@ public class Cafe24AccessTokenProviderChain extends OAuth2AccessTokenSupport imp
 		OAuth2AccessToken accessToken = null;
 		OAuth2AccessToken existingToken = null;
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
+		
+		Cafe24APIGenerater.setMallIdInResourceDetails(resource, auth);
+		
 		if (auth instanceof AnonymousAuthenticationToken) {
 			if (!resource.isClientOnly()) {
 				throw new InsufficientAuthenticationException(
