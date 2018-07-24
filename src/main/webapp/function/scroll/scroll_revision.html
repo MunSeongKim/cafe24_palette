@@ -1,329 +1,120 @@
-<!-- <link href="../css/scroll_revision.css" rel="stylesheet">
-<script src="../js/scroll_revision.js"></script> -->
-<style>
-.item {
-	margin: 1px;
-	width: 45px;
-	height: 30px;
-	border: 1px solid orange;
-	float: left;
-	border-radius: 10%;
-}
+<link href="/mammoth/function/scroll/css/scroll_revision.css" rel="stylesheet">
+<script src="/mammoth/function/scroll/js/scroll_revision.js"></script>
 
-.item-inner-st {
-	display: none;
-	position: absolute;
-	margin-top: -36px;
-	margin-left: 36px;
-	/* 값 저장이 안되있을 떄는 -13, 36*/
-}
-
-i {
-	color: orange;
-}
-
-/* 아이템 속 아이콘 */
-.fa-save {
-	/*margin-left:35%;*/
-	margin-top: 5px;
-}
-
-/* 전체 감싸는 div */
-.scroll-total-wrapper {
-	height: 100px;
-	text-align: -webkit-center;
-	/*text-align:center;*/
-	border-radius: 10%:
-}
-
-.scroll-re-keyword {
-	width: 80%;
-	height: 30%;
-	border: 1px solid orange;
-	margin-bottom: 6px;
-	border-radius: 7%;
-}
-
-/* modal 관련 css */
-.scroll-re-question-popup {
-	display: none;
-}
-
-.modal.scroll-re-question-popup {
-	top: 0px;
-	left: 0px;
-}
-
-.modal-dialog.scroll-re-dialog {
-	width: 350px;
-	max-width: 350px;
-	margin: 0px auto;
-	text-align: -webkit-center;
-	/*top:30%;*/
-}
-
-.modal-content.scroll-re-content {
-	width: 60%;
-}
-
-.modal-body.scroll-re-body {
-	align-text: center;
-}
-
-/* 키워드 입력 부분*/
-.scroll-re-pop-input {
-	width: 125px;
-	-webkit-transition: 0.5s; /* focus 받았을 때 시간을 두기 위함.*/
-	transition: 0.5s;
-	border: none;
-	outline: none; /* chrome 기본 focus event를 제거하기 위함 */
-	border-bottom: 2px solid #2872BC;
-}
-
-/* 키워드 입력 부분 focus 이벤트 받았을 때 */
-.scroll-re-pop-input:focus {
-	border-bottom: 3px solid #070294;
-}
-
-/* 키워드 입력 안됬을 때 보이는 input */
-.scroll-re-pop-chk-p {
-	display: none;
-	font-color: red;
-	font-size: 12px;
-	padding: 10px;
-}
-</style>
-
-<script>
-	// initialize functions.
-   	var init_functions = (function(){
-   		var settings = {};
-   		var current_page = location.href;
-   		var current_scrollY = window.pageYOffset;
-   		var user_input = $('.scroll-re-pop-input').val();
-   		var url_chk_params = current_page.split('?');
-   		
-      	var item_handler = function(){
-    	  	// insert item event here
-    		$('.scroll-re-question-popup').position({
-	  			of: window,
-	  			my: 'center',
-	  			at: 'center',
-	  			collision: 'fit'
-	  	  	});
-	  		
-	  		$('.scroll-re-question-popup').css('top', '30%');
-	  		// modal 자체가 style로 때려 박기 때문에 다시 제거 해줘야됨.
-	  		$('.scroll-re-question-popup').css('left', '');
-	  		
-	  		//$('.scroll_m_question_popup').center();
-	  		$('.scroll-re-question-popup').fadeIn(200);
-      };
-      return {
-         init : function(){
-            settings.item = $('.item');
-            settings.innerClose = $('.item-inner-st');
-            this.bindUIAction();
-         },
-         bindUIAction: function(){
-            // item에 클릭할 시 event 생성
-            settings.item.bind('click', item_handler);
-            // item에 mouseover event 생성
-            settings.item.mouseover(function(){
-               console.log('hover!');
-               // settings.innerClose.css('display', 'block');
-               $('> div', this).css('display', 'block');
-            });
-            // item에 mouseout event 생성
-            settings.item.mouseout(function(){
-               console.log('hover!');
-               //settings.innerClose.css('display', 'none');
-               $('> div', this).css('display', 'none');
-            });
-            // close 버튼에 mouseout event 생성
-            settings.innerClose.click(function(){
-               console.log('close clicked');
-            });
-            // close 버튼에 hover할 경우 div click 이벤트 제거
-            settings.innerClose.mouseover(function(){
-               settings.item.unbind('click');
-            });
-            // close 버튼에 hover할 경우 div click 이벤트 제거
-            settings.innerClose.mouseout(function(){
-               console.log('close 버튼 나옴')
-               settings.item.bind('click', item_handler);
-            });
-         }
-      } // end return
-   })();
-   
-	// modal안에 있는 이벤트 관련 functions
-	var modal_functions = (function(){
-		var settings = {};
-		// modal 그 자체
-		settings.modal = $('.scroll-re-question-popup');
-		// modal 속 input box객체
-		settings.modalInput = $('.scroll-re-pop-input');
-		// modal속 p 객체
-		settings.modalP = $('.scroll-re-pop-input');
-		return {
-			init : function(){
-				this.bindModalBasicEvent();
-			},
-			bindModalBasicEvent : function(){
-				// 기본 function들 이벤트 담을 곳
-			},
-			close_popup : function(){
-				// close_popup = 팝업 닫기 버튼에 대한 event
-				settings.modal.fadeOut(200);
-				// 검색어 입력값 초기화
-				settings.modalInput.val('');
-			},
-			save_popup : function(){
-				if(settings.modalInput.val() == ''){
-					settings.modalP.show();
-				}else{
-					// item count
-					var items = $('> div', $('.scroll-item-wrapper'));
-					console.log('items ==> ' + items.length);
-				}
-			}
-		}// end return
-	})();
-	
-	// 실행부
-	$(document).ready(function(){
-	init_functions.init();
-	modal_functions.init();
-	
-	////////////////////////////////////////////////////////////////////////
-	// scroll_m_question_popup 저장시
-	function save_popup(){
-		$('.scroll_pop_chk_p').hide();
-		
-		if($('.scroll_pop_input').val() == ''){
-			$('.scroll_pop_chk_p').show();
-		}else{
-			var items = $('> div', $('.scroll-item-wrapper'));
-				//items = wrapper.find('> a');
-			
-			console.log('items ==> ' + items.length);
-			
-			/* // 현재 페이지 url
-			var current_page = location.href;
-			// 현재 스크롤 위치
-			var current_scrollY = window.pageYOffset;
-			// 사용자가 입력한 키워드 값
-			var user_input = $('.scroll_pop_input').val();
-			
-			var url_chk_params = current_page.split('?');
-			
-			// url에 이미 파라미터 값이 있을 경우
-			if(url_chk_params.length > 1){
-				item_url = current_page + '&scrollY=' + window.pageYOffset;
-			}else{ // url에 파라미터가 없는 경우
-				item_url = current_page + '?scrollY=' + window.pageYOffset;
-			}
-			
-			// save at sessionStorage (key = itemID, value = item_url)
-			sessionStorage.setItem("scroll_item_url"+items.length, item_url);
-			// save at sessionStorage (keyword = user input value)
-			sessionStorage.setItem("scroll_item_keyword"+items.length, user_input);
-			
-			// select 옵션 추가
-			item_url = "'" + item_url + "'"; // ''를 안해주면 문법 error 발생.
-			$('.scroll_m_sel_btn').append('<a class="dropdown-item scroll_m_item'+items.length+'" onclick="url_parser('+item_url+')">'+user_input+'</a>');
-			
-			$('.scroll_m_question_popup').fadeOut(200);
-			
-			// 검색어 입력값 초기화
-			$('.scroll_pop_input').val(''); */
-		}
-	}
-});
-</script>
 <div class="scroll-total-wrapper">
-	<div class="scroll-re-keyword"></div>
+   <div class="scroll-re-keyword"><p id="kwd">검색어</p></div>
 
-	<div class="scroll-item-wrapper" style="width: 143px; height: 99px;">
-		<div class="item">
-			<i class="fas fa-save"></i>
-			<div class="item-inner-st">
-				<i class="fas fa-times-circle"></i>
-			</div>
-		</div>
-		<div class="item">
-			<i class="fas fa-save"></i>
-			<div class="item-inner-st">
-				<i class="fas fa-times-circle"></i>
-			</div>
-		</div>
-		<div class="item">
-			<i class="fas fa-save"></i>
-			<div class="item-inner-st">
-				<i class="fas fa-times-circle"></i>
-			</div>
-		</div>
-		<div class="item">
-			<i class="fas fa-save"></i>
-			<div class="item-inner-st">
-				<i class="fas fa-times-circle"></i>
-			</div>
-		</div>
-		<div class="item">
-			<i class="fas fa-save"></i>
-			<div class="item-inner-st">
-				<i class="fas fa-times-circle"></i>
-			</div>
-		</div>
-		<div class="item">
-			<i class="fas fa-save"></i>
-			<div class="item-inner-st">
-				<i class="fas fa-times-circle"></i>
-			</div>
-		</div>
-		<div class="item">
-			<i class="fas fa-save"></i>
-			<div class="item-inner-st">
-				<i class="fas fa-times-circle"></i>
-			</div>
-		</div>
-		<div class="item">
-			<i class="fas fa-save"></i>
-			<div class="item-inner-st">
-				<i class="fas fa-times-circle"></i>
-			</div>
-		</div>
-		<div class="item">
-			<div class="item-inner-st">
-				<i class="fas fa-times-circle"></i>
-			</div>
-		</div>
-	</div>
+   <div class="scroll-item-wrapper" style="width: 143px; height: 99px;">
+      <!-- <a href="#" onClick=""> -->
+      <div class="item-idx-1">
+         <div class="item-inner-sv1">
+            <input type="hidden" id="item-inner-kwd1">
+            <i class="fas fa-save on"></i>
+         </div>
+         <div class="item-inner-st1">
+            <i class="fas fa-times-circle"></i>
+         </div>
+      </div>
+      <!-- </a> -->
+      <div class="item-idx-2">
+         <div class="item-inner-sv2">
+         <input type="hidden" id="item-inner-kwd2">
+            <i class="fas fa-save"></i>
+         </div>
+         <div class="item-inner-st2">
+            <i class="fas fa-times-circle"></i>
+         </div>
+      </div>
+      <div class="item-idx-3">
+         <div class="item-inner-sv3">
+         <input type="hidden" id="item-inner-kwd3">
+            <i class="fas fa-save"></i>
+         </div>
+         <div class="item-inner-st3">
+            <i class="fas fa-times-circle"></i>
+         </div>
+      </div>
+      <div class="item-idx-4">
+         <div class="item-inner-sv4">
+         <input type="hidden" id="item-inner-kwd4">
+            <i class="fas fa-save"></i>
+         </div>
+         <div class="item-inner-st4">
+            <i class="fas fa-times-circle"></i>
+         </div>
+      </div>
+      <div class="item-idx-5">
+         <div class="item-inner-sv5">
+         <input type="hidden" id="item-inner-kwd5">
+            <i class="fas fa-save"></i>
+         </div>
+         <div class="item-inner-st5">
+            <i class="fas fa-times-circle"></i>
+         </div>
+      </div>
+      <div class="item-idx-6">
+         <div class="item-inner-sv6">
+         <input type="hidden" id="item-inner-kwd6">
+            <i class="fas fa-save"></i>
+         </div>
+         <div class="item-inner-st6">
+            <i class="fas fa-times-circle"></i>
+         </div>
+      </div>
+      <div class="item-idx-7">
+         <div class="item-inner-sv7">
+         <input type="hidden" id="item-inner-kwd7">
+            <i class="fas fa-save"></i>
+         </div>
+         <div class="item-inner-st7">
+            <i class="fas fa-times-circle"></i>
+         </div>
+      </div>
+      <div class="item-idx-8">
+         <div class="item-inner-sv8">
+         <input type="hidden" id="item-inner-kwd8">
+            <i class="fas fa-save"></i>
+         </div>
+         <div class="item-inner-st8">
+            <i class="fas fa-times-circle"></i>
+         </div>
+      </div>
+      <div class="item-idx-9">
+         <div class="item-inner-sv9">
+         <input type="hidden" id="item-inner-kwd9">
+            <i class="fas fa-save"></i>
+         </div>
+         <div class="item-inner-st9">
+            <i class="fas fa-times-circle"></i>
+         </div>
+      </div>
+   </div>
 </div>
 
 
 <!-- modal part -->
 <div class="modal scroll-re-question-popup" tabindex="-1" role="dialog">
-	<div class="modal-dialog scroll-re-dialog" role="document">
-		<div class="modal-content scroll-re-content">
-			<div class="modal-header">
-				<h6 class="modal-title">스크롤 저장</h6>
-				<!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+   <div class="modal-dialog scroll-re-dialog" role="document">
+      <div class="modal-content scroll-re-content">
+         <div class="modal-header">
+            <h6 class="modal-title">스크롤 저장</h6>
+            <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button> -->
-			</div>
-			<div class="modal-body scroll-re-body">
-				<p>키워드를 입력해주세요!</p>
-				<input type="text" class="scroll-re-pop-input">
-				<p class="scroll-re-pop-chk-p">키워드를 입력하셔야 저장할 수 있습니다.</p>
-			</div>
-			<div class="modal-footer">
-				<button type="button" onclick="modal_functions.save_popup()" class="btn btn-primary">저장</button>
-				<button type="button" onclick="modal_functions.close_popup()"
-					class="btn btn-secondary" data-dismiss="modal">닫기</button>
-			</div>
-		</div>
-	</div>
+         </div>
+         <div class="modal-body scroll-re-body">
+            <p>키워드를 입력해주세요!</p>
+            <input type="text" class="scroll-re-pop-input">
+            <p class="scroll-re-pop-chk-p">키워드를 입력하셔야 저장할 수 있습니다.</p>
+         </div>
+         <div class="modal-footer">
+            <button type="button" onclick="modal_functions.save_popup()" class="btn btn-primary">저장</button>
+            <button type="button" onclick="modal_functions.close_popup()"
+               class="btn btn-secondary" data-dismiss="modal">닫기</button>
+         </div>
+      </div>
+   </div>
 </div>
+
+<input type="hidden" id="saveItem">
 <!-- end modal part -->
