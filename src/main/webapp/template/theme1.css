@@ -12,6 +12,7 @@
 	/* border: 1px solid #000; */
 	text-shadow: none;
 	box-shadow: 0.188em 0.188em 0.313em;
+	overflow: hidden !important;
 }
 
 /* paenl div css */

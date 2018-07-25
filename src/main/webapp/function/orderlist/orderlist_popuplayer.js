@@ -1,6 +1,6 @@
 (function($) {
-	$.orderlist = {
-		formattedNow : function() {
+	$.format = {
+		now : function() {
 			var d = new Date(Date.now());
 			var curr_date = d.getDate();
 			var curr_month = d.getMonth() + 1;
@@ -11,11 +11,11 @@
 		    
 		    return [curr_year, curr_month, curr_date].join('-');
 		},
-		formattedAgo : function(options) {
-			var selectDate = this.formattedNow().split('-');
+		ago : function(options) {
+			var selectDate = this.now().split('-');
 			var changeDate = new Date();
 			
-			var opts = $.extend(true, {}, $.orderlist.defaults, options);
+			var opts = $.extend(true, {}, $.format.defaults, options);
 			
 			if(opts.flag.toLowerCase() === 'day') {
 				changeDate.setFullYear(selectDate[0], selectDate[1], selectDate[2]-Number(opts.period));
@@ -37,6 +37,74 @@
 		defaults : {
 			flag: 'day',
 			period: 7
+		}
+		
+	};
+	
+	$.orderlist = {
+		execute : function(options) {
+			var opts = $.extend(true, {}, $.orderlist.defaults, options);
+			$.orderlist.defaults = opts;
+						 
+			var resultDatas = {};
+
+			
+			$.ajax({
+				url:'https://devbit005.cafe24.com/mammoth/api/cafe24/orders',
+				type: 'get',
+				contentType: 'application/json',
+				dataType: 'json',
+				data: opts,
+				success: function(response) {
+					resultDatas['datas'] = response.data;
+					resultDatas['cut'] = function(){ return function(t,render){ return render(t).substr(0,10)+' '+render(t).substr(11,8);}};
+					$.orderlist.originData = resultDatas;
+					console.log(resultDatas)
+					$.orderlist.mustache(resultDatas);
+					
+					$.orderlist.popup('open');
+				}
+			});//ajax
+		},
+		defaults : {
+			'mall_url' : 'kimdudtj.cafe24.com',
+			'start_date' : $.format.ago(),
+			'end_date' : $.format.now(),
+			'member_id' : 'kimdudtj' //$('#crema-login-username').children('.xans-member-var-id').text()
+		},
+		originData : {},
+		checkedParse : function(checked) {
+			var cate_no = '38';
+			var obj = $.extend(true, {}, $.orderlist.originData);
+			var orders = obj['datas'];
+			var tmp = {};
+			tmp['cut'] = obj['cut'];
+			tmp['datas'] = [];
+			if(checked == true) {
+				for(var orderKey in orders){
+					var items = orders[orderKey].items;
+					for(var itemKey in items){
+						var categories = items[itemKey].product.categories;
+						var categoryNoList = []; 
+						Array.from(categories, x => categoryNoList.push(x['category_no']))
+						if( $.inArray(cate_no, categoryNoList) == -1 ){
+							items.pop(items[itemKey]);
+						}
+					}
+					if($.type(items) != 'undefined') {
+						tmp['datas'].push(orders[orderKey]);
+					}
+				}
+				$.orderlist.mustache(tmp);
+				return;
+			}
+			$.orderlist.mustache($.orderlist.originData);
+		},
+		mustache : function(data) {
+			var template = $('#mustache-template').html();
+			Mustache.parse(template);
+			var rendered = Mustache.render(template, data);
+			$('#mustache-result').html('').append(rendered);
 		},
 		popup : function(action) {
 			if(action === 'open') {
@@ -45,174 +113,48 @@
 					"right" : $('#panel').width(),
 					"top" : '20%'
 				}).show();
-			} else if(action === 'close') {
-				$('.popupLayer').hide();
-			} else {
-				return 0;
-			}
+			} 
+			else if(action === 'close') { $('.popupLayer').hide(); } 
+			else { return 0 };
 		}
 	};
 }(jQuery));
 
-function closeLayer() {
-	$.orderlist.popup('close');
-}
-
-/* 구매목록 버튼 클릭시 클릭한 위치 근처에 레이어가 나타난다. */
 $(document).ready(function() {
-	$('.func-orderlist').click(function() {
-		var end_date = $.orderlist.formattedNow();
-		var start_date = $.orderlist.formattedAgo();		
-		
-		// var member_id = $('#crema-login-username').children('.xans-member-var-id').text();
-		var member_id = 'kimdudtj';
-		
-		var datas = {
-				'start_date' : start_date,
-				'end_date' : end_date,
-				'member_id' : member_id
-			};
-		
-		var orderIds = [];
-		var orderDates = [];
-		var items = [];
-		
-		var exampleData = [
-			{
-				"orderId": "20180712-0000045",
-				"orderDate": "2018-07-12T16:29:51+09:00",
-				"items": [
-					{
-						"itemNo": "4",
-						"productNo": "9",
-						"productName": "샘플상품 1",
-						"productPrice": "5000.00",
-						"optionValue": "색상=레드, 사이즈=S",
-						"quantity": "2",
-						"additionalDiscountPrice": "1000.00",
-						"products": {
-							"productNo": "9",
-							"smallImage": null,
-							"categories": [
-								{
-									"category_no": "29",
-									"recommend": "F",
-									"new": "F"
-								}
-							]
-						}
-					},
-					{
-						"itemNo": "5",
-						"productNo": "10",
-						"productName": "샘플상품 2",
-						"productPrice": "10000.00",
-						"optionValue": "",
-						"quantity": "2",
-						"additionalDiscountPrice": "2000.00",
-						"products": {
-							"productNo": "10",
-							"smallImage": null,
-							"categories": [
-								{
-									"category_no": "33",
-									"recommend": "F",
-									"new": "F"
-								},
-								{
-									"category_no": "38",
-									"recommend": "F",
-									"new": "F"
-								},
-								{
-									"category_no": "34",
-									"recommend": "F",
-									"new": "F"
-								},
-								{
-									"category_no": "29",
-									"recommend": "F",
-									"new": "F"
-								}
-							]
-						}
-					}
-				]
-			},
-			{
-				"orderId": "20180712-0000033",
-				"orderDate": "2018-07-12T16:17:29+09:00",
-				"items": [
-					{
-						"itemNo": "3",
-						"productNo": "9",
-						"productName": "샘플상품 1",
-						"productPrice": "5000.00",
-						"optionValue": "색상=레드, 사이즈=L",
-						"quantity": "1",
-						"additionalDiscountPrice": "500.00",
-						"products": {
-							"productNo": "9",
-							"smallImage": null,
-							"categories": [
-								{
-									"category_no": "29",
-									"recommend": "F",
-									"new": "F"
-								}
-							]
-						}
-					}
-				]
-			}
-		];
-		var datas = {};
-		datas['datas'] = exampleData;
-		
-		var template = $('#mustache-template').html();
-		Mustache.parse(template);
-		
-		var rendered = Mustache.render(template, datas);
-		console.log(rendered);
-		$('#mustache-result').append(rendered);
-		
-		$.orderlist.popup('open');
-		/*
-		$.ajax({
-			url:'https://devbit005.cafe24.com/mammoth/api/cafe24/orders',
-			type: 'get',
-			contentType: 'application/json',
-			dataType: 'json',
-			data: datas,
-			success: function(response) {
-				console.log(response.data);
-				datas['datas'] = response.data;
-				
-				var template = $('#mustache-template').html();
-				Mustache.parse(template);
-				
-				var rendered = Mustache.render(template, datas);
-				console.log(rendered);
-				$('#mustache-result').html(rendered);
-				
-				$.each(response.data, function(index, data) {
-					
-					$.each(data, function(name, value) {
-						
-						if(name=='orderId') { orderIds.push(value)}
-						else if(name == 'orderDate') { orderDates.push(value) }
-						else { items.push(value)}
-					});
-				});
-				console.log(orderIds);
-				console.log(orderDates);
-				console.log(items);
-				
-				
-			}
-		});//ajax
-*/		
-		
-		
+	
+	/* popup X button event */
+	$('#popup-close > span').click(function() {
+		$.orderlist.popup('close');
 	});
+	
+	/* ORDER LIST button click event */
+	$('.func-orderlist').click(function() {
+		$.orderlist.execute();
+	});
+	
+	/* popup checkbox click event */
+	$('#ckbox').click(function() {
+		$.orderlist.checkedParse($(this).prop('checked'));
+	});
+
+	/* period button click event */
+	$('.span-period').click(function(){
+		$.orderlist.execute( {'start_date' : getStartDate($(this).data('period'))} );
+		
+		$(this).addClass('plt-pn-btn-default').removeClass('plt-pn-btn-simple');
+		$('.span-period').not($(this)).removeClass('plt-pn-btn-default').addClass('plt-pn-btn-simple');
+		$('#ckbox').prop('checked', false);
+	});
+
 });
+
+/* start_date setting */
+function getStartDate(period) {
+	if(period == 'week') {
+		return $.format.ago();
+	} else if(period == 'month') {
+		return $.format.ago( {'flag':'month', 'period':'1'} );
+	} else {
+		return $.format.ago( {'flag':'month', 'period':'6'} );
+	}
+};
