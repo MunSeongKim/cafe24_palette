@@ -1,58 +1,81 @@
 (function($) {
+	var p = {};
+	
 	$.panel = {
+		// p의 디폴트 값.
+		defaults : {
+			'position' : 'right',
+			'removePosition' : 'left'
+		},
+		
+		// p에 default값 세팅 / 위치가 바뀌면 바뀐 위치+default를 p에 세팅
+		setPosition : function(positions){
+			p = $.extend(true, {}, $.panel.defaults, positions);
+		},
+		
+		// 패널 버튼을 클릭하였을 때, action에 따라 패널, 패널 버튼, 스크롤의
+		// CSS를 변경한다.
 		nav : function(action) {
-			$('#panel-draggable-btn').toggleClass('open');
-			if(action === 'open') {
-				$('#panel').css('width', '15.625em');
-				$('#panel-draggable-btn').css({
-					'right' : '15.625em',
-					'left' : ''
-				});
-				$('.scroll_mm_div').css('right', '18.125em');
-			} else if(action === 'close') {
-				$('#panel').css('width', '0');
-				$('#panel-draggable-btn').css({
-					'right' : '0',
-					'left' : ''
-				});
-				$('.scroll_mm_div').css({
-					'right' : '2.5em',
-					'left' : ''
-				});
+			
+			$('#panel-draggable-btn').toggleClass('open'); // 버튼 모양 변경
+			$.panel.changePanel(action);
+		},
+		
+		// 패널, 버튼, 스크롤의 CSS 결정.
+		changePanel : function(action){
+			var panelCss = {};
+			var draggableCss = {};
+			var scrollCss = {};
+			
+			panelCss[p.position] = '0';
+			panelCss[p.removePosition] = '';
+			panelCss['width'] = '15.625em';
+			
+			if(action == 'open') {
+				panelCss['margin-'+p.position] = '0';
+				draggableCss[p.position] ="15.625em";
+				draggableCss[p.removePosition]="";
+				scrollCss[p.position] ="18.625em";
+				scrollCss[p.removePosition]="";
 			} else {
-				return 0;
+				panelCss['margin-'+p.position] = '-15.625em';
+				draggableCss[p.position] ="0";
+				draggableCss[p.removePosition]="";
+				scrollCss[p.position] ="0";
+				scrollCss[p.removePosition]="";
 			}
+			
+			// CSS 적용
+			$("#panel").css(panelCss);                                       
+			$("#panel-draggable-btn").css(draggableCss);
+			$(".scroll_mm_div").css(scrollCss);
 		}
 	}
 }(jQuery));
 
+// ESC키 누르면 패널 닫힘.
 $(document).keyup(function(e) {
 	if (e.keyCode == 27) { // escape key maps to keycode `27`
-		if($('.popupLayer').css('display') == 'block') {
-			$('.popupLayer').css('display', 'none');
-			return;
-		}
 		if(!$('#panel-draggable-btn').is('.open')) { return; }
 		$.panel.nav('close');
 	}
 });
 
 $(document).ready(function() { 
-	/// end device check 
+	/// preview_panel.jsp 로드
 	$('#panel-area').load('/mammoth/setting/preview', function(){
-		$.panel.nav('open');
+		$.panel.setPosition();
+		$.panel.changePanel('open');
+		
 		$("#panel-draggable-btn").draggable({
 			axis : "y", 
 			containment : "window" // 180713 hwi 추가
 		});
 		
-		$("#panel-draggable-btn").click(function() {
+		$("#panel-draggable-btn").on('click', function() {
 			if($('#panel-draggable-btn').is('.open') == true) {
-				if($('.popupLayer').css('display') == 'block') {
-					$('.popupLayer').css('display', 'none');
-				}
 				$.panel.nav('close');
-				return;
+				return; 
 			}
 			$.panel.nav('open');
 		});
@@ -80,3 +103,4 @@ $(document).ready(function() {
 	});
 		
 });
+

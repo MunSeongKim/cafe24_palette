@@ -28,12 +28,12 @@
 <title>새 패널 만들기</title>
 </head>
 <body>
-<div class="container-fluid">
+<div class="container-fluid" style="height: 90%; padding-left: 0; min-width: 900px;">
 	<input type="hidden" class="panel-division-type" name="admin" value="admin">
 	 
 	<div class="palette-title row">
 		<i class="fas fa-plus-square"></i>
-		<h1>새 패널 만들기</h1> 
+		<h1>새 패널 만들기</h1>
 	</div>
 
 	<!-- tab START -->
@@ -141,8 +141,8 @@ var tabsMaxSize = ${fn:length(tabs.map)};
 var hash = window.location.hash;  // ex) /create#func
 
 if(hash=='' || hash==null){
-	window.location = "#func";
-	hash = "#func";
+	window.location = "#type";
+	hash = "#type";  
 } 
 
 /* hash 위치에 맞는 탭 출력 */
@@ -210,7 +210,13 @@ function pageRender(currentIdx, tabsMaxSize, hash){
 
 function resizeDone(){
 	var currentWidth = window.innerWidth;
-	var rate = ((currentWidth - 250)/currentWidth)*100;
+	var rate;
+	if(currentWidth < 1000){
+		rate = 50
+	} else {
+		rate = ((currentWidth - 530)/currentWidth)*100;
+	}
+	
 	$("#panel-tabs").css({
 		"width" : rate+"%"
 	});
@@ -358,7 +364,6 @@ $(document).ready(function(){
 		$($("#sortable").children("li").siblings().not(".ui-state-disabled")).each(function(){
 			var funcid = $(this).data("funcid");
 			var funcorder = $(this).attr("funcorder");
-			console.log(funcid +", "+funcorder); 
 			
 			appendHiddenElement($("#saveform"), "funcid", funcid);
 			appendHiddenElement($("#saveform"), "funcorder", funcorder);
@@ -366,6 +371,8 @@ $(document).ready(function(){
 		
 		/* form에 선택된 themeid 정보 추가 */
 		appendHiddenElement($("#saveform"), "themeid", $(".card.seleted").data("themeid"));
+		
+		appendHiddenElement($("#saveform"), "position", $("#positionTypeDiv :radio[name=position]:checked").val());
 		
 		/* form 제출 */
 		$("#saveform").submit();

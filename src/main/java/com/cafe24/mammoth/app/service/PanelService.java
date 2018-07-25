@@ -48,10 +48,15 @@ public class PanelService {
 		repo.deleteById(id);
 	}
 	
-	public boolean createPanel(List<Long> funcId, List<Long> funcOrder, Long themeId) {
+	public boolean createPanel(
+			List<Long> funcId,
+			List<Long> funcOrder,
+			Long themeId,
+			String position
+			) {
 		Panel panel = new Panel();
 		panel.setName("Test Panel["+Calendar.getInstance().getTimeInMillis()+"]");
-		panel.setPosition(Position.RIGHT);
+		panel.setPosition(Position.valueOf(position));
 		panel.setTheme(themeRepository.getOne(themeId));
 		panel = repo.save(panel);
 		

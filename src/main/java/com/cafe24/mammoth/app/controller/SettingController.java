@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.cafe24.mammoth.app.domain.Func;
 import com.cafe24.mammoth.app.domain.Theme;
 import com.cafe24.mammoth.app.domain.enumerate.PanelType;
+import com.cafe24.mammoth.app.domain.enumerate.Position;
 import com.cafe24.mammoth.app.service.FuncService;
 import com.cafe24.mammoth.app.service.PanelService;
 import com.cafe24.mammoth.app.service.ThemeService;
@@ -33,8 +34,8 @@ public class SettingController {
 		func1.setName("recent"); 
 		func1.setNameEng("recent"); 
 		func1.setDesciption("recent");
-		func1.setImgPath("/assets/admin/image/test.gif");
-		func1.setFilePath("/function/recent/recent.html");
+		func1.setImgPath("/admin/image/test.gif");
+		func1.setFilePath("/template/function/recent/recent.html");
 		func1.setIsButton(false);
 		func1.setPreviewPath("/tmp");
 		
@@ -42,8 +43,8 @@ public class SettingController {
 		func2.setName("scoll");
 		func2.setNameEng("scoll");
 		func2.setDesciption("scoll");
-		func2.setImgPath("/assets/admin/image/test2.gif");
-		func2.setFilePath("/assets/admin/function/scroll/scroll.html");
+		func2.setImgPath("/admin/image/test2.gif");
+		func2.setFilePath("/template/function/scroll/scroll.html");
 		func2.setIsButton(false);
 		func2.setPreviewPath("/tmp");
 		
@@ -51,8 +52,8 @@ public class SettingController {
 		func3.setName("orderlist");
 		func3.setNameEng("orderlist");
 		func3.setDesciption("orderlist");
-		func3.setImgPath("/assets/admin/image/test3.gif");
-		func3.setFilePath("/assets/admin/function/orderlist/orderlist_popuplayer.html");
+		func3.setImgPath("/admin/image/test3.gif");
+		func3.setFilePath("/template/function/orderlist/orderlist_popuplayer.html");
 		func3.setIsButton(false);
 		func3.setPreviewPath("/tmp");
 		
@@ -63,16 +64,16 @@ public class SettingController {
 		Theme theme1 = new Theme();
 		theme1.setTitle("theme1");
 		theme1.setDescription("theme1!!");
-		theme1.setCssFilePath("/assets/admin/template/testTheme1.css");
-		theme1.setTitleImgPath("/assets/admin/image/beige.PNG");
-		theme1.setPreviewImgPath("/assets/admin/image/theme_white_orange.png");
+		theme1.setCssFilePath("/template/testTheme1.css");
+		theme1.setTitleImgPath("/admin/image/beige.PNG");
+		theme1.setPreviewImgPath("/admin/image/theme_white_orange.png");
 		 
 		Theme theme2 = new Theme();
 		theme2.setTitle("theme2");
 		theme2.setDescription("theme2!!!"); 
-		theme2.setCssFilePath("/assets/admin/template/testTheme2.css");
-		theme2.setTitleImgPath("/assets/admin/image/strawberry.PNG");
-		theme2.setPreviewImgPath("/assets/admin/image/theme_black_red.png");
+		theme2.setCssFilePath("/template/testTheme2.css");
+		theme2.setTitleImgPath("/admin/image/strawberry.PNG"); 
+		theme2.setPreviewImgPath("/admin/image/theme_black_red.png");
 		
 		themeService.saveTheme(theme1);
 		themeService.saveTheme(theme2);
@@ -92,7 +93,9 @@ public class SettingController {
 		List<Func> funcs = funcService.getFuncList();
 		List<Theme> themeList = themeService.getThemeList();
 		List<PanelType> panelTypes = Arrays.asList(PanelType.values());
+		List<Position> positions = Arrays.asList(Position.values());
 		
+		model.addAttribute("positions", positions);
 		model.addAttribute("panelTypes", panelTypes);
 		model.addAttribute("tabs", new SettingTab());
 		model.addAttribute("funcs", funcs);
@@ -101,27 +104,19 @@ public class SettingController {
 	}
 	
 	@PostMapping(value = "/create")
-	public String createPersist(
+	public String createPersist( 
 			@RequestParam("funcid") List<Long> funcId,
 			@RequestParam("funcorder") List<Long> funcOrder,
-			@RequestParam("themeid") Long themeId) {
+			@RequestParam("themeid") Long themeId,
+			@RequestParam("position") String position) {
 		System.out.println("createPersist is called!!");
-		// @RequestParam - primitive type의 값만 받을 수 있음. map이나 다른 형태 불가.-> 되는데?
 		
-		panelService.createPanel(funcId, funcOrder, themeId);
-		
-		/*for(int i=0; i<funcid.size(); i++) {
-			System.out.println("funcid : "+funcid.get(i)+", funcorder : "+funcorder.get(i));
-		}*/
-		
-		/*for(Entry<?, ?> entry : selectedFuncInfo.entrySet()) {
-			System.out.println(entry.getKey());
-			System.out.println(entry.getValue());
-		}*/
+		panelService.createPanel(funcId, funcOrder, themeId, position);
 		
 		return "redirect:/"; 
 	}
 	
+	// iframne올 띄우기 
 	@GetMapping(value="/testPage")
 	public String testPage() {
 		return "test"; 
@@ -138,13 +133,15 @@ public class SettingController {
 	// 새 패널 만들기 - 패널 미리보기
 	@GetMapping(value="/preview")
 	public String preview(Model model) {
-		
-		System.out.println("[HELLO!!]");
-		
 		// funclist
 		List<Func> funcs = funcService.getFuncList();
 		model.addAttribute("funcs", funcs);
 		return "preview_panel";
 	}
 
+	// 대쉬 보드 테스트
+	@GetMapping(value="/dashboard")
+	public String dashboard() {
+		return "dashboard"; 
+	}
 }

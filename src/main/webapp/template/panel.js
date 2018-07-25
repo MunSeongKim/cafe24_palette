@@ -2,6 +2,7 @@
 	$.panel = {
 		nav : function(action) {
 			$('#panel-draggable-btn').toggleClass('open');
+			
 			if(action === 'open') {
 				$('#panel').css('width', '15.625em');
 				$('#panel-draggable-btn').css({
@@ -12,8 +13,8 @@
 			} else if(action === 'close') {
 				$('#panel').css('width', '0');
 				$('#panel-draggable-btn').css({
-					'right' : '0',
-					'left' : ''
+					'right' : '0'
+					//'left' : ''
 				});
 				$('.scroll_mm_div').css({
 					'right' : '2.5em',

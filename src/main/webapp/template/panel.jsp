@@ -140,7 +140,7 @@
 </div>
 <!-- scroll top, bottom end -->
 
-<div id="panel-draggable-btn" class="draggable">
+<div id="panel-draggable-btn" class="draggable"> 
 	<span></span>
 	<span></span>
 	<span></span>

@@ -49,17 +49,217 @@
 table, table thead th {
 	text-align: center;
 }
+
+.sub-header {
+	padding-bottom: 10px;
+	border-bottom: 1px solid #eee;
+}
+
+.navbar-fixed-top {
+	border: 0;
+}
+
+.sidebar {
+	display: none;
+}
+
+@media ( min-width : 768px) {
+	.sidebar {
+		position: fixed;
+		top: 51px;
+		bottom: 0;
+		left: 0;
+		z-index: 1000;
+		display: block;
+		padding: 20px;
+		overflow-x: hidden;
+		overflow-y: auto;
+		background-color: #f5f5f5;
+		border-right: 1px solid #eee;
+	}
+}
+
+.nav-sidebar {
+	margin-right: -21px;
+	margin-bottom: 20px;
+	margin-left: -20px;
+}
+
+.nav-sidebar>li>a {
+	padding-right: 20px;
+	padding-left: 20px;
+}
+
+.nav-sidebar>.active>a, .nav-sidebar>.active>a:hover, .nav-sidebar>.active>a:focus
+	{
+	color: #fff;
+	background-color: #428bca;
+}
+
+.main {
+	padding: 20px;
+}
+
+@media ( min-width : 768px) {
+	.main {
+		padding-right: 40px;
+		padding-left: 40px; 
+	}
+}
+
+.main .page-header {
+	margin-top: 0;
+}
+
+.placeholders {
+	margin-bottom: 30px;
+	text-align: center;
+}
+
+.placeholders h4 {
+	margin-bottom: 0;
+}
+
+.placeholder {
+	margin-bottom: 20px;
+}
+
+.placeholder img {
+	display: inline-block;
+	border-radius: 50%;
+}
 </style>
 </head>
 
-<body>
-	<div class="container">
-		<h1>Panel List</h1>
-		<div class="row">
+<!-- 
 
+1. 
+
+
+ -->
+
+<body>
+	<nav class="navbar navbar-dark bg-dark navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="sr-only">네비게이션 토글</span> <span class="icon-bar"></span>
+					<span class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">대시보드</a>
+			</div>
+			<div class="collapse navbar-collapse"> 
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#">대시보드</a></li>
+					<li><a href="#">설정</a></li>
+					<li><a href="#">프로필</a></li>
+					<li><a href="#">도움말</a></li>
+				</ul>
+				<form class="navbar-form navbar-right">
+					<input type="text" class="form-control" placeholder="검색...">
+				</form>
+			</div>
+		</div>
+	</nav>
+	
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-3 col-md-2 sidebar">
+				<ul class="nav nav-sidebar">
+					<li><a href="">네비게이션A1</a></li>
+					<li><a href="">네비게이션A2</a></li>
+					<li><a href="">네비게이션A3</a></li>
+				</ul>
+			</div>
+			<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
+				<h1 class="page-header">대시보드</h1>
+
+				<h1>Panel List</h1>
+				
+				<div class="row"> 
+					<a href="${pageContext.servletContext.contextPath }/test" class="btn btn-primary pull-left">test</a>
+					<a href="${pageContext.servletContext.contextPath }/setting/create" class="btn btn-primary pull-right">만들기</a>
+				</div>
+				<div class="row">
+					<table id="tbl-panel-list" class="table table-striped">
+						<thead>
+							<tr>
+								<th>No.</th>
+								<th>Panel Name</th>
+								<th>Created Date</th>
+								<th>State</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="panel" items="${list }" varStatus="stat">
+								<tr>
+									<td>${stat.count }</td>
+									<td>${panel.name }</td>
+									<td>${panel.createdDate }</td>
+									<td id="state-td${panel.panelId }"><c:choose>
+											<c:when test="${panel.script.isApply eq true}">
+												Active
+											</c:when>
+											<c:otherwise>
+												Inactive
+											</c:otherwise>
+										</c:choose></td>
+									<td><c:choose>
+											<c:when test="${panel.script.isApply eq true}">
+												<button class="btn btn-default state" id="${panel.panelId }"
+													data-apply="false">해제</button>
+											</c:when>
+											<c:otherwise>
+												<button class="btn btn-info state" id="${panel.panelId }"
+													data-apply="true">적용</button>
+											</c:otherwise>
+										</c:choose> <a
+										href="${pageContext.servletContext.contextPath }/update/${panel.panelId }"
+										class="btn btn-success">수정</a>
+										<button class="btn btn-danger btn-delete"
+											data-panelid="${panel.panelId }" data-count="${stat.count }">삭제</button>
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+				<div id="dialog">
+					<div id="dialog-select-form" title="추가한 패널 동작 페이지 선택"
+						style="display: none">
+						<p class="validateTips normal">방금 만들어진 패널이 동작할 페이지를 선택해주세요.</p>
+						<p class="validateTips error" style="display: none">하나 이상 선택해야
+							합니다.</p>
+						<form>
+							<input type="checkbox" class="chkbox" id="chkbox-all"
+								name="chkbox-activepage" value="ALL"> 전체 페이지 <br> <input
+								type="checkbox" class="chkbox" id="chkbox-main"
+								name="chkbox-activepage" value="MAIN"> 메인 페이지<br> <input
+								type="checkbox" class="chkbox" id="chkbox-product"
+								name="chkbox-activepage" value="PRODUCT_LIST"> 상품 페이지<br>
+						</form>
+					</div>
+		
+					<div id="dialog-message" title="tets" style="display: none">
+						<p></p>
+					</div>
+				</div>
+
+				<h2 class="sub-header">처리현황</h2>
+				<div class="table-responsive">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<%-- <div class="container">
+		<h1>Panel List</h1>
+		<div class="row"> 
 			<a href="${pageContext.servletContext.contextPath }/test" class="btn btn-primary pull-left">test</a>
-			<a href="${pageContext.servletContext.contextPath }/setting/create"
-				class="btn btn-primary pull-right">만들기</a>
+			<a href="${pageContext.servletContext.contextPath }/setting/create" class="btn btn-primary pull-right">만들기</a>
 		</div>
 		<div class="row">
 			<table id="tbl-panel-list" class="table table-striped">
@@ -126,14 +326,13 @@ table, table thead th {
 				<p></p>
 			</div>
 		</div>
-	</div>
+	</div> --%>
 
 	<script>
 	function buttonChange(clickChangeState, autoChangeState) {
 		var clickStatePanelId = clickChangeState.panelId;
 		var clickStateIsApply = clickChangeState.isApply;
 		
-
 		console.log(clickStatePanelId+' '+clickStateIsApply)
 		if(clickStateIsApply == true) {
 			$('#state-td'+clickStatePanelId).text('Active');
