@@ -279,6 +279,7 @@ var uploader = (function(){
 	}
 	
 	var setElements = function(select, list, upload) {
+		// select : input['file'], list : 파일 리스트가 보여질 곳, upload : upload button
 		elements.select = select;
 		elements.list = list;
 		elements.upload = upload;
@@ -349,7 +350,9 @@ var uploader = (function(){
 		})
 	}
 	
+	// nav가 선택되면 그 선택에 따라 type이 변경된다.
 	var reset = function() {
+		//메뉴가 선택될 때마다 값을 초기화해준다.
 		if(type === 'function'){
 			uploader.setElements( $('#func-btn-select'), $('#func-div-list'), $('#func-btn-upload'));
 			uploader.clear();
@@ -382,6 +385,7 @@ var uploader = (function(){
 $(function() {
 	uploader.init();
 	
+	//타입(theme, function)을 새탕햐쥰더,
 	$('a.list-group-item').click(function(){
 		var type = $(this).data('name');
 		uploader.setType(type);
