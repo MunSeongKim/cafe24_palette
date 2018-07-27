@@ -2,17 +2,17 @@
 a:hover {
 	text-decoration: none !important;
 }
+
 /* popup css */
 .popupLayer {
-	position: fixed;
 	display: none;
 	font-weight: normal;
-	width: 40%;
-	height: 60%;
+	/* width: 40%; */
+	height: 100%;
 	max-width: 34.375em;
 	min-width: 15.625em;
 	padding: 0.2em 0.625em;
-	overflow: hidden;
+	margin: 0 auto;
 }
 .popupLayer hr {
 	height: 1%;
