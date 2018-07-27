@@ -29,7 +29,7 @@ public class SelectFunc {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "func_id")
-	private Func func;
+	private Function func;
 
 	@Column(nullable = false)
 	private Long funcOrder;
@@ -44,7 +44,7 @@ public class SelectFunc {
 		}
 	}
 
-	public void setFunc(Func func) {
+	public void setFunc(Function func) {
 		if (this.func != null) {
 			this.func.getSelectFuncs().remove(this);
 		}

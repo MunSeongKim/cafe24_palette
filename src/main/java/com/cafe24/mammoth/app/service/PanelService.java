@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.cafe24.mammoth.app.domain.Panel;
 import com.cafe24.mammoth.app.domain.SelectFunc;
 import com.cafe24.mammoth.app.domain.enumerate.Position;
-import com.cafe24.mammoth.app.repository.FuncRepository;
+import com.cafe24.mammoth.app.repository.FunctionRepository;
 import com.cafe24.mammoth.app.repository.PanelRepository;
 import com.cafe24.mammoth.app.repository.SelectFuncRepository;
 import com.cafe24.mammoth.app.repository.ThemeRepository;
@@ -30,7 +30,7 @@ public class PanelService {
 	ThemeRepository themeRepository;
 	
 	@Autowired
-	FuncRepository funcRepository;
+	FunctionRepository funcRepository;
 	
 	public List<Panel> getPanelList() {
 		return repo.findAll();
