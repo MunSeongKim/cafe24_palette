@@ -69,14 +69,19 @@ public class WebConfigurer extends WebMvcConfigurationSupport  {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		super.addResourceHandlers(registry);
+		// API Docs 페이지 리소스
 		registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/").resourceChain(true);
 		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/").resourceChain(true);
+		
+		// JQuery, Bootstrap 등 프론트 라이브러이 리소스
 		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/META-INF/resources/webjars/")
 		.setCacheControl(CacheControl.maxAge(3L, TimeUnit.HOURS).cachePublic()).resourceChain(true);
 		
+		// 기능, 테마 리소스
 		registry.addResourceHandler("/function/**").addResourceLocations("file:/cafe24/tmp/function/").resourceChain(true);
 		registry.addResourceHandler("/theme/**").addResourceLocations("file:/cafe24/tmp/theme/").resourceChain(true);
 		
+		//각 기능용 리소스 API
 		registry.addResourceHandler("/**/*.js").addResourceLocations("/").resourceChain(true);
 		registry.addResourceHandler("/**/*.css").addResourceLocations("/").resourceChain(true);
 		registry.addResourceHandler("/**/*.jpg").addResourceLocations("/").resourceChain(true);

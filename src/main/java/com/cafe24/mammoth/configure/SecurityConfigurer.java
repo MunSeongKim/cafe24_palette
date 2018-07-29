@@ -12,6 +12,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -44,9 +45,11 @@ import com.cafe24.mammoth.oauth2.Cafe24OAuth2ClientAuthenticationProcessingFilte
  * 1차 설정 완료.<br>
  * <br>
  * <b>Update:</b><br>
- * - AuthService 의존성 주입 부분을 SuccessHandler로 이전, SuccessHandler 생성자 변경 18-07-09, MoonStar<br> 
+ * - AuthService 의존성 주입 부분을 SuccessHandler로 이전, SuccessHandler 생성자 변경 18-07-09,
+ * MoonStar<br>
  * - CORS 적용: 자바스크립트 요청에 대해 Cross domain 문제 발생 해결 적용 18-07-11, MoonStar</br>
  * - Resource 경로 제외: static resource에 대한 경로 제외 설정 18-07-16, MoonStar
+ * 
  * @since 2018. 06. 26
  * @author MS Kim
  *
@@ -80,11 +83,10 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/api/**", "/static/**", "/webjars/**", 
-				"/**/*.js", "/**/*.css", "/**/*.jpg", "/**/*.png", "/**/*.html");
+		web.ignoring().antMatchers("/api/**", "/static/**", "/webjars/**", "/**/*.js", "/**/*.css", "/**/*.jpg",
+				"/**/*.png", "/**/*.html");
 	}
-	
-	
+
 	/**
 	 * 현재 상황: AccessToken 받는거 성공<br>
 	 * 설정: CSRF 설정, X-Frame-Option 해제, OAuth2ContextFilter 등록<br>
@@ -101,11 +103,9 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 		http.headers().frameOptions().disable();
 		// BasicAuthenticationFilter 이전에 cafe24Filter를 수행하도록 지정
 		// /oauth2 경로는 필터를 통해 인증받도록 설정, 그 외 경로는 접속 허용
-		http.authorizeRequests().requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-		.antMatchers("/oauth2").permitAll()
-		.and().addFilterBefore(cafe24Filter(), BasicAuthenticationFilter.class);
+		http.authorizeRequests().requestMatchers(CorsUtils::isPreFlightRequest).permitAll().antMatchers("/oauth2")
+				.permitAll().and().addFilterBefore(cafe24Filter(), BasicAuthenticationFilter.class);
 	}
-	
 
 	/**
 	 * OAuth2 Access Token 발급 및 인증 절차를 수행 할 필터 생성<br>
@@ -126,9 +126,10 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
 		return cafe24Filter;
 	}
-	
+
 	/**
 	 * AccessToken 발급을 위한 통신 client 역할을 하는 OAuth2RestTemplate 객체를 빈에 등록
+	 * 
 	 * @return {@link OAuth2RestTemplate}
 	 */
 	@Bean
@@ -137,31 +138,31 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 		AuthorizationCodeAccessTokenProvider accessTokenProvider = new AuthorizationCodeAccessTokenProvider();
 		accessTokenProvider.setMessageConverters(Arrays.asList(new Cafe24OAuth2AccessTokenMessageConverter()));
 		// ClientTokenServices 등록, AccessToken, Authentication를 DB에 저장, 추출
-		Cafe24AccessTokenProviderChain providerChain = new Cafe24AccessTokenProviderChain(Arrays.asList(accessTokenProvider));
+		Cafe24AccessTokenProviderChain providerChain = new Cafe24AccessTokenProviderChain(
+				Arrays.asList(accessTokenProvider));
 		providerChain.setClientTokenServices(cafe24ClientTokenServices());
 		// TokenProvider 등록, 위에서 생성한 TokenProvider 등록한 OAuth2RestTemplate 빈
 		OAuth2RestTemplate oauth2RestTemplate = new OAuth2RestTemplate(cafe24(), oauth2ClientContext);
 		oauth2RestTemplate.setAccessTokenProvider(providerChain);
 		return oauth2RestTemplate;
 	}
-	
-	
+
 	/**
 	 * AccessToken의 영속화 관리를 위한 서비스 빈 설정
+	 * 
 	 * @return {@link JdbcClientTokenServices}
 	 */
 	@Bean
 	public Cafe24ClientTokenServices cafe24ClientTokenServices() {
 		return new Cafe24ClientTokenServices(dataSource);
 	}
-	
+
 	/**
 	 * OAuth2 인증 성공 후 실행 될 핸들러 생성, 사용자 정보 저장 수행<br>
 	 * <br>
 	 * 수정<br>
 	 * - 매개변수 타입: Cafe24ResourceDetails -> ResourceServerProperties<br>
-	 * - AuthService 인수 삭제
-	 * <br>
+	 * - AuthService 인수 삭제 <br>
 	 * 
 	 * @return {@link AuthenticationSuccessHandler}
 	 */
@@ -173,7 +174,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	/**
 	 * AccessToken 발급에 필요한 정보를 읽어들여서 객체로 생성<br>
 	 * cafe24.client 하위의 속성을 읽어서 AuthorizationCodeResourceDetails 객체 생성<br>
-	 * mallId의 보관과 수정, isClientOnly() 메소드 수정을 위해 {@link AuthorizationCodeResourceDetails} 객체를 상속받아 구현<br>
+	 * mallId의 보관과 수정, isClientOnly() 메소드 수정을 위해
+	 * {@link AuthorizationCodeResourceDetails} 객체를 상속받아 구현<br>
 	 * 
 	 * @return {@link AuthrizationCodeResourceDetails}
 	 */
@@ -210,10 +212,24 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 		registration.setOrder(-100);
 		return registration;
 	}
-	
+
+	/**
+	 * LazyInitialization 문제 해결 방법 -> Open Session In View 필터 등록.
+	 * 정상 작동하는지 확인해 봐야함.
+	 */
+	@Bean
+	public FilterRegistrationBean<OpenEntityManagerInViewFilter> registerOpenEntityManagerInViewFilterBean() {
+		FilterRegistrationBean<OpenEntityManagerInViewFilter> registrationBean = new FilterRegistrationBean<OpenEntityManagerInViewFilter>();
+		OpenEntityManagerInViewFilter filter = new OpenEntityManagerInViewFilter();
+		registrationBean.setFilter(filter);
+		registrationBean.setOrder(5);
+		return registrationBean;
+	}
+
 	/**
 	 * CORS 정책 설정<br>
 	 * 모든 도메인들의 GET 요청에 대해 CORS 허용, 최대 캐시 보관 시간 3600초 설정<br>
+	 * 
 	 * @return {@link CorsConfigurationSource}
 	 */
 	@Bean

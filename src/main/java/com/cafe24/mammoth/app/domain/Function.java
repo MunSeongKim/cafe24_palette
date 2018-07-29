@@ -38,7 +38,10 @@ public class Function {
 	private String nameEng;
 
 	@Column(nullable = false, length = 255)
-	private String filePath;
+	private String desktopPath;
+	
+	@Column(nullable = false, length = 255)
+	private String mobilePath;
 
 	@Column(nullable = true, length = 255)
 	private String description;
@@ -63,8 +66,9 @@ public class Function {
 
 	@Override
 	public String toString() {
-		return "Function [funcId=" + funcId + ", name=" + name + ", nameEng=" + nameEng + ", filePath=" + filePath
-				+ ", description=" + description + ", isButton=" + isButton + ", createdDate=" + createdDate + "]";
+		return "Function [funcId=" + funcId + ", name=" + name + ", nameEng=" + nameEng + ", desktopPath=" + desktopPath
+				+ ", mobilePath=" + mobilePath + ", description=" + description + ", isButton=" + isButton
+				+ ", createdDate=" + createdDate + "]";
 	}
 
 }

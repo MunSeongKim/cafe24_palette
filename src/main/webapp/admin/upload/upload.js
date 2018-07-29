@@ -79,7 +79,11 @@ var uploader = (function(){
 	var upload = function() {
 		// 이미 저장되있는 file들의 key값을 interator할 준비
 		console.log("upload Start");
-		console.log(storeFiles);
+		
+		if( type === 'function'){
+			uploadData();
+		}
+		
 		// storeFiles[이미 저장된 file들]의 크기만큼 포문 돌면서
 		storeFiles.forEach((item, key, mapObj) => {
 			// key값이 prograss bar랑 연결되있어서 key를 넘겨야됨.
@@ -89,8 +93,35 @@ var uploader = (function(){
 		});
 	};
 	
+	var uploadData = function() {
+		console.log("uploadData");
+		var requestData = generateData();
+		var requestURL = API_URI + type + "/pre";
+		
+		console.log("uploadData before ajax");
+		$.ajax({
+			url: requestURL,
+			type: 'POST',
+			data: requestData,
+			contentType: false,
+			processData: false,
+			beforeSend: function(request) {
+				request.setRequestHeader(header, token);
+			},
+			success: function(response) {
+				console.log(response);
+				return ;
+			},
+			error: function(response, xhr, error){
+				console.log(response.status + " (" + error + "): " + response.responseText );
+			}
+		});
+	}
+	
 	var uploadFile = function(file, key){
-		var requestData = generateData(file);
+		// 현재 form 안에 있는 file들을 넘겨주기 위함.
+		// append the next file for upload
+		var requestData = generateFileData(file);
 		var requestURL = API_URI + type;
 		
 		// single 처리
@@ -167,7 +198,8 @@ var uploader = (function(){
 		}, false);
 	};
 	
-	var generateData = function(file) {
+	var generateData = function() {
+		console.log("generateData");
 		var data = new FormData(); // Create new FormData
 		
 		if( type === 'function' ) { // function form안에 있는 값들
@@ -177,19 +209,29 @@ var uploader = (function(){
 			});
 			
 			data.append('isButton', $('input[name="isButton"]').prop('checked'));
-		} else { // theme form안에 있는 값들
-			var form = $('#theme-form').serializeArray();
+			data.append("desktopFile", $('#func-desktop-html').prop("files")[0]);
+			data.append("mobileFile", $('#func-mobile-html').prop("files")[0]);
+		}
+		return data;
+	}
+	
+	var generateFileData = function(file){
+		var data = new FormData(); // Create new FormData
+		
+		if( type === 'function' ) { // function form안에 있는 값들
+			var form = $('#func-form').serializeArray();
 			form.forEach(function(item, key){
-				console.log(item.value);
 				data.append(item.name, item.value);
 			});
-			console.log($('#theme-img-file').prop("files"));
+		}  else { // theme form안에 있는 값들
+			var form = $('#theme-form').serializeArray();
+			form.forEach(function(item, key){
+				data.append(item.name, item.value);
+			});
 			data.append("imgFile", $('#theme-img-file').prop("files")[0]);
 		}
 		
-		// 현재 form 안에 있는 file들을 넘겨주기 위함.
-		data.append("file", file); // append the next file for upload
-		
+		data.append("files", file);
 		return data;
 	}
 	
@@ -200,26 +242,18 @@ var uploader = (function(){
 				alert("기능 이름을 입력하세요.");
 				return false ;
 			} else if( $('#btn-exist').length > 0 ){
+				$(this).focues();
 				alert('중복 검사를 해주세요.');
 				return false;
+			} else if ( $('#func-desktop-html').val() === '' ){
+				alert('데스크탑 버전의 HTML 파일을 등록해주세요.');
+				$('#func-desktop-label').focus();
+				return false;
+			} else if ( $('#func-mobile-html').val() === '' ){
+				alert('모바일 버전의 HTML 파일을 등록해주세요.');
+				$('#func-mobile-label').focus();
+				return false;
 			}
-			
-			var htmlCnt = 0;
-			storeFiles.forEach((item, key, mapObj) => {
-				var fileName = item.name;
-				if( fileName.substring(fileName.lastIndexOf('.')+1, fileName.length) === 'html'){
-					htmlCnt += 1;
-				}
-			});
-			
-			if( htmlCnt == 0 ){
-				alert("HTML 파일을 등록해주세요.");
-				return false;
-			} else if( htmlCnt > 1){
-				alert("HTML 파일을 1개만 등록해주세요.");
-				return false;
-			};
-			
 		} else {
 			if( $('#theme-name').val() === '' ) {
 				$('#theme-name').focus();
@@ -271,6 +305,9 @@ var uploader = (function(){
 		};
 		$(functionCheck).prop('checked', false);
 		
+		$('.custom-file-input').val('');
+		$('#func-desktop-label').text("데스크탑 버전의 HTML 파일을 선택하세요.");
+		$('#func-mobile-label').text("모바일 버전의 HTML 파일을 선택하세요.");
 		$('#theme-img-label').text("대표이미지 1장을 선택하세요.");
 		
 		// 현재 file 선택한 것들 initialize
@@ -347,7 +384,7 @@ var uploader = (function(){
 			error: function(response, xhr, error){
 				console.log(response.status + " (" + error + "): " + response.responseText );
 			}
-		})
+		});
 	}
 	
 	// nav가 선택되면 그 선택에 따라 type이 변경된다.
@@ -425,10 +462,12 @@ $(function() {
     	uploader.addItem();
 	}); // end function onready
     
-	$('#theme-img-file').change(function() {
+	$('.custom-file-input').change(function() {
+		var elementName = $(this).attr("name");
 		var fileName = $(this).val();
 		fileName = fileName.substring(fileName.lastIndexOf("\\")+1, fileName.length);
-		$('#theme-img-label').text(fileName);
+		
+		$('label[for="'+ elementName +'"]').text(fileName);
 	});
 	
 }); // end script

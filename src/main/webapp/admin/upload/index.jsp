@@ -15,8 +15,7 @@
 
 <link rel="stylesheet"
 	href="${pageContext.servletContext.contextPath}/static/bootstrap/4.1.1/css/bootstrap.min.css">
-<!-- <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/static/font-awesome/5.1.0/css/all.css" > -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/static/font-awesome/5.1.0/css/all.css" >
 <link rel="stylesheet" href="admin/upload/upload.css">
 
 <script
@@ -98,17 +97,34 @@
 											<button name="is-exist" id="btn-exist" class="btn btn-block btn-exist">Check!</button>
 										</div>
 									</div>
-									
+									<hr>
+									<div class="form-group row">
+										<label for="func-desktop" class="col-sm-2 col-form-label text-right">Desktop</label>
+										<div class="col-sm-10">
+											<div class="custom-file">
+											  <input type="file" class="form-control custom-file-input" name="func-desktop-html" id="func-desktop-html" accept=".html">
+											  <label class="custom-file-label" id="func-desktop-label" for="func-desktop-html">데스크탑 버전의 HTML 파일을 선택하세요.</label>
+										  </div>
+										</div>
+									</div>
+									<div class="form-group row">
+										<label for="func-mobile" class="col-sm-2 col-form-label text-right">Mobile</label>
+										<div class="col-sm-10">
+											<div class="custom-file">
+											  <input type="file" class="form-control custom-file-input" name="func-mobile-html" id="func-mobile-html" accept=".html">
+											  <label class="custom-file-label" id="func-mobile-label" for="func-mobile-html">모바일 버전의 HTML 파일을 선택하세요.</label>
+										  </div>
+										</div>
+									</div>
 								</form>
 							</div>
 						</div>
-						<hr>
 						<div class="row">
 							<div class="col">
 								<form enctype="multipart/form-data" method="post">
 									<label for="fileUploader"
 										class="input-file-trigger">Select a file or Drag & Drop your file!</label>
-									<input type="file" name="fileUploader" id="func-btn-select" class="btn input-file" accept=".js, .css, .html, .jsp" multiple >
+									<input type="file" name="fileUploader" id="func-btn-select" class="btn input-file" accept=".js, .css, .html, .jsp, .jpg, .png" multiple >
 									<!-- 나중에 accept 옵션으로 파일 확장자 막아주기. -->
 								</form>
 							</div>

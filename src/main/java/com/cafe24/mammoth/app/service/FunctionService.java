@@ -32,17 +32,26 @@ public class FunctionService {
 		return functionRepository.findAll();
 	}
 	
-	public boolean saveFile(Function function, MultipartFile file) {
+	public boolean saveFile(Function function, MultipartFile desktopFile, MultipartFile mobileFile ) {
 		String path = fileUploader.makeDirectory(UPLOAD_DIR_FUNC_PATH, function.getNameEng());
-		String filePath = fileUploader.restoreFile(path, file);
+		String desktopPath = fileUploader.restoreFile(path, desktopFile);
+		String mobilePath = fileUploader.restoreFile(path, mobileFile);
 		
-		if(filePath.contains("html")) {
-			function.setFilePath(filePath);
-			function.setCreatedDate(new Date());
-			return functionRepository.save(function) != null ? true : false;
+		function.setDesktopPath(desktopPath);
+		function.setMobilePath(mobilePath);
+		function.setCreatedDate(new Date());
+		return functionRepository.save(function) != null ? true : false;
+	}
+	
+	public boolean saveFile(Function function, MultipartFile[] files) {
+		String path = fileUploader.makeDirectory(UPLOAD_DIR_FUNC_PATH, function.getNameEng());
+		for(MultipartFile file : files) {
+			String desktopPath = fileUploader.restoreFile(path, file);
+			if(desktopPath == null) {
+				return false;
+			}
 		}
-		
-		return filePath != null ? true : false;
+		return true;
 	}
 
 	public Boolean isExist(String engName) {

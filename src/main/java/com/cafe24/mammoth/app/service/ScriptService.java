@@ -73,6 +73,7 @@ public class ScriptService {
 			// 패널의 스크립트 적용에 관한 데이터 변경
 			Script appliedScript = scriptRepository.findByApplied();
 			String scripttagsNo;
+			
 			// 이미 적용 된 상태에서 적용할 경우
 			if (appliedScript != null) {
 				scripttagsNo = appliedScript.getScripttagsNo();
