@@ -71,7 +71,7 @@ public class Panel {
 	@OneToOne(mappedBy = "panel", cascade = CascadeType.REMOVE)
 	private Script script;
 	
-	@OneToMany(mappedBy = "panel", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "panel", cascade = CascadeType.REMOVE, fetch=FetchType.EAGER)
 	private List<SelectFunc> selectFuncs = new ArrayList<>();
 
 	public void setMember(Member member) {

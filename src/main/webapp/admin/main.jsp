@@ -238,10 +238,11 @@ $(document).ready(function(){
 		obj['themeTitle'] = "${panel.theme.title}";
 		obj['themeTitleImgPath'] = "${panel.theme.titleImgPath}";
 		obj['scriptDpLocation'] = "${panel.script.dpLocation}";
-		
+		obj['selectFunc'] = "${panel.selectFunc}";
 		console.log(obj);
 		data.push(obj);
 	</c:forEach>
+	
 	console.log(data);
 	
 	$(".nav-tabs a").click(function(event){
