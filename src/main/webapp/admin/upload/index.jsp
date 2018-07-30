@@ -102,7 +102,7 @@
 										<label for="func-desktop" class="col-sm-2 col-form-label text-right">Desktop</label>
 										<div class="col-sm-10">
 											<div class="custom-file">
-											  <input type="file" class="form-control custom-file-input" name="func-desktop-html" id="func-desktop-html" accept=".html">
+											  <input type="file" class="form-control custom-file-input" name="func-desktop-html" id="func-desktop-html" accept=".html, jsp">
 											  <label class="custom-file-label" id="func-desktop-label" for="func-desktop-html">데스크탑 버전의 HTML 파일을 선택하세요.</label>
 										  </div>
 										</div>
@@ -111,7 +111,7 @@
 										<label for="func-mobile" class="col-sm-2 col-form-label text-right">Mobile</label>
 										<div class="col-sm-10">
 											<div class="custom-file">
-											  <input type="file" class="form-control custom-file-input" name="func-mobile-html" id="func-mobile-html" accept=".html">
+											  <input type="file" class="form-control custom-file-input" name="func-mobile-html" id="func-mobile-html" accept=".html, .jsp">
 											  <label class="custom-file-label" id="func-mobile-label" for="func-mobile-html">모바일 버전의 HTML 파일을 선택하세요.</label>
 										  </div>
 										</div>
@@ -124,7 +124,7 @@
 								<form enctype="multipart/form-data" method="post">
 									<label for="fileUploader"
 										class="input-file-trigger">Select a file or Drag & Drop your file!</label>
-									<input type="file" name="fileUploader" id="func-btn-select" class="btn input-file" accept=".js, .css, .html, .jsp, .jpg, .png" multiple >
+									<input type="file" name="fileUploader" id="func-btn-select" class="btn input-file" accept=".js, .css, .jpg, .png" multiple >
 									<!-- 나중에 accept 옵션으로 파일 확장자 막아주기. -->
 								</form>
 							</div>

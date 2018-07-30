@@ -242,7 +242,7 @@ var uploader = (function(){
 				alert("기능 이름을 입력하세요.");
 				return false ;
 			} else if( $('#btn-exist').length > 0 ){
-				$(this).focues();
+				$(this).focus();
 				alert('중복 검사를 해주세요.');
 				return false;
 			} else if ( $('#func-desktop-html').val() === '' ){
