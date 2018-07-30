@@ -16,23 +16,23 @@ import com.cafe24.mammoth.app.service.ScriptService;
 import com.cafe24.mammoth.app.support.JSONResult;
 
 @RestController
-@RequestMapping("/api/app")
+@RequestMapping("/api/cafe24")
 public class PanelAPIController {
 	@Autowired
-	ScriptService sservice;
+	ScriptService scriptService;
 	@Autowired
-	PanelService pservice;
+	PanelService panelService;
 	
 	@PostMapping(value = "/apply/{panelId}")
 	public JSONResult pageselect(@RequestBody Map<String, Object> map, @PathVariable("panelId") Long panelId) {
-		Map<String, Script> result = sservice.applyPanel(map, panelId);
+		Map<String, Script> result = scriptService.applyPanel(map, panelId);
 		System.out.println(panelId);
 		return JSONResult.success(result != null ? result : "null");
 	}
 	
 	@DeleteMapping(value="/panel/{panelId}")
 	public JSONResult delete(@PathVariable("panelId") long panelId) {
-		pservice.removePanel(panelId);
+		panelService.removePanel(panelId);
 		
 		return JSONResult.success("removed");
 	}

@@ -1,0 +1,213 @@
+/* 파일 선택 input을 가리기 위한 div */
+.input-file-container {
+	text-align: center;
+}
+
+/* .fileBox는 클래스가 없으며 페이지 로드될 시에 css를 꼽아버림 */
+
+/* 파일 전송 트리거 css */
+.input-file-trigger {
+	display: block;
+	padding: 14px 45px;
+	background: #4B4193;
+	color: #fff;
+	font-size: 1em;
+	transition: all .4s;
+	cursor: pointer;
+	text-align: center;
+	border-radius: 4px;
+}
+
+/* 파일 선택 input-file */
+.input-file {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	opacity: 0;
+	padding: 14px 0;
+	cursor: pointer;
+	z-index: -1;
+}
+
+/* 파일 선택 클릭, drag & drop 이벤트가 일어날 때 일어나는 css */
+.input-file:hover+.input-file-trigger, .input-file:focus+.input-file-trigger,
+	.input-file-trigger:hover, .input-file-trigger:focus {
+	background: #fff;
+	border: 2px solid #4B4193;
+	color: #333;
+	box-shadow: 2px 2px 5px;
+}
+
+/* 파일 선택 input css */
+
+/* 파일명 보이는 곳 div */
+
+/* list안에 파일명 */
+.file_name {
+	font-style: italic;
+	font-weight: bold;
+}
+
+/* list안에 삭제 버튼 */
+.file-rm {
+	cursor: pointer;
+	font-size: 20px;
+	/* margin-left:90px;
+	vertical-align:bottom; */
+}
+
+/* 취소 버튼 */
+#cancel_0 {
+	text-align: center;
+	/* margin: 10px; */
+}
+
+/* progress bar 관련 css 시작*/
+.progress-bar-striped.active {
+	/* height: 10px; */
+}
+
+
+/* progress bar 관련 css 끝 */
+
+/* Custom */
+* {
+	margin: 0;
+	padding: 0;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+html, body {
+	width: 100%;
+	height: 100%;
+	color: #636363;
+}
+
+h1 {
+	padding: 15px 15px;
+}
+
+legend {
+	padding: 10px;
+}
+
+textarea {
+	resize: none;
+}
+
+.container {
+	border-left: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
+	border-bottom: 1px solid #cccccc;
+}
+
+.row {
+	padding-left: 15px;
+	padding-right: 15px;
+	height: 100%;
+}
+
+.col {
+	padding: 5px;
+}
+
+.list-group-item-light.list-group-item-action.active {
+	color: #fff;
+	background-color: #563d7c;
+	border-color: #563d7c;
+}
+
+.progress-status {
+	font-weight: bold;
+	color: #784193;
+}
+
+.form-group {
+	margin-bottom: 0.25em;
+}
+
+.alert {
+	padding: 0.375rem 1.25rem;
+	margin-bottom: 0;
+}
+
+.custom-file-label {
+	color: #636c72;
+}
+
+.btn-upload {
+	background-color: #843C89;
+	border-color: #843C89;
+	color: #fff;
+	border-radius: 4px;
+}
+
+.btn-upload:hover {
+	background-color: #fff;
+	border: 2px solid #843C89;
+	color: #333;
+	box-shadow: 2px 2px 5px;
+}
+
+.btn-upload:disabled {
+	background-color: #333;
+	border-color: #333;
+	border-radius: 4px;
+	pointer-events: none;
+}
+
+.btn-check {
+	border-radius: 4px;
+	background-color: #636363;
+	border-color: #636363;
+	color: #fff;
+}
+
+.btn-check:hover {
+	background-color: #4B4193;
+}
+
+.btn-check.active {
+	background-color: #4B4193;
+	border-color: #4B4193;
+}
+
+.btn-check.active:hover {
+	background-color: #636363;
+}
+
+.btn-exist {
+	background-color: #3A153C;
+	border-color: #3A153C;
+	border-radius: 4px;
+	color: #fff;
+}
+
+.btn-exist:hover {
+	background-color: #fff;
+	color: #333;
+}
+
+
+.files {
+	width: 100%;
+	border: 2px dashed #784193;
+	border-radius: 4px;
+	display: inline-block;
+}
+
+
+/***********************/
+#header {
+	background-color: #563d7c;
+	color: white;
+}
+
+#body {
+	padding: 15px 15px;
+}

@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.cafe24.mammoth.app.domain.Func;
+import com.cafe24.mammoth.app.domain.Function;
 import com.cafe24.mammoth.app.domain.Theme;
 import com.cafe24.mammoth.app.domain.enumerate.PanelType;
 import com.cafe24.mammoth.app.domain.enumerate.Position;
-import com.cafe24.mammoth.app.service.FuncService;
+import com.cafe24.mammoth.app.service.FunctionService;
 import com.cafe24.mammoth.app.service.PanelService;
 import com.cafe24.mammoth.app.service.ThemeService;
 import com.cafe24.mammoth.app.support.SettingTab;
@@ -93,7 +93,7 @@ public class SettingController {
 	}*/
 	
 	@Autowired
-	private FuncService funcService;
+	private FunctionService funcService;
 	
 	@Autowired
 	private ThemeService themeService;
@@ -103,7 +103,7 @@ public class SettingController {
 
 	@GetMapping(value = "/create")
 	public String create(Model model) {
-		List<Func> funcs = funcService.getFuncList();
+		List<Function> funcs = funcService.getFuncList();
 		List<Theme> themeList = themeService.getThemeList();
 		List<PanelType> panelTypes = Arrays.asList(PanelType.values());
 		List<Position> positions = Arrays.asList(Position.values());
@@ -147,7 +147,7 @@ public class SettingController {
 	@GetMapping(value="/preview")
 	public String preview(Model model) {
 		// funclist
-		List<Func> funcs = funcService.getFuncList();
+		List<Function> funcs = funcService.getFuncList();
 		model.addAttribute("funcs", funcs);
 		return "preview_panel";
 	}

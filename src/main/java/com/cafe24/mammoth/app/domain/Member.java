@@ -35,7 +35,7 @@ public class Member {
 	@Column(name = "mall_url", nullable = true, length = 200)
 	private String mallUrl;
 
-	@OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	private List<Panel> panels;
 
 	@Override

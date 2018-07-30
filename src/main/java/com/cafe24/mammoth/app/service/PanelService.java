@@ -12,7 +12,7 @@ import com.cafe24.mammoth.app.domain.Panel;
 import com.cafe24.mammoth.app.domain.Script;
 import com.cafe24.mammoth.app.domain.SelectFunc;
 import com.cafe24.mammoth.app.domain.enumerate.Position;
-import com.cafe24.mammoth.app.repository.FuncRepository;
+import com.cafe24.mammoth.app.repository.FunctionRepository;
 import com.cafe24.mammoth.app.repository.PanelRepository;
 import com.cafe24.mammoth.app.repository.ScriptRepository;
 import com.cafe24.mammoth.app.repository.SelectFuncRepository;
@@ -32,7 +32,7 @@ public class PanelService {
 	ThemeRepository themeRepository;
 	
 	@Autowired
-	FuncRepository funcRepository;
+	FunctionRepository funcRepository;
 	
 	@Autowired
 	ScriptRepository scriptRepository;

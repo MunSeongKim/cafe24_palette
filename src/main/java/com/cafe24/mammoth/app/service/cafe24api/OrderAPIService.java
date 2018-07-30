@@ -92,7 +92,7 @@ public class OrderAPIService {
 	private Product getProduct(String productNo) {
 		//Request Parameters
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-		params.add("fields", "product_no,small_image,category");
+		params.add("fields", "product_no,small_image,category,product_tag");
 		// Communicate to API Server
 		ProductsTemplate productsTemplate = cafe24Template.getOperation(ProductsTemplate.class);
 		// API Response
@@ -100,8 +100,9 @@ public class OrderAPIService {
 		// Convert response to DTO
 		Product product = new Product();
 		product.setProductNo(products.getProductNo());
-		product.setSmallImage(product.getSmallImage());
+		product.setSmallImage(products.getSmallImage());
 		product.setCategories(products.getCategories());
+		product.setTags(products.getProductTag());
 		
 		// 캐시에 데이터 삽입
 		cacheManager.getCache("products").put(productNo, product);

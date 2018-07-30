@@ -49,7 +49,6 @@ public class OrderAPIController {
 		params.add("member_id", memberId);
 		System.out.println(params);
 		List<Order> orderList = orderAPIService.getOrderList(params);
-		System.out.println(orderList);
 		return JSONResult.success(orderList != null ? orderList : "null");
 	}
 }
