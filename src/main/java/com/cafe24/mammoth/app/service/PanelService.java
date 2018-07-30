@@ -9,10 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cafe24.mammoth.app.domain.Panel;
+import com.cafe24.mammoth.app.domain.Script;
 import com.cafe24.mammoth.app.domain.SelectFunc;
 import com.cafe24.mammoth.app.domain.enumerate.Position;
 import com.cafe24.mammoth.app.repository.FuncRepository;
 import com.cafe24.mammoth.app.repository.PanelRepository;
+import com.cafe24.mammoth.app.repository.ScriptRepository;
 import com.cafe24.mammoth.app.repository.SelectFuncRepository;
 import com.cafe24.mammoth.app.repository.ThemeRepository;
 
@@ -32,6 +34,9 @@ public class PanelService {
 	@Autowired
 	FuncRepository funcRepository;
 	
+	@Autowired
+	ScriptRepository scriptRepository;
+	
 	public List<Panel> getPanelList() {
 		return repo.findAll();
 	}
@@ -48,13 +53,19 @@ public class PanelService {
 		repo.deleteById(id);
 	}
 	
-	public boolean createPanel(List<Long> funcId, List<Long> funcOrder, Long themeId) {
+	public boolean createPanel(
+			List<Long> funcId,
+			List<Long> funcOrder,
+			Long themeId,
+			String position
+			) {
 		Panel panel = new Panel();
 		panel.setName("Test Panel["+Calendar.getInstance().getTimeInMillis()+"]");
-		panel.setPosition(Position.RIGHT);
+		panel.setPosition(Position.valueOf(position));
 		panel.setTheme(themeRepository.getOne(themeId));
 		panel = repo.save(panel);
 		
+		// select_func tbl row create
 		for(int i=0; i<funcId.size(); i++) {
 			SelectFunc selectFunc = new SelectFunc();
 			selectFunc.setPanel(panel);
@@ -62,6 +73,13 @@ public class PanelService {
 			selectFunc.setFunc(funcRepository.getOne(funcId.get(i)));
 			selectFuncRepository.save(selectFunc);
 		}
+		
+		// script tbl row create
+		Script script = new Script();
+		script.setPanel(panel);
+		script.setIsApply(false);
+		script.setFilepath("/template/skel.js");
+		scriptRepository.save(script); 
 		
 		return true;
 	}

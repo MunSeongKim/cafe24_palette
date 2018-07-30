@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+#panel{
+	margin-right: 0;
+}
+
 /* panel css */
 .panel {
 	height: 100%;
@@ -33,9 +37,9 @@
 	top:1em;
 	width: 2.5em;
 	height: 1.563em;
+	right: 0;
 	position: fixed;
 	margin: 3.125em 0.313em;
-	right: 0;
 	-webkit-transform: rotate(0deg);
 	-moz-transform: rotate(0deg);
 	-o-transform: rotate(0deg);
@@ -95,7 +99,6 @@
 	-moz-transform: rotate(-45deg);
 	-o-transform: rotate(-45deg);
 	transform: rotate(-45deg);
-	bor
 }
 
 /*

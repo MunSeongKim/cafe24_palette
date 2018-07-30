@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -69,7 +70,7 @@ public class Panel {
 	
 	@OneToOne(mappedBy = "panel", cascade = CascadeType.REMOVE)
 	private Script script;
-
+	
 	@OneToMany(mappedBy = "panel", cascade = CascadeType.REMOVE)
 	private List<SelectFunc> selectFuncs = new ArrayList<>();
 

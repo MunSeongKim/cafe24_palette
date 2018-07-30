@@ -17,7 +17,7 @@ import com.cafe24.mammoth.app.service.PanelService;
 @Controller // : view(화면) return
 @RequestMapping(value = "/")
 public class MainController {
-
+	
 	@Autowired
 	private PanelService panelService;
 	
@@ -25,9 +25,11 @@ public class MainController {
 	public String main(Model model) {
 		
 		List<Panel> list = panelService.getPanelList();
-
+		
+		System.out.println(list.get(0).getTheme());
+		System.out.println(list.get(0).getSelectFuncs());
+		
 		model.addAttribute("list", list);
 		return "main";
 	}
-
 }
