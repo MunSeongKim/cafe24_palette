@@ -126,11 +126,7 @@
 		},
 		popup : function(action) {
 			if(action === 'open') {
-				$('.popupLayer').css({
-					"position" : "fixed",
-					"right" : $('#panel').width(),
-					"top" : '20%'
-				}).show();
+				$('.popupLayer').show();
 			} 
 			else if(action === 'close') { $('.popupLayer').hide(); } 
 			else { return 0 };
@@ -145,10 +141,7 @@ $(document).ready(function() {
 		$.orderlist.popup('close');
 	});
 	
-	/* ORDER LIST button click event */
-	$('.func-orderlist').click(function() {
-		$.orderlist.execute();
-	});
+	$.orderlist.execute();
 	
 	/* popup checkbox click event */
 	$('#ckbox').click(function() {

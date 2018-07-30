@@ -2,7 +2,7 @@
    margin: 1px;
    width: 45px;
    height: 30px;
-   border: 1px solid orange;
+   /* border: 1px solid orange; */
    float: left;
    border-radius: 10%;
 }
@@ -20,9 +20,9 @@
    display: none;
 }
 
-i {
+/* i {
    color: orange;
-}
+} */
 
 /* 아이템 속 아이콘 */
 .fa-save {
@@ -46,7 +46,7 @@ i {
 .scroll-re-keyword {
    width: 80%;
    height: 30%;
-   border: 1px solid orange;
+   /* border: 1px solid orange; */
    margin-bottom: 6px;
    border-radius: 7%;
 }

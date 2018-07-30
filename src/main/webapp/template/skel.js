@@ -12,22 +12,23 @@ var readyToExe = (function() {
     *  https통신을 하기 때문에 요청도 https로 해야됨. 다행히 모든 js cdn서버는 https제공. (solved)
     */
    var files = [
+	   'https://devbit005.cafe24.com/mammoth/static/jquery/1.11.1/jquery.min.js',
+	   'https://devbit005.cafe24.com/mammoth/static/jquery-ui/1.12.1/jquery-ui.min.js',
+	   'https://devbit005.cafe24.com/mammoth/static/popper.js/1.14.1/umd/popper.min.js',
+	   'https://devbit005.cafe24.com/mammoth/static/bootstrap/4.1.1/js/bootstrap.min.js',
+	   'https://devbit005.cafe24.com/mammoth/static/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js',
+	   'https://devbit005.cafe24.com/mammoth/static/mustachejs/2.2.1/mustache.min.js'
          //'https://code.jquery.com/jquery-3.3.1.min.js',
-         'https://code.jquery.com/jquery-1.11.1.min.js',
-         'https://code.jquery.com/ui/1.12.1/jquery-ui.js',
+         //'https://code.jquery.com/jquery-1.11.1.min.js',
+         //'https://code.jquery.com/ui/1.12.1/jquery-ui.js',
          //'https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js',
          //'https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css',
          //'https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css',
          //'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
-         //'/mammoth/template/theme1.css',
-         //'/mammoth/template/panel.css',
-         //'/mammoth/function/orderlist/orderlist_popuplayer.css',
-         'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js',
+         //'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js',
          //'https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css',
-         'https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js',
+         //'https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js',
          //'https://devbit005.cafe24.com/mammoth/static/mustachejs/2.2.1/mustache.min.js'
-         //'/mammoth/template/panel.js'
-         //'/mammoth/template/panel.jsp'
          ];
 
    var done = false;
@@ -86,16 +87,21 @@ var readyToExe = (function() {
             element.onreadystatechange = element.onload = null; // kill memory leak in IE
             // done = true; //원래 여기에 true있는데 패턴 변경한 순간... 로직이 바뀐듯 나중에 확인해보자.
             if (files.length != 0) {
+            	
                if (files.length == 1) {
                   //createElement div
-                  readyToExe.includeTargetElement();
+                  //readyToExe.includeTargetElement();
                }
                readyToExe.loadNextScript(files);
             } else {
-            	if(isMobile == false)
+            	if(isMobile == true){
+            		readyToExe.includeTargetElement();
             		$('#panel-area').load('/mammoth/template/panel.jsp');
-            	else
+            	}
+            	else{
+            		readyToExe.includeTargetElement();
             		$('#panel-area').load('/mammoth/template/panel_m.jsp');
+            	}
             }
          }
       }, // end scriptLoaded
@@ -103,7 +109,7 @@ var readyToExe = (function() {
          //확장자 추출..
          //결과값 : false  .확장자
          var len = str.length;
-         var last = str.lastIndexOf("."); //확장자 추출
+         var last = str.lastIndexOf(".");
 
          if (last == -1) { //. 를 발견하지 못한다면.
             return false; //확장자가 없음.
