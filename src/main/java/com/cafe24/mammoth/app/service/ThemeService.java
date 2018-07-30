@@ -45,7 +45,7 @@ public class ThemeService {
 		if(filePath.contains("css")) {
 			theme.setFilePath(filePath);
 		}
-		theme.setTitleImgPath(imgFilePath);
+		theme.setTitleImgPath(imgFilePath.replace("/cafe24/tmp", ""));
 		theme.setCreatedDate(new Date());
 		return themeRepository.save(theme) != null ? true : false;
 	}

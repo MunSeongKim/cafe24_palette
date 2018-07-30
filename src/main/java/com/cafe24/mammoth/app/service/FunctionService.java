@@ -37,8 +37,10 @@ public class FunctionService {
 		String desktopPath = fileUploader.restoreFile(path, desktopFile);
 		String mobilePath = fileUploader.restoreFile(path, mobileFile);
 		
-		function.setDesktopPath(desktopPath);
-		function.setMobilePath(mobilePath);
+		
+		
+		function.setDesktopPath(desktopPath.replace("/cafe24/tmp", ""));
+		function.setMobilePath(mobilePath.replace("/cafe24/tmp", ""));
 		function.setCreatedDate(new Date());
 		return functionRepository.save(function) != null ? true : false;
 	}
