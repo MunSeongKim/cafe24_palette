@@ -1,21 +1,16 @@
-<script src="orderlist_popuplayer.js"></script>
-<link rel="stylesheet" type="text/css" href="orderlist_popuplayer.css" />
+<script src="orderlist_popuplayer_m.js"></script>
+<link rel="stylesheet" type="text/css" href="orderlist_popuplayer_m.css" />
 
 <style>
 .hide { display:none; }
 </style>
-
-<span id="btn-orderlist" class="func-orderlist plt-pn-btn plt-pn-btn-default">ORDER LIST</span>
 <!-- 구매 목록 팝업 레이어  -->
-<div class="popupLayer plt-pn">
+<div class="popupLayer plt-pn-font-black">
 	<div id="popup-header">
 		<div id="popup-period">
 			<span class="plt-pn-btn plt-pn-btn-default plt-pn-font-l plt-pn-font-n span-period" data-period="week">1주일</span>
 			<span class="plt-pn-btn plt-pn-btn-simple plt-pn-font-l plt-pn-font-n span-period" data-period="month">1개월</span>
 			<span class="plt-pn-btn plt-pn-btn-simple plt-pn-font-l plt-pn-font-n span-period" data-period="sixmonths">6개월</span>
-			<div id="popup-close">
-				<span>&times;</span>
-			</div>
 		</div>
 		<div id="popup-chkbox" class="plt-pn-font-m">
 			<input type="checkbox" name="ckbox" id="ckbox"> 현재와 동일한 카테고리
@@ -54,7 +49,7 @@
 											</div>
 											<div class="col-md-6">
 												<p>{{productName}}</p>
-												<p><span class="info-title">PRICE</span> <br> \ {{#cut.price}}{{productPrice}}{{/cut.price}}</p>
+												<p><span class="info-title">PRICE</span> <br> {{#cut.price}}{{productPrice}}{{/cut.price}} won</p>
 												{{#optionValue}}<p><span class="info-title">OPTION</span> <br> {{#cut.options}}{{optionValue}}{{/cut.options}}</p>{{/optionValue}}
 
 												{{#product.tags}}<p>{{#cut.tags}}{{product.tags}}{{/cut.tags}}</p>{{/product.tags}}

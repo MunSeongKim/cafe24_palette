@@ -1,17 +1,25 @@
 @charset "EUC-KR";
 /* 180723 scss 파일 제작 - hwi */
 /* complie site: http://www.cssportal.com/scss-to-css/ */
-/* orange 부분 */
-$themecolor: #fea702;
 
-/* panel bg */
-$panelBgcolor: #e0e0e0;
+/* themeColor: main color*/
+$themeColor: #A593E0;
 
-/* panel color */
-$panelColor: #ffffff;
+/* main color의 inverse*/
+$themeInverseColor: #E0E3DA;
+
+/* panel font color */
+$panelFontColor: #ffffff;
 
 /* border color */
-$borderColor: #e0e0e0;
+$borderColor: #000;
+$borderBoxColor: #566270;
+/* mobile button color */
+$mobileColor: #A593E0;
+
+/* basic color*/
+$blackColor: #000000;
+$whiteColor: #ffffff;
 
 /* 
  * Tag 단위 css 
@@ -21,40 +29,38 @@ $borderColor: #e0e0e0;
 .plt-pn {
 	font-family: sans-serif !important;
 	background-color: rgba(255, 255, 255, 1);
-	color: black;
+	color: $blackColor;
 	/* border: 1px solid #000; */
 	text-shadow: none;
-	box-shadow: 0.188em 0.188em 0.313em;
-    
+	
     &-box {
         padding: 1.063em 0;
-        border-top: 0.063em solid #dcdcdc;
-        border-bottom: 0.063em solid #dcdcdc;
+        border-top: 0.063em solid $borderBoxColor;
+        border-bottom: 0.063em solid $borderBoxColor;
         margin: 1.250em 2.500em;
-    }
-    
+        }
     &-a {
         /* <a> css */
         text-decoration: none !important;
-        color: #000 !important;
+        color: $blackColor !important;
         font-weight: normal !important;
         :hover{
             text-decoration: none !important;
             cursor: pointer !important;
-            color: $themecolor !important;
+            color: $themeColor !important;
             font-weight: bold !important;
         }
     }
     
     &-li {
         /* <li> css*/
-        border: 1px solid $themecolor !important;
-	    background-color: $themecolor;
+        border: 1px solid $themeColor !important;
+	    background-color: $themeColor;
     }
     
     &-i {
         /* <i> css */
-        color: $themecolor;
+        color: $themeColor;
     }
     
     &-hr {
@@ -63,8 +69,8 @@ $borderColor: #e0e0e0;
             margin-top: 0.563em !important;
             margin-bottom: 0.563em !important;   
         }
-        &-solid { border-top: 0.063em solid black !important; }
-        &-thin { border-top: 0.063em thin black !important; }
+        &-solid { border-top: 0.063em solid $blackColor !important; }
+        &-thin { border-top: 0.063em thin $blackColor !important; }
         &-space-l {
            margin-top: 1em !important;
            margin-bottom: 1em !important;
@@ -79,41 +85,52 @@ $borderColor: #e0e0e0;
     /* 개별 단위 css */
     &-bg {
         /* background */
-        background: $panelBgcolor !important;
-	    color: $panelColor !important;
+        background: $themeColor !important;
+	    color: $panelFontColor !important;
+	    font-weight: bold;
     }
     
     &-border {
         /* border */
          &-dotted { border: 0.125em dotted $borderColor !important; }
          &-solid { border: 0.125em solid $borderColor !important; }
+         &-color { border-color: $themeColor !important; }
     }
     
     &-font {
          /* font */
+         color: $themeColor;
          &-l { font-size: 1.250em !important; }
          &-m { font-size: 1em !important; }
          &-s { font-size: 0.688em !important; }
          &-b { font-weight: bold !important; }
          &-n { font-weight: normal !important; }
+         &-black * { color: $blackColor; }
+         &-white * { color: $whiteColor; }
     }
     
     /****************************************************************/
     /* panel button 관련 css */
     &-btn{
         /* default, inverse btn commoness part */
-        &-default, &-inverse {
-            width: 80%;
-            padding: 0.250em 0.375em;
-            border-radius: 0.250em;
-            text-align: center;
-        }
+        width: 80%;
+        padding: 0.250em 0.375em;
+        border-radius: 0.250em;
+        text-align: center;
         
         &-default {
              /* default btn css */
-            background-color: $themecolor !important; 
-            color: white !important;
-            :hover{
+            background-color: $themeColor !important; 
+            color: $whiteColor !important;
+            
+            
+            &-empty {
+            	/* default 버튼의 비어있는 버전 */
+            	border: 0.063em solid $themeColor !important;
+        		color: $blackColor !important;
+            }
+            
+            span&:hover{
                  /* button 기능하는 <span> tag */
                 cursor: pointer;
             }
@@ -121,19 +138,22 @@ $borderColor: #e0e0e0;
         
         &-inverse {
             /* inverse btn css */
-            background-color: #0080ff !important; 
-            color: #fff !important;
-            :hover {
-                 /* button 기능하는 <span> tag */
-            cursor: pointer;
-            }
+            background-color: $themeInverseColor !important; 
+            color: $whiteColor !important;
+            
+           span&:hover {
+           		cursor: pointer;
+        	}
         }
+        
+        
         
         &-simple {
             /* button simple css (bg X, color: black, border X) */
-            /* background-color: #ffffff !important; */ 
+            /* background-color: $whiteColor !important; */ 
             color: #000000 !important;
-            :hover{
+            
+            span&:hover{
                 /* button 기능하는 <span> tag */
                 cursor: pointer;
             }
@@ -150,8 +170,20 @@ $borderColor: #e0e0e0;
             /* border: 0.063em solid black; */
             :hover{
                 cursor: pointer;
-                color: $themecolor !important;
+                color: $themeColor !important;
             }
         }
+        /* mobile button */
+		&-active, &-inactive {
+			border: 2px solid $mobileColor !important;
+		}
+		&-active {
+			background-color: $mobileColor !important;
+			color: $whiteColor !important;	
+		}
+		&-inactive {
+			background-color: #ffffff !important;
+			color: $blackColor !important;
+		}
     }
 }

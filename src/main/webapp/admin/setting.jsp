@@ -23,21 +23,26 @@
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script> <!-- 토글 버튼 라이브러리 -->
 <script	src="${pageContext.servletContext.contextPath }/static/mustachejs/2.2.1/mustache.min.js"></script> 
 <script type="text/javascript" src="${pageContext.servletContext.contextPath }/admin/assets/js/preview_panel.js"></script>
-<%-- <script src="${pageConetxt.servletContext.contextPath }/static/bootstrap-toggle/2.2.2/js/bootstrap-toggle.js" type="text/javascript"></script> --%>
+<script src="${pageConetxt.servletContext.contextPath }/static/bootstrap-toggle/2.2.2/js/bootstrap-toggle.js" type="text/javascript"></script>
 
 <title>새 패널 만들기</title>
 </head>
 <body>
-<div class="container-fluid">
+<div class="setting-container container-fluid" style="height: 90%; padding-left: 0; min-width: 900px;">
 	<input type="hidden" class="panel-division-type" name="admin" value="admin">
 	 
-	<div class="palette-title row">
-		<i class="fas fa-plus-square"></i>
-		<h1>새 패널 만들기</h1> 
+	<div class="palette-title row fouc fouc-flex"> 
+		<div class="col-sm-9">
+			<h4><i class="fas fa-plus-square"></i>새 패널 만들기</h4>
+		</div>
+		
+		<div class="col-sm-3" style="text-align: right;">
+			<button class="btn btn-danger btn-delete btn-sm" id="gomain"><i class="fas fa-trash-alt" style="margin-bottom: 0;"></i>Main화면</button>
+		</div>
 	</div>
 
 	<!-- tab START -->
-	<div id="panel-tabs" class="row fouc"> 
+	<div id="panel-tabs" class="row fouc">
 		<ul class="nav nav-tabs" id="myTab">
 			<c:forEach var="tab_element" items="${tabs.map }" varStatus="stat">
 				<c:choose> 
@@ -110,7 +115,9 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="palette-modal-header modal-header">
-				  <h5 class="palette-modal-title modal-title"><i class="custom-i fas fa-palette"></i>Palette</h5>
+				  <h5 class="palette-modal-title modal-title" style="margin-left: 10px;">
+				  	<i class="custom-i fas fa-palette"></i>Palette
+				  </h5>
 				    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -136,13 +143,12 @@ function includeTargetElement() {
   	document.body.appendChild(element);
 }
 
-
 var tabsMaxSize = ${fn:length(tabs.map)};
 var hash = window.location.hash;  // ex) /create#func
 
 if(hash=='' || hash==null){
-	window.location = "#func";
-	hash = "#func";
+	window.location = "#type";
+	hash = "#type";  
 } 
 
 /* hash 위치에 맞는 탭 출력 */
@@ -156,7 +162,9 @@ $('#myTab a').on('shown.bs.tab', function(event){
 	$(".toggle-off").css({
 		"padding-right" : "12px"
 	})
-	$(".fouc").show(); 
+	
+	$(".fouc-flex").css("display", "flex");
+	$(".fouc").show();
 });
 
 //페이지 초기화
@@ -210,7 +218,13 @@ function pageRender(currentIdx, tabsMaxSize, hash){
 
 function resizeDone(){
 	var currentWidth = window.innerWidth;
-	var rate = ((currentWidth - 250)/currentWidth)*100;
+	var rate;
+	if(currentWidth < 1000){
+		rate = 50
+	} else {
+		rate = ((currentWidth - 530)/currentWidth)*100;
+	}
+	
 	$("#panel-tabs").css({
 		"width" : rate+"%"
 	});
@@ -229,10 +243,10 @@ $(document).ready(function(){
 		timer = setTimeout(resizeDone, 150);
 	});
 	
-	// 이미지를 포함한 모든 요소가 로드가 되고 실행.
-	/* alert("window.ready"); */
-	console.log('1')
-	console.log("tabsMaxSize"+tabsMaxSize);
+	/* 메인가기 버튼 누르면 동작 */
+	$("#gomain").click(function(){
+		location.href = '/mammoth/';
+	});
 	
 	// Next 버튼 클릭 시.
 	$("#pager-next").click(function(event){
@@ -358,7 +372,6 @@ $(document).ready(function(){
 		$($("#sortable").children("li").siblings().not(".ui-state-disabled")).each(function(){
 			var funcid = $(this).data("funcid");
 			var funcorder = $(this).attr("funcorder");
-			console.log(funcid +", "+funcorder); 
 			
 			appendHiddenElement($("#saveform"), "funcid", funcid);
 			appendHiddenElement($("#saveform"), "funcorder", funcorder);
@@ -366,6 +379,8 @@ $(document).ready(function(){
 		
 		/* form에 선택된 themeid 정보 추가 */
 		appendHiddenElement($("#saveform"), "themeid", $(".card.seleted").data("themeid"));
+		
+		appendHiddenElement($("#saveform"), "position", $("#positionTypeDiv :radio[name=position]:checked").val());
 		
 		/* form 제출 */
 		$("#saveform").submit();
