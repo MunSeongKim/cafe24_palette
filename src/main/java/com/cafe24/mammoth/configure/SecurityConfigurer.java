@@ -12,7 +12,6 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -27,10 +26,12 @@ import org.springframework.security.oauth2.client.token.grant.code.Authorization
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 import com.cafe24.mammoth.oauth2.Cafe24AccessTokenProviderChain;
 import com.cafe24.mammoth.oauth2.Cafe24AuthenticationSuccessHandler;
@@ -89,8 +90,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
 	/**
 	 * 현재 상황: AccessToken 받는거 성공<br>
-	 * 설정: CSRF 설정, X-Frame-Option 해제, OAuth2ContextFilter 등록<br>
-	 * <br>
+	 * 설정: CSRF, CORS 설정, X-Frame-Option 해제, OAuth2ContextFilter, CharacterEncodingFilter 등록<br>
+	 * 수정내용: CharacterEncodingFilter 등록, 18-07-30, MoonStar<br>
 	 * 
 	 * @param HttpSecurity
 	 *            - 인터셉터로 요청을 안전하게 보호하는 방법 설정
@@ -98,13 +99,27 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.httpBasic().disable();
+		
 		// iframe에서 요청이 발생할 때 X-Frame-Option에 대한 문제 발생 해당 값을 해제하여 문제 해결. 원인: 아직 모르겠음
 		http.headers().frameOptions().disable();
+		
+		// CharacterEncodingFilter는 Security 사용 시 CsrfFilter 앞에 해당 필터를 위치해야 함
+		http.addFilterBefore(characterEncodingFilter(), CsrfFilter.class);
+		
 		// BasicAuthenticationFilter 이전에 cafe24Filter를 수행하도록 지정
 		// /oauth2 경로는 필터를 통해 인증받도록 설정, 그 외 경로는 접속 허용
 		http.authorizeRequests().requestMatchers(CorsUtils::isPreFlightRequest).permitAll().antMatchers("/oauth2")
-				.permitAll().and().addFilterBefore(cafe24Filter(), BasicAuthenticationFilter.class);
+				.permitAll().and().addFilterBefore(cafe24AuthenticationProcessingFilter(), BasicAuthenticationFilter.class);
+	}
+	
+	/**
+	 * CharacterEncodingFilter 등록, 한글 적용 작업
+	 */
+	private Filter characterEncodingFilter() {
+		CharacterEncodingFilter chracterFilter = new CharacterEncodingFilter();
+		chracterFilter.setEncoding("UTF-8");
+		chracterFilter.setForceEncoding(true);;
+		return chracterFilter;
 	}
 
 	/**
@@ -116,7 +131,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	 * 
 	 * @return {@link OAuth2ClientAuthenticationProcessingFilter}
 	 */
-	private Filter cafe24Filter() {
+	private Filter cafe24AuthenticationProcessingFilter() {
 		OAuth2ClientAuthenticationProcessingFilter cafe24Filter = new Cafe24OAuth2ClientAuthenticationProcessingFilter(
 				"/oauth2", cafe24(), cafe24Resource());
 		// 필터에 OAuth2RestTemplate 빈 등록
@@ -211,19 +226,6 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 		registration.setFilter(filter);
 		registration.setOrder(-100);
 		return registration;
-	}
-
-	/**
-	 * LazyInitialization 문제 해결 방법 -> Open Session In View 필터 등록.
-	 * 정상 작동하는지 확인해 봐야함.
-	 */
-	@Bean
-	public FilterRegistrationBean<OpenEntityManagerInViewFilter> registerOpenEntityManagerInViewFilterBean() {
-		FilterRegistrationBean<OpenEntityManagerInViewFilter> registrationBean = new FilterRegistrationBean<OpenEntityManagerInViewFilter>();
-		OpenEntityManagerInViewFilter filter = new OpenEntityManagerInViewFilter();
-		registrationBean.setFilter(filter);
-		registrationBean.setOrder(5);
-		return registrationBean;
 	}
 
 	/**

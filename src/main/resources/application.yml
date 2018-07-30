@@ -23,6 +23,9 @@ spring:
     ehcache:
       config: classpath:ehcache.xml
 
+  security:
+    enabled: false
+
 logging:
   level:
     org:
