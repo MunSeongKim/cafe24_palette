@@ -31,15 +31,10 @@ public class PanelAPIController {
 	}
 	
 	@DeleteMapping(value="/panel/{panelId}")
-	public JSONResult delete(@PathVariable(value="id") long panelId) {
+	public JSONResult delete(@PathVariable("panelId") long panelId) {
 		pservice.removePanel(panelId);
 		
 		return JSONResult.success("removed");
 	}
-	
-	
-	
-	
-	
 	
 }

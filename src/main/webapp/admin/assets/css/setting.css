@@ -36,9 +36,7 @@ html, body{
 		width: 100%;
 		padding : 15px; 
 		padding-bottom : 0; 
-		background-color: #563d7c;  
-/* 		border-top-left-radius : 10px;
-		border-top-right-radius : 10px; */
+		background-color: #563d7c;
 		color : #fff;
 		margin: 0px auto;
 	}
@@ -124,13 +122,18 @@ li{
 	border-radius: 10px;
 }
 
+.setting-container{
+	margin: 0;
+	padding: 0;
+}
+
 .container-fluid{
 	
-} 
+}
 
 .fouc{
 	display: none;
-} 
+}
 
 .palette-title{
 	width : 85%;
@@ -313,7 +316,7 @@ li{
 }
 
 .palette-modal-header{
-	padding: 0; 
+	padding: 0;
 	background-color: #563d7c;
 }
 

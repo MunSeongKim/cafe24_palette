@@ -16,7 +16,6 @@
 		// 패널 버튼을 클릭하였을 때, action에 따라 패널, 패널 버튼, 스크롤의
 		// CSS를 변경한다.
 		nav : function(action) {
-			
 			$('#panel-draggable-btn').toggleClass('open'); // 버튼 모양 변경
 			$.panel.changePanel(action);
 		},
@@ -35,13 +34,27 @@
 				panelCss['margin-'+p.position] = '0';
 				draggableCss[p.position] ="15.625em";
 				draggableCss[p.removePosition]="";
-				scrollCss[p.position] ="18.625em";
+				
+				if(p.position == 'left'){
+					scrollCss[p.position] ="16em";
+				}else{
+					scrollCss[p.position] ="17.625em";
+				}
+				
 				scrollCss[p.removePosition]="";
-			} else {
+			} 
+			// 패널을 닫았을 때.
+			else {
 				panelCss['margin-'+p.position] = '-15.625em';
 				draggableCss[p.position] ="0";
 				draggableCss[p.removePosition]="";
-				scrollCss[p.position] ="0";
+				
+				if(p.position == 'left'){
+					scrollCss[p.position] ="0em";
+				}else{
+					scrollCss[p.position] ="2.5em";
+				}
+				
 				scrollCss[p.removePosition]="";
 			}
 			
@@ -64,6 +77,7 @@ $(document).keyup(function(e) {
 $(document).ready(function() { 
 	/// preview_panel.jsp 로드
 	$('#panel-area').load('/mammoth/setting/preview', function(){
+	/*$('#panel-area').load('/mammoth/admin/preview_panel.html', function(){*/
 		$.panel.setPosition();
 		$.panel.changePanel('open');
 		

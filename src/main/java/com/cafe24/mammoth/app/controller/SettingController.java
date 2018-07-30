@@ -23,6 +23,19 @@ import com.cafe24.mammoth.app.service.PanelService;
 import com.cafe24.mammoth.app.service.ThemeService;
 import com.cafe24.mammoth.app.support.SettingTab;
 
+/*
+ * skel.js -> panel.jsp -> panel.js인 상황.
+ * 페이지에서 skel.js가 호출되어 실행될때마다 panel.jsp가 호출되고 jsp는 서버와 통신하여 DB에 따라 기능을 선택적으로 그림. -> 되는 듯하지만 뭔가 이상함.
+ * 
+ * [제안]
+ * 1. DB에 있는 선택된 기능들의 file 경로, 테마 CSS 파일경로 및 패널 정보를 조회.
+ * 2. 위의 file 경로에 있는 html소스들과 테마의 css 파일 소스를 모두 합쳐서 qyuee201807260000201.html 로 저장. -> preview_panle.html로 예시
+ * 3. 
+ * 4. panel.js를 통해서 위의 파일을 읽어 들인다. -> $('#panel-area').load('/mammoth/admin/preview_panel.html', function(){
+ * 5. skle.js에 위의 파일명을 넣기위해서 
+ * 
+ */
+
 @Controller
 @RequestMapping(value = "/setting")
 @SessionAttributes({"mallId", "mallUrl"})

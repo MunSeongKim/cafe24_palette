@@ -2,6 +2,8 @@ package com.cafe24.mammoth.app.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +11,7 @@ import com.cafe24.mammoth.app.domain.Theme;
 import com.cafe24.mammoth.app.repository.ThemeRepository;
 
 @Service
+@Transactional
 public class ThemeService {
 	@Autowired
 	private ThemeRepository themeRepository;
