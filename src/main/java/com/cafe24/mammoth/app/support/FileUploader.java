@@ -49,11 +49,12 @@ public class FileUploader {
 			e.printStackTrace();
 			return null;
 		}
+		
 		return filePath;
 	}
 
 	public String makeDirectory(String rootPath, String directoryName) {
-		String filePath = rootPath + directoryName;
+		String filePath = rootPath + "/" + directoryName;
 		File dir = new File(filePath);
 		if (!dir.exists()) {
 			dir.mkdir();

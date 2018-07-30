@@ -75,7 +75,7 @@
 		<form id="saveform" method="POST" action="${pageContext.servletContext.contextPath }/setting/create">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }" />
 			<!-- 
-				"funcid" , "funcorder" 
+				"funcid" , "funcorder"  
 			-->
 		</form>
 		

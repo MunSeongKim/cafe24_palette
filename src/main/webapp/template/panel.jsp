@@ -13,7 +13,7 @@
 	
 	<script src="/mammoth/template/panel.js" type="text/javascript"></script>
 </head>
-<h1>panel.jsp!!!!!!</h1>
+
 <div class="scroll_mm_div plt-pn-i">
 	<i class="fas fa-arrow-alt-circle-up scroll_top"></i>
 	<i class="fas fa-arrow-alt-circle-down scroll_bottom"></i>			

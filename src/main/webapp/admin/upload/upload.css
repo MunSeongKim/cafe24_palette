@@ -100,11 +100,11 @@ textarea {
 	resize: none;
 }
 
-.container {
+/* .container {
 	border-left: 1px solid #cccccc;
 	border-right: 1px solid #cccccc;
 	border-bottom: 1px solid #cccccc;
-}
+} */
 
 .row {
 	padding-left: 15px;

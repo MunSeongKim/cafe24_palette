@@ -3,41 +3,40 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
-<div class="scroll_mm_div open right right-scroll">
+<div class="scroll_mm_div plt-pn-i">
 	<i class="fas fa-arrow-alt-circle-up scroll_top"></i>
 	<i class="fas fa-arrow-alt-circle-down scroll_bottom"></i>			
 </div>
 <!-- scroll top, bottom end -->
 
-<div id="panel-draggable-btn" class="open">
+<div id="panel-draggable-btn" class="draggable">
 	<span></span>
 	<span></span>
 	<span></span> 
 	<span></span>
 </div>
 
-<div id="panel" class="panel plt-pn open">
-	<div class="container preview_panel"> 
+<div id="panel" class="panel plt-pn ">
+	<div class="container preview_panel">
 		<c:forEach var="func" items="${funcs }">
 			<div class="row preview_func_div" data-panelfuncname="${func.nameEng }">
 				<c:choose>
 					<c:when test="${func.isButton eq true}">
 						<div>
 							<div id="paenl-div-${func.nameEng }" class="func-${func.nameEng }">
-								<c:import url="${func.filePath }"></c:import>
+								<!-- /cafe24/tmp/funhction/recent.... -->
+								<c:import url="${func.desktopPath }" />
 							</div>
 						</div>
 					</c:when>
 					
-					<c:otherwise>
+					<c:otherwise> 
 						<div id="panel-div-${func.nameEng }" class="func-${func.nameEng }" data-panelfuncname="${func.nameEng }">
-							<c:import url="${func.filePath }"></c:import>
+							<c:import url="${func.desktopPath }" />
 						</div>
-					</c:otherwise>
+					</c:otherwise> 
 				</c:choose>
 			</div>
 		</c:forEach>
 	</div>
 </div>
-
-<div id="panel-func-orderlist"></div>

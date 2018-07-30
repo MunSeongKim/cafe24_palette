@@ -77,17 +77,16 @@ public class WebConfigurer extends WebMvcConfigurationSupport  {
 		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/META-INF/resources/webjars/")
 		.setCacheControl(CacheControl.maxAge(3L, TimeUnit.HOURS).cachePublic()).resourceChain(true);
 		
-		// 기능, 테마 리소스
+		// 기능, 테마 리소스 
 		registry.addResourceHandler("/function/**").addResourceLocations("file:/cafe24/tmp/function/").resourceChain(true);
 		registry.addResourceHandler("/theme/**").addResourceLocations("file:/cafe24/tmp/theme/").resourceChain(true);
 		
 		//각 기능용 리소스 API
 		registry.addResourceHandler("/**/*.js").addResourceLocations("/").resourceChain(true);
 		registry.addResourceHandler("/**/*.css").addResourceLocations("/").resourceChain(true);
-		registry.addResourceHandler("/**/*.jpg").addResourceLocations("/").resourceChain(true);
-		registry.addResourceHandler("/**/*.png").addResourceLocations("/").resourceChain(true);
+		// registry.addResourceHandler("/**/*.jpg").addResourceLocations("/").resourceChain(true);
+		// registry.addResourceHandler("/**/*.png").addResourceLocations("/").resourceChain(true);
 		registry.addResourceHandler("/**/*.html").addResourceLocations("/").resourceChain(true);
-		
 		
 	}
 

@@ -219,7 +219,7 @@ table, table thead th {
 <script type="text/javascript">
 function renderDetail(idx, data) {
 	console.log(idx);
-	var template = $('#mustache-template').html();
+	var template = $('#mustache-panellist-template').html();
 	Mustache.parse(template);
 	var rendered = Mustache.render(template, data[idx]);
 	$('#mustache-result').html('').append(rendered);	
@@ -238,8 +238,9 @@ $(document).ready(function(){
 		obj['themeTitle'] = "${panel.theme.title}";
 		obj['themeTitleImgPath'] = "${panel.theme.titleImgPath}";
 		obj['scriptDpLocation'] = "${panel.script.dpLocation}";
-		obj['selectFunc'] = "${panel.selectFunc}";
-		console.log(obj);
+		
+		
+		console.log(obj); 
 		data.push(obj);
 	</c:forEach>
 	
@@ -247,7 +248,7 @@ $(document).ready(function(){
 	
 	$(".nav-tabs a").click(function(event){
 		event.stopPropagation;
-		$(":not(this)").children("span").text("");
+		$(":not(this)").children("span.current-nav").text("");
 		$(this).children("span").append('<i class="fas fa-check mr-1"></i>');
 		
 		$(":not(this)").removeClass("none-event");
@@ -421,7 +422,7 @@ $(document).ready(function(){
 								</div>
 							</div>
 							<div id="mustache-result"></div>
-							<script id="mustache-template" type="text/template">
+							<script id="mustache-panellist-template" type="text/template">
 							<!-- 보여줄 정보 
 								패널명
 								패널 position 정보
@@ -534,7 +535,8 @@ $(document).ready(function(){
 				<div class="col-sm-12 col-md-12 carousel-item" id="fileupload"> 
 					<div class="row">
 						<div class="col-sm-12 card mt-5 rounded">
-							<h1>fileupload1</h1> 
+							<!-- 파일 업로드 레이아웃 소스. -->
+							<jsp:include page="/admin/upload/index.jsp" />
 						</div>
 					</div>
 				</div>

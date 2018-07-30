@@ -105,16 +105,16 @@ $(document).ready(function(){
 	<div class="row" style="height: 100%; padding: 5px;">
 		<!-- 테마 선택 card 형태 grid 배치 -->
 		<div class="theme-list-div col-sm-12 col-md-12 col-lg-12 col-xl-12">
-			<i class="custom-i fas fa-comment-alt"> 테마목록</i>
+			<i class="custom-i fas fa-comment-alt"> 테마목록</i> 
 			<hr class="custom-hr">
-			<c:forEach var="theme" items="${themes }" varStatus="stat"> 
-				<div class="card" data-cssfilepath=${pageContext.servletContext.contextPath }${theme.cssFilePath } data-previewpath = "${theme.previewImgPath }" data-themeid = ${theme.id } data-themetitle = ${theme.title }>
+			<c:forEach var="theme" items="${themes }" varStatus="stat">
+				<div class="card" data-cssfilepath="${pageContext.servletContext.contextPath }${theme.filePath }" data-previewpath = "${theme.titleImgPath }" data-themeid = ${theme.id } data-themetitle = ${theme.title }>
 			 		<img class="card-img-top" src="${pageContext.servletContext.contextPath }${theme.titleImgPath }" alt="Card image cap">
 			  		<div class="card-body">
-			    		<p class="card-title">테마명:${theme.title }</p> 
+			    		<p class="card-title">테마명:${theme.title }</p>
 			  		</div>
 				</div>
-			</c:forEach> 
+			</c:forEach>
 		</div>
 		 
 		<%-- <div class="theme-detail-image-div tab-content col-sm-6 col-md-5 col-lg-4 col-xl-3">
