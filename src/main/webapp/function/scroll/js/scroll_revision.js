@@ -7,7 +7,7 @@ var handler_functions = (function() {
 				if (target.css('display') == 'block') {
 					console.log('handler 데이터 있는 상태');
 					// scroll 이동 이벤트를 줘야됨.
-					modal_functions.scroll_move(url);
+					modal_functions.page_move(url);
 				} else { // none 상태
 					console.log('handler 데이터 없는 상태');
 
@@ -44,7 +44,7 @@ var handler_functions = (function() {
 				$('#kwd').text('');
 
 				parent.bind('click', function() {
-					$('#saveItem').val($(this).attr('class'));
+					$('#saveItem').val($(this).attr('class').split(' ')[0]);
 					// insert item event here
 					$('.scroll-re-question-popup').position({
 						of : window,
@@ -111,7 +111,7 @@ var init_functions = (function() {
 	var settings = {};
 
 	var item_handler = function() {
-		$('#saveItem').val($(this).attr('class'));
+		$('#saveItem').val($(this).attr('class').split(' ')[0]);
 		var wrapper1 = $('.' + $('#saveItem').val() + ' div:first-child');
 		var wrapper2 = $('.' + $('#saveItem').val() + ' div:last-child');
 		var wrapper3 = $('.' + $('#saveItem').val() + '');
@@ -214,9 +214,6 @@ var modal_functions = (function() {
 			if (settings.modalInput.val() == '') {
 				settings.modalP.show();
 			} else {
-				
-				console.log('location.href ==> ' + current_page);
-				
 				var user_input = $('.scroll-re-pop-input').val();
 				// item count
 				var wrapper1 = $('.' + $('#saveItem').val() + ' div:first-child');
@@ -290,7 +287,7 @@ var modal_functions = (function() {
 						}, 200);
 
 						// scrollY파라미터는 없애줌.
-						// history.pushState({}, null, location.pathname);
+						history.pushState({}, null, location.pathname);
 					} else {
 						if (j == 0) {
 							ex_scroll_params += '?' + key + '=' + value;
@@ -308,6 +305,91 @@ var modal_functions = (function() {
 			}
 			// scrollY파라미터 삭제하기 위해서. 클래스 패스만 남음.
 			history.pushState({}, null, ex_scroll_params);
+		}, // end scroll_move
+		page_move : function(url_scrollY){
+			var param = new Array();
+
+			// 현재 페이지의 url
+			var url = decodeURIComponent(url_scrollY);
+			// url이 encodeURIComponent 로 인코딩 되었을때는 다시 디코딩 해준다.
+			url = decodeURIComponent(url);
+
+			var params;
+			// url에서 '?' 문자 이후의 파라미터 문자열까지 자르기
+			params = url.substring(url.indexOf('?') + 1, url.length);
+			// 파라미터 구분자("&") 로 분리
+			params = params.split("&");
+			// params 배열을 다시 "=" 구분자로 분리하여 param 배열에 key = value 로 담는다.
+			var size = params.length;
+			var key, value, scrollY;
+
+			// scrollY값을 제외하고 다른 파라미터를 붙이기 위한 변수 준비
+			var ex_scroll_params = '';
+
+			if (params[0].split("=")[1] != 'undefined'
+					&& params[0].split("=")[1] != null) {
+				for (var j = 0; j < size; j++) {
+					key = params[j].split("=")[0];
+					value = params[j].split("=")[1];
+
+					// scrollY값에 엄청 큰 값을 입력했을 때 막기 위해서.
+					// 현재 페이지에서 가장 하단 부분 Yvalue를 구해준다.
+					var max_yvalue = $(document).height() - $(window).height();
+
+					// 파라미터에 scrollY값이 있을 경우
+					if (key == 'scrollY') {
+
+						// 현재 파라미터로 붙은 Y값이 최대값보다 클 경우
+						if (value > max_yvalue) {
+							value = max_yvalue;
+						}
+						// scrollY위치로 이동.
+						$('html').animate({
+							scrollTop : value
+						}, 200);
+
+						scrollY = value;
+
+						// scrollY파라미터는 없애줌.
+						// history.pushState({}, null, location.pathname);
+					} else {
+						if (j == 0) {
+							ex_scroll_params += '?' + key + '=' + value;
+						} else if (j >= 1) {
+							// 첫 번째 파라미터가 scrollY일 경우 -- 그럴리는 없지만 혹시나해서 만들어놓음
+							var qu_mark_chk = ex_scroll_params.split("?");
+							if (qu_mark_chk.length < 2)
+								ex_scroll_params += '?' + key + '=' + value;
+							else
+								ex_scroll_params += '&' + key + '=' + value;
+						}
+					}
+					// history.pushState({}, null, ex_scroll_params);
+				} // end for
+			}
+			// scrollY파라미터 삭제하기 위해서. 클래스 패스만 남음.
+			// history.pushState({}, null, ex_scroll_params);
+
+			// 다른 페이지를 구분하기 위한 페이지
+			
+			console.log('ex_scroll_params ==> ' + ex_scroll_params);
+			
+			var url_chk_params = url.split('?');
+			
+			var origin_url = url_chk_params[0] + ex_scroll_params;
+			// current_site = origin_url;
+			
+			/////// 180731 파라미터 값 수정중
+			
+			var cur_url = location.href;
+			if (cur_url != origin_url) {
+				// url에 이미 파라미터 값이 있을 경우
+				if (ex_scroll_params != '') {
+					location.href = origin_url + '&scrollY=' + scrollY;
+				} else { // url에 파라미터가 없는 경우
+					location.href = origin_url + '?scrollY=' + scrollY;
+				}
+			}
 		}
 	}// end return
 })();

@@ -1,19 +1,12 @@
 @charset "EUC-KR";
-/* 180723 scss 파일 제작 - hwi */
-/* complie site: http://www.cssportal.com/scss-to-css/ */
-/* themeColor: main color*/
-/* main color의 inverse*/
-/* panel font color */
-/* border color */
-/* mobile button color */
-/* basic color*/
+
 /* 
  * Tag 단위 css 
  */
 /* panel css */
 .plt-pn {
   font-family: sans-serif !important;
-  background-color: rgba(255, 255, 243, 1);
+  background-color: rgba(255, 255, 255, 1);
   color: #000;
   /* border: 1px solid #000; */
   text-shadow: none;
@@ -47,7 +40,7 @@
 }
 .plt-pn-i {
   /* <i> css */
-  color: #a593e0;
+  color: #a593e0 !important;
 }
 .plt-pn-hr {
   /* <hr> css */

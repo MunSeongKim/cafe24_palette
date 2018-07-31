@@ -10,8 +10,8 @@
 .scroll-item-wrapper [class^='item-inner-st'], .scroll-item-wrapper [class*='item-inner-st'] {
    display: none;
    position: absolute;
-   margin-top: -36px;
-   margin-left: 36px;
+   margin-top: -39px;
+   margin-left: 29px;
    border-radius: 100%;
    /* 값 저장이 안되있을 떄는 -13, 36*/
 }
@@ -98,4 +98,11 @@
    font-color: red;
    font-size: 12px;
    padding: 10px;
+}
+
+
+
+/* 기본 테마 속성 재정의 하는 곳 */
+.plt-pn-btn {
+	padding: 0.15em 0.375em;
 }

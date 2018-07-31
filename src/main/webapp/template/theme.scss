@@ -60,7 +60,7 @@ $whiteColor: #ffffff;
     
     &-i {
         /* <i> css */
-        color: $themeColor;
+        color: $themeColor !important;
     }
     
     &-hr {

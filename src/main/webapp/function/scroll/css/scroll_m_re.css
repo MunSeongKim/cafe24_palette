@@ -1,5 +1,13 @@
-.scroll-m-info [class^='col-'], .scroll-m-info [class*='col-'] {
-	text-align: center;
+.row [class^='col-'], .row [class*='col-'] {
+	/* text-align: center; */
+	color: black;
+}
+
+.header-div {
+	overflow:hidden;
+	border-radius: 5px;
+	border: 1px solid black; 
+	margin: 15px 0 20px
 }
 
 .save-title {
@@ -9,15 +17,21 @@
 .scroll-m-item a[class^='scroll-item'], .scroll-m-item a[class*='scroll-item'] {
 	display:inline-block;
 	width:95%;
-	padding: .75rem 1.25rem;
+	padding: 0rem 1.25rem 0.75rem;
 }
 
 .scroll-m-item {
+	overflow: hidden;
 	padding: 0;
 }
 
-.item-remove {
+.item-remove-i {
 	cursor: pointer;
+}
+
+.item-remove-div {
+	margin-right: 10px;
+	text-align: right;
 }
 
 .scroll-m-warning {
@@ -30,4 +44,8 @@
 .scroll-m-warning.scale-out {
  transform: scale(0);
  transition: transform 0.2s !important;
+}
+
+.kwd-font {
+	font-weight:800;
 }

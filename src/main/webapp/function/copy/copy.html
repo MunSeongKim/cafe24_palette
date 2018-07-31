@@ -1,0 +1,49 @@
+<link href="/mammoth/function/copy/css/copy.css" rel="stylesheet">
+<script src="/mammoth/function/copy/js/copy.js"></script>
+
+<!-- 첫 줄(링크input, 복사하기 버튼, 도움말, 도움말 팝업) -->
+<div class="header_part">
+	<!-- link관련 요소들 (input, 복사하기 버튼) -->
+	<input type="text" class="form-control scroll_text_url plt-pn-btn plt-pn-btn-default"
+		id="scroll_text_url" readonly />
+	<div class="scroll_copy_div">
+		<span class="plt-pn-btn plt-pn-btn-inverse scroll_copy_button"
+			id="scroll_copy_button" data-toggle="tooltip"
+			data-placement="bottom" title="" data-original-title="">
+			copy</span>
+
+		<!-- 복사하기 버튼 -->
+		<!-- <button type="button" class="btn btn-info" id="scroll_copy_button"
+			value="copy">copy
+			<span class="scroll_copy_span" id="scroll_copy_span"></span>
+		</button>
+		<div class="scroll_copied_popup">
+			<p>copied</p>
+		</div> -->
+		<!-- 복사완료 팝업 -->
+
+		<!-- 도움말 버튼 -->
+		<!-- 180731 기능 분할로 도움말이 이 기능에 붙어있기 애매함. -->
+		<!-- <i class="plt-pn-i far fa-question-circle scroll_question_button"></i>
+		180711 boot modal로 변경
+		<div class="modal scroll_question_popup" tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">[도움말]</h5>
+						<div class="scroll_question_popup_close">
+							<i class="far fa-window-close"></i>
+						</div>
+					</div>
+					<div class="modal-body">
+						<p>
+							1. copy버튼을 눌러서 위치가 담긴<br>페이지의 url을 저장할 수 있습니다.<br> 2.
+							'r' 키를 누르면 현재 페이지 위치를 저장할 수 있습니다.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div> -->
+		<!-- end modal -->
+	</div>
+</div>

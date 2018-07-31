@@ -1,0 +1,161 @@
+<style>
+/* container */
+.recent_main_div {
+	width: 100%;
+	height: 90%;
+	padding: 0;
+	margin: 0;
+	max-width: none;
+}
+
+/* title css */
+.recent_row_title {
+	width: 100%;
+	height: 10%; 
+	margin-left: 0;
+}
+.recent_row_title .title {
+	font-size: xx-large;
+	margin: 0 auto;
+}
+/* card css */
+.recent_row_card {
+ 	height: 80%; 
+	margin-left: 0;
+}
+
+.recent_row_card .carousel,
+.recent_row_card .carousel .carousel-inner,
+.recent_row_card .carousel .carousel-inner .carousel-item,
+.recent_row_card .card {
+	height: 100%;	
+}
+.recent_row_card .carousel {
+	
+}
+.recent_row_card .carousel .carousel-inner {
+	width: 70%;
+	margin: 0 auto;
+}
+.recent_row_card .card .card-img-top .card-img {
+	width: auto;
+ 	height: 200px;
+}
+.recent_row_card .card .card-body {
+	overflow: auto;
+	overflow-x: hidden;
+	color: black;
+}
+
+/* card-body 내부 내용 css */
+.recent_row_card .card .card-body .card-title, 
+.recent_row_card .card .card-body .card-options, 
+.recent_row_card .card .card-body .card-text {
+	font-size: 0.5em;
+	font-weight: bold;
+}
+
+/* left/right button css */
+ .carousel-control-prev,
+ .carousel-control-next {
+	background-image: unset;
+ }
+ .carousel-control-prev-icon i,
+ .carousel-control-next-icon i {
+ 	font-size: 2em;
+ }
+
+</style>
+<script type="text/javascript" src="/mammoth/function/recent/js/recent_m.js"></script>
+<div class="recent_main_div container">
+
+	<!-- title -->
+	<div class="row recent_row_title">
+		<a class="title plt-pn-a "
+			href="/product/recent_view_product.html">최근 본 상품
+			<span class="recent_count badge badge-light"></span>
+		</a>
+	</div>
+	<!-- title END -->
+	
+	<!-- card -->
+	<div class="row justify-content-center recent_row_card">
+
+		
+		
+		<!-- card contents -->
+		<div class="carousel slide" id="myCarousel" data-ride="carousel">
+					
+			<!-- button END -->
+			<div class="carousel-inner">
+				<script id="recent-mustache-template" type="text/template">
+					{{^datas}}
+						<div class="row">
+						최근 본 상품이 없습니다.
+						</div>
+					{{/datas}}
+					{{#datas}}
+						{{#first}}
+						<div class="carousel-item active">
+						{{/first}}
+						{{^first}}
+						<div class="carousel-item">
+						{{/first}}
+							<div class="card">
+								<div class="card-img-top text-center ">
+									<img class="card-img img-fluid rounded" src="{{imgSrc}}" data-iProductNo="{{iProductNo}}" alt="Card image">
+								</div>
+		
+								<div class="card-body">
+									<!-- 상품에 대한 조회 수 정보 -->
+									<!-- Front API 필요 -->
+									<p>
+										<i class="fas fa-eye" style="font-size: 12px;">1777회</i>
+									</p>
+									<p>
+										<span class="card-title">PRODUCT NAME</span><br> 
+										<span class="recent_product_name">{{sProductName}}</span>
+									</p>
+			
+									<p>
+										<!-- front api 필요 -->
+										<span class="card-options">OPTIONS</span><br>
+										<span class="recent_options"> : S, M, L, XL </span>
+									</p>
+			
+									<p>
+										<!-- front api 필요 -->
+										<span class="card-text">DETAIL INFO</span><br> <span
+											class="card-content recent_detail_info"> 이 상품은 엄~청 잘 나가는
+											상품 입니다. 지금 안사면 후회 하실 겁니다. 색상은 ~~~가 있고, 소재는 ~~~입니다. 이 상품은 엄~청 잘
+											나가는 상품 입니다. 지금 안사면 후회 하실 겁니다. 색상은 ~~~가 있고, 소재는 ~~~입니다.이 상품은 엄~청
+											잘 나가는 상품 입니다. 지금 안사면 후회 하실 겁니다. 색상은 ~~~가 있고, 소재는 ~~~입니다.이 상품은
+											엄~청 잘 나가는 상품 입니다. 지금 안사면 후회 하실 겁니다. 색상은 ~~~가 있고, 소 </span>
+									</p>	
+									<a href="#"
+										class="recent-link-btn btn plt-pn-btn-default btn-sm btn-block">상품
+										페이지 이동</a>
+								</div>
+		
+							</div><!--card-->
+						</div>
+					{{/datas}}
+				</script>
+			</div>
+			<!-- left button -->
+			<a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
+				<span class="carousel-control-prev-icon">
+					<i class="fas fa-angle-left plt-pn-i"></i>
+				</span>
+			</a>
+			<!-- right button -->
+			<a class="carousel-control-next" href="#myCarousel" data-slide="next">
+				 <span class="carousel-control-next-icon">
+				 <i class="fas fa-angle-right plt-pn-i"></i></span>
+			</a>
+			<!-- button END -->
+		</div>
+		<!-- contents END -->
+	</div>
+	<!-- card END -->
+</div>
