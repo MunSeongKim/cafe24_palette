@@ -117,7 +117,8 @@
 		preview : function(options){
 			var array = $.recent.getArray();
 			
-			$(".carousel-inner").mouseenter(function(evnet){
+			$(".carousel-inner").click(function(evnet){
+			/*$(".carousel-inner").mouseenter(function(evnet){*/
 				var iProductNo = event.target.getAttribute("data-iProductNo");
 				var currentData = $.recent.getOneArray(array, iProductNo);
 				 
@@ -135,23 +136,27 @@
 					"border-radius" : options.preview.layoutBorderRadius+"px"
 				})
 				
-				//console.log(preViewOptions); 값이 넘어감.
+				
 				$.recent.previewRender(options);
 			});
 			
-			$('.carousel-inner').mouseleave(function(event) {
-				$('.recent_preview_layout').css("display", "none"); 
-			})
-			
-			$('.recent_preview_layout').mouseleave(function(event){
-				$('.recent_preview_layout').css("display", "none");
+			/* popup X button event */
+			$('#recent_preview_layout_close > span').click(function() {
+				$('.recent_preview_layout').hide();
 			});
+			/*$('.carousel-inner').mouseleave(function(event) {
+				$('.recent_preview_layout').css("display", "none"); 
+			})*/
+			
+			/*$('.recent_preview_layout').mouseleave(function(event){
+				$('.recent_preview_layout').css("display", "none");
+			});*/
 		},
 		
 		// 미리보기 화면 출력 및 위치 결정
 		previewRender : function(options){
 			var pre = $(".recent_preview_layout");
-			x = event.pageX;  // 마우스 포인터의 x위치
+			/*x = event.pageX;  // 마우스 포인터의 x위치
 			y = event.pageY;  // 마우스 포인터의 y위치
 			var sWidth = window.innerWidth;
 			var sHeight = window.innerHeight;
@@ -169,17 +174,13 @@
 			// 레이어 위치를 바꾸었더니 상단기준점(0,0) 밖으로 벗어난다면 상단기준점(0,0)에 배치하자.
 			if( divLeft < 0 ) divLeft = 0;
 			if( divTop < 0 ) divTop = 0;
-			
+			*/
 			// preview의 속성을 변경한다.
 			pre.css({
-				"width" : options.preview.layoutWidth+"px",
-				"border-radius" : options.preview.layoutBorderRadius+"px",
 				"position" : "fixed",
-				"display" : "",
-				"left" : divLeft,
-				"top" : divTop,
-				"z-index" : "1000"
-			})
+				"right" : $('#panel').width(),
+				"top" : '20%'
+			}).show();
 		}
 	};
 	
