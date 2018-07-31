@@ -11,7 +11,6 @@
 <meta id="_csrf_header" name="_csrf_header"
 	content="${_csrf.headerName}" />
 
-<title>File uploader for Palette</title>
 <link rel="stylesheet" href="admin/upload/upload.css">
 <script src="admin/upload/upload.js"></script>
 

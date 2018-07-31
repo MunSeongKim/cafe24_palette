@@ -25,14 +25,14 @@
 						<div>
 							<div id="paenl-div-${func.nameEng }" class="func-${func.nameEng }">
 								<!-- /cafe24/tmp/funhction/recent.... -->
-								<c:import url="${func.desktopPath }" />
+								<c:import url="${func.desktopPath }" charEncoding="UTF-8"/>
 							</div>
 						</div>
 					</c:when>
 					
 					<c:otherwise> 
 						<div id="panel-div-${func.nameEng }" class="func-${func.nameEng }" data-panelfuncname="${func.nameEng }">
-							<c:import url="${func.desktopPath }" />
+							<c:import url="${func.desktopPath }" charEncoding="UTF-8"/> 
 						</div>
 					</c:otherwise> 
 				</c:choose>

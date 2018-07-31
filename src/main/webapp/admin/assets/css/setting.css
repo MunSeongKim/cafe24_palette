@@ -349,3 +349,21 @@ li{
 .preview_func_div{
 	display: none;
 }
+
+#gomain:hover {
+	color: white !important;
+	text-decoration: none;
+}
+
+#gomain:hover i.fa-undo-alt {
+	-webkit-animation: rotation 1.5s infinite linear;
+}
+
+@-webkit-keyframes rotation {
+	from {
+			-webkit-transform: rotate(359deg);
+	}
+	to {
+			-webkit-transform: rotate(0deg);
+	}
+}

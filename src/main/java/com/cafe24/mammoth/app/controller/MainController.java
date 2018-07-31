@@ -26,10 +26,10 @@ public class MainController {
 		
 		List<Panel> list = panelService.getPanelList();
 		 
-		/*System.out.println(list.get(0).getTheme());
-		System.out.println(list.get(0).getSelectFuncs());*/
+		System.out.println(list.get(0).getTheme());
+		System.out.println(list.get(0).getSelectFuncs());
 		
-		model.addAttribute("list", list);
+		model.addAttribute("list", list); 
 		return "main";
 	}
 }

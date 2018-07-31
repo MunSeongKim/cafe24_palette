@@ -14,7 +14,9 @@
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/font-awesome/5.1.0/css/all.css"/>
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/admin/assets/css/setting.css">
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/template/panel.css">
-<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/template/theme1.css">
+
+<!-- preview_panel 기본 theme 적용 -->
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/admin/assets/css/theme1.css">
 
 <script src="${pageContext.servletContext.contextPath }/static/jquery/1.11.1/jquery.min.js"></script>
 <script src="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.js"></script>
@@ -23,8 +25,7 @@
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script> <!-- 토글 버튼 라이브러리 -->
 <script	src="${pageContext.servletContext.contextPath }/static/mustachejs/2.2.1/mustache.min.js"></script> 
 <script type="text/javascript" src="${pageContext.servletContext.contextPath }/admin/assets/js/preview_panel.js"></script>
-<script src="${pageConetxt.servletContext.contextPath }/static/bootstrap-toggle/2.2.2/js/bootstrap-toggle.js" type="text/javascript"></script>
-
+<script src="${pageConetxt.servletContext.contextPath }/static/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <title>새 패널 만들기</title>
 </head>
 <body>
@@ -33,14 +34,14 @@
 	 
 	<div class="palette-title row fouc fouc-flex"> 
 		<div class="col-sm-9">
-			<h4><i class="fas fa-plus-square"></i>새 패널 만들기</h4>
+			<h4><i class="fas fa-plus-square"></i> 새 패널 만들기</h4>
 		</div>
 		
 		<div class="col-sm-3" style="text-align: right;">
-			<button class="btn btn-danger btn-delete btn-sm" id="gomain"><i class="fas fa-trash-alt" style="margin-bottom: 0;"></i>Main화면</button>
-		</div>
+			<button class="btn btn-link btn-delete btn-sm text-white-50" id="gomain"><i class="fas fa-undo-alt" style="margin-bottom: 0;"></i> 돌아가기</button>
+		</div> 
 	</div>
-
+ 
 	<!-- tab START -->
 	<div id="panel-tabs" class="row fouc">
 		<ul class="nav nav-tabs" id="myTab">
