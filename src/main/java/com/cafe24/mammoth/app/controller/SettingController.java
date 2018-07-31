@@ -42,13 +42,11 @@ import com.cafe24.mammoth.app.support.SettingTab;
 public class SettingController {
 	@Autowired
 	private FunctionService funcService;
-	
 	@Autowired
 	private ThemeService themeService;
-	
 	@Autowired
 	private PanelService panelService;
-
+	
 	@GetMapping(value = "/create")
 	public String create(Model model) {
 		List<Function> funcs = funcService.getFuncList();
@@ -65,14 +63,15 @@ public class SettingController {
 	}
 	
 	@PostMapping(value = "/create")
-	public String createPersist( 
+	public String createPersist(
+			@RequestParam("panelname") String panelName,
 			@RequestParam("funcid") List<Long> funcId,
 			@RequestParam("funcorder") List<Long> funcOrder,
 			@RequestParam("themeid") Long themeId,
 			@RequestParam("position") String position) {
 		System.out.println("createPersist is called!!");
 		
-		panelService.createPanel(funcId, funcOrder, themeId, position);
+		panelService.createPanel(panelName, funcId, funcOrder, themeId, position);
 		
 		return "redirect:/"; 
 	}

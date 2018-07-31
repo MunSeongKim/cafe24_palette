@@ -1,6 +1,5 @@
 package com.cafe24.mammoth.app.service;
 
-import java.util.Calendar;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -54,13 +53,14 @@ public class PanelService {
 	}
 	
 	public boolean createPanel(
+			String panelName,
 			List<Long> funcId,
 			List<Long> funcOrder,
 			Long themeId,
 			String position
 			) {
 		Panel panel = new Panel();
-		panel.setName("Test Panel["+Calendar.getInstance().getTimeInMillis()+"]");
+		panel.setName(panelName);
 		panel.setPosition(Position.valueOf(position));
 		panel.setTheme(themeRepository.getOne(themeId));
 		panel = panelRepository.save(panel);
@@ -91,6 +91,10 @@ public class PanelService {
 	
 	public Panel getApplyPanel(String mallId) {
 		return panelRepository.findByMemberIdAndScriptIsIsApplyTrue(mallId);
+	}
+	
+	public boolean canUsePanelName(String name) {
+		return panelRepository.confirmPanelName(name) == 0 ? true : false;
 	}
 	
 }

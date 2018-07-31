@@ -70,9 +70,9 @@ i{
 	background-color: #563d7c;
     color: #fff;
     border-radius: 6px;
-    padding: 3px;
+    padding: 10px;
     font-weight: 700;
-    margin-bottom: 7px;
+    margin-bottom: 7px !important;
 }
 
 .custom-hr{
@@ -346,7 +346,7 @@ $(function() {
 							<!-- name -->
 							<p>기능 명 : ${func.name }</p>
 							<!-- description -->
-							<span>${func.desciption }</span>
+							<span>${func.description }</span>
 							<div class="customer-pickrate" style="margin-top: 20px;">
 								<p style="margin: 0;">기능 선택 비율</p>
 								<div class="progress">
@@ -363,7 +363,7 @@ $(function() {
 							<!-- name -->
 							<p>기능 명 : ${func.name }</p>
 							<!-- description --> 
-							<span>${func.desciption }</span>
+							<span>${func.description }</span>
 							<div class="customer-pickrate" style="margin-top: 20px;">
 								<p style="margin: 0;">기능 선택 비율</p>
 								<div class="progress">

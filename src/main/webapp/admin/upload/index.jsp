@@ -11,23 +11,9 @@
 <meta id="_csrf_header" name="_csrf_header"
 	content="${_csrf.headerName}" />
 
-<title>File uploader for Palette</title>
-
-<link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath}/static/bootstrap/4.1.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/static/font-awesome/5.1.0/css/all.css" >
 <link rel="stylesheet" href="admin/upload/upload.css">
-
-<script
-	src="${pageContext.servletContext.contextPath}/static/jquery/1.11.1/jquery.min.js"></script>
-<script
-	src="${pageContext.servletContext.contextPath}/static/popper.js/1.14.3/dist/umd/popper.min.js"></script>
-<script
-	src="${pageContext.servletContext.contextPath}/static/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script
-	src="${pageContext.servletContext.contextPath}/static/mustachejs/2.2.1/mustache.min.js"></script>
 <script src="admin/upload/upload.js"></script>
-	
+
 </head>
 
 <body>
@@ -35,9 +21,9 @@
 		<!-- Header -->
 		<div class="row justify-content-center" id="header">
 			<div class="col">
-				<h1>
+				<h4>
 					<i class="fas fa-file-upload"></i> File Upload
-				</h1>
+				</h4>
 			</div>
 		</div>
 		<!-- body -->
@@ -102,7 +88,7 @@
 										<label for="func-desktop" class="col-sm-2 col-form-label text-right">Desktop</label>
 										<div class="col-sm-10">
 											<div class="custom-file">
-											  <input type="file" class="form-control custom-file-input" name="func-desktop-html" id="func-desktop-html" accept=".html, jsp">
+											  <input type="file" class="form-control custom-file-input" name="func-desktop-html" id="func-desktop-html" accept=".html, .jsp">
 											  <label class="custom-file-label" id="func-desktop-label" for="func-desktop-html">데스크탑 버전의 HTML 파일을 선택하세요.</label>
 										  </div>
 										</div>

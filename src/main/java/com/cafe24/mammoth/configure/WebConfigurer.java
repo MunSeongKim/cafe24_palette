@@ -87,8 +87,8 @@ public class WebConfigurer extends WebMvcConfigurationSupport {
 		// 각 기능용 리소스 API
 		registry.addResourceHandler("/**/*.js").addResourceLocations("/").resourceChain(true);
 		registry.addResourceHandler("/**/*.css").addResourceLocations("/").resourceChain(true);
-		registry.addResourceHandler("/**/*.jpg").addResourceLocations("/").resourceChain(true);
-		registry.addResourceHandler("/**/*.png").addResourceLocations("/").resourceChain(true);
+		// registry.addResourceHandler("/**/*.jpg").addResourceLocations("/").resourceChain(true);
+		// registry.addResourceHandler("/**/*.png").addResourceLocations("/").resourceChain(true);
 		registry.addResourceHandler("/**/*.html").addResourceLocations("/").resourceChain(true);
 	}
 	

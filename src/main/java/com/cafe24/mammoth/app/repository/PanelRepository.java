@@ -19,4 +19,7 @@ public interface PanelRepository extends JpaRepository<Panel, Long> {
 	
 	@Query("SELECT p FROM Panel p JOIN p.member m WHERE m.mallId = :mallId")
 	public List<Panel> findAllByMemberId(@Param("mallId") String mallId);
+
+	@Query("select count(p) from Panel p where p.name= :name")
+	public int confirmPanelName(@Param("name") String name);
 }

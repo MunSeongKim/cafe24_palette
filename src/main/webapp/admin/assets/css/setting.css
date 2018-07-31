@@ -143,7 +143,6 @@ li{
 .palette-title{
 	width : 85%;
 	padding : 15px;
-	padding-bottom : 0; 
 	background-color: #563d7c;  
 /* 	border-top-left-radius : 10px;
 	border-top-right-radius : 10px; */
@@ -208,6 +207,10 @@ li{
 .disable{
 	cursor: not-allowed;
 }
+
+/* .nav-tabs {
+	border: 0px;
+} */
 
 .nav-tabs>li>a{
 	pointer-events: none;
@@ -338,7 +341,19 @@ li{
 }
 
 .palette-modal-btn{
-	padding: 0; 
+	padding: 5px; 
+}
+
+i {
+	margin-bottom: 0 !important;
+}
+
+#pager-previous {
+	margin-right: 10px;
+}
+
+#pager-previous, #pager-next, #pager-save {
+	padding: 5px 8px;
 }
 
 /*===================== preview_panel ==============================*/
@@ -348,4 +363,22 @@ li{
 
 .preview_func_div{
 	display: none;
+}
+
+#gomain:hover {
+	color: white !important;
+	text-decoration: none;
+}
+
+#gomain:hover i.fa-undo-alt {
+	-webkit-animation: rotation 1.5s infinite linear;
+}
+
+@-webkit-keyframes rotation {
+	from {
+			-webkit-transform: rotate(359deg);
+	}
+	to {
+			-webkit-transform: rotate(0deg);
+	}
 }

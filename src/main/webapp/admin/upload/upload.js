@@ -21,6 +21,7 @@ var uploader = (function(){
 	    elements.select = $('#func-btn-select');
 	    elements.list = $('#func-div-list');
 	    elements.upload = $('#func-btn-upload');
+	    
 	};
 	
 	
@@ -435,8 +436,8 @@ $(function() {
 		}
 	});
 	
-	$('.btn-check').click(function() {
-		if( !$(this).hasClass('active') ){
+	$('.btn-check').on("click", function() {
+		if( !$(this).hasClass('active') ){ 
 			$('span.label-text').text("Yes");
 		} else {
 			$('span.label-text').text("No");

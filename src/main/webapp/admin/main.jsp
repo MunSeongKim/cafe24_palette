@@ -9,34 +9,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="_csrf" content="${_csrf.token}" />
 <!-- default header name is X-CSRF-TOKEN -->
-<meta name="_csrf_header" content="${_csrf.headerName}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" /> 
 
-<link rel="stylesheet" 
-	href="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.theme.min.css">
-<link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/css/bootstrap.min.css">
-	
-<%-- <link rel="stylesheet" 
-	href="${pageContext.servletContext.contextPath }/static/bootstrap-toggle/2.2.2/css/bootstrap-toogle.min.css"/> --%>
-
-<link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath }/static/font-awesome/5.1.0/css/all.css"/> 
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.theme.min.css">
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/font-awesome/5.1.0/css/all.css"/> 
 
 <!-- jQuery library -->
 <script src="${pageContext.servletContext.contextPath }/static/jquery/1.11.1/jquery.min.js"></script>
 <script src="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.min.js"></script>
-<script
-	src="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script
-	src="${pageContext.servletContext.contextPath }/static/mustachejs/2.2.1/mustache.min.js"></script>
-<script
-	src="${pageContext.servletContext.contextPath }/static/popper.js/1.14.3/dist/umd/popper.min.js"></script>
-	 
-<%-- <script
-	src="${pageContext.servletContext.contextPath }/static/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script> --%>
-
+<script src="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="${pageContext.servletContext.contextPath }/static/mustachejs/2.2.1/mustache.min.js"></script>
+<script src="${pageContext.servletContext.contextPath }/static/popper.js/1.14.3/dist/umd/popper.min.js"></script>
 <script src="${pageContext.servletContext.contextPath }/admin/assets/js/cookie.js"></script>
-
 <script type="text/javascript" src="${pageContext.servletContext.contextPath }/admin/assets/js/preview_panel.js"></script>
 
 <!-- Google Chart -->
@@ -62,7 +47,8 @@
 				hAxis: {title: 'Month'}, 
 				seriesType: 'bars',
 				series: {5: {type: 'line'}},
-				'width' : '100%' 
+				width : '100%',
+				height : '100%'
 			};
 		
 		var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
@@ -89,8 +75,6 @@
         var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
         chart.draw(data, options);
       }
-	
-	
 </script>
 
 <style>
@@ -126,17 +110,12 @@ table, table thead th {
 
 #panellist{
 	width: 100%;
-	/* box-shadow: 0 0 35px 0 rgba(154,161,171,.15); */
 }
 
 .nav-li-inverse{
 	background-color: white;
 	color: #563d7c; !important;
 }
-
-/* .active{
-	pointer-events : none;
-} */ 
 
 #palette-tab{
 	width: 100%;
@@ -219,7 +198,7 @@ table, table thead th {
 <script type="text/javascript">
 function renderDetail(idx, data) {
 	console.log(idx);
-	var template = $('#mustache-template').html();
+	var template = $('#mustache-panellist-template').html();
 	Mustache.parse(template);
 	var rendered = Mustache.render(template, data[idx]);
 	$('#mustache-result').html('').append(rendered);	
@@ -227,27 +206,38 @@ function renderDetail(idx, data) {
 
 $(document).ready(function(){
 	var data = new Array();
+	
 	<c:forEach items="${list}" var="panel">
-		  
 		var obj = {};
+		var funcs = [];
 		obj['panelId'] = "${panel.panelId}";
-		obj['panelName'] = "${panel.name}";
-		obj['panelCreatedDate'] = "${panel.createdDate}";
+		obj['panelName'] = "${panel.name}"; 
+		obj['panelCreatedDate'] = '<fmt:formatDate value="${panel.createdDate }" pattern="yyyy-MM-dd"/>';
 		obj['panelPosition'] = "${panel.position}";
 		obj['panelType'] = "${panel.panelType}";
 		obj['themeTitle'] = "${panel.theme.title}";
-		obj['themeTitleImgPath'] = "${panel.theme.titleImgPath}";
+		obj['themeTitleImgPath'] = "${pageContext.servletContext.contextPath}${panel.theme.titleImgPath}";
 		obj['scriptDpLocation'] = "${panel.script.dpLocation}";
-		obj['selectFunc'] = "${panel.selectFunc}";
-		console.log(obj);
+		
+		<c:forEach items="${panel.selectFuncs}" var="func">
+			var func = {};
+			func['id'] = "${func.id}";
+			func['funcOrder'] = "${func.funcOrder +1}";
+			func['funcEngName'] = "${func.func.nameEng }";
+			func['funcKorName'] = "${func.func.name}";
+			funcs.push(func);
+		</c:forEach>
+		
+		obj["funcs"] = funcs;
 		data.push(obj);
+		console.log(data);
 	</c:forEach>
 	
 	console.log(data);
 	
 	$(".nav-tabs a").click(function(event){
 		event.stopPropagation;
-		$(":not(this)").children("span").text("");
+		$(":not(this)").children("span.current-nav").text("");
 		$(this).children("span").append('<i class="fas fa-check mr-1"></i>');
 		
 		$(":not(this)").removeClass("none-event");
@@ -271,8 +261,8 @@ $(document).ready(function(){
 		renderDetail(($(this).prev().text()-1), data);
 	});
 });
-</script>
-
+</script> 
+<title>Palette</title>
 </head>
 
 <body>
@@ -280,8 +270,8 @@ $(document).ready(function(){
     <nav class="navbar navbar-expand-lg navbar-dark static-top">
     	<div class="container">
         	<a class="navbar-brand" href="#" style="font-size: 1.5em;"><i class="custom-i fas fa-palette"></i> Palette</a>
-        	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          		<span class="navbar-toggler-icon"></span>
+        	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#controls" aria-controls="controls" aria-expanded="false" aria-label="Toggle navigation">
+          		<span class="navbar-toggler-icon"></span> 
         	</button>
         	
 	        <div class="collapse navbar-collapse" id="controls">
@@ -290,7 +280,7 @@ $(document).ready(function(){
 	             		<a class="none-event" href="#">
 	             			<span class="current-nav">
 	             			<i class="fas fa-check mr-1"></i>
-	             			</span>Panel List 
+	             			</span>Panel List
 	             			<span class="sr-only">(current)</span>
 	             		</a>
 	            	</li>
@@ -335,7 +325,7 @@ $(document).ready(function(){
 									<h4 class="sub-tab-title"><i class="fas fa-list"></i> Panel List</h4>
 								</div>
 								 
-								<div class="col-sm-6" style="text-align: right;">
+								<div class="col-sm-6" style="text-align: right;"> 
 									<a href="${pageContext.servletContext.contextPath }/setting/create" class="btn btn-primary btn-sm pull-right float-right"><i class="fas fa-plus-square"></i> 만들기</a>
 								</div>
 							</div>
@@ -356,7 +346,7 @@ $(document).ready(function(){
 											<tr>
 												<td>${stat.count }</td>
 												<td id="panel-name-td${panel.panelId }" class="panel-name-td">${panel.name }</td>
-												<td>${panel.createdDate }</td>
+												<td><fmt:formatDate value="${panel.createdDate }" pattern="yyyy-MM-dd"/></td>
 												
 												<td id="state-td${panel.panelId }">
 													<c:choose>
@@ -380,7 +370,7 @@ $(document).ready(function(){
 														</c:otherwise>
 													</c:choose>
 													
-													<a href="${pageContext.servletContext.contextPath }/update/${panel.panelId }" class="btn btn-success btn-sm"><i class="fas fa-wrench"></i> 수정</a> 
+													<a href="${pageContext.servletContext.contextPath }/update/${panel.panelId }" class="btn btn-success disabled btn-sm" style="text-decoration: line-through"><i class="fas fa-wrench" style="text-decoration: line-through"></i> 수정</a> 
 													<button class="btn btn-danger btn-delete btn-sm" data-panelid="${panel.panelId }" data-count="${stat.count }"><i class="fas fa-trash-alt"></i>삭제</button>
 												</td>
 											</tr>
@@ -420,8 +410,10 @@ $(document).ready(function(){
 									<h4 class="sub-tab-title"><i class="fas fa-info-circle"></i> Panel Detail Info</h4>
 								</div>
 							</div>
-							<div id="mustache-result"></div>
-							<script id="mustache-template" type="text/template">
+							<div id="mustache-result">
+								<h5>Please Click Panel List</h5>
+							</div>
+							<script id="mustache-panellist-template" type="text/template">
 							<!-- 보여줄 정보 
 								패널명
 								패널 position 정보
@@ -431,25 +423,25 @@ $(document).ready(function(){
 								적용된 테마 이름
 							 -->
 							<div class="row">
-								<div class="col-sm-4">
+								<div class="col-sm-6">
 									<p class="text-monospace">패널명:</p>
 									<p>{{panelName}}</p> 
 								</div>
-								<div class="col-sm-4">
-									<p class="text-monospace">position:</p>
+								<div class="col-sm-3">
+									<p class="text-monospace">패널 위치:</p>
 									<p>{{panelPosition}}</p>
 								</div>
-								<div class="col-sm-4">
+								<div class="col-sm-3">
 									<p class="text-monospace">생성일:</p>
-									<p>{{panelCreatedDate}}</p>
+									<p>{{panelCreatedDate}}</p> 
 								</div>
 							</div>
 							
 							<div class="row mt-4">
 								<div class="col-sm-8">
-									<p class="text-monospace">적용 위치:</p>
-									<p>{{scriptDpLocation}}</p>
-								</div> 
+									<p class="text-monospace">적용 화면:</p>
+									<p>{{^scriptDpLocation}}없음{{/scriptDpLocation}}{{#scriptDpLocation}}{{scriptDpLocation}}{{/scriptDpLocation}}</p>
+								</div>
 								
 								<div class="col-sm-4">
 									<p class="text-monospace">적용테마명:</p>
@@ -458,34 +450,29 @@ $(document).ready(function(){
 							</div>
 							
 							<div class="row mt-4 d-flex">
-								<div class="col-sm-8 selected-func-table-div">
+								<div class="col-sm-8">
 									<p class="text-monospace">선택된 기능 정보</p>
 									<table class="table table-sm table-dark">
 										<thead>
 											<tr>
 												<th scope="col">기능 순서</th>
-												<th scope="col">기능명</th>
-												<th scope="col">추가 사항</th>
+												<th scope="col">기능명(Kor)</th>
+												<th scope="col">기능명(Eng)</th>
 											</tr>
 										</thead>
 										<tbody>
+											{{#funcs}}
 											<tr>
-												<th scope="row">1</th>
-												<td>Mark</td>
-												<td>Otto</td>
+												<th scope="row">{{funcOrder}}</th>
+												<td>{{funcKorName}}</td>
+												<td>{{funcEngName}}</td>
 											</tr>
-											<tr>
-												<th scope="row">2</th>
-												<td>Jacob</td>
-												<td>Thornton</td>
-											</tr>
-											<tr>
-												<th scope="row">3</th> 
-												<td>Jacob</td>
-												<td>Thornton</td>
-											</tr>
+											{{/funcs}}
 										</tbody>
 									</table>
+								</div>
+								<div class="col-sm-4 text-center">
+									<img src="{{themeTitleImgPath}}" class="img-thumbnail">
 								</div>
 							</div>
 							</script>
@@ -496,7 +483,7 @@ $(document).ready(function(){
 				<!-- Statistics Tab Start --> 
 				<div class="col-sm-12 col-md-12 carousel-item" id="stat">
 					<div class="row" style="height: 100%;">
-						<div class="col-sm-6 card mt-5 rounded">
+						<div class="col-sm-6 card mt-5 rounded" style="height: 500px; ">
 							<div id="chart_div"> 
 							</div> 
 						</div>
@@ -520,12 +507,8 @@ $(document).ready(function(){
 				<!-- about Tab Start -->
 				<div class="col-sm-12 col-md-12 carousel-item" id="about">
 					<div class="row">
-						<div class="col-sm-6 card mt-5 rounded">
-							<h1>about1</h1>
-						</div>
-						
-						<div class="col-sm-6 card mt-5 rounded">
-							<h1>about2</h1>
+						<div class="col-sm-12 card mt-5 rounded">
+							<h1>About Palette</h1>
 						</div>
 					</div>
 				</div>
@@ -534,7 +517,8 @@ $(document).ready(function(){
 				<div class="col-sm-12 col-md-12 carousel-item" id="fileupload"> 
 					<div class="row">
 						<div class="col-sm-12 card mt-5 rounded">
-							<h1>fileupload1</h1> 
+							<!-- 파일 업로드 레이아웃 소스. -->
+							<jsp:include page="/admin/upload/index.jsp" />
 						</div>
 					</div>
 				</div>
@@ -555,7 +539,7 @@ $(document).ready(function(){
 					<p></p>
 				</div>
 				<div class="palette-modal-footer modal-footer">
-					<button type="button" class="palette-modal-btn panel-delete-btn btn btn-sm btn-secondary bg-danger d-none" data-dismiss="modal">삭제</button>
+					<button type="button" class="palette-modal-btn panel-delete-btn btn btn-sm btn-secondary bg-danger d-none" data-dismiss="modal"> 삭제</button>
 					<button type="button" class="palette-modal-btn btn btn-sm btn-secondary bg-info" data-dismiss="modal">Close</button>
 				</div>
 			</div>
@@ -581,7 +565,6 @@ $(document).ready(function(){
 		}
 		
 		if(autoChangeState != null) {
-			console.log('sdfdsfdsfsdf')
 			var autoStatePanelId = autoChangeState.panelId;
 			var autoStateIsApply = autoChangeState.isApply;
 			

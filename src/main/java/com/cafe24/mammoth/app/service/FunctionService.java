@@ -16,13 +16,15 @@ import com.cafe24.mammoth.app.support.FileUploader;
 @Service
 @Transactional
 public class FunctionService {
-	public final String UPLOAD_DIR_FUNC_PATH = "/cafe24/tmp/function/";
+	
+	public final String UPLOAD_DIR_FUNC_PATH = "/cafe24/tmp/function";
+	/*public final String UPLOAD_DIR_FUNC_PATH = "C:/Users/bit/git/mammoth/src/main/resources/static/";*/
 	
 	@Autowired
 	private FileUploader fileUploader;
 	
-	@Autowired 
-	private FunctionRepository functionRepository;
+	@Autowired
+	private FunctionRepository functionRepository; 
 	
 	public boolean save(Function function) {
 		return functionRepository.save(function) != null ? true : false;
@@ -36,11 +38,10 @@ public class FunctionService {
 		String path = fileUploader.makeDirectory(UPLOAD_DIR_FUNC_PATH, function.getNameEng());
 		String desktopPath = fileUploader.restoreFile(path, desktopFile);
 		String mobilePath = fileUploader.restoreFile(path, mobileFile);
-		
-		
-		
+
 		function.setDesktopPath(desktopPath.replace("/cafe24/tmp", ""));
 		function.setMobilePath(mobilePath.replace("/cafe24/tmp", ""));
+
 		function.setCreatedDate(new Date());
 		return functionRepository.save(function) != null ? true : false;
 	}

@@ -28,8 +28,7 @@ public class MainController {
 	public String main(@ModelAttribute("mallId") String mallId, Model model) {
 		
 		List<Panel> list = panelService.getPanelList(mallId);
-		
-		model.addAttribute("list", list);
+		model.addAttribute("list", list); 
 		return "main";
 	}
 }
