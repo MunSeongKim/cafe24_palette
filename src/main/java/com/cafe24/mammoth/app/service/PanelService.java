@@ -23,7 +23,7 @@ import com.cafe24.mammoth.app.repository.ThemeRepository;
 public class PanelService {
 	
 	@Autowired
-	PanelRepository repo;
+	PanelRepository panelRepository;
 	
 	@Autowired
 	SelectFuncRepository selectFuncRepository;
@@ -37,20 +37,20 @@ public class PanelService {
 	@Autowired
 	ScriptRepository scriptRepository;
 	
-	public List<Panel> getPanelList() {
-		return repo.findAll();
+	public List<Panel> getPanelList(String mallId) {
+		return panelRepository.findAllByMemberId(mallId);
 	}
 	
 	public Panel getPanelById(Long id) {
-		return repo.findOne(id);
+		return panelRepository.findOne(id);
 	}
 	
 	public boolean savePanel(Panel panel) {
-		return repo.save(panel) != null ? true : false;
+		return panelRepository.save(panel) != null ? true : false;
 		
 	}
 	public void removePanel(Long id) {
-		repo.deleteById(id);
+		panelRepository.deleteById(id);
 	}
 	
 	public boolean createPanel(
@@ -63,14 +63,14 @@ public class PanelService {
 		panel.setName("Test Panel["+Calendar.getInstance().getTimeInMillis()+"]");
 		panel.setPosition(Position.valueOf(position));
 		panel.setTheme(themeRepository.getOne(themeId));
-		panel = repo.save(panel);
+		panel = panelRepository.save(panel);
 		
 		// select_func tbl row create
 		for(int i=0; i<funcId.size(); i++) {
 			SelectFunc selectFunc = new SelectFunc();
 			selectFunc.setPanel(panel);
 			selectFunc.setFuncOrder(funcOrder.get(i));
-			selectFunc.setFunc(funcRepository.getOne(funcId.get(i)));
+			selectFunc.setFunction(funcRepository.getOne(funcId.get(i)));
 			selectFuncRepository.save(selectFunc);
 		}
 		
@@ -82,6 +82,15 @@ public class PanelService {
 		scriptRepository.save(script); 
 		
 		return true;
+	}
+
+	public List<Panel> getPanelListByMemberId(String mallId) {
+		//return panelRepository.findAllByMemberId();
+		return null;
+	}
+	
+	public Panel getApplyPanel(String mallId) {
+		return panelRepository.findByMemberIdAndScriptIsIsApplyTrue(mallId);
 	}
 	
 }

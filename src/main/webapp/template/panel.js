@@ -87,18 +87,4 @@ $(document).ready(function() {
 						}, 200);
 			});
 	/* scroll end */
-
-	// order-list popup
-	$('#func4').load("/mammoth/function/orderlist/orderlist_popuplayer.html");
-	
-	// 180713 hwi scroll function add
-	$('#func1').load("/mammoth/function/scroll/scroll_revision.html");
-	
-	// 180713 hwi share function add
-	$('#func2').load("/mammoth/function/share/share.html");
-
-	// 180717 Add dongseok's function
-	$('#func3').load("/mammoth/function/recent/recent.html");
-
-  
 });

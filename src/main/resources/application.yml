@@ -4,6 +4,12 @@ spring:
     username: palette
     password: palette
     driver-class-name: com.mysql.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    cachePrepStmts: true
+    prepStmtCacheSize: 100
+    prepStmtCacheSqlLimit: 2048
+    useServerPrepStmts: true
+    maximumPoolSize: 10
     
   jpa:
     database: MYSQL
