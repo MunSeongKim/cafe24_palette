@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -109,7 +109,7 @@
 							<div class="col">
 								<form enctype="multipart/form-data" method="post">
 									<label for="fileUploader"
-										class="input-file-trigger">Select a file or Drag & Drop your file!</label>
+										class="input-file-trigger">Select a files ...</label>
 									<input type="file" name="fileUploader" id="func-btn-select" class="btn input-file" accept=".js, .css, .jpg, .png" multiple >
 									<!-- 나중에 accept 옵션으로 파일 확장자 막아주기. -->
 								</form>
@@ -161,7 +161,7 @@
 						<div class="row">
 							<div class="col">
 								<form enctype="multipart/form-data" method="post">
-									<label for="fileUploader" class="input-file-trigger">Select a file or Drag & Drop your file!</label>
+									<label for="fileUploader" class="input-file-trigger">Select a files ...</label>
 									<input type="file" name="fileUploader" id="theme-btn-select" class="btn input-file" accept=".css" >
 									<!-- 나중에 accept 옵션으로 파일 확장자 막아주기. -->
 								</form>
