@@ -92,10 +92,10 @@ $(document).ready(function() {
 	$('#func4').load("/mammoth/function/orderlist/orderlist_popuplayer.html");
 	
 	// 180713 hwi scroll function add
-	$('#func1').load("/mammoth/function/scroll/scroll_revision.html");
+	$('#func1').load("/mammoth/function/scroll/scroll.html");
 	
 	// 180713 hwi share function add
-	$('#func2').load("/mammoth/function/share/share.html");
+	$('#func2').load("/mammoth/function/copy/copy.html");
 
 	// 180717 Add dongseok's function
 	$('#func3').load("/mammoth/function/recent/recent.html");

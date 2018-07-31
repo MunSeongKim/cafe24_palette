@@ -2,23 +2,25 @@
 <script src="/mammoth/function/scroll/js/scroll_m_re.js"></script>
 
 <div class="container">
-	<div style="border: 1px solid black; margin: 15px 0 20px">
+	<div class="header-div">
 		<!-- 위치 정보 -->
 		<div class="row scroll-m-info" style="margin-top: 5px">
-			<div class="col-8 text-truncate">
+			<div class="col-8">
 				현재 사이트: <span id="scroll-info-site" style="color:black;"></span>
 			</div>
-			<div class="col-xs-4 text-truncate nopadding">
+		</div>
+		<div class="row">
+			<div class="col-8">
 				 스크롤 위치: <span id="scroll-info-span" style="color:black;"></span>
 			</div>
 		</div>
 		<!-- 검색어 -->
 		<div class="row">
 			 <div class="col-12">
-		      <label for="scroll-m-kwd">검색어</label>
+		      <label for="scroll-m-kwd"></label>
 		      <input type="text" class="form-control" id="scroll-m-kwd" placeholder="검색어를 입력해주세요" required>
 		      <div class="invalid-tooltip scroll-m-warning scale-out">
-		           	검색어를 입력해주세요!!
+		           	키워드를 입력해주세요!!
 		      </div>
 		    </div>
 		</div>
@@ -26,7 +28,7 @@
 		<div class="row">
 			<div class="col-12">
 				<button style="width: 100%; margin-top: 7px;" type="button" id="scroll-save-btn"
-					class="btn btn-secondary btn-lg">Block level button</button>
+					class="btn btn-secondary btn-lg">스크롤 저장 버튼</button>
 			</div>
 		</div>
 	</div>
@@ -38,4 +40,20 @@
 			</ul>
 		</div>
 	</div>
+	
+	<script id="mustache-scroll-m-template" type="text/template">
+		{{#same}}
+			<li class="list-group-item list-group-item-primary scroll-m-item">
+		{{/same}}
+		{{^same}}
+			<li class="list-group-item list-group-item-light scroll-m-item">
+		{{/same}}
+			<div class="item-remove-div">
+				<i class="fas fa-times item-remove-i {{key}}"></i>
+			</div>
+			<a class="{{key}}" onclick="href_parser('{{url}}')">
+				<span class="kwd-font">[키워드]</span> {{kwd}} <br>
+				<span class="kwd-font">[저장 URL]</span> {{realUrl}}</a>
+		</li>
+	</script>
 </div>
