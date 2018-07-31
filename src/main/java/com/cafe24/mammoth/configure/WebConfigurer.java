@@ -56,14 +56,12 @@ public class WebConfigurer extends WebMvcConfigurationSupport  {
 	}
 	
 	// Servlet Context 설정
-		@Override
-		public void setServletContext(ServletContext servletContext) {
-			super.setServletContext(servletContext);
-			servletContext.addListener(RequestContextListener.class);
-		}
+	@Override
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+		servletContext.addListener(RequestContextListener.class);
+	}
 	
-		
-		
 	// ResourceHandler 등록
 	// 정적 자원에 대한 처리 등록
 	@Override

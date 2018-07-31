@@ -9,10 +9,10 @@
 </div>
 <!-- scroll top, bottom end -->
 
-<div id="panel-draggable-btn" class="draggable">
+<div id="panel-draggable-btn" class="draggable open">
 	<span></span>
 	<span></span>
-	<span></span> 
+	<span></span>
 	<span></span>
 </div>
 

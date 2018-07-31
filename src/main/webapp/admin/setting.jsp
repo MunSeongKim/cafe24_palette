@@ -7,6 +7,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="_csrf" content="${_csrf.token}" />
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.min.css">
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/css/bootstrap.min.css">
@@ -16,8 +19,8 @@
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/template/panel.css">
 
 <!-- preview_panel 기본 theme 적용 -->
-<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/admin/assets/css/theme1.css">
-
+<%-- <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/admin/assets/css/theme1.css"> --%>
+ 
 <script src="${pageContext.servletContext.contextPath }/static/jquery/1.11.1/jquery.min.js"></script>
 <script src="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.js"></script>
 <script	src="${pageContext.servletContext.contextPath }/static/popper.js/1.14.3/dist/umd/popper.min.js"></script>
@@ -28,6 +31,7 @@
 <script src="${pageConetxt.servletContext.contextPath }/static/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <title>새 패널 만들기</title>
 </head>
+
 <body>
 <div class="setting-container container-fluid" style="height: 90%; padding-left: 0; min-width: 900px;">
 	<input type="hidden" class="panel-division-type" name="admin" value="admin">
@@ -39,7 +43,7 @@
 		
 		<div class="col-sm-3" style="text-align: right;">
 			<button class="btn btn-link btn-delete btn-sm text-white-50" id="gomain"><i class="fas fa-undo-alt" style="margin-bottom: 0;"></i> 돌아가기</button>
-		</div> 
+		</div>
 	</div>
  
 	<!-- tab START -->
@@ -75,9 +79,6 @@
 		<!-- 설정 값을 넘기기 위한 hidden form -->
 		<form id="saveform" method="POST" action="${pageContext.servletContext.contextPath }/setting/create">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }" />
-			<!-- 
-				"funcid" , "funcorder"  
-			-->
 		</form>
 		
 		<div class="tab-content fouc" id="myTabContent">
@@ -105,9 +106,9 @@
 		<!-- Pager START -->
 		<div class="fouc nav-pagination">
 			<ul class="pagination custom-pagination-ul">
-				<li><button type="button" class="btn btn-danger" id="pager-previous"><i class="fas fa-chevron-left"></i>Previous</button></li>
-				<li><button type="button" class="btn btn-primary" id="pager-next">Next<i class="fas fa-chevron-right"></i></button></li> 
-				<li><button type="button" class="btn btn-success" id="pager-save"><i class="fas fa-plus"></i>Save</button></li>
+				<li><button type="button" class="btn btn-danger" id="pager-previous"><i class="fas fa-chevron-left"></i> Previous</button></li>
+				<li><button type="button" class="btn btn-primary" id="pager-next">Next <i class="fas fa-chevron-right"></i></button></li> 
+				<li><button type="button" class="btn btn-success" id="pager-save"><i class="fas fa-plus"></i> Save</button></li>
 			</ul>
 		</div>
 	</div>
@@ -120,7 +121,7 @@
 				  	<i class="custom-i fas fa-palette"></i>Palette
 				  </h5>
 				    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
+						<span aria-hidden="true" style="padding: 5px;">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
@@ -137,6 +138,11 @@
 </body>
 
 <script type="text/javascript">
+$(window).on("beforeunload", function(e){
+	var message = "페이지를 나가면 메인 화면으로 이동 합니다. 정말 나가시겠습니까?";
+	e.returnValue = message; 
+	return message;
+});
 
 function includeTargetElement() {
   	var element = document.createElement("div");
@@ -149,7 +155,7 @@ var hash = window.location.hash;  // ex) /create#func
 
 if(hash=='' || hash==null){
 	window.location = "#type";
-	hash = "#type";  
+	hash = "#type";   
 } 
 
 /* hash 위치에 맞는 탭 출력 */
@@ -288,8 +294,6 @@ $(document).ready(function(){
 		$("#"+currentPage).removeClass("show active");
 		$("#"+nextPage).addClass("show active");
 		
-		console.log("currentIdx :" +currentIdx);
-		
 		if(currentIdx != tabsMaxSize-1) {
 			$("#pager-previous").show();
 			$("#pager-next").show();
@@ -368,6 +372,10 @@ $(document).ready(function(){
 			return;
 		}
 		
+		// 패널 이름 정보 추가
+		var panelname = $("#inputPanelName").val();
+		appendHiddenElement($("#saveform"), "panelname", panelname);
+		
 		// form 수정
 		// ui-state-disabled가 없는 li --> 선택 된 li Element
 		$($("#sortable").children("li").siblings().not(".ui-state-disabled")).each(function(){
@@ -384,7 +392,7 @@ $(document).ready(function(){
 		appendHiddenElement($("#saveform"), "position", $("#positionTypeDiv :radio[name=position]:checked").val());
 		
 		/* form 제출 */
-		$("#saveform").submit();
+		$("#saveform").submit(); 
 	})
 });
 
@@ -442,7 +450,15 @@ function progressBarChange(currentIdx, tabsMaxSize){
 function funcNextProcess(currentPage){
 	var data = [];
 	
-	if(currentPage == "func"){ /* 기능 결정 페이지 next 할 때. */
+	if(currentPage == "type"){
+		
+		if($("#inputPanelName").val()=="" || $("#confirmFlag").val()=="false"){
+			$(".modal-body").text("패널 명을 입력&확인 해주세요.");
+			$("#confirmModal").modal('show');
+			return false;
+		}
+		
+	}else if(currentPage == "func"){ /* 기능 결정 페이지 next 할 때. */
 		var $li = $("#sortable").children("li");
 		var count = 0;
 		$li.each(function(){

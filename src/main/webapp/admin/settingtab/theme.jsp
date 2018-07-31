@@ -21,7 +21,7 @@
 }
  
 .theme-list-div{
-	overflow: scroll; 
+	overflow: auto; 
 	overflow-x : hidden;
 	max-height: 575px;
 }
@@ -33,10 +33,9 @@
 	max-height: 520px;
 	width: 70%;
 }
-
 </style>
-<script>
 
+<script>
 /* theme 선택 css file 변경 */
 function includeThemeFile(path) {
 	var themeFlag = 0;

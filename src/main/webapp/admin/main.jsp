@@ -11,32 +11,17 @@
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}" /> 
 
-<link rel="stylesheet" 
-	href="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.theme.min.css">
-<link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/css/bootstrap.min.css">
-	
-<%-- <link rel="stylesheet" 
-	href="${pageContext.servletContext.contextPath }/static/bootstrap-toggle/2.2.2/css/bootstrap-toogle.min.css"/> --%>
-
-<link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath }/static/font-awesome/5.1.0/css/all.css"/> 
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.theme.min.css">
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/font-awesome/5.1.0/css/all.css"/> 
 
 <!-- jQuery library -->
 <script src="${pageContext.servletContext.contextPath }/static/jquery/1.11.1/jquery.min.js"></script>
 <script src="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.min.js"></script>
-<script
-	src="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script
-	src="${pageContext.servletContext.contextPath }/static/mustachejs/2.2.1/mustache.min.js"></script>
-<script
-	src="${pageContext.servletContext.contextPath }/static/popper.js/1.14.3/dist/umd/popper.min.js"></script>
-	 
-<%-- <script
-	src="${pageContext.servletContext.contextPath }/static/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script> --%>
-
+<script src="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="${pageContext.servletContext.contextPath }/static/mustachejs/2.2.1/mustache.min.js"></script>
+<script src="${pageContext.servletContext.contextPath }/static/popper.js/1.14.3/dist/umd/popper.min.js"></script>
 <script src="${pageContext.servletContext.contextPath }/admin/assets/js/cookie.js"></script>
-
 <script type="text/javascript" src="${pageContext.servletContext.contextPath }/admin/assets/js/preview_panel.js"></script>
 
 <!-- Google Chart -->
@@ -90,8 +75,6 @@
         var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
         chart.draw(data, options);
       }
-	
-	
 </script>
 
 <style>
@@ -127,17 +110,12 @@ table, table thead th {
 
 #panellist{
 	width: 100%;
-	/* box-shadow: 0 0 35px 0 rgba(154,161,171,.15); */
 }
 
 .nav-li-inverse{
 	background-color: white;
 	color: #563d7c; !important;
 }
-
-/* .active{
-	pointer-events : none;
-} */ 
 
 #palette-tab{
 	width: 100%;
@@ -302,7 +280,7 @@ $(document).ready(function(){
 	             		<a class="none-event" href="#">
 	             			<span class="current-nav">
 	             			<i class="fas fa-check mr-1"></i>
-	             			</span>Panel List 
+	             			</span>Panel List
 	             			<span class="sr-only">(current)</span>
 	             		</a>
 	            	</li>
@@ -587,7 +565,6 @@ $(document).ready(function(){
 		}
 		
 		if(autoChangeState != null) {
-			console.log('sdfdsfdsfsdf')
 			var autoStatePanelId = autoChangeState.panelId;
 			var autoStateIsApply = autoChangeState.isApply;
 			

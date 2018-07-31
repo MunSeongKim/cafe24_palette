@@ -40,67 +40,13 @@ import com.cafe24.mammoth.app.support.SettingTab;
 @RequestMapping(value = "/setting")
 @SessionAttributes({"mallId", "mallUrl"})
 public class SettingController {
-	
-	/*@PostConstruct
-	public void init() {
-		Func func1 = new Func();
-		func1.setName("recent"); 
-		func1.setNameEng("recent"); 
-		func1.setDesciption("recent");
-		func1.setImgPath("/admin/image/test.gif");
-		func1.setFilePath("/template/function/recent/recent.html");
-		func1.setIsButton(false);
-		func1.setPreviewPath("/tmp");
-		
-		Func func2 = new Func();
-		func2.setName("scoll");
-		func2.setNameEng("scoll");
-		func2.setDesciption("scoll");
-		func2.setImgPath("/admin/image/test2.gif");
-		func2.setFilePath("/template/function/scroll/scroll.html");
-		func2.setIsButton(false);
-		func2.setPreviewPath("/tmp");
-		
-		Func func3 = new Func();
-		func3.setName("orderlist");
-		func3.setNameEng("orderlist");
-		func3.setDesciption("orderlist");
-		func3.setImgPath("/admin/image/test3.gif");
-		func3.setFilePath("/template/function/orderlist/orderlist_popuplayer.html");
-		func3.setIsButton(false);
-		func3.setPreviewPath("/tmp");
-		
-		funcService.save(func1);
-		funcService.save(func2);
-		funcService.save(func3);
-		
-		Theme theme1 = new Theme();
-		theme1.setTitle("theme1");
-		theme1.setDescription("theme1!!");
-		theme1.setCssFilePath("/template/testTheme1.css");
-		theme1.setTitleImgPath("/admin/image/beige.PNG");
-		theme1.setPreviewImgPath("/admin/image/theme_white_orange.png");
-		 
-		Theme theme2 = new Theme();
-		theme2.setTitle("theme2");
-		theme2.setDescription("theme2!!!"); 
-		theme2.setCssFilePath("/template/testTheme2.css");
-		theme2.setTitleImgPath("/admin/image/strawberry.PNG"); 
-		theme2.setPreviewImgPath("/admin/image/theme_black_red.png");
-		
-		themeService.saveTheme(theme1);
-		themeService.saveTheme(theme2);
-	}*/
-	
 	@Autowired
 	private FunctionService funcService;
-	
 	@Autowired
 	private ThemeService themeService;
-	
 	@Autowired
 	private PanelService panelService;
-
+	
 	@GetMapping(value = "/create")
 	public String create(Model model) {
 		List<Function> funcs = funcService.getFuncList();
@@ -117,14 +63,15 @@ public class SettingController {
 	}
 	
 	@PostMapping(value = "/create")
-	public String createPersist( 
+	public String createPersist(
+			@RequestParam("panelname") String panelName,
 			@RequestParam("funcid") List<Long> funcId,
 			@RequestParam("funcorder") List<Long> funcOrder,
 			@RequestParam("themeid") Long themeId,
 			@RequestParam("position") String position) {
 		System.out.println("createPersist is called!!");
 		
-		panelService.createPanel(funcId, funcOrder, themeId, position);
+		panelService.createPanel(panelName, funcId, funcOrder, themeId, position);
 		
 		return "redirect:/"; 
 	}

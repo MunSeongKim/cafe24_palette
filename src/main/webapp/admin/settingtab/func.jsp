@@ -70,9 +70,9 @@ i{
 	background-color: #563d7c;
     color: #fff;
     border-radius: 6px;
-    padding: 3px;
+    padding: 10px;
     font-weight: 700;
-    margin-bottom: 7px;
+    margin-bottom: 7px !important;
 }
 
 .custom-hr{

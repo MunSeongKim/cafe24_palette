@@ -3,7 +3,6 @@ package com.cafe24.mammoth.app.controller.api;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,12 +28,4 @@ public class PanelAPIController {
 		System.out.println(panelId);
 		return JSONResult.success(result != null ? result : "null");
 	}
-	
-	@DeleteMapping(value="/panel/{panelId}")
-	public JSONResult delete(@PathVariable("panelId") long panelId) {
-		panelService.removePanel(panelId);
-		
-		return JSONResult.success("removed");
-	}
-	
 }
