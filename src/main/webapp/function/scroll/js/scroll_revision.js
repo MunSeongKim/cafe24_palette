@@ -2,10 +2,10 @@ var handler_functions = (function() {
 
 	return {
 		click_handler : function(parent, target, url) {
+			parent.unbind('click');
 			////event 담는 handler [각 item div]
 			parent.bind('click', function() {
 				if (target.css('display') == 'block') {
-					console.log('handler 데이터 있는 상태');
 					// scroll 이동 이벤트를 줘야됨.
 					modal_functions.page_move(url);
 				} else { // none 상태
@@ -147,7 +147,6 @@ var init_functions = (function() {
 			settings.item.bind('click', item_handler);
 		},
 		chk_sessionStorage : function () {
-			console.log('chk sessionStorage');
 			var session_value = '1'; // 값이 null이 아닐 때까지 돌려주기 위해 임시 값 저장
 			var idx = 1; // index value
 			var idx_class = 1;
