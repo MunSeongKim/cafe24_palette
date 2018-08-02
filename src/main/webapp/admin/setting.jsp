@@ -16,19 +16,18 @@
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"/>
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/font-awesome/5.1.0/css/all.css"/>
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/admin/assets/css/setting.css">
-<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/template/panel.css">
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/template/palette.css">
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/admin/assets/css/default-theme.css">
 
-<!-- preview_panel 기본 theme 적용 -->
-<%-- <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/admin/assets/css/theme1.css"> --%>
- 
+
 <script src="${pageContext.servletContext.contextPath }/static/jquery/1.11.1/jquery.min.js"></script>
 <script src="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.js"></script>
 <script	src="${pageContext.servletContext.contextPath }/static/popper.js/1.14.3/dist/umd/popper.min.js"></script>
 <script	src="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script> <!-- 토글 버튼 라이브러리 -->
 <script	src="${pageContext.servletContext.contextPath }/static/mustachejs/2.2.1/mustache.min.js"></script> 
-<script type="text/javascript" src="${pageContext.servletContext.contextPath }/admin/assets/js/preview_panel.js"></script>
-<script src="${pageConetxt.servletContext.contextPath }/static/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<script src="${pageContext.servletContext.contextPath }/admin/assets/js/preview_panel.js"></script>
+<script src="${pageContext.servletContext.contextPath }/static/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
 <title>새 패널 만들기</title>
 </head>
 

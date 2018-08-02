@@ -1,17 +1,20 @@
 package com.cafe24.mammoth.app.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cafe24.mammoth.app.domain.Member;
 import com.cafe24.mammoth.app.domain.Panel;
 import com.cafe24.mammoth.app.domain.Script;
 import com.cafe24.mammoth.app.domain.SelectFunc;
 import com.cafe24.mammoth.app.domain.enumerate.Position;
 import com.cafe24.mammoth.app.repository.FunctionRepository;
+import com.cafe24.mammoth.app.repository.MemberRepository;
 import com.cafe24.mammoth.app.repository.PanelRepository;
 import com.cafe24.mammoth.app.repository.ScriptRepository;
 import com.cafe24.mammoth.app.repository.SelectFuncRepository;
@@ -22,19 +25,22 @@ import com.cafe24.mammoth.app.repository.ThemeRepository;
 public class PanelService {
 	
 	@Autowired
-	PanelRepository panelRepository;
+	private PanelRepository panelRepository;
 	
 	@Autowired
-	SelectFuncRepository selectFuncRepository;
+	private SelectFuncRepository selectFuncRepository;
 	
 	@Autowired
-	ThemeRepository themeRepository;
+	private ThemeRepository themeRepository;
 	
 	@Autowired
-	FunctionRepository funcRepository;
+	private FunctionRepository funcRepository;
 	
 	@Autowired
-	ScriptRepository scriptRepository;
+	private ScriptRepository scriptRepository;
+	
+	@Autowired
+	private MemberRepository memberRepository;
 	
 	public List<Panel> getPanelList(String mallId) {
 		return panelRepository.findAllByMemberId(mallId);
@@ -53,16 +59,23 @@ public class PanelService {
 	}
 	
 	public boolean createPanel(
+			String mallId,
 			String panelName,
 			List<Long> funcId,
 			List<Long> funcOrder,
 			Long themeId,
 			String position
 			) {
+		
+		System.out.println("mallId: " + mallId);
+		
+		Optional<Member> savedMember = memberRepository.findById(mallId);
+		Member member = savedMember.isPresent() ? savedMember.get() : null;
 		Panel panel = new Panel();
 		panel.setName(panelName);
-		panel.setPosition(Position.valueOf(position));
+		panel.setPosition(position.toUpperCase().equals("RIGHT") ? Position.RIGHT : Position.LEFT);
 		panel.setTheme(themeRepository.getOne(themeId));
+		panel.setMember(member);
 		panel = panelRepository.save(panel);
 		
 		// select_func tbl row create
@@ -78,17 +91,12 @@ public class PanelService {
 		Script script = new Script();
 		script.setPanel(panel);
 		script.setIsApply(false);
-		script.setFilepath("/template/skel.js");
+		script.setFilepath("/template/paletteLoader.js");
 		scriptRepository.save(script); 
 		
 		return true;
 	}
 
-	public List<Panel> getPanelListByMemberId(String mallId) {
-		//return panelRepository.findAllByMemberId();
-		return null;
-	}
-	
 	public Panel getApplyPanel(String mallId) {
 		return panelRepository.findByMemberIdAndScriptIsIsApplyTrue(mallId);
 	}

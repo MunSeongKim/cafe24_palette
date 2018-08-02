@@ -99,7 +99,7 @@ $(document).ready(function(){
 				<form id="confirmForm" class="form-inline">
 				  	<div class="form-group row align-items-center w-100"> 
 				    	<div class="col-sm-3">
-				    		<label id="label-inputPanelName" for="inputPanelName"><i class="far fa-times-circle text-danger"></i> 패널명</label>
+				    		<label id="label-inputPanelName" for="inputPanelName"><i class="far fa-times-circle text-danger" style="margin-right: 8px;"></i> 패널명</label>
 				    	</div>
 				    	
 				    	<div class="col-sm-8">

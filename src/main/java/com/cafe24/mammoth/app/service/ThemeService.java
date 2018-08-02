@@ -43,7 +43,7 @@ public class ThemeService {
 		String imgFilePath = fileUploader.restoreFile(UPLOAD_DIR_THEME_IMG_PATH, imgFile);
 		
 		if(filePath.contains("css")) {
-			theme.setFilePath(filePath);
+			theme.setFilePath(filePath.replace("/cafe24/tmp", ""));
 		}
 		theme.setTitleImgPath(imgFilePath.replace("/cafe24/tmp", ""));
 		theme.setCreatedDate(new Date());

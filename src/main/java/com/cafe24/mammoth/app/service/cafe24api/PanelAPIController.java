@@ -1,4 +1,4 @@
-package com.cafe24.mammoth.app.controller.api;
+package com.cafe24.mammoth.app.service.cafe24api;
 
 import java.util.Map;
 
@@ -24,7 +24,7 @@ public class PanelAPIController {
 	PanelService panelService;
 	
 	@PostMapping(value = "/apply/{panelId}")
-	public JSONResult pageselect(@RequestBody Map<String, Object> map, @PathVariable("panelId") Long panelId) {
+	public JSONResult apply(@RequestBody Map<String, Object> map, @PathVariable("panelId") Long panelId) {
 		Map<String, Script> result = scriptService.applyPanel(map, panelId);
 		System.out.println(panelId);
 		return JSONResult.success(result != null ? result : "null");

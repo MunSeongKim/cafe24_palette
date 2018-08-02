@@ -17,7 +17,7 @@ public class UploadController {
 
 	@GetMapping(value = { "/", "" })
 	public String index() {
-		return "upload/index";
+		return "admin/upload/index";
 	}
 
 }

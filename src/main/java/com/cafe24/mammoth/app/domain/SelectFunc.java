@@ -35,22 +35,16 @@ public class SelectFunc {
 	private Long funcOrder;
 
 	public void setPanel(Panel panel) {
-		if (this.panel != null) {
-			this.panel.getSelectFuncs().remove(this);
-		}
 		this.panel = panel;
-		if (panel != null) {
+		if(!panel.getSelectFuncs().contains(this)) {
 			panel.getSelectFuncs().add(this);
 		}
 	}
 
-	public void setFunction(Function func) {
-		if (this.function != null) {
-			this.function.getSelectFuncs().remove(this);
-		}
-		this.function = func;
-		if (func != null) {
-			func.getSelectFuncs().add(this);
+	public void setFunction(Function function) {
+		this.function = function;
+		if(!function.getSelectFuncs().contains(this)) {
+			function.getSelectFuncs().add(this);
 		}
 	}
 

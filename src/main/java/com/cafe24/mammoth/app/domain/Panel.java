@@ -43,7 +43,7 @@ public class Panel {
 	private String name;
 
 	// 15.625em, 50%, 100%
-	@Column(nullable = true, length=20, columnDefinition="VARCHAR(20) DEFAULT '15.625em'")
+	@Column(nullable = true, length = 20, columnDefinition = "VARCHAR(20) DEFAULT '15.625em'")
 	private String width;
 
 	@Enumerated(EnumType.STRING)
@@ -59,31 +59,37 @@ public class Panel {
 	@Column(name = "created_date", nullable = false)
 	private Date createdDate;
 
-	@ManyToOne
-	@JoinColumn(name = "mall_id", insertable = false, updatable = false)
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "mall_id")
 	private Member member;
-	
+
 	// 요거 수정해야함
-	@ManyToOne(optional=true)
-	@JoinColumn(name="theme_id", nullable=true)
+	@ManyToOne(optional = true, fetch = FetchType.LAZY)
+	@JoinColumn(name = "theme_id", nullable = true)
 	private Theme theme;
-	
-	@OneToOne(mappedBy = "panel", cascade = CascadeType.REMOVE)
+
+	@OneToOne(mappedBy = "panel", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	private Script script;
-	
-	@OneToMany(mappedBy = "panel", cascade = CascadeType.REMOVE, fetch=FetchType.LAZY)
+
+	@OneToMany(mappedBy = "panel", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	private List<SelectFunc> selectFuncs = new ArrayList<>();
 
 	public void setMember(Member member) {
-		if (this.member != null) {
-			this.member.getPanels().remove(this);
-		}
 		this.member = member;
-		if (member != null) {
+		if (!member.getPanels().contains(this)) {
+			System.out.println("타나?");
 			member.getPanels().add(this);
+			System.out.println("탄다!!");
 		}
 	}
-	
+
+	public void setTheme(Theme theme) {
+		this.theme = theme;
+		if (!theme.getPanels().contains(this)) {
+			theme.getPanels().add(this);
+		}
+	}
+
 	@Override
 	public String toString() {
 		return "Panel [panelId=" + panelId + ", name=" + name + ", width=" + width + ", position=" + position

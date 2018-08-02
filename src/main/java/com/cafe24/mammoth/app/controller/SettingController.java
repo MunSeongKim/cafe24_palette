@@ -59,35 +59,36 @@ public class SettingController {
 		model.addAttribute("tabs", new SettingTab());
 		model.addAttribute("funcs", funcs);
 		model.addAttribute("themes", themeList);
-		return "setting";
+		return "admin/setting";
 	}
 	
 	@PostMapping(value = "/create")
 	public String createPersist(
+			@ModelAttribute("mallId") String mallId,
 			@RequestParam("panelname") String panelName,
 			@RequestParam("funcid") List<Long> funcId,
 			@RequestParam("funcorder") List<Long> funcOrder,
 			@RequestParam("themeid") Long themeId,
 			@RequestParam("position") String position) {
 		System.out.println("createPersist is called!!");
-		
-		panelService.createPanel(panelName, funcId, funcOrder, themeId, position);
+		System.out.println("mallId: " + mallId);
+		panelService.createPanel(mallId, panelName, funcId, funcOrder, themeId, position);
 		
 		return "redirect:/"; 
 	}
 	
-	// iframne올 띄우기 
+	/*// iframne올 띄우기 
 	@GetMapping(value="/testPage")
 	public String testPage() {
 		return "test"; 
-	}
+	}*/
 	
 	@GetMapping(value ="/update/{panelId}")
 	public String update(Model model, @ModelAttribute("mallId") String mallId,
 			@PathVariable("panelId") Long panelId) {
 		model.addAttribute("tabs", new SettingTab()); 
 		// Get data of panel
-		return "setting";
+		return "admin/setting";
 	}
 	
 	// 새 패널 만들기 - 패널 미리보기
@@ -96,12 +97,12 @@ public class SettingController {
 		// funclist
 		List<Function> funcs = funcService.getFuncList();
 		model.addAttribute("funcs", funcs);
-		return "preview_panel";
+		return "admin/preview_panel";
 	}
-
+/*
 	// 대쉬 보드 테스트
 	@GetMapping(value="/dashboard")
 	public String dashboard() {
 		return "dashboard"; 
-	}
+	}*/
 }

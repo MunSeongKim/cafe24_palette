@@ -46,12 +46,9 @@ public class Script {
 
 	public void setPanel(Panel panel) {
 		this.panel = panel;
-
-		if(this.panel.getScript() != null) {
-			this.panel.setScript(null);
+		if(panel.getScript() != this) {
+			panel.setScript(this);
 		}
-		
-		this.panel.setScript(this);
 	}
 
 }

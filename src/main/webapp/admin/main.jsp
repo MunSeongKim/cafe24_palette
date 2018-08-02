@@ -78,7 +78,7 @@
 </script>
 
 <style>
-@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+@import url(https://fonts.googleapis.com/earlyaccess/notosanskr.css);
 
 * {
 	margin: 0;
@@ -223,8 +223,8 @@ $(document).ready(function(){
 			var func = {};
 			func['id'] = "${func.id}";
 			func['funcOrder'] = "${func.funcOrder +1}";
-			func['funcEngName'] = "${func.func.nameEng }";
-			func['funcKorName'] = "${func.func.name}";
+			func['funcEngName'] = "${func.function.nameEng }";
+			func['funcKorName'] = "${func.function.name}";
 			funcs.push(func);
 		</c:forEach>
 		

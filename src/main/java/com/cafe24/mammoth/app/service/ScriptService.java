@@ -74,6 +74,11 @@ public class ScriptService {
 			Script appliedScript = scriptRepository.findByApplied();
 			String scripttagsNo;
 			
+			Optional<Script> script = scriptRepository.findById(panelId);
+			Script savedScript = script.isPresent() ? script.get() : null;
+			String src = "https://devbit005.cafe24.com/mammoth" + savedScript.getFilepath();
+			scripttags.setSrc( src );
+			
 			// 이미 적용 된 상태에서 적용할 경우
 			if (appliedScript != null) {
 				scripttagsNo = appliedScript.getScripttagsNo();
@@ -88,7 +93,7 @@ public class ScriptService {
 			}
 
 			// API 적용 후 DB에 데이터 저장
-			Optional<Script> script = scriptRepository.findById(panelId);
+			
 			Script applyScript = null;
 			if( script.isPresent() ) {
 				applyScript = script.get();
@@ -98,9 +103,23 @@ public class ScriptService {
 				applyScript.setIsApply(true);
 			}
 			
+			
+			Script clickChangeState = new Script();
+			Script autoChangeState = new Script();
+			
+			clickChangeState.setPanelId(applyScript.getPanelId());
+			clickChangeState.setIsApply(applyScript.getIsApply());
+			if(appliedScript != null) {
+				autoChangeState.setPanelId(appliedScript.getPanelId());
+				autoChangeState.setIsApply(appliedScript.getIsApply());
+			} else {
+				autoChangeState = null;
+			}
+			
+			
 			Map<String, Script> result = new HashMap<>();
-			result.put("clickChangeState", applyScript);
-			result.put("authChangeState", appliedScript != null ? appliedScript : null);
+			result.put("clickChangeState", clickChangeState);
+			result.put("autoChangeState", autoChangeState );
 			return result;
 		}
 
@@ -113,9 +132,13 @@ public class ScriptService {
 		unapplyScript.setIsApply(false);
 		unapplyScript.setScripttagsNo(null);
 		
+		Script clickChangeState = new Script();
+		clickChangeState.setPanelId(unapplyScript.getPanelId());
+		clickChangeState.setIsApply(unapplyScript.getIsApply());
+		
 		Map<String, Script> result = new HashMap<>();
-		result.put("clickChangeState", unapplyScript);
-		result.put("authChangeState", null);
+		result.put("clickChangeState", clickChangeState);
+		result.put("autoChangeState", null);
 		return result;
 	}
 

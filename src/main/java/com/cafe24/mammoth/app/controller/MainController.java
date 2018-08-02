@@ -29,6 +29,6 @@ public class MainController {
 		
 		List<Panel> list = panelService.getPanelList(mallId);
 		model.addAttribute("list", list); 
-		return "main";
+		return "admin/main";
 	}
 }

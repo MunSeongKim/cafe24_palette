@@ -1,5 +1,6 @@
 package com.cafe24.mammoth.app.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -36,8 +37,9 @@ public class Member {
 	private String mallUrl;
 
 	@OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-	private List<Panel> panels;
+	private List<Panel> panels = new ArrayList<>();
 
+	
 	@Override
 	public String toString() {
 		return "Member [mallId=" + mallId + ", panelUsed=" + panelUsed + ", baseDomain=" + baseDomain

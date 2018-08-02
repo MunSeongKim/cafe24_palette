@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.CacheControl;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.web.context.request.RequestContextListener;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
@@ -87,9 +88,8 @@ public class WebConfigurer extends WebMvcConfigurationSupport {
 		// 각 기능용 리소스 API
 		registry.addResourceHandler("/**/*.js").addResourceLocations("/").resourceChain(true);
 		registry.addResourceHandler("/**/*.css").addResourceLocations("/").resourceChain(true);
-		// registry.addResourceHandler("/**/*.jpg").addResourceLocations("/").resourceChain(true);
-		// registry.addResourceHandler("/**/*.png").addResourceLocations("/").resourceChain(true);
 		registry.addResourceHandler("/**/*.html").addResourceLocations("/").resourceChain(true);
+		
 	}
 	
 	/**
@@ -105,5 +105,33 @@ public class WebConfigurer extends WebMvcConfigurationSupport {
 		return registrationBean;
 	}
 
+	
+	@Override
+	protected void addCorsMappings(CorsRegistry registry) {
+		registry.addMapping("/**")
+				.allowedOrigins("*")
+				.allowedMethods("GET")
+				.allowedHeaders("*")
+				.allowCredentials(false).maxAge(3600);
+	}
+/*
+	*//**
+	 * CORS 정책 설정<br>
+	 * 모든 도메인들의 GET 요청에 대해 CORS 허용, 최대 캐시 보관 시간 3600초 설정<br>
+	 * 
+	 * @return {@link CorsConfigurationSource}
+	 *//*
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.addAllowedOrigin("*");
+		configuration.addAllowedMethod(HttpMethod.GET);
+		configuration.addAllowedHeader("*");
+		configuration.setAllowCredentials(false);
+		configuration.setMaxAge(3600L);
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
+	}*/
 
 }

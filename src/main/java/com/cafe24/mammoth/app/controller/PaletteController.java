@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -24,6 +25,7 @@ import com.cafe24.mammoth.app.service.PanelService;
  */
 @Controller
 @RequestMapping("/palette")
+@CrossOrigin
 public class PaletteController {
 	
 	@Autowired
@@ -31,9 +33,10 @@ public class PaletteController {
 	
 	@Autowired
 	private PanelService panelService;
-	
-	@RequestMapping("/{mallUrl}")
+	@RequestMapping("/{mallUrl:(?!assets|static|admin).*}")
 	public String palette(@PathVariable("mallUrl") String mallUrl, Model model) {
+		System.out.println("=================== paletteController ===================");
+		System.out.println(mallUrl);
 		Member member = memberService.getOneByMallUrl(mallUrl);
 		Panel panel = panelService.getApplyPanel(member.getMallId());
 		List<SelectFunc> selectFuncs = panel.getSelectFuncs();
@@ -52,10 +55,16 @@ public class PaletteController {
 			}
 		});
 		
+		System.out.println(panel);
+		System.out.println(panel.getTheme());
+		System.out.println(selectFuncs);
+		
+		System.out.println("=================== paletteController ===================");
+		
 		model.addAttribute("panel", panel);
 		model.addAttribute("theme", panel.getTheme());
 		model.addAttribute("selectFuncs", selectFuncs);
 		
-		return "template/panel";
+		return "template/palette";
 	}
 }

@@ -2,6 +2,7 @@ package com.cafe24.mammoth.app.support;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
@@ -31,7 +32,7 @@ public class APITokenInterceptor implements HandlerInterceptor {
 	private Cafe24ClientTokenServices clientTokenServices;
 	@Autowired
 	private OAuth2RestTemplate oauth2RestTemplate;
-	
+
 	/**
 	 * Cafe24 API를 사용하는 컨트롤러 요청이 들어왔을 때 동작<br>
 	 * DB에 저장된 Authentication을 가져와서 accessToken을 조회하도록 구현<br>
@@ -40,17 +41,25 @@ public class APITokenInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		// 요청 URL로부터 User의 MallId를 가져오기 위한 작업
-		String mallUrl = request.getHeader("origin").replaceAll("^(https?)://", "");
-		if(mallUrl.contains("localhost")) {
-			mallUrl = request.getParameter("mall_url");
+
+		HttpSession session = request.getSession();
+		String mallId = null;
+		if (session != null) {
+			mallId = (String) request.getSession().getAttribute("mallId");
+			if (mallId == null) {
+				String mallUrl = request.getHeader("origin").replaceAll("^(https?)://", "");
+				if (mallUrl.contains("localhost")) {
+					mallUrl = request.getParameter("mall_url");
+				}
+				Member storedMember = memberService.getOneByMallUrl(mallUrl);
+				mallId = storedMember.getMallId();
+				request.getSession().setAttribute("mallId", mallId);
+			}
 		}
-		
-		Member storedMember = memberService.getOneByMallUrl(mallUrl);
-		String mallId = storedMember.getMallId();
-		
+
 		// SecurityContextHolder에 Authentication 객체를 교체
 		clientTokenServices.setAuthenticationToSecurityContext(mallId);
-		
+
 		// RestTemplate에서 AccessToken을 받음
 		// 위에서 설정한 authentication 객체와 일치한 토큰정보가 없으면 토근을 새로 발급
 		// 있으면 DB에 저장된 토근을 반환
@@ -59,7 +68,7 @@ public class APITokenInterceptor implements HandlerInterceptor {
 		// API를 사용하기 위해 Cafe24Template에 mallId와 accessToken을 설정
 		cafe24Template.setAccessToken(accessToken.getValue());
 		cafe24Template.setMallId(mallId);
-		
+
 		// 컨트롤러로 응답 전달
 		return true;
 	}

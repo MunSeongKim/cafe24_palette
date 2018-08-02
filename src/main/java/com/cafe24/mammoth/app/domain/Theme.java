@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,13 +44,13 @@ public class Theme {
 	@Column(nullable = false)
 	private Date createdDate;
 	
-	@OneToMany(mappedBy = "theme")
-	private List<Panel> panel;
-
+	@OneToMany(mappedBy = "theme", fetch=FetchType.LAZY)
+	private List<Panel> panels;
+	
 	@PreRemove
 	public void preRemove() {
-		if (panel != null) {
-			for (Panel p : panel) {
+		if (panels != null) {
+			for (Panel p : panels) {
 				if (p.getTheme().equals(this)) {
 					p.setTheme(null);
 				}
