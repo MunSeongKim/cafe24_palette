@@ -46,13 +46,13 @@ a:hover {
 	margin-top: 0.625em;
 }
 /* card css */
-.card .card-body {
+#popup-orderlist .card .card-body {
 	font-size: 0.688em;
 	padding-top: 0px;
 	padding-bottom: 0px;
 }
 
-.card .card-body .order-pdt-info {
+#popup-orderlist .card .card-body .order-pdt-info {
 	margin-top: 0.625em;
 }
 /* card 내부 */

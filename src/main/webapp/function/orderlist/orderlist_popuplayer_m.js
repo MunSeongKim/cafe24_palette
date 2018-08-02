@@ -135,14 +135,17 @@
 }(jQuery));
 
 $(document).ready(function() {
+	var dataId = $('.popupLayer').parent().attr('id');
+	// mobile li 버튼 클릭 시 실행
+	$('.zoom-menu li[data-id='+dataId+']').click(function() {
+		$.orderlist.execute();
+	});
+	
 	
 	/* popup X button event */
 	$('#popup-close > span').click(function() {
 		$.orderlist.popup('close');
 	});
-	
-	$.orderlist.execute();
-	
 	/* popup checkbox click event */
 	$('#ckbox').click(function() {
 		$.orderlist.checkedParse($(this).prop('checked'));

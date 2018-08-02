@@ -327,7 +327,7 @@
 	};
 	
 })(jQuery);
-$(document).ready(function() {   
+$(document).ready(function() {
 	var dataId = $('.recent-main-div').parent().attr('id');
 	
 	$('.zoom-menu li[data-id='+dataId+']').click(function() {

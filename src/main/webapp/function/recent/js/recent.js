@@ -306,6 +306,7 @@
 				var opts = optDatas.options.option;
 				var hit = hitDatas.count;
 				console.log(opts);
+				
 				// product image
 				$(".recent-preview-img").attr({
 					"src" : "http://"+sessionData.sImgSrc,

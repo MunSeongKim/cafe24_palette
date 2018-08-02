@@ -1,3 +1,79 @@
+(function($) {
+	var p = {};
+	$.panel = {
+		
+		// p의 디폴트 값.
+		defaults : {
+			'position' : 'right',
+			'removePosition' : 'left'
+		},
+		
+		// p에 default값 세팅 / 위치가 바뀌면 바뀐 위치+default를 p에 세팅
+		setPosition : function(positions){
+			p = $.extend(true, {}, $.panel.defaults, positions);
+		},
+		
+		// 패널 버튼을 클릭하였을 때, action에 따라 패널, 패널 버튼, 스크롤의
+		// CSS를 변경한다.
+		nav : function(action) {
+			$('#panel-draggable-btn').toggleClass('open'); // 버튼 모양 변경
+			$.panel.changePanel(action);
+		},
+		
+		// 패널, 버튼, 스크롤의 CSS 결정.
+		changePanel : function(action){
+			var panelCss = {};
+			var draggableCss = {};
+			var scrollCss = {};
+			
+			panelCss[p.position] = '0';
+			panelCss[p.removePosition] = '';
+			panelCss['width'] = '15.625em';
+			
+			if(action == 'open') {
+				panelCss['margin-'+p.position] = '0';
+				draggableCss[p.position] ="15.625em";
+				draggableCss[p.removePosition]="";
+				
+				if(p.position == 'left'){
+					scrollCss[p.position] ="16em";
+				}else{
+					scrollCss[p.position] ="17.625em";
+				}
+				
+				scrollCss[p.removePosition]="";
+			} 
+			// 패널을 닫았을 때.
+			else {
+				panelCss['margin-'+p.position] = '-15.625em';
+				draggableCss[p.position] ="0";
+				draggableCss[p.removePosition]="";
+				
+				if(p.position == 'left'){
+					scrollCss[p.position] ="0em";
+				}else{
+					scrollCss[p.position] ="2.5em";
+				}
+				
+				scrollCss[p.removePosition]="";
+			}
+			
+			// CSS 적용
+			$("#panel").css(panelCss);                                       
+			$("#panel-draggable-btn").css(draggableCss);
+			$(".scroll_mm_div").css(scrollCss);
+		},
+		// panel position에 따른 팝업 css 만들어줌.
+		makePopupCss : function() {
+			var popupCss = {};
+			popupCss['position'] = 'fixed';
+			popupCss[p.position] = $('#panel').width();
+			popupCss['top'] = '20%';
+			return popupCss;
+		}
+	}
+}(jQuery));
+
 $(document).keyup(function(e) {
    if (e.keyCode == 27) { // escape key maps to keycode `27`
       if($('.popupLayer').css('display') == 'block') {
@@ -10,39 +86,16 @@ $(document).keyup(function(e) {
 });
 
 $(document).ready(function() {
-	/********************/
-	$.panel = {
-      nav : function(action) {
-         $('#panel-draggable-btn').toggleClass('open');
-         if(action === 'open') {
-            $('#panel').css({
-            	'width':'15.625em',
-            	'margin-right': '0'
-            });
-            $('#panel-draggable-btn').css({
-               'right' : '15.625em',
-               'left' : ''
-            });
-            $('.scroll_mm_div').css('right', '18.125em');
-         } else if(action === 'close') {
-            $('#panel').css({
-            	'margin-right': '-15.625em'
-            });
-            $('#panel-draggable-btn').css({
-               'right' : '0',
-               'left' : ''
-            });
-            $('.scroll_mm_div').css({
-               'right' : '2.5em',
-               'left' : ''
-            });
-         } else {
-            return 0;
-         }
-      }
-   }
-	/********************/
-	alert('panel.js!!!');
+	/* DB 에서 받아온 panel의 position 값으로 변경해야 함 */
+	// var position = $(panel.position);
+	var position = 'right';
+	var removePosition = 'left';
+	
+	if(position === 'left'.toLowerCase()) { removePosition = 'right'; }
+	
+	$.panel.setPosition({'position': position, 'removePosition':removePosition});
+	$.panel.changePanel('close');
+	
 	$("#panel-draggable-btn").draggable({
 		axis : "y",
 		containment : "window" // 180713 hwi 추가
@@ -89,16 +142,16 @@ $(document).ready(function() {
 	/* scroll end */
 
 	// order-list popup
-	$('#func4').load("/mammoth/function/orderlist/orderlist_popuplayer.html");
+	$('#func4').load("../function/orderlist/orderlist_popuplayer.html");
 	
 	// 180713 hwi scroll function add
-	$('#func1').load("/mammoth/function/scroll/scroll.html");
+	$('#func1').load("./../function/scroll/scroll_revision.html");
 	
 	// 180713 hwi share function add
-	$('#func2').load("/mammoth/function/copy/copy.html");
+	$('#func2').load("../function/copy/copy.html");
 
 	// 180717 Add dongseok's function
-	$('#func3').load("/mammoth/function/recent/recent.html");
+	$('#func3').load("../function/recent/recent.html");
 
   
 });

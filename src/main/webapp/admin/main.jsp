@@ -31,8 +31,24 @@
 <!-- 패널 미리보기 -->
 <script type="text/javascript" src="${pageContext.servletContext.contextPath }/admin/assets/js/preview_panel.js"></script>
 
+<!-- Google Chart -->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="./admin/assets/js/Chart.bundle.js"></script>
+<script src="./admin/assets/js/utils.js"></script>
+
+<script type="text/javascript" src="./admin/assets/js/chart.js"></script>
+
+<!-- Google Chart End -->
+
 <style>
 @import url(https://fonts.googleapis.com/earlyaccess/notosanskr.css);
+/* chart js */
+canvas {
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+}
+/************/
 
 * {
 	margin: 0;
@@ -548,26 +564,31 @@ $(document).ready(function(){
 			
 				<!-- Statistics Tab Start -->
 				<div class="col-sm-12 col-md-12 carousel-item" id="stat">
-					<div class="row" style="height: 100%;">
-						<div class="col-sm-6 card mt-5 rounded">
-							<div id="chart_div">
-								
-							</div> 
+					<!-- chart js 추가 -->
+					<!-- 1. doughnut chart -->
+					<div class="col-12 card mt-5 rounded">
+						<div id="canvas-holder" style="width:100%">
+							<canvas id="chart-area"></canvas>
 						</div>
-						
-						<div class="col-sm-6 card mt-5 rounded">
-							<div id="donutchart"></div>
-						</div>
+						<button id="randomizeData">Randomize Data</button>
+						<button id="addDataset">Add Dataset</button>
+						<button id="removeDataset">Remove Dataset</button>
+						<button id="addData">Add Data</button>
+						<button id="removeData">Remove Data</button>
 					</div>
-					
-					<div class="row">
-						<div class="col-sm-6 card mt-5 rounded">
-							<h1>stat3</h1>
+					<!-- 2. vertical chart 
+						    [- 전체 패널 개수
+						    - 사용자 평균 개수]
+						    - 내 패널 개수 -->
+					<div class="col-12 card mt-5 rounded">
+						<div id="container" style="width: 100%;">
+							<canvas id="canvas"></canvas>
 						</div>
-						
-						<div class="col-sm-6 card mt-5 rounded">
-							<h1>stat4</h1>
-						</div>
+						<button id="randomizeData1">Randomize Data</button>
+						<button id="addDataset1">Add Dataset</button>
+						<button id="removeDataset1">Remove Dataset</button>
+						<button id="addData1">Add Data</button>
+						<button id="removeData1">Remove Data</button>
 					</div>
 				</div>
 				

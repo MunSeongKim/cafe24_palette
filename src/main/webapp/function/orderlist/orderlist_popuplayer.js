@@ -125,12 +125,9 @@
 			$('#mustache-result').html('').append(rendered);
 		},
 		popup : function(action) {
+			var popupCss = $.panel.makePopupCss();
 			if(action === 'open') {
-				$('.popupLayer').css({
-					"position" : "fixed",
-					"right" : $('#panel').width(),
-					"top" : '20%'
-				}).show();
+				$('.popupLayer').css(popupCss).show();
 			} 
 			else if(action === 'close') { $('.popupLayer').hide(); } 
 			else { return 0 };

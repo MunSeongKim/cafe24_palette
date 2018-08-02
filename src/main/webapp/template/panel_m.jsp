@@ -32,7 +32,7 @@
 	<!-- 일단 기능 2개 있다고 가정 -->
 	<!-- 얘는 function idx로 활용한다. -->
 	<c:forEach begin="0" end="3" varStatus="status" step="1">
-		<li class="${status.count}">
+		<li class="${status.count}" data-id="func${status.count }">
 			<a class="zoom-fab zoom-btn-sm plt-pn-btn-inactive scale-transition scale-out" 
 				data-stat-id="func${status.count }">
 			<span class="zoom-icon zoom-icon-func${status.count }">F</span>
