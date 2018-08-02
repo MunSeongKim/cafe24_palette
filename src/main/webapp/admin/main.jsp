@@ -14,8 +14,7 @@
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.theme.min.css">
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/font-awesome/5.1.0/css/all.css"/> 
-
-<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/template/panel.css">
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/template/palette.css"> 
  
 <!-- preview_panel 기본 theme 적용 -->
 <link rel="stylesheet" id="themeEx" href="">
@@ -505,15 +504,15 @@ $(document).ready(function(){
 							</div>
 							<script id="mustache-panellist-template" type="text/template">
 							<div class="row">
-								<div class="col-sm-6">
+								<div class="col-sm-4">
 									<p class="text-monospace">패널명:</p>
 									<p>{{panelName}}</p> 
 								</div>
-								<div class="col-sm-3">
+								<div class="col-sm-4">
 									<p class="text-monospace">패널 위치:</p>
 									<p>{{panelPosition}}</p>
 								</div>
-								<div class="col-sm-3">
+								<div class="col-sm-4">
 									<p class="text-monospace">생성일:</p>
 									<p>{{panelCreatedDate}}</p> 
 								</div>

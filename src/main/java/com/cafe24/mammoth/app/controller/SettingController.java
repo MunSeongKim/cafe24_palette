@@ -77,11 +77,11 @@ public class SettingController {
 		return "redirect:/"; 
 	}
 	
-	/*// iframne올 띄우기 
-	@GetMapping(value="/testPage")
+	// iframne올 띄우기 
+	@GetMapping(value="/palette")
 	public String testPage() {
-		return "test"; 
-	}*/
+		return "admin/palette"; 
+	}
 	
 	@GetMapping(value ="/update/{panelId}")
 	public String update(Model model, @ModelAttribute("mallId") String mallId,
@@ -99,10 +99,5 @@ public class SettingController {
 		model.addAttribute("funcs", funcs);
 		return "admin/preview_panel";
 	}
-/*
-	// 대쉬 보드 테스트
-	@GetMapping(value="/dashboard")
-	public String dashboard() {
-		return "dashboard"; 
-	}*/
+	
 }

@@ -18,7 +18,7 @@ import com.cafe24.mammoth.app.service.PanelService;
 // -> @Controller + @ResponseBody
 @Controller // : view(화면) return
 @RequestMapping(value = "/")
-@SessionAttributes({"mallId", "mallUrl"})
+//@SessionAttributes({"mallId", "mallUrl"})
 public class MainController {
 	
 	@Autowired
@@ -26,7 +26,7 @@ public class MainController {
 	
 	@GetMapping(value = { "", "/" })
 	public String main(@ModelAttribute("mallId") String mallId, Model model) {
-		
+		mallId = "qyuee"; 
 		List<Panel> list = panelService.getPanelList(mallId);
 		model.addAttribute("list", list); 
 		return "admin/main";

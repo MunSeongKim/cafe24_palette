@@ -71,9 +71,11 @@ var readyToExe = (function() {
 	      scriptLoaded : function(element) {
 	         // check done variable to make sure we aren't getting notified more than once on the same script
 	         if (!done) {
-	            if(files.length == 6) {
+	        	 
+	        	 // 나중에 풀어서 적용할 꺼
+	            /*if(files.length == 6) {
 	            	window.$Palette = jQuery.noConflict(true);
-	            }
+	            }*/
 	        	 element.onreadystatechange = element.onload = null; // kill memory leak in IE
 	            // done = true; //원래 여기에 true있는데 패턴 변경한 순간... 로직이 바뀐듯 나중에 확인해보자.
 	            if (files.length != 0) {
