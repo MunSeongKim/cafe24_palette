@@ -84,8 +84,14 @@ public class PanelService {
 		return true;
 	}
 	
-	public boolean canUsePanelName(String name) {
-		return repo.confirmPanelName(name) == 0 ? true : false;
+	public boolean isExistByName(String name) {
+		System.out.println(repo.findByName(name));
+		System.out.println(repo.findOne(7L));
+		System.out.println("name : "+name);
+//		System.out.println("canUsePanelName : "+result);
+		 
+//		return result == null ? true : false;
+		return false;
 	}
 	
 }

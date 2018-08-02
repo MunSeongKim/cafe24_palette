@@ -19,24 +19,28 @@
 <div id="panel" class="panel plt-pn ">
 	<div class="container preview_panel">
 		<c:forEach var="func" items="${funcs }">
-			<div class="row preview_func_div" data-panelfuncname="${func.nameEng }">
-				<c:choose>
-					<c:when test="${func.isButton eq true}">
-						<div>
-							<div id="paenl-div-${func.nameEng }" class="func-${func.nameEng }">
-								<!-- /cafe24/tmp/funhction/recent.... -->
+			<c:choose>
+				<c:when test="${func.isButton eq true}">
+					<div class="preview_func_div" data-panelfuncname="${func.nameEng }" data-isbtn=${func.isButton }>
+						<div class="row">
+							<div id="paenl-div-${func.nameEng }" class="preview-func-${func.nameEng }" style="width: 90%;">
 								<c:import url="${func.desktopPath }" charEncoding="UTF-8"/>
 							</div>
 						</div>
-					</c:when>
-					
-					<c:otherwise> 
-						<div id="panel-div-${func.nameEng }" class="func-${func.nameEng }" data-panelfuncname="${func.nameEng }">
+					</div>
+				</c:when>
+				
+				<c:otherwise>
+				
+				<div class="preview_func_div" data-panelfuncname="${func.nameEng }" data-isbtn=${func.isButton }> 
+					<div class="row">
+						<div id="panel-div-${func.nameEng }" class="preview-func-${func.nameEng }">
 							<c:import url="${func.desktopPath }" charEncoding="UTF-8"/> 
 						</div>
-					</c:otherwise> 
-				</c:choose>
-			</div>
+					</div>
+				</div>
+				</c:otherwise> 
+			</c:choose>
 		</c:forEach>
 	</div>
 </div>

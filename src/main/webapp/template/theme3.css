@@ -17,6 +17,10 @@
   /****************************************************************/
   /* panel button ฐüทร css */
 }
+.plt-pn-block {
+	display: block;
+	margin: 0 auto;
+}
 .plt-pn-box {
   padding: 1.063em 0;
   border-top: 0.063em solid #ececec;
@@ -112,6 +116,10 @@
   border-radius: 0.25em;
   text-align: center;
   /* mobile button */
+}
+.plt-pn-block {
+	display: block;
+	margin: 0 auto;
 }
 .plt-pn-btn-default {
   /* default btn css */

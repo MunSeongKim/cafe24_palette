@@ -32,7 +32,11 @@ $whiteColor: #ffffff;
 	color: $blackColor;
 	/* border: 1px solid #000; */
 	text-shadow: none;
-	
+    &-block {
+        /* inline -> block */
+        display: block;
+        margin: 0 auto;
+    }
     &-box {
         padding: 1.063em 0;
         border-top: 0.063em solid $borderBoxColor;

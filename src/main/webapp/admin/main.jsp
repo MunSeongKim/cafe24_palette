@@ -15,6 +15,11 @@
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/font-awesome/5.1.0/css/all.css"/> 
 
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/template/panel.css">
+ 
+<!-- preview_panel 기본 theme 적용 -->
+<link rel="stylesheet" id="themeEx" href="">
+
 <!-- jQuery library -->
 <script src="${pageContext.servletContext.contextPath }/static/jquery/1.11.1/jquery.min.js"></script>
 <script src="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.min.js"></script>
@@ -22,99 +27,30 @@
 <script src="${pageContext.servletContext.contextPath }/static/mustachejs/2.2.1/mustache.min.js"></script>
 <script src="${pageContext.servletContext.contextPath }/static/popper.js/1.14.3/dist/umd/popper.min.js"></script>
 <script src="${pageContext.servletContext.contextPath }/admin/assets/js/cookie.js"></script>
+
+<!-- 패널 미리보기 -->
 <script type="text/javascript" src="${pageContext.servletContext.contextPath }/admin/assets/js/preview_panel.js"></script>
 
-<!-- Google Chart -->
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
-<script type="text/javascript">
-	google.charts.load('current', {'packages' : ['corechart']});
-	google.charts.setOnLoadCallback(drawVisualization);
-	google.charts.setOnLoadCallback(drawChart); 
-	
-	function drawVisualization() { 
-		var data = google.visualization.arrayToDataTable([
-				['Month', 'Bolivia', 'Ecuador', 'Madagascar', 'Papua New Guinea', 'Rwanda', 'Average'],
-				['2004/05',  165,      938,         522,             998,           450,      614.6],
-				['2005/06',  135,      1120,        599,             1268,          288,      682],
-				['2006/07',  157,      1167,        587,             807,           397,      623],
-				['2007/08',  139,      1110,        615,             968,           215,      609.4],
-				['2008/09',  136,      691,         629,             1026,          366,      569.6]
-			]);
-		var options = {
-				title : 'Monthly Coffee Production by Country',
-				vAxis: {title: 'Cups'},
-				hAxis: {title: 'Month'}, 
-				seriesType: 'bars',
-				series: {5: {type: 'line'}},
-				width : '100%',
-				height : '100%'
-			};
-		
-		var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
-		chart.draw(data, options);
-	}
-	
-	function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Task', 'Hours per Day'],
-          ['Work',     11],
-          ['Eat',      2],
-          ['Commute',  2],
-          ['Watch TV', 2],
-          ['Sleep',    7]
-        ]);
-
-        var options = {
-          title: 'My Daily Activities',
-          pieHole: 0.4,
-          width : '100%',
-          height : '100%'
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-        chart.draw(data, options);
-      }
-</script>
-
 <style>
-@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+@import url(https://fonts.googleapis.com/earlyaccess/notosanskr.css);
 
 * {
 	margin: 0;
 	padding: 0;
-	font-family: 'Noto Sans KR', 'Dotum', '돋움', 'arial', 'verdana', sans-serif;
+	font-family: 'Noto Sans KR', 'Dotum', '돋움', 'arial', 'verdana', sans-serif; 
 }
 
 body{
 	height : 100%;
 	background-color: #563d7c;
-} 
+}
 
-.container {
+#mainNavbar .container, #mainContainer .container{
 	position: relative;
-}
-
-table, table thead th {
-	text-align: center;
-}
-
-.navbar{
-	background-color: #563d7c;
-	color : white;
-}
-
-.navbar-brand{
-	margin-left: -15px;
 }
 
 #panellist{
 	width: 100%;
-}
-
-.nav-li-inverse{
-	background-color: white;
-	color: #563d7c; !important;
 }
 
 #palette-tab{
@@ -125,47 +61,65 @@ table, table thead th {
 	width: 100%;
 }
 
-.none-event{
+/* #mainNavbar CSS */
+
+#mainNavbar .navbar{
+	background-color: #563d7c;
+	color : white;
+}
+
+#mainNavbar .navbar-brand{
+	margin-left: -15px;
+}
+
+#mainNavbar .none-event{
 	pointer-events : none;
 	color: white !important;
 }
 
-.nav-tabs{
+#mainNavbar .nav-tabs{
 	border: none;
 }
 
-.nav-tabs li{
+#mainNavbar .nav-tabs li{
 	margin-right: 15px;
 }
 
-.nav-tabs a {
+#mainNavbar .nav-tabs a {
 	color: #949494;
 }
 
-.nav-tabs .nav-link {
+#mainNavbar .nav-tabs .nav-link {
 	border: none;
 }
 
-.navbar-nav .nav-item .nav-link.active {
+#mainNavbar .navbar-nav .nav-item .nav-link.active {
 	background: inherit;
 }
 
-.card{
+
+/* @mainContainer CSS */
+#mainContainer table, table thead th {
+	text-align: center;
+}
+
+#mainContainer .card{
 	box-shadow: 4px 4px 4px #AAAAAA;
 }
 
-.carousel-inner{
+#mainContainer .carousel-inner{ 
 	overflow: visible;
+	position: relative;
+    width: 100%;
 }
 
-.sub-tab-title{ 
+#mainContainer .sub-tab-title{
 	font-weight: 700;
 }
 
 .panel-detail-info-div p{
 	display: inline;
 }
-
 
 /* 모달 CSS */
 .palette-modal-header{
@@ -181,32 +135,74 @@ table, table thead th {
 	margin-left: 10px;
 }
 
-.modal-footer{
-	padding: 0.625em;
-}
-
-.selected-func-table-div{
-	margin: 0px auto;
-}
-
-.panel-name-td{
+/* #tblPanelList CSS start */
+#tblPanelList .panel-name-td{
 	cursor: pointer;
+}
+
+#tblPanelList .preview-panel-btn > .panelOpen{
+	color: blue;
+}
+
+#tblPanelList .preview-panel-btn > .panelClose{
+	color: red;
 }
 
 </style>
 
 <script type="text/javascript">
+
+/* Panel Detail Info 데이터 갱신 */
 function renderDetail(idx, data) {
-	console.log(idx);
 	var template = $('#mustache-panellist-template').html();
 	Mustache.parse(template);
 	var rendered = Mustache.render(template, data[idx]);
-	$('#mustache-result').html('').append(rendered);	
+	$('#mustache-panelDetail-result').html('').append(rendered);
+}
+
+/* theme 선택 css file 변경 */
+function includeThemeFile(path) {
+	var themeFlag = 0;
+	$("head > link").each(function(){
+		if($(this).attr("id")=="themeEx"){
+			// href만 갈아끼우기
+			$(this).attr("href", path);
+			themeFlag = 1;
+			return false; // break;
+		}
+	}); 
+	
+	if(themeFlag == 1){
+		return;
+	}
+	
+	var element = document.createElement("link");
+	$(element).attr("id", "themeEx");
+	$(element).attr("rel", "stylesheet"); 
+	$(element).attr("type", "text/css");
+	$(element).attr("href", path);
+	
+  	// element 잘 생성이 안되었을 때.
+  	if (typeof element != "undefined") {
+    	$("head").append(element);
+  	}
 }
 
 $(document).ready(function(){
-	var data = new Array();
 	
+	/* 패널 미리보기 초기화 */
+	$.previewPanel.init({
+		visible : "hide",
+		funcVisible : false
+	});
+	
+	/* carousel 초기화 */
+	$('.carousel').carousel({
+		interval : false /* auto slide off */
+	})
+	
+	/* panel list data preprocessing start*/
+	var data = new Array();
 	<c:forEach items="${list}" var="panel">
 		var obj = {};
 		var funcs = [];
@@ -216,6 +212,7 @@ $(document).ready(function(){
 		obj['panelPosition'] = "${panel.position}";
 		obj['panelType'] = "${panel.panelType}";
 		obj['themeTitle'] = "${panel.theme.title}";
+		obj['themeFilePath'] = "${pageContext.servletContext.contextPath}${panel.theme.filePath}";
 		obj['themeTitleImgPath'] = "${pageContext.servletContext.contextPath}${panel.theme.titleImgPath}";
 		obj['scriptDpLocation'] = "${panel.script.dpLocation}";
 		
@@ -230,11 +227,41 @@ $(document).ready(function(){
 		
 		obj["funcs"] = funcs;
 		data.push(obj);
-		console.log(data);
 	</c:forEach>
+	/* panel list data proprecessing end */
 	
-	console.log(data);
+	/* 옵션에 해당하는 기능의 div 재배치 및 출력 */
+	function funcRender(idx){
+		var funcOrderList = [];  // 기능이 배치된 순서대로 기능명이 array에 있음.
+		var position = data[idx].panelPosition.toLowerCase();
+		var removePosition = "left";
+		
+		if(position == 'left'){
+			removePosition = 'right';
+		}
+		
+		$.previewPanel.setPosition({
+			position : position,
+			removePosition : removePosition
+		});
+		
+		data[idx].funcs.forEach(function(func, index){
+			funcOrderList.push(func.funcEngName);
+			
+			tmpElement = $(".preview_panel > div[data-panelfuncname="+func.funcEngName+"]");
+			
+			if(index==0){
+				$(".preview_panel").prepend(tmpElement);
+			}else{
+				exTmpElement = $(".preview_panel > div[data-panelfuncname="+funcOrderList[index-1]+"]");
+				$(exTmpElement).after(tmpElement);
+			}
+			
+			$(tmpElement).removeClass("hide");
+		});
+	} 
 	
+	/* 메뉴 상단 탭 클릭 시 */
 	$(".nav-tabs a").click(function(event){
 		event.stopPropagation;
 		$(":not(this)").children("span.current-nav").text("");
@@ -244,30 +271,76 @@ $(document).ready(function(){
 		$(this).addClass("none-event");
 	});
 	
-	$('.carousel').carousel({
-		interval : false /* auto slide off */
-	})
-	
+	/*  */
  	$('#adminTabContent').on('slide.bs.carousel', function (evt) {
     	$('#adminTabContent .controls li.active').removeClass('active');
     	$('#adminTabContent .controls li:eq(' + $(evt.relatedTarget).index() + ')').addClass('active');
     });
 	
-	$("#tbl-panel-list > tbody > tr").hover(function(){
+	/* panel List Table에 마우스를 올렸을 때. */
+	$("#tblPanelList > tbody > tr").hover(function(){
 		$(this).toggleClass("table-success");
 	});
 	
-	$("#tbl-panel-list > tbody .panel-name-td").click(function(){
-		renderDetail(($(this).prev().text()-1), data);
+	/* 리스트에서 Panel Name을 눌러서 상세정보를 볼 때. */
+	$("#tblPanelList > tbody .panel-name-td").click(function(){
+		/* preview Panel 숨김 */
+		$.previewPanel.close();
+		
+		/* 모든 기능 div 숨김 */
+		$(".preview_func_div").each(function(){
+			if(!$(this).hasClass("hide")){
+				$(this).addClass("hide"); 
+			}
+		});
+		
+		var idx = ($(this).prev().text()-1);
+		
+		/* preview panle에 적용될 CSS 파일 위치 */
+		var cssFilePath = data[idx].themeFilePath;
+		
+		/* 맨 처음만 동작 */
+		if($(".preview-panel-btn").hasClass("hide")){
+			funcRender(idx);
+		}
+		
+		/* 미리보기 버튼 출력 */
+		$(".preview-panel-btn").removeClass("panelOpen hide");
+		
+		/* preview_panel이 사라지게 하면서.. */
+		$("#panelArea").fadeOut(300, function(){
+			$.previewPanel.close();
+			funcRender(idx);
+		}); 
+		
+		/* theme css File 교체 */
+		includeThemeFile(cssFilePath, "css");
+		
+		/* Panel Detail Info에 데이터 교체 */
+		renderDetail(idx, data);
+	}); 
+	
+	/* 미리보기 클릭 시 - 패널 보이기 */
+	$(".preview-panel-btn").click(function(){
+		$("#panelArea").show();
+		
+		if(!$(this).hasClass("panelOpen")){
+			$(this).toggleClass("panelOpen");
+			$.previewPanel.open();
+		}else{
+			$(this).toggleClass("panelOpen");
+			$.previewPanel.close();
+		}
 	});
 });
-</script> 
+</script>
+
 <title>Palette</title>
 </head>
 
-<body>
+<body id="main-body">
 	<!-- Navigation -->  
-    <nav class="navbar navbar-expand-lg navbar-dark static-top">
+    <nav id="mainNavbar" class="navbar navbar-expand-lg navbar-dark static-top">
     	<div class="container">
         	<a class="navbar-brand" href="#" style="font-size: 1.5em;"><i class="custom-i fas fa-palette"></i> Palette</a>
         	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#controls" aria-controls="controls" aria-expanded="false" aria-label="Toggle navigation">
@@ -307,13 +380,13 @@ $(document).ready(function(){
     	</div>
     </nav>
      
-    <!-- <div id="panel-area">
-    </div>  -->
+    <div id="panelArea">
+    </div>
   
     <!-- Page Content -->
-    <div class="container">
+    <div id="mainContainer" class="container">
 		<div class="row carousel slide" id="adminTabContent" data-ride="carousel">
-			<div class="carousel-inner">
+			<div class="carousel-inner"> 
 				<!-- Panel List Tab-->
 				<div class="row carousel-item active" id="panellist">
 					
@@ -331,7 +404,7 @@ $(document).ready(function(){
 							</div>
 							
 							<div class="row"> 
-								<table id="tbl-panel-list" class="table table-striped table-centered mb-0 table-sm">
+								<table id="tblPanelList" class="table table-striped table-centered mb-0 table-sm">
 									<thead>
 										<tr>
 											<th>No.</th>
@@ -407,21 +480,14 @@ $(document).ready(function(){
 						<div class="main card-body">
 							<div class="row mb-3"> 
 								<div class="col-sm-6">
-									<h4 class="sub-tab-title"><i class="fas fa-info-circle"></i> Panel Detail Info</h4>
+									<h4 class="sub-tab-title d-inline"><i class="fas fa-info-circle"></i> Panel Detail Info</h4>
+									<button class="btn btn-sm btn-info align-bottom preview-panel-btn hide">미리보기</button> 
 								</div>
 							</div>
-							<div id="mustache-result">
+							<div id="mustache-panelDetail-result">
 								<h5>Please Click Panel List</h5>
 							</div>
 							<script id="mustache-panellist-template" type="text/template">
-							<!-- 보여줄 정보 
-								패널명
-								패널 position 정보
-								패널 생성일
-								패널이 적용된 지점 (dp_location)
-								적용된 기능 list + 순서
-								적용된 테마 이름
-							 -->
 							<div class="row">
 								<div class="col-sm-6">
 									<p class="text-monospace">패널명:</p>
@@ -480,11 +546,12 @@ $(document).ready(function(){
 					</div>
 				</div>
 			
-				<!-- Statistics Tab Start --> 
+				<!-- Statistics Tab Start -->
 				<div class="col-sm-12 col-md-12 carousel-item" id="stat">
 					<div class="row" style="height: 100%;">
-						<div class="col-sm-6 card mt-5 rounded" style="height: 500px; ">
-							<div id="chart_div"> 
+						<div class="col-sm-6 card mt-5 rounded">
+							<div id="chart_div">
+								
 							</div> 
 						</div>
 						
@@ -546,6 +613,7 @@ $(document).ready(function(){
 		</div>
 	</div>
 	
+	<!-- 적용, 해체 등에 대한 script -->
 	<script>
 	function buttonChange(clickChangeState, autoChangeState) {
 		var clickStatePanelId = clickChangeState.panelId;
@@ -729,11 +797,11 @@ $(document).ready(function(){
 						return;
 					}
 					
-					//$('#tbl-panel-list tbody tr:nth-child('+count+')').remove();
+					//$('#tblPanelList tbody tr:nth-child('+count+')').remove();
 					$(removeTarget).remove();
 					
 					for(i=1;i<=${fn:length(list)};i++) {
-						$('#tbl-panel-list tbody tr:nth-child('+i+') td:first').text(i);
+						$('#tblPanelList tbody tr:nth-child('+i+') td:first').text(i);
 					}
 					alert('삭제되었습니다.');
 				}

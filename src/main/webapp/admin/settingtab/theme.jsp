@@ -54,7 +54,7 @@ function includeThemeFile(path) {
 	
 	var element = document.createElement("link");
 	$(element).attr("id", "themeEx");
-	$(element).attr("rel", "stylesheet"); 
+	$(element).attr("rel", "stylesheet");
 	$(element).attr("type", "text/css");
 	$(element).attr("href", path);
 	

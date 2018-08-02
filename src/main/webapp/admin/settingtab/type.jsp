@@ -19,7 +19,7 @@ $(document).ready(function(){
 		var removePosition = $(':radio[name=position]').not($(this)).val().toLowerCase(); 
 		
 		// 현재 선택된 포지션의 정보 및 삭제 할 포지션 정보
-		$.panel.setPosition({
+		$.previewPanel.setPosition({
 			'position':position,
 			'removePosition':removePosition
 		});
@@ -32,7 +32,7 @@ $(document).ready(function(){
 		}
 		
 		// 패널, 패널 버튼, 스크롤 위치 변경 - open인 상태로 위치 변경
-		$.panel.changePanel('open');
+		$.previewPanel.open();
 	});
 	
 	$("#confirmForm").submit(function(event){
