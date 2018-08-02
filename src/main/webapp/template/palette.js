@@ -97,7 +97,6 @@ $(document).ready(function() {
     $.panel.changePanel('close');
 	
 	$("#panel-draggable-btn").draggable({
-		helper: "clone",
 		axis : "y",
 		containment : "window" // 180713 hwi 추가
 	});

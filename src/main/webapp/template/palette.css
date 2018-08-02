@@ -49,6 +49,7 @@
 	-o-transition: .3s ease-in-out;
 	transition: .3s ease-in-out;
 	cursor: pointer;
+	z-index: 1;
 }
 
 #panel-draggable-btn span {
@@ -56,7 +57,7 @@
 	position: absolute;
 	height: 0.5em;
 	width: 100%;
-	background: lightgray;
+	background: #333;
 	border-radius: 0.563em;
 	opacity: 1;
 	left: 0;
@@ -109,13 +110,15 @@
 .scroll_mm_div {
 	right: 2.5em;
 	position: fixed;
-	top: 50%;
+	top: 80%;
 	/*left:50%;*/
 	width: 0.625em;
 	-webkit-transition: .3s ease-in-out;
 	-moz-transition: .3s ease-in-out;
 	-o-transition: .3s ease-in-out;
 	transition: .3s ease-in-out;
+	
+	z-index : 1;
 }
 
 .scroll_top {

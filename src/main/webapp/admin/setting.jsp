@@ -14,10 +14,12 @@
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.min.css">
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"/>
-<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/font-awesome/5.1.0/css/all.css"/> 
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/font-awesome/5.1.0/css/all.css"/>
+ 
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/admin/assets/css/setting.css">
-<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/template/palette.css">
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/admin/assets/css/default-theme.css">
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/template/palette.css">
+
 
 <script src="${pageContext.servletContext.contextPath }/static/jquery/1.11.1/jquery.min.js"></script>
 <script src="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.js"></script>
