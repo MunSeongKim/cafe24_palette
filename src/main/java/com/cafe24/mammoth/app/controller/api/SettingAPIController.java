@@ -28,7 +28,7 @@ public class SettingAPIController {
 	public JSONResult canUsePanelName(@RequestBody String name){
 		System.out.println("name : "+name);
 		
-		boolean result = panelService.canUsePanelName(name);
+		boolean result = panelService.isExistByName(name);
 		return JSONResult.success(result == true ? "non-exist" : "exist");
 	}
 	

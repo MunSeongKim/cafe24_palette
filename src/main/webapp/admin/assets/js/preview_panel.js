@@ -1,23 +1,95 @@
+/*
+ * 패널 미리보기 JS
+ * $.previewPanel 을 통해 preview_panel을 조정한다.
+ * 
+ */
 (function($) {
 	var p = {};
 	
-	$.panel = {
+	$.previewPanel = {
 		// p의 디폴트 값.
 		defaults : {
-			'position' : 'right',
-			'removePosition' : 'left'
+			visible : false,
+			funcVisible : false,
+			position : 'right',
+			removePosition : 'left'
 		},
 		
-		// p에 default값 세팅 / 위치가 바뀌면 바뀐 위치+default를 p에 세팅
-		setPosition : function(positions){
-			p = $.extend(true, {}, $.panel.defaults, positions);
+		init : function(opts){
+			
+			$('#panelArea').load('/mammoth/setting/preview', function(){
+				
+				$("#panel-draggable-btn").draggable({
+					axis : "y", 
+					containment : "window" // 180713 hwi 추가
+				});
+				
+				$("#panel-draggable-btn").on('click', function() {
+					if($(this).is('.open') == true) { 
+						$.previewPanel.close(); 
+						return;
+					}
+					
+					$(this).addClass('open');
+					$.previewPanel.open();
+				});
+				
+				/*
+				 * 180712 hwi
+				 * 스크롤 맨 위, 아래 버튼 start 
+				 */
+				// draggable 참고사이트: https://api.jqueryui.com/draggable/#option-containment
+				$(".scroll_mm_div").draggable({
+					axis : "y",  // option : x, y
+					containment:"window"  // option : parent, document, window 화면에서 element나가는 것을 방지하기 위해 window선언
+				});
+				$('.scroll_top').click(function(){
+					$('html, body').animate({scrollTop: 0}, 200); // 무조건 맨 위 scrollY value 0
+				});
+				
+				$('.scroll_bottom').click(function(){
+					// document max height value - window max height = 스크롤을 최대로 내릴 수 있는 height값이 나온다.
+					$("html, body").animate({scrollTop:$(document).height()- $(window).height()}, 200);
+				});
+				
+				// preview_panel.jsp가 모두 로드되어  id가 panel인 element가 생성 된 후.
+				// 그래서 callback 함수 안에 있는 것임.
+				p = $.extend(true, {}, $.previewPanel.defaults, opts);
+				
+				if(p.visible == true){
+					$.previewPanel.open();
+				}else if(p.visible == false){
+					$.previewPanel.close(); 
+				}else if(p.visible == "hide"){
+					$.previewPanel.displayNone();
+				}
+				
+				/*if(p.funcVisible == false){
+					$(".preview_func_div").addClass("hide");
+				}*/ 
+				
+			});
+
 		},
 		
-		// 패널 버튼을 클릭하였을 때, action에 따라 패널, 패널 버튼, 스크롤의
-		// CSS를 변경한다.
-		nav : function(action) {
-			$('#panel-draggable-btn').toggleClass('open'); // 버튼 모양 변경
-			$.panel.changePanel(action);
+		setPosition : function(position){ 
+			p = $.extend(true, {}, p, position);
+			$.previewPanel.open();
+		},
+		
+		open : function(){
+			$('#panel-draggable-btn').addClass('open');
+			$.previewPanel.changePanel('open'); 
+		},
+		
+		close : function(){
+			$('#panel-draggable-btn').toggleClass('open');
+			$.previewPanel.changePanel('close');
+		},
+		
+		displayNone : function(){
+			$('#panel-draggable-btn').toggleClass('open');
+			$("#panelArea").hide();
 		},
 		
 		// 패널, 버튼, 스크롤의 CSS 결정.
@@ -26,11 +98,11 @@
 			var draggableCss = {};
 			var scrollCss = {};
 			
-			panelCss[p.position] = '0';
-			panelCss[p.removePosition] = '';
-			panelCss['width'] = '15.625em';
+			panelCss[p.position] = '0';       // ex) 오른쪽 패널이면 position -> right 이므로 right를 0으로 하고
+			panelCss[p.removePosition] = '';  //     left 속성은 제거한다.
 			
 			if(action == 'open') {
+				panelCss['width'] = '15.625em';
 				panelCss['margin-'+p.position] = '0';
 				draggableCss[p.position] ="15.625em";
 				draggableCss[p.removePosition]="";
@@ -45,6 +117,7 @@
 			} 
 			// 패널을 닫았을 때.
 			else {
+				panelCss['width'] = '0em';
 				panelCss['margin-'+p.position] = '-15.625em';
 				draggableCss[p.position] ="0";
 				draggableCss[p.removePosition]="";
@@ -59,7 +132,7 @@
 			}
 			
 			// CSS 적용
-			$("#panel").css(panelCss);                                       
+			$("#panel").css(panelCss);
 			$("#panel-draggable-btn").css(draggableCss);
 			$(".scroll_mm_div").css(scrollCss);
 		}
@@ -70,51 +143,6 @@
 $(document).keyup(function(e) {
 	if (e.keyCode == 27) { // escape key maps to keycode `27`
 		if(!$('#panel-draggable-btn').is('.open')) { return; }
-		$.panel.nav('close');
+		$.previewPanel.close();
 	}
 });
-
-$(document).ready(function() { 
-	/// preview_panel.jsp 로드
-	$('#panel-area').load('/mammoth/setting/preview', function(){
-	/*$('#panel-area').load('/mammoth/admin/preview_panel.html', function(){*/
-		$.panel.setPosition();
-		$.panel.changePanel('open');
-		
-		$("#panel-draggable-btn").draggable({
-			axis : "y", 
-			containment : "window" // 180713 hwi 추가
-		});
-		
-		$("#panel-draggable-btn").on('click', function() {
-			if($('#panel-draggable-btn').is('.open') == true) {
-				$.panel.nav('close');
-				return; 
-			}
-			$.panel.nav('open');
-		});
-		
-		/*
-		 * 180712 hwi
-		 * 스크롤 맨 위, 아래 버튼 start 
-		 */
-		// draggable 참고사이트: https://api.jqueryui.com/draggable/#option-containment
-		$(".scroll_mm_div").draggable({
-			axis : "y",  // option : x, y
-			containment:"window"  // option : parent, document, window 화면에서 element나가는 것을 방지하기 위해 window선언
-		});
-		$('.scroll_top').click(function(){
-			console.log('toptop');
-			$('html, body').animate({scrollTop: 0}, 200); // 무조건 맨 위 scrollY value 0
-		});
-		
-		$('.scroll_bottom').click(function(){
-			console.log('bottom');
-			// document max height value - window max height = 스크롤을 최대로 내릴 수 있는 height값이 나온다.
-			$("html, body").animate({scrollTop:$(document).height()- $(window).height()}, 200);
-		});
-		
-	});
-		
-});
-

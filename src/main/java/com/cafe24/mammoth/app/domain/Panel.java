@@ -39,7 +39,7 @@ public class Panel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long panelId;
 
-	@Column(nullable = false, length = 100)
+	@Column(name="name", nullable = false, length = 100)
 	private String name;
 
 	// 15.625em, 50%, 100%

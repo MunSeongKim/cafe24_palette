@@ -14,11 +14,10 @@
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.min.css">
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"/>
-<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/font-awesome/5.1.0/css/all.css"/>
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/font-awesome/5.1.0/css/all.css"/> 
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/admin/assets/css/setting.css">
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/template/palette.css">
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/admin/assets/css/default-theme.css">
-
 
 <script src="${pageContext.servletContext.contextPath }/static/jquery/1.11.1/jquery.min.js"></script>
 <script src="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.js"></script>
@@ -117,7 +116,7 @@
 			<div class="modal-content">
 				<div class="palette-modal-header modal-header">
 				  <h5 class="palette-modal-title modal-title" style="margin-left: 10px;">
-				  	<i class="custom-i fas fa-palette"></i>Palette
+				  	<i class="custom-i fas fa-palette"></i> Palette
 				  </h5>
 				    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true" style="padding: 5px;">&times;</span>
@@ -145,7 +144,7 @@ $(window).on("beforeunload", function(e){
 
 function includeTargetElement() {
   	var element = document.createElement("div");
-  	element.setAttribute("id", "panel-area");
+  	element.setAttribute("id", "panelArea"); 
   	document.body.appendChild(element);
 }
 
@@ -242,6 +241,11 @@ function resizeDone(){
 
 /* DOM이 모두 준비되고 */
 $(document).ready(function(){
+	
+	/* 패널 미리보기 수행 */
+	$.previewPanel.init({
+		visible : true
+	});
 	
 	$(window).on('resize', function(){
 		var timer = null;

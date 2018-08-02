@@ -208,10 +208,6 @@ li{
 	cursor: not-allowed;
 }
 
-/* .nav-tabs {
-	border: 0px;
-} */
-
 .nav-tabs>li>a{
 	pointer-events: none;
 	border: 0px; 

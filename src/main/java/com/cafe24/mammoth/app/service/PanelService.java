@@ -101,8 +101,14 @@ public class PanelService {
 		return panelRepository.findByMemberIdAndScriptIsIsApplyTrue(mallId);
 	}
 	
-	public boolean canUsePanelName(String name) {
-		return panelRepository.confirmPanelName(name) == 0 ? true : false;
+	public boolean isExistByName(String name) {
+		System.out.println(panelRepository.confirmPanelName(name));
+		System.out.println(panelRepository.findOne(7L));
+		System.out.println("name : "+name);
+//		System.out.println("canUsePanelName : "+result);
+		 
+//		return result == null ? true : false;
+		return false;
 	}
 	
 }
