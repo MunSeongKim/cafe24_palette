@@ -72,8 +72,16 @@
 
 		},
 		
+		// 다시 위치를 결정 할 때.
 		setPosition : function(position){ 
 			p = $.extend(true, {}, p, position);
+			
+			// 기존의 방향과 다른 class는 삭제.
+			$("#panel").removeClass("panel-"+p.removePosition+"-open panel-"+p.removePosition+"-close");
+			$("#panel-draggable-btn").removeClass("panel-"+p.removePosition+"-draggable-open panel-"+p.removePosition+"-draggable-close");
+			$(".scroll_mm_div").removeClass("panel-"+p.removePosition+"-scroll-open panel-"+p.removePosition+"-scroll-close");
+			
+			// position이 바뀌어서 다시 적용시키기 위해서 여기서 open()을 호출.
 			$.previewPanel.open();
 		},
 		
@@ -94,47 +102,27 @@
 		
 		// 패널, 버튼, 스크롤의 CSS 결정.
 		changePanel : function(action){
-			var panelCss = {};
-			var draggableCss = {};
-			var scrollCss = {};
-			
-			panelCss[p.position] = '0';       // ex) 오른쪽 패널이면 position -> right 이므로 right를 0으로 하고
-			panelCss[p.removePosition] = '';  //     left 속성은 제거한다.
 			
 			if(action == 'open') {
-				panelCss['width'] = '15.625em';
-				panelCss['margin-'+p.position] = '0';
-				draggableCss[p.position] ="15.625em";
-				draggableCss[p.removePosition]="";
+				$("#panel").removeClass("panel-"+p.position+"-close");
+				$("#panel-draggable-btn").removeClass("panel-"+p.position+"-draggable-close");
+				$(".scroll_mm_div").removeClass("panel-"+p.position+"-scroll-close");
 				
-				if(p.position == 'left'){
-					scrollCss[p.position] ="16em";
-				}else{
-					scrollCss[p.position] ="17.625em";
-				}
-				
-				scrollCss[p.removePosition]="";
-			} 
-			// 패널을 닫았을 때.
-			else {
-				panelCss['width'] = '0em';
-				panelCss['margin-'+p.position] = '-15.625em';
-				draggableCss[p.position] ="0";
-				draggableCss[p.removePosition]="";
-				
-				if(p.position == 'left'){
-					scrollCss[p.position] ="0em";
-				}else{
-					scrollCss[p.position] ="2.5em";
-				}
-				
-				scrollCss[p.removePosition]="";
+				$("#panel").addClass("panel-"+p.position+"-open");
+				$("#panel-draggable-btn").addClass("panel-"+p.position+"-draggable-open");
+				$(".scroll_mm_div").addClass("panel-"+p.position+"-scroll-open");
 			}
 			
-			// CSS 적용
-			$("#panel").css(panelCss);
-			$("#panel-draggable-btn").css(draggableCss);
-			$(".scroll_mm_div").css(scrollCss);
+			// 패널을 닫았을 때.
+			else if(action == 'close'){
+				$("#panel").removeClass("panel-"+p.position+"-open");
+				$("#panel-draggable-btn").removeClass("panel-"+p.position+"-draggable-open");
+				$(".scroll_mm_div").removeClass("panel-"+p.position+"-scroll-open");
+				
+				$("#panel").addClass("panel-"+p.position+"-close");
+				$("#panel-draggable-btn").addClass("panel-"+p.position+"-draggable-close");
+				$(".scroll_mm_div").addClass("panel-"+p.position+"-scroll-close");
+			}
 		}
 	}
 }(jQuery));

@@ -14,8 +14,8 @@
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.theme.min.css">
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/font-awesome/5.1.0/css/all.css"/> 
-<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/template/palette.css"> 
- 
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/admin/assets/css/preview_panel.css">
+
 <!-- preview_panel 기본 theme 적용 -->
 <link rel="stylesheet" id="themeEx" href="">
 
@@ -25,7 +25,6 @@
 <script src="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="${pageContext.servletContext.contextPath }/static/mustachejs/2.2.1/mustache.min.js"></script>
 <script src="${pageContext.servletContext.contextPath }/static/popper.js/1.14.3/dist/umd/popper.min.js"></script>
-<script src="${pageContext.servletContext.contextPath }/admin/assets/js/cookie.js"></script>
 
 <!-- 패널 미리보기 -->
 <script type="text/javascript" src="${pageContext.servletContext.contextPath }/admin/assets/js/preview_panel.js"></script>
@@ -258,7 +257,7 @@ $(document).ready(function(){
 		$.previewPanel.setPosition({
 			position : position,
 			removePosition : removePosition
-		});
+		}); 
 		
 		data[idx].funcs.forEach(function(func, index){
 			funcOrderList.push(func.funcEngName);
@@ -299,6 +298,7 @@ $(document).ready(function(){
 	
 	/* 리스트에서 Panel Name을 눌러서 상세정보를 볼 때. */
 	$("#tblPanelList > tbody .panel-name-td").click(function(){
+		console.log("list click!!");
 		/* preview Panel 숨김 */
 		$.previewPanel.close();
 		
@@ -324,7 +324,8 @@ $(document).ready(function(){
 		
 		/* preview_panel이 사라지게 하면서.. */
 		$("#panelArea").fadeOut(300, function(){
-			$.previewPanel.close();
+			/* $.previewPanel.close();
+			funcRender(idx); */
 			funcRender(idx);
 		}); 
 		

@@ -18,7 +18,7 @@
  
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/admin/assets/css/setting.css">
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/admin/assets/css/default-theme.css">
-<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/template/palette.css">
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/admin/assets/css/preview_panel.css">
 
 
 <script src="${pageContext.servletContext.contextPath }/static/jquery/1.11.1/jquery.min.js"></script>

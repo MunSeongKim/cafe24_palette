@@ -23,8 +23,10 @@
 				<c:when test="${func.isButton eq true}">
 					<div class="preview_func_div" data-panelfuncname="${func.nameEng }" data-isbtn=${func.isButton }>
 						<div class="row">
-							<div id="paenl-div-${func.nameEng }" class="preview-func-${func.nameEng }" style="width: 90%;">
-								<c:import url="${func.desktopPath }" charEncoding="UTF-8"/>
+							<div id="paenl-div-${func.nameEng }" class="preview preview-func-${func.nameEng }" style="width: 90%;">
+								<c:import url="${func.desktopPath }" charEncoding="UTF-8">
+									<c:param name="isPreview" value="true" />
+								</c:import>
 							</div>
 						</div>
 					</div>

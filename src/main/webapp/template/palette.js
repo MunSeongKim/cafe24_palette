@@ -42,7 +42,7 @@
                 }
                 
                 scrollCss[p.removePosition]="";
-            } 
+            }
             // 패널을 닫았을 때.
             else {
                 panelCss['margin-'+p.position] = '-15.625em';
@@ -59,7 +59,7 @@
             }
             
             // CSS 적용
-            $("#panel").css(panelCss);                                      
+            $("#panel").css(panelCss);
             $("#panel-draggable-btn").css(draggableCss);
             $(".scroll_mm_div").css(scrollCss);
         },
