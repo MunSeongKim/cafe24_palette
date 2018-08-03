@@ -25,26 +25,26 @@
 
 /* 패널 버튼 우측 open*/
 .panel-right-draggable-open{
-	right : 15.625em;
-	left : unset;
+	right : 15.625em !important;
+	left : unset !important;
 }
 
 /* 패널 버튼 우측 close */
 .panel-right-draggable-close{
-	right : 0em;
-	left : unset;
+	right : 0em !important;
+	left : unset !important;
 }
 
 /* 스크롤 우측 open */
 .panel-right-scroll-open{
-	right : 15.625em;
-	left : unset;
+	right : 15.625em !important;
+	left : unset !important;
 }
 
 /* 스크롤 우측 close */
 .panel-right-scroll-close{
-	right : 0em;
-	left : unset;
+	right : 0em !important;
+	left : unset !important;
 }
 /********************************************************/
 
@@ -73,29 +73,50 @@
 
 /* 패널 버튼 좌측 open*/
 .panel-left-draggable-open{
-	right : unset;
-	left : 15.625em;
+	right : unset !important;
+	left : 15.625em !important;
 } 
 
 /* 패널 버튼 좌측 close */
 .panel-left-draggable-close{
-	right : unset;
-	left : 0em;
+	right : unset !important;
+	left : 0em !important;
 }
 
 /* 스크롤 좌측 open */
 .panel-left-scroll-open{
-	right : unset;
-	left : 15.625em;
+	right : unset !important;
+	left : 15.625em !important;
 }
 
 /* 스크롤 좌측 close */
 .panel-left-scroll-close{
-	right : unset;
-	left : 0em;
+	right : unset !important;
+	left : 0em !important;
 }
 
-/******************preview panel을 위한 CSS******************/
+/*****************[popup layer의 위치 결정을 위한 CSS]******************/
+.popup-right-open{
+	display : block !important;
+	position: fixed !important;
+	right: 15.625em !important;
+	top: 20% !important;
+}
+
+.popup-left-open{
+	display : block !important;
+	position: fixed !important;
+	left: 15.625em !important;
+	top: 20% !important;
+}
+
+.popup-close{
+	display: none !important;
+	left: unset !important;
+	right: unset !important;
+}
+/*****************************************************************/
+
 /* palette.css와 거의 흡사하지만 중간중간 변경이 있음.
     이유는 panel을 통제하는 js 부분이 class로 모두 변경되었기 때문임.
  */

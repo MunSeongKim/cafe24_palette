@@ -245,7 +245,7 @@ function resizeDone(){
 $(document).ready(function(){
 	
 	/* 패널 미리보기 수행 */
-	$.previewPanel.init({
+	$.panel.init({
 		visible : true
 	});
 	
@@ -457,11 +457,11 @@ function funcNextProcess(currentPage){
 	
 	if(currentPage == "type"){
 		
-		if($("#inputPanelName").val()=="" || $("#confirmFlag").val()=="false"){
+		/* if($("#inputPanelName").val()=="" || $("#confirmFlag").val()=="false"){
 			$(".modal-body").text("패널 명을 입력&확인 해주세요.");
 			$("#confirmModal").modal('show');
 			return false;
-		}
+		} */
 		
 	}else if(currentPage == "func"){ /* 기능 결정 페이지 next 할 때. */
 		var $li = $("#sortable").children("li");
