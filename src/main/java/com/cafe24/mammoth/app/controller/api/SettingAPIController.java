@@ -28,8 +28,6 @@ public class SettingAPIController {
 	
 	@PostMapping(value = "/panel/confirmPName")
 	public JSONResult isExistPanelName(@RequestBody Map<String, String> requestData){
-		System.out.println("name : "+requestData.get("name"));
-		
 		boolean result = panelService.isExistByName(requestData.get("name"));
 		return JSONResult.success(result == true ? "exist" : "non-exist");
 	}

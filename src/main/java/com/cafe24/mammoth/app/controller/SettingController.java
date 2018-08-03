@@ -64,15 +64,12 @@ public class SettingController {
 	
 	@PostMapping(value = "/create")
 	public String createPersist(
-			/*@ModelAttribute("mallId") String mallId,*/
+			@ModelAttribute("mallId") String mallId,
 			@RequestParam("panelname") String panelName,
 			@RequestParam("funcid") List<Long> funcId,
 			@RequestParam("funcorder") List<Long> funcOrder,
 			@RequestParam("themeid") Long themeId,
 			@RequestParam("position") String position) {
-		System.out.println("createPersist is called!!");
-		String mallId = "qyuee";
-		System.out.println("mallId: " + mallId);
 		panelService.createPanel(mallId, panelName, funcId, funcOrder, themeId, position);
 		
 		return "redirect:/"; 
@@ -84,6 +81,7 @@ public class SettingController {
 		return "admin/palette"; 
 	}
 	
+	@Deprecated
 	@GetMapping(value ="/update/{panelId}")
 	public String update(Model model, @ModelAttribute("mallId") String mallId,
 			@PathVariable("panelId") Long panelId) {

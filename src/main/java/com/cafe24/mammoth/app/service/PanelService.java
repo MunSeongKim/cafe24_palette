@@ -102,10 +102,7 @@ public class PanelService {
 	}
 	
 	public boolean isExistByName(String name) {
-		int result = panelRepository.confirmPanelName(name);
-		System.out.println("결과 : "+result);
-		 
-		return result == 1 ? true : false;
+		return panelRepository.confirmPanelName(name) == 1 ? true : false;
 	}
 	
 }
