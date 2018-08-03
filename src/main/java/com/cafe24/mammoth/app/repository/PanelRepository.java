@@ -22,4 +22,8 @@ public interface PanelRepository extends JpaRepository<Panel, Long> {
 
 	@Query("select count(p) from Panel p where p.name= :name")
 	public int confirmPanelName(@Param("name") String name);
+	
+	@Query("SELECT COUNT(p) FROM Panel p GROUP BY p.member")
+	public List<Long> perPersonPanelCount();
+
 }

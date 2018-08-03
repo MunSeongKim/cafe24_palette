@@ -1,5 +1,8 @@
 package com.cafe24.mammoth.app.service;
 
+import java.util.HashMap;
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +25,20 @@ public class StatisticService {
 		return PanelRepository.count();
 	}
 	
-	public Long getPerPersonPanelCount() {
-		/*// 사람마다 수정해야됨.
-		System.out.println("PanelRepository.count() ==> " + PanelRepository.perPersonPanelCount());
+	// 패널관련 통계
+	public Double getPerPersonPanelCount() {
+		List<Long> list = PanelRepository.perPersonPanelCount();
 		
-		return PanelRepository.perPersonPanelCount();*/
-		return 1L;
+		double perPersonPanelCount = (double)PanelRepository.count() / (double)list.size();
+				
+		return perPersonPanelCount;
 	}
 	
+	// 기능관련 통계
+	public List<Object[]> getFunctionCount(){
+		List<Object[]> list = selectFuncRepository.getFunctionCount();
+		
+		return list;
+	}
 	
 }

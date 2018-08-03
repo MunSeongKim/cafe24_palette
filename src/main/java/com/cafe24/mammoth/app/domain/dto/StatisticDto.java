@@ -9,8 +9,10 @@ import lombok.ToString;
 
 @Configuration
 @Getter @Setter @ToString
+//@AllArgsConstructor
 @EqualsAndHashCode
 public class StatisticDto {
-	private Long totalPanelCount;
-	private Long avgPerPanelCount;
+	private Long functionId;
+	private String functionName;
+	private Long functionCount;
 }

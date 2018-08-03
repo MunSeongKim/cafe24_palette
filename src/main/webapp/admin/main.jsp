@@ -562,33 +562,25 @@ $(document).ready(function(){
 					</div>
 				</div>
 			
-				<!-- Statistics Tab Start -->
+				<!-- Statistics Tab Start --> 
 				<div class="col-sm-12 col-md-12 carousel-item" id="stat">
+					<div class="row">
 					<!-- chart js 추가 -->
 					<!-- 1. doughnut chart -->
-					<div class="col-12 card mt-5 rounded">
+					<div class="col-12 col-md-6 card mt-5 rounded">
 						<div id="canvas-holder" style="width:100%">
 							<canvas id="chart-area"></canvas>
 						</div>
-						<button id="randomizeData">Randomize Data</button>
-						<button id="addDataset">Add Dataset</button>
-						<button id="removeDataset">Remove Dataset</button>
-						<button id="addData">Add Data</button>
-						<button id="removeData">Remove Data</button>
 					</div>
 					<!-- 2. vertical chart 
 						    [- 전체 패널 개수
 						    - 사용자 평균 개수]
 						    - 내 패널 개수 -->
-					<div class="col-12 card mt-5 rounded">
+					<div class="col-12 col-md-6 card mt-5 rounded">
 						<div id="container" style="width: 100%;">
 							<canvas id="canvas"></canvas>
 						</div>
-						<button id="randomizeData1">Randomize Data</button>
-						<button id="addDataset1">Add Dataset</button>
-						<button id="removeDataset1">Remove Dataset</button>
-						<button id="addData1">Add Data</button>
-						<button id="removeData1">Remove Data</button>
+					</div>
 					</div>
 				</div>
 				
