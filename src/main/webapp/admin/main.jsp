@@ -48,7 +48,7 @@ canvas {
 }
 /************/
 
-* {
+* { 
 	margin: 0;
 	padding: 0;
 	font-family: 'Noto Sans KR', 'Dotum', '돋움', 'arial', 'verdana', sans-serif; 
@@ -133,6 +133,7 @@ body{
 
 .panel-detail-info-div p{
 	display: inline;
+	font-weight: 600;
 }
 
 /* 모달 CSS */
@@ -150,21 +151,25 @@ body{
 }
 
 /* #tblPanelList CSS start */
-#tblPanelList .panel-name-td{
+#tblPanelList tr{
 	cursor: pointer;
 }
 
-#tblPanelList .preview-panel-btn > .panelOpen{
-	color: blue;
-}
-
-#tblPanelList .preview-panel-btn > .panelClose{
-	color: red;
+#preview-panel-btn {
+	padding: 0;
+	display: none;
+	background-color: #563d7c;
+	color: white;
 }
 
 </style>
 
 <script type="text/javascript">
+
+function renderDetailInit(){
+	var template = $('#mustache-panelDetail-result').html();
+	Mustache.parse(template);
+}
 
 /* Panel Detail Info 데이터 갱신 */
 function renderDetail(idx, data) {
@@ -205,7 +210,7 @@ function includeThemeFile(path) {
 $(document).ready(function(){
 	
 	/* 패널 미리보기 초기화 */
-	$.previewPanel.init({
+	$.panel.init({
 		visible : "hide",
 		funcVisible : false
 	});
@@ -254,7 +259,7 @@ $(document).ready(function(){
 			removePosition = 'right';
 		}
 		
-		$.previewPanel.setPosition({
+		$.panel.setPosition({
 			position : position,
 			removePosition : removePosition
 		}); 
@@ -285,7 +290,6 @@ $(document).ready(function(){
 		$(this).addClass("none-event");
 	});
 	
-	/*  */
  	$('#adminTabContent').on('slide.bs.carousel', function (evt) {
     	$('#adminTabContent .controls li.active').removeClass('active');
     	$('#adminTabContent .controls li:eq(' + $(evt.relatedTarget).index() + ')').addClass('active');
@@ -297,10 +301,13 @@ $(document).ready(function(){
 	});
 	
 	/* 리스트에서 Panel Name을 눌러서 상세정보를 볼 때. */
-	$("#tblPanelList > tbody .panel-name-td").click(function(){
-		console.log("list click!!");
+	$("#tblPanelList > tbody > tr").click(function(){
+		/* 클릭 된 tr 색 변경 */
+		$(this).addClass("bg-success");
+		$(":not(this)").removeClass("bg-success");
+		
 		/* preview Panel 숨김 */
-		$.previewPanel.close();
+		$.panel.close();
 		
 		/* 모든 기능 div 숨김 */
 		$(".preview_func_div").each(function(){
@@ -308,24 +315,23 @@ $(document).ready(function(){
 				$(this).addClass("hide"); 
 			}
 		});
-		
-		var idx = ($(this).prev().text()-1);
+		 
+		/* panel-name-td에 있는 순서 번호 가져오기 */
+		var idx = ($(".panel-name-td", this).prev().text()-1);
 		
 		/* preview panle에 적용될 CSS 파일 위치 */
 		var cssFilePath = data[idx].themeFilePath;
 		
 		/* 맨 처음만 동작 */
-		if($(".preview-panel-btn").hasClass("hide")){
+		if($("#preview-panel-btn").hasClass("hide")){
 			funcRender(idx);
 		}
 		
 		/* 미리보기 버튼 출력 */
-		$(".preview-panel-btn").removeClass("panelOpen hide");
+		$("#preview-panel-btn").fadeIn(300); 
 		
 		/* preview_panel이 사라지게 하면서.. */
 		$("#panelArea").fadeOut(300, function(){
-			/* $.previewPanel.close();
-			funcRender(idx); */
 			funcRender(idx);
 		}); 
 		
@@ -337,16 +343,9 @@ $(document).ready(function(){
 	}); 
 	
 	/* 미리보기 클릭 시 - 패널 보이기 */
-	$(".preview-panel-btn").click(function(){
+	$("#preview-panel-btn").click(function(){
 		$("#panelArea").show();
-		
-		if(!$(this).hasClass("panelOpen")){
-			$(this).toggleClass("panelOpen");
-			$.previewPanel.open();
-		}else{
-			$(this).toggleClass("panelOpen");
-			$.previewPanel.close();
-		}
+		$(this).fadeOut(300); 
 	});
 });
 </script>
@@ -373,7 +372,7 @@ $(document).ready(function(){
 	             			<span class="sr-only">(current)</span>
 	             		</a>
 	            	</li>
-	            
+	             
 	            	<li data-target="#adminTabContent" data-slide-to="1">
 	            		<a href="#">
 	            		<span class="current-nav"></span> 
@@ -390,6 +389,12 @@ $(document).ready(function(){
 	              		<a href="#">
 	              		<span class="current-nav"></span>
 	              		FileUpload</a>
+	            	</li>
+	            	
+	            	<li data-target="#adminTabContent" data-slide-to="4">
+	              		<a href="#">
+	              		<span class="current-nav"></span>
+	              		Contact Us</a>
 	            	</li>
 	          	</ul>
 	      	</div>
@@ -495,67 +500,71 @@ $(document).ready(function(){
 					<div class="col-sm-12 col-md-12 card mt-5 rounded panel-detail-info-div">
 						<div class="main card-body">
 							<div class="row mb-3"> 
-								<div class="col-sm-6">
-									<h4 class="sub-tab-title d-inline"><i class="fas fa-info-circle"></i> Panel Detail Info</h4>
-									<button class="btn btn-sm btn-info align-bottom preview-panel-btn hide">미리보기</button> 
+								<div class="col-sm-6"> 
+									<h4 class="sub-tab-title d-inline align-middle"><i class="fas fa-info-circle"></i> Panel Detail Info</h4>
+									<button id="preview-panel-btn" class="btn btn-sm"><i class="fas fa-eye"></i> 미리보기</button> 
 								</div>
 							</div>
+							
 							<div id="mustache-panelDetail-result">
 								<h5>Please Click Panel List</h5>
 							</div>
+							
 							<script id="mustache-panellist-template" type="text/template">
-							<div class="row">
-								<div class="col-sm-4">
-									<p class="text-monospace">패널명:</p>
-									<p>{{panelName}}</p> 
+							<div id="panel-detail-info">
+								<div class="row">
+									<div class="col-sm-5">
+										<p class="text-monospace">패널명:</p>
+										<p>{{panelName}}</p>
+									</div>
+									<div class="col-sm-3">
+										<p class="text-monospace">패널 위치:</p>
+										<p>{{panelPosition}}</p>
+									</div>
+									<div class="col-sm-4">
+										<p class="text-monospace">생성일:</p>
+										<p>{{panelCreatedDate}}</p> 
+									</div>
 								</div>
-								<div class="col-sm-4">
-									<p class="text-monospace">패널 위치:</p>
-									<p>{{panelPosition}}</p>
-								</div>
-								<div class="col-sm-4">
-									<p class="text-monospace">생성일:</p>
-									<p>{{panelCreatedDate}}</p> 
-								</div>
-							</div>
 							
-							<div class="row mt-4">
-								<div class="col-sm-8">
-									<p class="text-monospace">적용 화면:</p>
-									<p>{{^scriptDpLocation}}없음{{/scriptDpLocation}}{{#scriptDpLocation}}{{scriptDpLocation}}{{/scriptDpLocation}}</p>
-								</div>
+								<div class="row mt-4">
+									<div class="col-sm-8">
+										<p class="text-monospace">적용 화면:</p>
+										<p>{{^scriptDpLocation}}없음{{/scriptDpLocation}}{{#scriptDpLocation}}{{scriptDpLocation}}{{/scriptDpLocation}}</p>
+									</div>
 								
-								<div class="col-sm-4">
-									<p class="text-monospace">적용테마명:</p>
-									<p>{{themeTitle}}</p>
+									<div class="col-sm-4">
+										<p class="text-monospace">적용테마명:</p>
+										<p>{{themeTitle}}</p>
+									</div>
 								</div>
-							</div>
 							
-							<div class="row mt-4 d-flex">
-								<div class="col-sm-8">
-									<p class="text-monospace">선택된 기능 정보</p>
-									<table class="table table-sm table-dark">
-										<thead>
-											<tr>
-												<th scope="col">기능 순서</th>
-												<th scope="col">기능명(Kor)</th>
-												<th scope="col">기능명(Eng)</th>
-											</tr>
-										</thead>
-										<tbody>
-											{{#funcs}}
-											<tr>
-												<th scope="row">{{funcOrder}}</th>
-												<td>{{funcKorName}}</td>
-												<td>{{funcEngName}}</td>
-											</tr>
-											{{/funcs}}
-										</tbody>
-									</table>
-								</div>
+								<div class="row mt-4 d-flex">
+									<div class="col-sm-8">
+										<p class="text-monospace"><i class="fas fa-table"></i> 선택된 기능 정보</p>
+										<table class="table table-sm table-dark">
+											<thead>
+												<tr>
+													<th scope="col">기능 순서</th>
+													<th scope="col">기능명(Kor)</th>
+													<th scope="col">기능명(Eng)</th>
+												</tr>
+											</thead>
+											<tbody>
+												{{#funcs}}
+												<tr>
+													<th scope="row">{{funcOrder}}</th>
+													<td>{{funcKorName}}</td>
+													<td>{{funcEngName}}</td>
+												</tr>
+												{{/funcs}}
+											</tbody>
+										</table>
+									</div>
 								<div class="col-sm-4 text-center">
 									<img src="{{themeTitleImgPath}}" class="img-thumbnail">
 								</div>
+							</div>
 							</div>
 							</script>
 						</div>
@@ -602,6 +611,17 @@ $(document).ready(function(){
 						</div>
 					</div>
 				</div>
+				
+				<!-- 영서 -->
+				<!-- Contact Us Tab Start -->
+				<div class="col-sm-12 col-md-12 carousel-item" id="contact">
+					<div class="row">
+						<div class="col-sm-12 card mt-5 rounded">
+							<h1>Contact Us</h1>
+						</div>
+					</div>
+				</div>
+				
 			</div>
 		</div>
 	</div>
@@ -632,7 +652,6 @@ $(document).ready(function(){
 		var clickStatePanelId = clickChangeState.panelId;
 		var clickStateIsApply = clickChangeState.isApply;
 		
-		console.log(clickStatePanelId+' '+clickStateIsApply)
 		if(clickStateIsApply == true) {
 			$('#state-td'+clickStatePanelId).text('Active');
 			$('#'+clickStatePanelId).text('해제');
@@ -655,8 +674,7 @@ $(document).ready(function(){
 			$('#'+autoStatePanelId).data('apply', true);
 		}
 	}
-
-
+	
 	/* 패널 적용,해제 ajax */
 	function stateChange(panelId, state, datas, dialog) {
 		var token = $("meta[name='_csrf']").attr("content");
@@ -679,7 +697,7 @@ $(document).ready(function(){
 			}
 		});
 	};
-
+	
 	$(function() {
 		/* panel 추가 시 페이지 선택 dialog */
 		var pageSelectDialog = $("#dialog-select-form").dialog({
@@ -721,7 +739,8 @@ $(document).ready(function(){
 		});//pageSelectDialog
 		
 		/* 해제 버튼 클릭 */
-		$('.state').click(function() {
+		$('.state').click(function(evt) {
+			evt.stopPropagation();
 			var state = false;
 			var panelId = $(this).attr('id');
 			var aaa = $(this).data('apply');
@@ -757,7 +776,9 @@ $(document).ready(function(){
 		// 2. 삭제 버튼이 눌린 tr을 가져오도록 수정
 		//	138: removeTarget = $(this).parent().parent(); 추가
 		//	152: $(removeTarget).remove(); 추가
-		$('.btn-delete').click(function() {
+		$('.btn-delete').click(function(evt) {
+			evt.stopPropagation();
+			
 			if($(this).prev().prev().data('apply') == false) {
 				alert('적용 해제 후 삭제해주세요.');
 				return;
@@ -780,11 +801,6 @@ $(document).ready(function(){
 				$(".modal-body", this).text('정말 삭제합니까?');
 				$(".panel-delete-btn", this).removeClass("d-none");
 		    });
-			
-			/* $("#confirmModal").on('hidden.bs.modal', function () {
-				$(".modal-body", this).text("");
-				$(".panel-delete-btn", this).addClass("d-none");
-		    }); */ 
 			
 			/* modal 내 삭제 버튼 눌렸을 때. */
 			$(".panel-delete-btn").on("click", function(){
@@ -810,8 +826,8 @@ $(document).ready(function(){
 						return;
 					}
 					
-					//$('#tblPanelList tbody tr:nth-child('+count+')').remove();
 					$(removeTarget).remove();
+					$("#panelArea").hide();
 					
 					for(i=1;i<=${fn:length(list)};i++) {
 						$('#tblPanelList tbody tr:nth-child('+i+') td:first').text(i);

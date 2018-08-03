@@ -120,8 +120,7 @@ li{
     background-color: #fff;
 }
 
-.container {
-	background-color: #fff;
+.container { 
 	margin-top: 50px; 
 	position: relative;
 	border-radius: 10px;

@@ -1,4 +1,4 @@
-// let's practice module pattern 
+
 var readyToExe = (function() {
 	var isMobile = false;
    /*
@@ -73,9 +73,12 @@ var readyToExe = (function() {
 	         if (!done) {
 	        	 
 	        	 // 나중에 풀어서 적용할 꺼
-	            /*if(files.length == 6) {
-	            	window.$Palette = jQuery.noConflict(true);
-	            }*/
+	        	 // files 안에 있는 파일 개수 -1개 입력
+	        	 // jQuery UI 로드 문제 $, jQuery 모두 오버라이드 해줘야 해결된다.
+	            if(files.length == 4) {
+	            	$ = jQuery.noConflict(true);
+	            	jQuery = $;
+	            }
 	        	 element.onreadystatechange = element.onload = null; // kill memory leak in IE
 	            // done = true; //원래 여기에 true있는데 패턴 변경한 순간... 로직이 바뀐듯 나중에 확인해보자.
 	            if (files.length != 0) {
@@ -100,8 +103,6 @@ var readyToExe = (function() {
 	         }
 	      }, // end scriptLoaded
 	      extractExt : function(str) {
-	         //확장자 추출..
-	         //결과값 : false  .확장자
 	         var len = str.length;
 	         var last = str.lastIndexOf(".");
 	
@@ -109,7 +110,6 @@ var readyToExe = (function() {
 	            return false; //확장자가 없음.
 	         }
 	
-	         //var ext = str.substr(last, len - last );  //확장자 추출 (. 포함)
 	         var ext = str.substring(last, len); //확장자 추출 (. 포함)
 	         ext = ext.toLowerCase(); //소문자로.
 	
@@ -126,9 +126,6 @@ var readyToExe = (function() {
 
 
 window.addEventListener('load', function(){
-	console.log(jQuery);
-	console.log($);
-	console.log(jQuery === $);
 	readyToExe.chkMobile();
 	readyToExe.loadNextScript();	
 });

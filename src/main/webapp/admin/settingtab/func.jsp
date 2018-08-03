@@ -158,7 +158,6 @@ i{
 
 <script>
 $(function() {
-	
 	/* 순위 결정 메소드 */
 	function determineOrder($ul){
 		$ul.children().each(function(index){
@@ -234,7 +233,8 @@ $(function() {
 	    
 	    /* 어떠한 Element에 대해서 sortable을 적용할지 결정한다. */
 	    /* li에서 .ul-state-disabled가 없는 엘리먼트만 sortable 적용. */
-	    items : 'li:not(.ui-state-disabled)'
+	    items : 'li:not(.ui-state-disabled)',
+	    cancel : '.ui-state-disabled'
 	});
 	
 	$("#sortable").disableSelection();
@@ -284,12 +284,14 @@ $(function() {
 		$li = $(this).closest("li");    /* 가까이 있는 li 탐색 */
 		$ul = $(this).closest("ul");    /* 가까이 있는 ul 탐색 */
 		var funcname = $li.data("funcname");
-		if($(this).hasClass("off")==true){  // 버튼을 눌렀는데 off라는 class를 가지고 있지 않다 -> off하는 상황.
-			$li.addClass("ui-state-disabled"); 	 /* li 비활성화 */
-			
+		
+		// 버튼을 눌렀는데 off라는 class를 가지고 있지 않다 -> off하는 상황.
+		if($(this).hasClass("off")==true){
 			$li.removeAttr("funcorder");	/* funcorder 삭제 */
 			$li.detach();				/* 해당 버튼이 있는 li 제거 */
 			$li.appendTo($ul);		 /* ul의 마지막에 지워진 li 추가 */
+			
+			$li.addClass("ui-state-disabled"); 	 /* li 비활성화 */
 			
 			/* li내의 버튼 이벤트는 활성화 */
 			$(this).css({"pointer-events" : "all"});
@@ -299,12 +301,11 @@ $(function() {
 					$(this).fadeOut(300);
 				}
 			});
-			
 		}else{ /* 버튼을 눌러서 기능을 On하는 상황. */
-			$li.removeClass("ui-state-disabled");
 			$li.detach();				/* 해당 버튼이 있는 li 제거 */
 			$li.prependTo($ul);
 			$li.attr("funcorder", "0");
+			$li.removeClass("ui-state-disabled");
 			
 			/* drag & drop 후 순서 정보 */
 	    	var orderInfo = $("#sortable").sortable('toArray');
@@ -318,11 +319,11 @@ $(function() {
 					$(this).fadeIn(300);
 				}
 			});
-		} 
+		}
 		
-		// determine Order
+		// determine Order - 기능 순서 재정렬
 		determineOrder($(this).closest("ul"));
-	});
+	}); 
 	
 });
 	

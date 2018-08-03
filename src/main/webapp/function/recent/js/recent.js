@@ -220,13 +220,16 @@
 			// true : 깊은 복사
 			// target : 합쳐진 객체를 받을 객체.
 			var opts = $.extend(true, {}, $.recent.defaults, options);
+			
 			// 화면 전환 속도 ms
 			$('#recentBox .carousel').carousel({ interval: opts.interval });
 						
 			// 최근 본 상품 목록 그리기.
 			this.render(opts);
-			this.preview(opts);
 			
+			if(opts.isPreview == true){
+				this.preview(opts);
+			}
 		},
 		
 		// SessionStorate에 있는 값을 JSON으로 리턴.
@@ -317,10 +320,10 @@
 				});
 				
 				// product hit
-				$('.recent-preview-hit').append(hit);
+				$('.recent-preview-hit').html(hit);
 				
 				// product name
-				$(".recent-preview-title").append(productName);
+				$(".recent-preview-title").html(productName);
 				
 				// product options
 				var content = '';
@@ -338,17 +341,16 @@
 					
 					content += ']<br>';
 				}
-				$('.recent-preview-options').append(content);
+				$('.recent-preview-options').html(content);
 				
 				// product detail info
 				if(simpleDescription != '') {
-					$('.recent-preview-content').append(simpleDescription);
+					$('.recent-preview-content').html(simpleDescription);
 				} else if(summaryDescription != '') {
-					$('.recent-preview-content').append(summaryDescription);
+					$('.recent-preview-content').html(summaryDescription);
 				} else {
-					$('.recent-preview-content').append('간략 설명이 없습니다.');
+					$('.recent-preview-content').html('간략 설명이 없습니다.');
 				}
-				
 				
 				// product link
 				$(".recent-link-btn").attr({
@@ -357,7 +359,6 @@
 					"border-radius" : options.preview.layoutBorderRadius+"px"
 				})
 				
-				
 				$.recent.previewRender(options);
 			});
 			
@@ -365,7 +366,6 @@
 			$('#recent_preview_layout_close > span').click(function() {
 				$.recent.popup('close');
 			});
-			
 		},
 		
 		// 미리보기 화면 출력 및 위치 결정
@@ -373,19 +373,15 @@
 			// preview의 속성을 변경한다.
 			$.recent.popup('open');
 		},
+		
 		popup : function(action) {
+			$.panel.makePopupCss($(".recent-preview-layout"), action);
+			
 			if(action === 'open') {
-				$(".recent-preview-layout").css({
-					"position" : "fixed",
-					"right" : $('#panel').width(),
-					"top" : '20%'
-				}).show();
 				$('#recentBox .carousel').carousel('pause');
-			} else {
-				$('.recent-preview-layout').hide();
+			} else if(action === 'close') {
 				$('#recentBox .carousel').carousel({ interval: true });
 			}
-			
 		}
 	};
 	

@@ -1,12 +1,12 @@
 /*
  * 패널 미리보기 JS
- * $.previewPanel 을 통해 preview_panel을 조정한다.
+ * $.panel 을 통해 preview_panel을 조정한다.
  * 
  */
 (function($) {
 	var p = {};
 	
-	$.previewPanel = {
+	$.panel = {
 		// p의 디폴트 값.
 		defaults : {
 			visible : false,
@@ -26,12 +26,12 @@
 				
 				$("#panel-draggable-btn").on('click', function() {
 					if($(this).is('.open') == true) { 
-						$.previewPanel.close(); 
+						$.panel.close(); 
 						return;
 					}
 					
 					$(this).addClass('open');
-					$.previewPanel.open();
+					$.panel.open();
 				});
 				
 				/*
@@ -54,14 +54,14 @@
 				
 				// preview_panel.jsp가 모두 로드되어  id가 panel인 element가 생성 된 후.
 				// 그래서 callback 함수 안에 있는 것임.
-				p = $.extend(true, {}, $.previewPanel.defaults, opts);
+				p = $.extend(true, {}, $.panel.defaults, opts);
 				
 				if(p.visible == true){
-					$.previewPanel.open();
+					$.panel.open();
 				}else if(p.visible == false){
-					$.previewPanel.close(); 
+					$.panel.close(); 
 				}else if(p.visible == "hide"){
-					$.previewPanel.displayNone();
+					$.panel.displayNone();
 				}
 				
 				/*if(p.funcVisible == false){
@@ -82,27 +82,25 @@
 			$(".scroll_mm_div").removeClass("panel-"+p.removePosition+"-scroll-open panel-"+p.removePosition+"-scroll-close");
 			
 			// position이 바뀌어서 다시 적용시키기 위해서 여기서 open()을 호출.
-			$.previewPanel.open();
+			$.panel.open();
 		},
 		
 		open : function(){
 			$('#panel-draggable-btn').addClass('open');
-			$.previewPanel.changePanel('open'); 
+			$.panel.changePanel('open'); 
 		},
 		
 		close : function(){
 			$('#panel-draggable-btn').toggleClass('open');
-			$.previewPanel.changePanel('close');
+			$.panel.changePanel('close');
 		},
 		
 		displayNone : function(){
 			$('#panel-draggable-btn').toggleClass('open');
 			$("#panelArea").hide();
 		},
-		
 		// 패널, 버튼, 스크롤의 CSS 결정.
 		changePanel : function(action){
-			
 			if(action == 'open') {
 				$("#panel").removeClass("panel-"+p.position+"-close");
 				$("#panel-draggable-btn").removeClass("panel-"+p.position+"-draggable-close");
@@ -123,7 +121,20 @@
 				$("#panel-draggable-btn").addClass("panel-"+p.position+"-draggable-close");
 				$(".scroll_mm_div").addClass("panel-"+p.position+"-scroll-close");
 			}
-		}
+		},
+		
+		// panel position에 따른 팝업 css 만들어줌.
+        makePopupCss : function(layer, action) {
+        	if(action === 'open'){
+        		$(layer).removeClass("popup-close");
+        		$(layer).removeClass("popup-"+p.removePosition+"-open");
+        		$(layer).addClass("popup-"+p.position+"-open");
+        	}else if(action === 'close'){
+        		$(layer).removeClass("popup-"+p.position+"-open");
+        		$(layer).removeClass("popup-"+p.removePosition+"-open");
+        		$(layer).addClass("popup-close");
+        	}
+        }
 	}
 }(jQuery));
 
@@ -131,6 +142,6 @@
 $(document).keyup(function(e) {
 	if (e.keyCode == 27) { // escape key maps to keycode `27`
 		if(!$('#panel-draggable-btn').is('.open')) { return; }
-		$.previewPanel.close();
+		$.panel.close();
 	}
 });

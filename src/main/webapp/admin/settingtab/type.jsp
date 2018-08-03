@@ -13,13 +13,12 @@
 <script>
 
 $(document).ready(function(){
-	
 	$(":radio[name=position]").change(function(){
 		var position = $(this).val().toLowerCase();
 		var removePosition = $(':radio[name=position]').not($(this)).val().toLowerCase(); 
 		
 		// 현재 선택된 포지션의 정보 및 삭제 할 포지션 정보
-		$.previewPanel.setPosition({
+		$.panel.setPosition({
 			'position':position,
 			'removePosition':removePosition
 		});
@@ -28,11 +27,11 @@ $(document).ready(function(){
 		// 이유 : open이 없으면 panel.css에서 85번 line과 같은 코드가 동작하지않는다.
 		// 간단히 말해서 패널이 열려있는 상태와 패널 버튼의 상태가 일치하지 않음
 		if(!$('#panel-draggable-btn').hasClass('open')) {
-			$('#panel-draggable-btn').addClass('open');	
+			$('#panel-draggable-btn').addClass('open');
 		}
 		
 		// 패널, 패널 버튼, 스크롤 위치 변경 - open인 상태로 위치 변경
-		$.previewPanel.open();
+		$.panel.open();
 	});
 	
 	$("#confirmForm").submit(function(event){
@@ -61,7 +60,11 @@ $(document).ready(function(){
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		
-		var name = $("#inputPanelName").val();
+		/* issue : data를 ajax로 보낼 때 JSON.stringify()로 직렬화를 하고
+		     서버에서 @RequestBody Map<?, ?>으로 받는 상황에서 아래 name변수가
+		   json 형태가 아니였음.
+		*/
+		var name = { "name": $("#inputPanelName").val()};
 		
 		$.ajax({
 			url: '${pageContext.servletContext.contextPath}/api/app/panel/confirmPName',
@@ -110,6 +113,9 @@ $(document).ready(function(){
 				   			<input type="hidden" id="confirmFlag" value="false">
 				   			<button id="btn-confirmPName" type="submit" class="btn btn-primary btn-sm" style="vertical-align: top;">확인</button>
 				   		</div>
+				  	</div>
+				  	<div class="row">
+				  		
 				  	</div>
 				</form>
 			</div>
