@@ -372,7 +372,7 @@ $(document).ready(function(){
 	             			<span class="sr-only">(current)</span>
 	             		</a>
 	            	</li>
-	            
+	             
 	            	<li data-target="#adminTabContent" data-slide-to="1">
 	            		<a href="#">
 	            		<span class="current-nav"></span> 
@@ -389,6 +389,12 @@ $(document).ready(function(){
 	              		<a href="#">
 	              		<span class="current-nav"></span>
 	              		FileUpload</a>
+	            	</li>
+	            	
+	            	<li data-target="#adminTabContent" data-slide-to="4">
+	              		<a href="#">
+	              		<span class="current-nav"></span>
+	              		Contact Us</a>
 	            	</li>
 	          	</ul>
 	      	</div>
@@ -613,6 +619,17 @@ $(document).ready(function(){
 						</div>
 					</div>
 				</div>
+				
+				<!-- 영서 -->
+				<!-- Contact Us Tab Start -->
+				<div class="col-sm-12 col-md-12 carousel-item" id="contact">
+					<div class="row">
+						<div class="col-sm-12 card mt-5 rounded">
+							<h1>Contact Us</h1>
+						</div>
+					</div>
+				</div>
+				
 			</div>
 		</div>
 	</div>

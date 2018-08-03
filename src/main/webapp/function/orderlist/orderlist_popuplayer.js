@@ -112,7 +112,7 @@
 					if($.type(items) != 'undefined') {
 						tmp['datas'].push(orders[orderKey]);
 					}
-				}
+				} 
 				$.orderlist.mustache(tmp);
 				return;
 			}
