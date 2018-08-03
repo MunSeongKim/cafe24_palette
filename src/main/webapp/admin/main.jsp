@@ -513,11 +513,11 @@ $(document).ready(function(){
 							<script id="mustache-panellist-template" type="text/template">
 							<div id="panel-detail-info">
 								<div class="row">
-									<div class="col-sm-4">
+									<div class="col-sm-5">
 										<p class="text-monospace">패널명:</p>
-										<p>{{panelName}}</p> 
+										<p>{{panelName}}</p>
 									</div>
-									<div class="col-sm-4">
+									<div class="col-sm-3">
 										<p class="text-monospace">패널 위치:</p>
 										<p>{{panelPosition}}</p>
 									</div>
@@ -682,8 +682,7 @@ $(document).ready(function(){
 			$('#'+autoStatePanelId).data('apply', true);
 		}
 	}
-
-
+	
 	/* 패널 적용,해제 ajax */
 	function stateChange(panelId, state, datas, dialog) {
 		var token = $("meta[name='_csrf']").attr("content");
@@ -706,7 +705,7 @@ $(document).ready(function(){
 			}
 		});
 	};
-
+	
 	$(function() {
 		/* panel 추가 시 페이지 선택 dialog */
 		var pageSelectDialog = $("#dialog-select-form").dialog({
@@ -836,9 +835,7 @@ $(document).ready(function(){
 					}
 					
 					$(removeTarget).remove();
-					
-					$("#panel-detail-info").hide();
-					$("#preview-panel-btn").hide();
+					$("#panelArea").hide();
 					
 					for(i=1;i<=${fn:length(list)};i++) {
 						$('#tblPanelList tbody tr:nth-child('+i+') td:first').text(i);

@@ -1,5 +1,7 @@
 package com.cafe24.mammoth.app.controller.api;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,11 +27,11 @@ public class SettingAPIController {
 	PanelService panelService;
 	
 	@PostMapping(value = "/panel/confirmPName")
-	public JSONResult canUsePanelName(@RequestBody String name){
-		System.out.println("name : "+name);
+	public JSONResult isExistPanelName(@RequestBody Map<String, String> requestData){
+		System.out.println("name : "+requestData.get("name"));
 		
-		boolean result = panelService.isExistByName(name);
-		return JSONResult.success(result == true ? "non-exist" : "exist");
+		boolean result = panelService.isExistByName(requestData.get("name"));
+		return JSONResult.success(result == true ? "exist" : "non-exist");
 	}
 	
 	@DeleteMapping(value="/panel/{panelId}")
