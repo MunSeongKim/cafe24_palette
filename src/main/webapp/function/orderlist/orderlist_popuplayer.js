@@ -55,7 +55,7 @@
 			                "productPrice": "5000.00",
 			                "optionValue": "색상=레드, 사이즈=S",
 			                "quantity": "2",
-			                "additionalDiscountPrice": "1000.00",
+			                "additionalDiscountPrice": "10000.00",
 			                "products": {
 			                    "productNo": "9",
 			                    "smallImage": null,
@@ -75,7 +75,7 @@
 			                "productPrice": "10000.00",
 			                "optionValue": "",
 			                "quantity": "2",
-			                "additionalDiscountPrice": "2000.00",
+			                "additionalDiscountPrice": "20000.00",
 			                "products": {
 			                    "productNo": "10",
 			                    "smallImage": null,
@@ -172,8 +172,8 @@
 					var list = render(t).split(',');
 					var format= [];
 					for(var i in list) { 
-						format.push('<a class="info-tags info-title"' + 
-								' href="http://stylenanda.com/product/search.html?keyword='
+						format.push('<a class="info-tags info-title orderlist-click"' + 
+								' href="/product/search.html?keyword='
 								+list[i]+'"> #'
 								+list[i]+'</a>'); 
 					}
@@ -237,6 +237,9 @@ $(document).ready(function() {
 	$('.func-orderlist').click(function() {
 		if($('#panel').hasClass('preview')) {
 			$.orderlist.preview();
+			$('.orderlist-click').on('click', function(event) {
+				event.preventDefault();
+			});
 		} else {
 			$.orderlist.execute();
 		}
@@ -244,7 +247,9 @@ $(document).ready(function() {
 	
 	/* popup checkbox click event */
 	$('#ckbox').click(function() {
-		$.orderlist.checkedParse($(this).prop('checked'));
+		if(!$('#panel').hasClass('preview')) {
+			$.orderlist.checkedParse($(this).prop('checked'));
+		}
 	});
 
 	/* period button click event */

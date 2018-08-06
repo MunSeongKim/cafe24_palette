@@ -66,7 +66,7 @@
 								var format= [];
 								for(var i in list) { 
 									format.push('<a class="info-tags info-title"' + 
-											' href="http://stylenanda.com/product/search.html?keyword='
+											' href="/product/search.html?keyword='
 											+list[i]+'"> #'
 											+list[i]+'</a>'); 
 								}
