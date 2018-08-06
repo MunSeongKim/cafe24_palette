@@ -322,7 +322,6 @@ var _protocol = "https";
 			var array = $.recent.getArray();
 			
 			$("#recentBox .carousel-inner").click(function(event){
-				alert('click!!!!');
 				var iProductNo = event.target.getAttribute("data-iProductNo");
 				var sessionData = $.recent.getOneArray(array, iProductNo);
 				var productDatas = tmpProductData;

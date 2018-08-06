@@ -222,7 +222,7 @@
 			$('#orderlist-mustache-result').html('').append(rendered);
 		},
 		popup : function(action) {
-			$.panel.makePopupCss($('.popupLayer'), action);
+			$.panel.makePopupCss($('.popupLayer.orderlist'), action);
 		}
 	};
 }(jQuery));
@@ -236,7 +236,6 @@ $(document).ready(function() {
 	/* ORDER LIST button click event */
 	$('.func-orderlist').click(function() {
 		if($('#panel').hasClass('preview')) {
-			alert('preview');
 			$.orderlist.preview();
             
 			$('.info-detail-link').on('click', function(event) {
@@ -249,7 +248,6 @@ $(document).ready(function() {
             });
             
 		} else {
-			alert('execute');
 			$.orderlist.execute();
 		}
 	});
