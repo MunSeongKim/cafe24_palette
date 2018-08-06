@@ -140,7 +140,7 @@
 <script type="text/javascript">
 $(window).on("beforeunload", function(e){
 	var message = "페이지를 나가면 메인 화면으로 이동 합니다. 정말 나가시겠습니까?";
-	e.returnValue = message; 
+	e.returnValue = message;
 	return message;
 });
 
@@ -367,7 +367,10 @@ $(document).ready(function(){
 	});
 	
 	/* save 버튼 누를 때 */
-	$("#pager-save").click(function(){
+	$("#pager-save").on("click", function(evt){
+		/* 여기서는 beforeunload 이벤트 해제 */
+		$(window).unbind('beforeunload');
+		
 		var values = findCurrentTag("previous");      // 현재 탭 정보 얻어오기.
 		var currentPage = values.currentPage;
 		
@@ -393,11 +396,22 @@ $(document).ready(function(){
 		
 		/* form에 선택된 themeid 정보 추가 */
 		appendHiddenElement($("#saveform"), "themeid", $(".card.seleted").data("themeid"));
-		
 		appendHiddenElement($("#saveform"), "position", $("#positionTypeDiv :radio[name=position]:checked").val());
 		
-		/* form 제출 */
-		$("#saveform").submit(); 
+		/* 이벤트 동작 중지 */
+		evt.preventDefault();
+		
+		/* 제출 여부 묻기 */
+		if(!confirm('패널을 저장하시겠습니까?')) return;
+		
+		/* form 제출 */ 
+		console.log("before submit");
+		$("#saveform").submit();
+		
+		/* $("#saveform").submit(function(){
+			//console.log("form is submitted! ");
+			//$(window).unbind('beforeunload');
+		}); */ 
 	})
 });
 
@@ -457,11 +471,11 @@ function funcNextProcess(currentPage){
 	
 	if(currentPage == "type"){
 		
-		/* if($("#inputPanelName").val()=="" || $("#confirmFlag").val()=="false"){
+		if($("#inputPanelName").val()=="" || $("#confirmFlag").val()=="false"){
 			$(".modal-body").text("패널 명을 입력&확인 해주세요.");
 			$("#confirmModal").modal('show');
 			return false;
-		} */
+		}
 		
 	}else if(currentPage == "func"){ /* 기능 결정 페이지 next 할 때. */
 		var $li = $("#sortable").children("li");

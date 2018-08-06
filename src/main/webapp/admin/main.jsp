@@ -513,11 +513,11 @@ $(document).ready(function(){
 							<script id="mustache-panellist-template" type="text/template">
 							<div id="panel-detail-info">
 								<div class="row">
-									<div class="col-sm-4">
+									<div class="col-sm-5">
 										<p class="text-monospace">패널명:</p>
-										<p>{{panelName}}</p> 
+										<p>{{panelName}}</p>
 									</div>
-									<div class="col-sm-4">
+									<div class="col-sm-3">
 										<p class="text-monospace">패널 위치:</p>
 										<p>{{panelPosition}}</p>
 									</div>
@@ -571,33 +571,25 @@ $(document).ready(function(){
 					</div>
 				</div>
 			
-				<!-- Statistics Tab Start -->
+				<!-- Statistics Tab Start --> 
 				<div class="col-sm-12 col-md-12 carousel-item" id="stat">
+					<div class="row">
 					<!-- chart js 추가 -->
 					<!-- 1. doughnut chart -->
-					<div class="col-12 card mt-5 rounded">
+					<div class="col-12 col-md-6 card mt-5 rounded">
 						<div id="canvas-holder" style="width:100%">
 							<canvas id="chart-area"></canvas>
 						</div>
-						<button id="randomizeData">Randomize Data</button>
-						<button id="addDataset">Add Dataset</button>
-						<button id="removeDataset">Remove Dataset</button>
-						<button id="addData">Add Data</button>
-						<button id="removeData">Remove Data</button>
 					</div>
 					<!-- 2. vertical chart 
 						    [- 전체 패널 개수
 						    - 사용자 평균 개수]
 						    - 내 패널 개수 -->
-					<div class="col-12 card mt-5 rounded">
+					<div class="col-12 col-md-6 card mt-5 rounded">
 						<div id="container" style="width: 100%;">
 							<canvas id="canvas"></canvas>
 						</div>
-						<button id="randomizeData1">Randomize Data</button>
-						<button id="addDataset1">Add Dataset</button>
-						<button id="removeDataset1">Remove Dataset</button>
-						<button id="addData1">Add Data</button>
-						<button id="removeData1">Remove Data</button>
+					</div>
 					</div>
 				</div>
 				
@@ -682,8 +674,7 @@ $(document).ready(function(){
 			$('#'+autoStatePanelId).data('apply', true);
 		}
 	}
-
-
+	
 	/* 패널 적용,해제 ajax */
 	function stateChange(panelId, state, datas, dialog) {
 		var token = $("meta[name='_csrf']").attr("content");
@@ -706,7 +697,7 @@ $(document).ready(function(){
 			}
 		});
 	};
-
+	
 	$(function() {
 		/* panel 추가 시 페이지 선택 dialog */
 		var pageSelectDialog = $("#dialog-select-form").dialog({
@@ -836,9 +827,7 @@ $(document).ready(function(){
 					}
 					
 					$(removeTarget).remove();
-					
-					$("#panel-detail-info").hide();
-					$("#preview-panel-btn").hide();
+					$("#panelArea").hide();
 					
 					for(i=1;i<=${fn:length(list)};i++) {
 						$('#tblPanelList tbody tr:nth-child('+i+') td:first').text(i);
