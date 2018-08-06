@@ -85,10 +85,10 @@
 			});//ajax
 		},
 		defaults : {
-			'mall_url' : 'kimdudtj.cafe24.com',
+			//'mall_url' : 'kimdudtj.cafe24.com',
 			'start_date' : $.format.ago(),
 			'end_date' : $.format.now(),
-			'member_id' : 'kimdudtj' //$('#crema-login-username').children('.xans-member-var-id').text()
+			'member_id' : $('#crema-login-username').children('.xans-member-var-id').text()
 		},
 		originData : {},
 		checkedParse : function(checked) {
