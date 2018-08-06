@@ -239,7 +239,7 @@
 			return json;
 		},
 		 
-		// SessionStorate에 있는 값을 Array로 리턴.
+		// SessionStorage에 있는 값을 Array로 리턴.
 		getArray : function(){
 			var array = [];
 			var jsonData = this.getJson();
@@ -278,15 +278,23 @@
 		frontApi : function(productNo) {
 			CAFE24API.init('D0OdNNlzFdfWprppcum7NG'); //App Key
 
+			var productDatas = null;
+			var optDatas = null;
+			var hitDatas = null;
+			
 			CAFE24API.get('/api/v2/products/'+productNo, function(err, res){
-			    console.log(res);
+				productDatas = res;
 			});
+			
 			CAFE24API.get('/api/v2/products/'+productNo+'/options', function(err, res){
-			    console.log(res);
+				optDatas = res;
 			});
+			
 			CAFE24API.get('/api/v2/products/'+productNo+'/hits/count', function(err, res){
-			    console.log(res);
+				hitDatas = res;
 			});
+			
+			$.recent.setDetailData(productDatas, optDatas, hitDatas);
 		},
 		// 미리보기 레아이웃 준비
 		preview : function(options){
@@ -296,68 +304,18 @@
 				var iProductNo = event.target.getAttribute("data-iProductNo");
 				var sessionData = $.recent.getOneArray(array, iProductNo);
 				
-				/* 실제 front api 사용 부분*/
-				/*$.recent.frontApi(iProductNo);*/
-				/* 가상 데이터 사용 부분 */
 				var productDatas = tmpProductData;
 				var optDatas = tmpOptData;
 				var hitDatas = tmpHitData;
 				
-				var productName = productDatas.product.product_name;
-				var simpleDescription = productDatas.product.simple_description;
-				var summaryDescription = productDatas.product.summary_description;
-				var opts = optDatas.options.option;
-				var hit = hitDatas.count;
-				console.log(opts);
-				
-				// product image
-				$(".recent-preview-img").attr({
-					"src" : "https://"+sessionData.sImgSrc,
-					"height" : options.preview.imgHeight+"px",
-				}).css({ 
-					"border-top-left-radius" : options.preview.layoutBorderRadius+"px", 
-					"border-top-right-radius" : options.preview.layoutBorderRadius+"px"
-				});
-				
-				// product hit
-				$('.recent-preview-hit').html(hit);
-				
-				// product name
-				$(".recent-preview-title").html(productName);
-				
-				// product options
-				var content = '';
-				for(var i in opts) {
-					content += opts[i].option_name;
-					content += '<br>[ ';
-					for(var j in opts[i].option_value) {
-						var color = opts[i].option_value[j].option_color;
-						if(color ==='#ffffff') {
-							color += ';background-color: #000000';
-						}
-						content += '<span style="color:'+color+'; font-weight: bold;">'
-						content += opts[i].option_value[j].option_text + '</span> ';
-					}
-					
-					content += ']<br>';
+				/* 가상 데이터 사용 부분 */
+				if($("#panel").hasClass("preview")){
+					$.recent.setDetailData(productDatas, optDatas, hitDatas)
 				}
-				$('.recent-preview-options').html(content);
-				
-				// product detail info
-				if(simpleDescription != '') {
-					$('.recent-preview-content').html(simpleDescription);
-				} else if(summaryDescription != '') {
-					$('.recent-preview-content').html(summaryDescription);
-				} else {
-					$('.recent-preview-content').html('간략 설명이 없습니다.');
+				/* 실제 front api 사용 부분*/
+				else{
+					$.recent.frontApi(iProductNo);
 				}
-				
-				// product link
-				$(".recent-link-btn").attr({
-					'href': 'http://'+window.location.hostname+'/product/detail.html?product_no='+iProductNo
-				}).css({
-					"border-radius" : options.preview.layoutBorderRadius+"px"
-				})
 				
 				$.recent.previewRender(options);
 			});
@@ -366,6 +324,63 @@
 			$('#recent_preview_layout_close > span').click(function() {
 				$.recent.popup('close');
 			});
+		},
+		
+		setDetailData : function (productDatas, optDatas, hitDatas){
+			var productName = productDatas.product.product_name;
+			var simpleDescription = productDatas.product.simple_description;
+			var summaryDescription = productDatas.product.summary_description;
+			var opts = optDatas.options.option;
+			var hit = hitDatas.count;
+			
+			// product image
+			$(".recent-preview-img").attr({
+				"src" : "https://"+sessionData.sImgSrc,
+				"height" : options.preview.imgHeight+"px",
+			}).css({ 
+				"border-top-left-radius" : options.preview.layoutBorderRadius+"px", 
+				"border-top-right-radius" : options.preview.layoutBorderRadius+"px"
+			});
+			
+			// product hit
+			$('.recent-preview-hit').html(hit);
+			
+			// product name
+			$(".recent-preview-title").html(productName);
+			
+			// product options
+			var content = '';
+			for(var i in opts) {
+				content += opts[i].option_name;
+				content += '<br>[ ';
+				for(var j in opts[i].option_value) {
+					var color = opts[i].option_value[j].option_color;
+					if(color ==='#ffffff') {
+						color += ';background-color: #000000';
+					}
+					content += '<span style="color:'+color+'; font-weight: bold;">'
+					content += opts[i].option_value[j].option_text + '</span> ';
+				}
+				
+				content += ']<br>';
+			}
+			$('.recent-preview-options').html(content);
+			
+			// product detail info
+			if(simpleDescription != '') {
+				$('.recent-preview-content').html(simpleDescription);
+			} else if(summaryDescription != '') {
+				$('.recent-preview-content').html(summaryDescription);
+			} else {
+				$('.recent-preview-content').html('간략 설명이 없습니다.');
+			}
+			
+			// product link
+			$(".recent-link-btn").attr({
+				'href': 'http://'+window.location.hostname+'/product/detail.html?product_no='+iProductNo
+			}).css({
+				"border-radius" : options.preview.layoutBorderRadius+"px"
+			})
 		},
 		
 		// 미리보기 화면 출력 및 위치 결정

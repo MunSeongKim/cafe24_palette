@@ -16,14 +16,14 @@
 	<span></span>
 </div>
 
-<div id="panel" class="panel plt-pn ">
+<div id="panel" class="panel preview plt-pn">
 	<div class="container preview_panel">
 		<c:forEach var="func" items="${funcs }">
 			<c:choose>
 				<c:when test="${func.isButton eq true}">
 					<div class="preview_func_div" data-panelfuncname="${func.nameEng }" data-isbtn=${func.isButton }>
 						<div class="row">
-							<div id="paenl-div-${func.nameEng }" class="preview preview-func-${func.nameEng }" style="width: 90%;">
+							<div id="paenl-div-${func.nameEng }" class="preview-func-${func.nameEng }" style="width: 90%;">
 								<c:import url="${func.desktopPath }" charEncoding="UTF-8">
 									<c:param name="isPreview" value="true" />
 								</c:import>
