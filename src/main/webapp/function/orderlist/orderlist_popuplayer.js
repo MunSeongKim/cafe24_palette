@@ -42,6 +42,102 @@
 	};
 	
 	$.orderlist = {
+		preview : function() {
+			var tmpDatas = [
+			    {
+			        "orderId": "20180712-0000045",
+			        "orderDate": "2018-07-12T16:29:51+09:00",
+			        "items": [
+			            {
+			                "itemNo": "4",
+			                "productNo": "9",
+			                "productName": "샘플상품 1",
+			                "productPrice": "5000.00",
+			                "optionValue": "색상=레드, 사이즈=S",
+			                "quantity": "2",
+			                "additionalDiscountPrice": "1000.00",
+			                "products": {
+			                    "productNo": "9",
+			                    "smallImage": null,
+			                    "categories": [
+			                        {
+			                            "category_no": "29",
+			                            "recommend": "F",
+			                            "new": "F"
+			                        }
+			                    ]
+			                }
+			            },
+			            {
+			                "itemNo": "5",
+			                "productNo": "10",
+			                "productName": "샘플상품 2",
+			                "productPrice": "10000.00",
+			                "optionValue": "",
+			                "quantity": "2",
+			                "additionalDiscountPrice": "2000.00",
+			                "products": {
+			                    "productNo": "10",
+			                    "smallImage": null,
+			                    "categories": [
+			                        {
+			                            "category_no": "33",
+			                            "recommend": "F",
+			                            "new": "F"
+			                        },
+			                        {
+			                            "category_no": "38",
+			                            "recommend": "F",
+			                            "new": "F"
+			                        },
+			                        {
+			                            "category_no": "34",
+			                            "recommend": "F",
+			                            "new": "F"
+			                        },
+			                        {
+			                            "category_no": "29",
+			                            "recommend": "F",
+			                            "new": "F"
+			                        }
+			                    ]
+			                }
+			            }
+			        ]
+			    },
+			    {
+			        "orderId": "20180712-0000033",
+			        "orderDate": "2018-07-12T16:17:29+09:00",
+			        "items": [
+			            {
+			                "itemNo": "3",
+			                "productNo": "9",
+			                "productName": "샘플상품 1",
+			                "productPrice": "5000.00",
+			                "optionValue": "색상=레드, 사이즈=L",
+			                "quantity": "1",
+			                "additionalDiscountPrice": "500.00",
+			                "products": {
+			                    "productNo": "9",
+			                    "smallImage": null,
+			                    "categories": [
+			                        {
+			                            "category_no": "29",
+			                            "recommend": "F",
+			                            "new": "F"
+			                        }
+			                    ]
+			                }
+			            }
+			        ]
+			    }
+			];
+			var resultDatas = {};
+			resultDatas['datas'] = tmpDatas;
+			resultDatas['cut'] = $.orderlist.formatList;
+			$.orderlist.mustache(resultDatas);
+			$.orderlist.popup('open');
+		},
 		execute : function(options) {
 			var opts = $.extend(true, {}, $.orderlist.defaults, options);
 			$.orderlist.defaults = opts;
@@ -57,23 +153,7 @@
 				data: opts,
 				success: function(response) {
 					resultDatas['datas'] = response.data;
-					formatList = {
-							'date' : function(){ return function(t,render){ return render(t).substr(0,10)+' '+render(t).substr(11,8);}}
-							,'price' : function(){ return function(t,render){ return render(t).split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");}}
-							,'options' : function(){ return function(t,render){ return render(t).replace(/,/gi,'<br>'); }}
-							,'tags' : function(){ return function(t,render){
-								var list = render(t).split(',');
-								var format= [];
-								for(var i in list) { 
-									format.push('<a class="info-tags info-title"' + 
-											' href="http://stylenanda.com/product/search.html?keyword='
-											+list[i]+'"> #'
-											+list[i]+'</a>'); 
-								}
-								return format.toString().replace(/,/gi, ' ');
-								}
-							}
-					};
+					formatList = $.orderlist.formatList;
 					
 					resultDatas['cut'] = formatList;
 					$.orderlist.originData = resultDatas;
@@ -84,11 +164,28 @@
 				}
 			});//ajax
 		},
+		formatList : {
+				'date' : function(){ return function(t,render){ return render(t).substr(0,10)+' '+render(t).substr(11,8);}}
+				,'price' : function(){ return function(t,render){ return render(t).split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");}}
+				,'options' : function(){ return function(t,render){ return render(t).replace(/,/gi,'<br>'); }}
+				,'tags' : function(){ return function(t,render){
+					var list = render(t).split(',');
+					var format= [];
+					for(var i in list) { 
+						format.push('<a class="info-tags info-title"' + 
+								' href="http://stylenanda.com/product/search.html?keyword='
+								+list[i]+'"> #'
+								+list[i]+'</a>'); 
+					}
+					return format.toString().replace(/,/gi, ' ');
+					}
+				}
+		},
 		defaults : {
-			'mall_url' : 'kimdudtj.cafe24.com',
+			//'mall_url' : 'kimdudtj.cafe24.com',
 			'start_date' : $.format.ago(),
 			'end_date' : $.format.now(),
-			'member_id' : 'kimdudtj' //$('#crema-login-username').children('.xans-member-var-id').text()
+			'member_id' : $('#crema-login-username').children('.xans-member-var-id').text()
 		},
 		originData : {},
 		checkedParse : function(checked) {
@@ -138,7 +235,11 @@ $(document).ready(function() {
 	
 	/* ORDER LIST button click event */
 	$('.func-orderlist').click(function() {
-		$.orderlist.execute();
+		if($('#panel').hasClass('preview')) {
+			$.orderlist.preview();
+		} else {
+			$.orderlist.execute();
+		}
 	});
 	
 	/* popup checkbox click event */

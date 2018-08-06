@@ -3,24 +3,27 @@
 /* complie site: http://www.cssportal.com/scss-to-css/ */
 
 /* themeColor: main color*/
-$themeColor: #A593E0;
+$themeColor: #000;
 
 /* main color의 inverse*/
-$themeInverseColor: #E0E3DA;
+$themeInverseColor: #fff;
 
 /* panel font color */
-$panelFontColor: #ffffff;
+$panelFontColor: #fff;
 
 /* border color */
-$borderColor: #000;
+$borderColor: #000000;
 $borderBoxColor: #566270;
 /* mobile button color */
-$mobileColor: #A593E0;
+$mobileColor: #566270;
 
 /* basic color*/
 $blackColor: #000000;
 $whiteColor: #ffffff;
 
+/* <i> color */
+/* 일반적으로는 $themeColor 따라가지만, $themeColor가 #fff인 경우 #000으로 설정*/
+$iColor: #000000;
 /* 
  * Tag 단위 css 
  */
@@ -28,7 +31,7 @@ $whiteColor: #ffffff;
 /* panel css */
 .plt-pn {
 	font-family: sans-serif !important;
-	background-color: rgba(255, 255, 255, 1);
+	background-color: rgba(0, 0, 0, 1);
 	color: $blackColor;
 	/* border: 1px solid #000; */
 	text-shadow: none;
@@ -64,7 +67,7 @@ $whiteColor: #ffffff;
     
     &-i {
         /* <i> css */
-        color: $themeColor !important;
+        color: $iColor !important;
     }
     
     &-hr {
@@ -125,7 +128,7 @@ $whiteColor: #ffffff;
         &-default {
              /* default btn css */
             background-color: $themeColor !important; 
-            color: $whiteColor !important;
+            color: $panelFontColor !important;
             
             
             &-empty {
