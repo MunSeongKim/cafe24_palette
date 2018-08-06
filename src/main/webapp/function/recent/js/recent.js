@@ -11,7 +11,7 @@
 			"0" : {
 				"iProductNo" : "101470",
 				"sProductName" : "첫번째 상품",
-				"sImgSrc" : "localhost:8080/mammoth/function/recent/recent_product1.jpg",
+				"sImgSrc" : "devbit005.cafe24.com/mammoth/function/recent/recent_product1.jpg",
 				"isAdultProduct" : "F",
 				"link_product_detail" : "/product/린넨-suit-자켓/101470/display/2/",
 				"sParam" : "?product_no=101470&cate_no=39&display_group=2"
@@ -19,7 +19,7 @@
 			"1" : {
 				"iProductNo" : "98781",
 				"sProductName" : "두번째 상품",
-				"sImgSrc" : "localhost:8080/mammoth/function/recent/recent_product2.jpg",
+				"sImgSrc" : "devbit005.cafe24.com/mammoth/function/recent/recent_product2.jpg",
 				"isAdultProduct" : "F",
 				"link_product_detail" : "/product/cb-리얼플러스-어깨패드/98781/display/2/",
 				"sParam" : "?product_no=98781&cate_no=52&display_group=2"
@@ -27,7 +27,7 @@
 			"2" : {
 				"iProductNo" : "101479",
 				"sProductName" : "세번째 상품",
-				"sImgSrc" : "localhost:8080/mammoth/function/recent/recent_product3.jpg",
+				"sImgSrc" : "devbit005.cafe24.com/mammoth/function/recent/recent_product3.jpg",
 				"isAdultProduct" : "F",
 				"link_product_detail" : "/product/시원한-린넨-7부-셔츠/101479/display/2/",
 				"sParam" : "?product_no=101479&cate_no=2825&display_group=2"
@@ -207,7 +207,7 @@
 				layoutWidth : 300,
 				
 				// 미리보기 이미지 높이
-				imgHeight : "inherit" 
+				imgHeight : "inherit"
 			},
 			layoutBorderRadius : 20
 		},
@@ -264,7 +264,7 @@
 			for(i in jsonData){
 				var iProductNo = jsonData[i].iProductNo;
 				var link = jsonData[i].link_product_detail;
-				var imgSrc = "http://"+jsonData[i].sImgSrc;
+				var imgSrc = "https://"+jsonData[i].sImgSrc;
 				var imgTag = '<img src="'+imgSrc+'" data-iProductNo="'+iProductNo+'" style="width: 100%;">';
 				var carouselItem = '<div class="carousel-item" style="height: 120px;">'+imgTag+'</div>';
 				$("#recentBox .carousel-inner").append(carouselItem);
@@ -312,7 +312,7 @@
 				
 				// product image
 				$(".recent-preview-img").attr({
-					"src" : "http://"+sessionData.sImgSrc,
+					"src" : "https://"+sessionData.sImgSrc,
 					"height" : options.preview.imgHeight+"px",
 				}).css({ 
 					"border-top-left-radius" : options.preview.layoutBorderRadius+"px", 
