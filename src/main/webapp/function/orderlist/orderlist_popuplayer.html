@@ -10,9 +10,9 @@
 <div class="popupLayer plt-pn">
 	<div id="popup-header">
 		<div id="popup-period">
-			<span class="plt-pn-btn plt-pn-btn-default plt-pn-font-l plt-pn-font-n span-period" data-period="week">1주일</span>
-			<span class="plt-pn-btn plt-pn-btn-simple plt-pn-font-l plt-pn-font-n span-period" data-period="month">1개월</span>
-			<span class="plt-pn-btn plt-pn-btn-simple plt-pn-font-l plt-pn-font-n span-period" data-period="sixmonths">6개월</span>
+			<span class="plt-pn-btn plt-pn-btn-default plt-pn-font-l plt-pn-font-n span-period orderlist-click" data-period="week">1주일</span>
+			<span class="plt-pn-btn plt-pn-btn-simple plt-pn-font-l plt-pn-font-n span-period orderlist-click" data-period="month">1개월</span>
+			<span class="plt-pn-btn plt-pn-btn-simple plt-pn-font-l plt-pn-font-n span-period orderlist-click" data-period="sixmonths">6개월</span>
 			<div id="popup-close">
 				<span>&times;</span>
 			</div>
@@ -50,7 +50,7 @@
 												{{#product.smallImage}}
 													<img class="img-fluid d-block info-smallimage" src="{{product.smallImage}}" />
 												{{/product.smallImage}}
-												<a href="/product/detail.html?product_no={{productNo}}" class="plt-pn-btn plt-pn-btn-default info-detail-link">상품 상세보기</a>
+												<a href="/product/detail.html?product_no={{productNo}}" class="plt-pn-btn plt-pn-btn-default info-detail-link orderlist-click">상품 상세보기</a>
 											</div>
 											<div class="col-md-6">
 												<p>{{productName}}</p>
