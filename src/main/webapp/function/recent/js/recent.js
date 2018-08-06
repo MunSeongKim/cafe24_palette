@@ -299,15 +299,15 @@ var _protocol = "http";
 			
 			CAFE24API.get('/api/v2/products/'+productNo, function(err, res){
 				productDatas = res;
-			});
+			}, 100);
 			
 			CAFE24API.get('/api/v2/products/'+productNo+'/options', function(err, res){
 				optDatas = res;
-			});
+			}, 100);
 			
 			CAFE24API.get('/api/v2/products/'+productNo+'/hits/count', function(err, res){
 				hitDatas = res;
-			});
+			}, 100);
 			
 			$.recent.setDetailData(productNo, productDatas, optDatas, hitDatas, sessionData, options);
 		},

@@ -402,7 +402,12 @@ $(document).ready(function(){
 		evt.preventDefault();
 		
 		/* 제출 여부 묻기 */
-		if(!confirm('패널을 저장하시겠습니까?')) return;
+		if(!confirm('패널을 저장하시겠습니까?')){
+			return;
+		}
+		
+		/* 세션 storage clear */
+		sessionStorage.clear();
 		
 		/* form 제출 */ 
 		console.log("before submit");

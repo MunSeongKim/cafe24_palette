@@ -617,7 +617,7 @@ $(document).ready(function(){
 				<div class="col-sm-12 col-md-12 carousel-item" id="contact">
 					<div class="row">
 						<div class="col-sm-12 card mt-5 rounded">
-							<h1>Contact Us</h1>
+							<jsp:include page="/admin/contactus/index.jsp" />
 						</div>
 					</div>
 				</div>
