@@ -43,12 +43,14 @@ public class ScriptService {
 	 */
 	@SuppressWarnings("unchecked")
 	public Map<String, Script> applyPanel(Map<String, Object> requestData, Long panelId) {
+		System.out.println("ScriptService -------------------------------------------------");
+		
 		// state = 현재 패널의 적용 상태, true: 적용되지 않았음, false: 적용 됨
 		Boolean state = (Boolean) requestData.get("state");
 
 		// 패널 적용.
 		if (state) {
-			Scripttags scripttags = new Scripttags();
+			Scripttags requestScripttags = new Scripttags();
 			
 			// Theme들의 skin_no 목록 구해서 Set으로 변환
 			List<Themes> themes = cafe24Template.getOperation(ThemesTemplate.class).getList();
@@ -57,7 +59,7 @@ public class ScriptService {
 				skinNo.add(t.getSkinNo());
 			}
 			// skin_no setting
-			scripttags.setSkinNo(skinNo);
+			requestScripttags.setSkinNo(skinNo);
 			
 			// 적용할 displayLocation 추출
 			List<String> datas = (List<String>) requestData.get("data");
@@ -66,7 +68,7 @@ public class ScriptService {
 				displayLocation.add(data);
 			}
 			// display_location setting
-			scripttags.setDisplayLocation(displayLocation);
+			requestScripttags.setDisplayLocation(displayLocation);
 			
 			ScripttagsTemplate scripttagsTemplate = cafe24Template.getOperation(ScripttagsTemplate.class);
 			
@@ -76,39 +78,42 @@ public class ScriptService {
 			
 			Optional<Script> script = scriptRepository.findById(panelId);
 			Script savedScript = script.isPresent() ? script.get() : null;
-			String src = "https://devbit005.cafe24.com/mammoth" + savedScript.getFilepath();
-			scripttags.setSrc( src );
+			
+			requestScripttags.setSrc( "https://devbit005.cafe24.com/mammoth" + savedScript.getFilepath() );
+			
+			System.out.println(appliedScript);
 			
 			// 이미 적용 된 상태에서 적용할 경우
 			if (appliedScript != null) {
 				scripttagsNo = appliedScript.getScripttagsNo();
-				scripttagsTemplate.update(scripttagsNo, scripttags);
+				scripttagsTemplate.update(scripttagsNo, requestScripttags);
 				appliedScript.setScripttagsNo(null);
 				appliedScript.setIsApply(false);
 			}
 			// 적용 된 패널이 없을 때 적용 할 경우
 			else {
-				scripttags = scripttagsTemplate.create(scripttags);
-				scripttagsNo = scripttags.getScriptNo();
+				Scripttags tmp = scripttagsTemplate.create(requestScripttags);
+				System.out.println(tmp);
+				scripttagsNo = tmp.getScriptNo();
 			}
 
+			
+			System.out.println(scripttagsNo);
+			
 			// API 적용 후 DB에 데이터 저장
+			String data = String.join(",", datas);
+			// 스크립트 적용 상태 변경
+			savedScript.setDpLocation(data);
+			savedScript.setIsApply(true);
+			savedScript.setScripttagsNo(scripttagsNo);
 			
-			Script applyScript = null;
-			if( script.isPresent() ) {
-				applyScript = script.get();
-				String data = String.join(",", datas);
-				// 스크립트 적용 상태 변경
-				applyScript.setDpLocation(data);
-				applyScript.setIsApply(true);
-			}
-			
+			System.out.println(savedScript);
 			
 			Script clickChangeState = new Script();
 			Script autoChangeState = new Script();
 			
-			clickChangeState.setPanelId(applyScript.getPanelId());
-			clickChangeState.setIsApply(applyScript.getIsApply());
+			clickChangeState.setPanelId(savedScript.getPanelId());
+			clickChangeState.setIsApply(savedScript.getIsApply());
 			if(appliedScript != null) {
 				autoChangeState.setPanelId(appliedScript.getPanelId());
 				autoChangeState.setIsApply(appliedScript.getIsApply());

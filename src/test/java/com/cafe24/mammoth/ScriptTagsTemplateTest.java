@@ -27,16 +27,19 @@ public class ScriptTagsTemplateTest {
 	Cafe24Template cafe24Template;
 	
 	@SuppressWarnings("unused")
-	private static final String accessToken = "Eewx5toeNkiHOOvF138K6K";
+	private static final String accessToken = "UUgDC2P2BNWhOIYfxOuxMG";
 	/*private Cafe24Template cafe24Template = new Cafe24Template(accessToken);*/
 	
-	private ScripttagsOperations scriptTagsTemplate = cafe24Template.getOperation(ScripttagsTemplate.class);
+	private ScripttagsTemplate scripttagsTemplate;
 	
 	// getList -> ok!
 	@Test
 	//@Ignore
 	public void scripttagsGetListTest() throws IOException {
-		List<Scripttags> list = scriptTagsTemplate.getList();
+		cafe24Template.setAccessToken(accessToken);
+		cafe24Template.setAccessToken("chyin370");
+		scripttagsTemplate = cafe24Template.getOperation(ScripttagsTemplate.class);
+		List<Scripttags> list = scripttagsTemplate.getList();
 		for(Scripttags scripttags : list) {
 			System.out.println(scripttags);
 		}
@@ -46,7 +49,7 @@ public class ScriptTagsTemplateTest {
 	@Test
 	@Ignore
 	public void scripttagsGetTest() {
-		Scripttags s1 = scriptTagsTemplate.get("");
+		Scripttags s1 = scripttagsTemplate.get("");
 		System.out.println(s1);
 	}
 	
@@ -54,7 +57,7 @@ public class ScriptTagsTemplateTest {
 	@Test
 	@Ignore
 	public void scripttagsCountTest() {
-		int count = scriptTagsTemplate.count();
+		int count = scripttagsTemplate.count();
 		System.out.println("count : "+count);
 	}
 	
@@ -62,7 +65,7 @@ public class ScriptTagsTemplateTest {
 	@Test
 	@Ignore
 	public void scripttagsDeleteTest() {
-		boolean result = scriptTagsTemplate.delete("1530862881319004");
+		boolean result = scripttagsTemplate.delete("1530862881319004");
 		System.out.println("삭제 결과 : "+result);
 	}
 	
@@ -85,7 +88,7 @@ public class ScriptTagsTemplateTest {
 		scripttags.setSkinNo(skinNo);
 		scripttags.setSrc(src);
 		
-		Scripttags resultScripttags = scriptTagsTemplate.create(scripttags);
+		Scripttags resultScripttags = scripttagsTemplate.create(scripttags);
 		
 		System.out.println("===================[create result]===================");
 		try {
@@ -113,7 +116,7 @@ public class ScriptTagsTemplateTest {
 		String src = "https://lee33397.cafe24.com/securityOAuth2/helloScriptTags.js";
 		updateValue.setSrc(src);    // 변경
 		
-		boolean result = scriptTagsTemplate.update("1530862601642794", updateValue);
+		boolean result = scripttagsTemplate.update("1530862601642794", updateValue);
 		System.out.println("수정 결과 : "+result);
 	}
 }

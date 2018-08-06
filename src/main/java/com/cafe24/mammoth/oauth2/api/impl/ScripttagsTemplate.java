@@ -90,7 +90,8 @@ public class ScripttagsTemplate implements ScripttagsOperations{
 		 */
 		apiUrl = URIBuilder.buildApiUri(baseUrl);
 		HttpEntity<String> entity = prettyRequestBodyConverter(scripttags);
-		return usingApiRestTemplate.postForObject(apiUrl, entity, Scripttags.class);
+		String responseData = usingApiRestTemplate.postForObject(apiUrl, entity, String.class);
+		return Cafe24ApiJsonParser.parser(responseData, Scripttags.class);
 	}
 
 	/**

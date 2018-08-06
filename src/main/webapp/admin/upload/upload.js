@@ -64,7 +64,7 @@ var uploader = (function(){
 					key: key,
 					name: item.name
 			}
-			var template = $('#mustache-template').html();
+			var template = $('#upload-mustache-template').html();
             Mustache.parse(template);
             var rendered = Mustache.render(template, data);
             $(elements.list).append(rendered);
@@ -242,11 +242,11 @@ var uploader = (function(){
 				$('#func-name').focus();
 				alert("기능 이름을 입력하세요.");
 				return false ;
-			} else if( $('#btn-exist').length > 0 ){
+			} /*else if( $('#btn-exist').length > 0 ){
 				$(this).focus();
 				alert('중복 검사를 해주세요.');
 				return false;
-			} else if ( $('#func-desktop-html').val() === '' ){
+			}*/ else if ( $('#func-desktop-html').val() === '' ){
 				alert('데스크탑 버전의 HTML 파일을 등록해주세요.');
 				$('#func-desktop-label').focus();
 				return false;
@@ -357,30 +357,26 @@ var uploader = (function(){
 		});
 	}
 	
-	var isExist = function() {
+	var isExist = function(result) {
 		if( $('#func-eng-name').val() === '' ) {
 			$('#func-eng-name').focus();
 			alert("기능 영문 이름을 입력하세요.");
 			return false ;
 		}
-		
-		$.ajax({
+
+		var confirmValue = null;
+		/* 180806 수정중 */
+		return $.ajax({
 			url: API_URI + 'check',
 			type: 'GET',
 			dataType: 'json',
 			data: {'engName': $('#func-eng-name').val()},
+			async: false,
 			beforeSend: function(request) {
 				request.setRequestHeader(header, token);
 			},
-			success: function(response) {
-				if(response.result === 'success'){
-					$('#btn-exist').parent().html('<div class="alert alert-success" id="checkedExist">확인되었습니다!</div>');
-					return ;
-				}
-				
-				alert("해당 영문명의 기능이 이미 존재합니다.");
-				$('#func-eng-name').focus();
-				return ;
+			success: function(response){
+				result = response.result;
 			},
 			error: function(response, xhr, error){
 				console.log(response.status + " (" + error + "): " + response.responseText );
@@ -416,7 +412,7 @@ var uploader = (function(){
 		clear: clear,
 		isExist: isExist,
 		reset: reset,
-		setExistButton: setExistButton,
+		setExistButton: setExistButton
 	}
 })();
 
@@ -432,6 +428,21 @@ $(function() {
 
 	$('.btn-upload').click(function() {
 		if(uploader.validate()){
+			console.log('upload t/f ==> ');
+			
+			if(uploader.getType() == 'function'){
+				var result = null;
+				uploader.isExist(result);
+				if( result === 'fail' ){
+					if( !confirm("해당 영문명의 기능을 덮어씁니다.") ){
+						return ;
+					}
+				} else {
+					if( !confirm("해당 영문명의 기능이 없습니다.") ){
+						return ;
+					}
+				}
+			}
 			uploader.upload();
 		}
 	});
@@ -444,10 +455,10 @@ $(function() {
 		}
 	});
 	
-	$('#btn-exist').click(function(e) {
+	/*$('#btn-exist').click(function(e) {
 		e.preventDefault();
 		uploader.isExist();
-	});
+	});*/
 	
 	$('.input-file-trigger').click(function(){
 		var element = uploader.getElement('select');

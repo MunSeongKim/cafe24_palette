@@ -13,7 +13,6 @@
 
 <link rel="stylesheet" href="admin/upload/upload.css">
 <script src="admin/upload/upload.js"></script>
-
 </head>
 
 <body>
@@ -78,10 +77,10 @@
 												</label>
 											</div>
 										</div>
-										<label for="is-button" class="col-sm-2 col-form-label text-right">중복검사</label>
+										<!-- <label for="is-button" class="col-sm-2 col-form-label text-right">수정 확인</label>
 										<div class="col-sm-4">
 											<button name="is-exist" id="btn-exist" class="btn btn-block btn-exist">Check!</button>
-										</div>
+										</div> -->
 									</div>
 									<hr>
 									<div class="form-group row">
@@ -186,7 +185,7 @@
 		</div>
 	</div>
 	
-	 <script id="mustache-template" type="text/template">
+	 <script id="upload-mustache-template" type="text/template">
 		<li class="list-group-item" id="file-list{{key}}">
 			<div class="row align-items-center">
 				<div class="col col-1">

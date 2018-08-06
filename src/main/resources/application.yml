@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/palette
+    url: jdbc:mysql://localhost:33606/palette
     username: palette
     password: palette
     driver-class-name: com.mysql.jdbc.Driver

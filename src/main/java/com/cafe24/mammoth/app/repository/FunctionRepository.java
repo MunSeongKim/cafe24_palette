@@ -12,5 +12,7 @@ public interface FunctionRepository extends JpaRepository<Function, Long>{
 
 	@Query("SELECT CASE WHEN COUNT(*) = 1 THEN true ELSE false END FROM Function f WHERE f.nameEng = :engName")
 	Boolean existsByEngName(@Param("engName") String engName);
-	
+
+	@Query("SELECT f FROM Function f WHERE f.nameEng = :engName")
+	Function findByNameEng(@Param("engName") String nameEng);
 }

@@ -3,8 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <head>
-	<!-- <link rel="stylesheet" href="https://devbit005.cafe24.com/mammoth/static/jquery-ui/1.8.21/jquery-ui.theme.min.css"> -->
-	<link rel="stylesheet" href="https://code.jquery.com/ui/1.8.24/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="https://devbit005.cafe24.com/mammoth/static/jquery-ui/1.12.1/jquery-ui.theme.min.css">
 	<link rel="stylesheet" href="https://devbit005.cafe24.com/mammoth/static/bootstrap/4.1.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://devbit005.cafe24.com/mammoth/static/bootstrap-toggle/2.2.2/css/bootstrap-toggle.css"/>
 	

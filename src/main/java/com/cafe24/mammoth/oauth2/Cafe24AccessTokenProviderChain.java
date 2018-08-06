@@ -70,7 +70,7 @@ public class Cafe24AccessTokenProviderChain extends OAuth2AccessTokenSupport imp
 
 	public OAuth2AccessToken obtainAccessToken(OAuth2ProtectedResourceDetails resource, AccessTokenRequest request)
 			throws UserRedirectRequiredException, AccessDeniedException {
-
+		System.out.println("===================================== obtainAccessToken =============================");
 		OAuth2AccessToken accessToken = null;
 		OAuth2AccessToken existingToken = null;
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -86,20 +86,27 @@ public class Cafe24AccessTokenProviderChain extends OAuth2AccessTokenSupport imp
 
 		if (resource.isClientOnly() || (auth != null && auth.isAuthenticated())) {
 			existingToken = request.getExistingToken();
+			System.out.println(existingToken);
 			if (existingToken == null && clientTokenServices != null) {
 				existingToken = clientTokenServices.getAccessToken(resource, auth);
+				System.out.println(existingToken);
+				System.out.println(existingToken.getExpiration());
+				System.out.println(existingToken.isExpired());
 			}
 
 			if (existingToken != null) {
 				if (existingToken.isExpired()) {
+					System.out.println("Expired");
 					if (clientTokenServices != null) {
 						clientTokenServices.removeAccessToken(resource, auth);
 					}
 					OAuth2RefreshToken refreshToken = existingToken.getRefreshToken();
 					if (refreshToken != null && resource.isClientOnly()) {
 						accessToken = refreshAccessToken(resource, refreshToken, request);
+						System.out.println("accessToken: " + accessToken);
 					}
 				} else {
+					System.out.println("No expired");
 					accessToken = existingToken;
 				}
 			}

@@ -54,7 +54,6 @@ public class WebConfigurer extends WebMvcConfigurationSupport {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		super.addInterceptors(registry);
-		registry.addInterceptor(apiTokenInterceptor()).addPathPatterns("/api/test/**");
 		registry.addInterceptor(apiTokenInterceptor()).addPathPatterns("/api/cafe24/**");
 	}
 
@@ -76,7 +75,7 @@ public class WebConfigurer extends WebMvcConfigurationSupport {
 		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/")
 				.resourceChain(true);
 
-		// JQuery, Bootstrap 등 프론트 라이브러이 리소스
+		// JQuery, Bootstrap 등 프론트 라이브러리 리소스
 		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/META-INF/resources/webjars/")
 				.setCacheControl(CacheControl.maxAge(3L, TimeUnit.HOURS).cachePublic()).resourceChain(true);
 

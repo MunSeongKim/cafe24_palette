@@ -39,9 +39,17 @@ public class FunctionService {
 		String desktopPath = fileUploader.restoreFile(path, desktopFile);
 		String mobilePath = fileUploader.restoreFile(path, mobileFile);
 
+		Function savedFunction = functionRepository.findByNameEng(function.getNameEng());
+		
+		if(savedFunction != null) {
+			savedFunction.setDesktopPath(desktopPath.replace("/cafe24/tmp", ""));
+			savedFunction.setMobilePath(mobilePath.replace("/cafe24/tmp", ""));
+			savedFunction.setCreatedDate(new Date());
+			return true;
+		}
+		
 		function.setDesktopPath(desktopPath.replace("/cafe24/tmp", ""));
 		function.setMobilePath(mobilePath.replace("/cafe24/tmp", ""));
-
 		function.setCreatedDate(new Date());
 		return functionRepository.save(function) != null ? true : false;
 	}

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.cafe24.mammoth.app.domain.Panel;
 import com.cafe24.mammoth.app.service.PanelService;
@@ -17,7 +18,7 @@ import com.cafe24.mammoth.app.service.PanelService;
 // -> @Controller + @ResponseBody
 @Controller // : view(화면) return
 @RequestMapping(value = "/")
-//@SessionAttributes({"mallId", "mallUrl"})
+@SessionAttributes({"mallId", "mallUrl"})
 public class MainController {
 	
 	@Autowired
@@ -26,6 +27,8 @@ public class MainController {
 	@GetMapping(value = { "", "/" })
 	public String main(@ModelAttribute("mallId") String mallId, Model model) {
 		List<Panel> list = panelService.getPanelList(mallId);
+		System.out.println("--------------------------- MainController --------------------------");
+		System.out.println(list);
 		model.addAttribute("list", list); 
 		return "admin/main";
 	}
