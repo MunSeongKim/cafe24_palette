@@ -19,14 +19,22 @@
 			
 			$('#panelArea').load('/mammoth/setting/preview', function(){
 				
+				// preview_panel.jsp가 모두 로드되어  id가 panel인 element가 생성 된 후.
+				// 그래서 callback 함수 안에 있는 것임.
+				p = $.extend(true, {}, $.panel.defaults, opts);
+				
 				$("#panel-draggable-btn").draggable({
 					axis : "y", 
 					containment : "window" // 180713 hwi 추가
 				});
 				
 				$("#panel-draggable-btn").on('click', function() {
-					if($(this).is('.open') == true) { 
-						$.panel.close(); 
+					if($(this).is('.open') == true) {
+						// 열려 있는 popup layer 모두 닫기.
+						$('.popupLayer').removeClass("popup-"+p.position+"-open");
+						
+						$.panel.close();
+						
 						return;
 					}
 					
@@ -51,10 +59,6 @@
 					// document max height value - window max height = 스크롤을 최대로 내릴 수 있는 height값이 나온다.
 					$("html, body").animate({scrollTop:$(document).height()- $(window).height()}, 200);
 				});
-				
-				// preview_panel.jsp가 모두 로드되어  id가 panel인 element가 생성 된 후.
-				// 그래서 callback 함수 안에 있는 것임.
-				p = $.extend(true, {}, $.panel.defaults, opts);
 				
 				if(p.visible == true){
 					$.panel.open();
@@ -83,6 +87,9 @@
 			
 			// position이 바뀌어서 다시 적용시키기 위해서 여기서 open()을 호출.
 			$.panel.open();
+		},
+		getPosition: function() {
+			return p.position;
 		},
 		
 		open : function(){
@@ -140,8 +147,17 @@
 
 // ESC키 누르면 패널 닫힘.
 $(document).keyup(function(e) {
-	if (e.keyCode == 27) { // escape key maps to keycode `27`
-		if(!$('#panel-draggable-btn').is('.open')) { return; }
-		$.panel.close();
-	}
+   if (e.keyCode == 27) { // escape key maps to keycode `27`
+	  
+	  var pos = $.panel.getPosition();
+	  
+	  if($('.popupLayer').hasClass("popup-"+pos+"-open")){
+		  $('.popupLayer').removeClass("popup-"+pos+"-open");
+	      return;
+	  }
+	  
+      if(!$('#panel-draggable-btn').is('.open')) { return; }
+      
+      $.panel.close();
+   }
 });
