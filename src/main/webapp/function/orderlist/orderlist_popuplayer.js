@@ -237,9 +237,16 @@ $(document).ready(function() {
 	$('.func-orderlist').click(function() {
 		if($('#panel').hasClass('preview')) {
 			$.orderlist.preview();
-			$('.orderlist-click').on('click', function(event) {
+            
+			$('.info-detail-link').on('click', function(event) {
+                alert('상품 상세 페이지로 이동합니다.'); 
 				event.preventDefault();
 			});
+            $('.info-tags').on('click', function(event) {
+                alert('상품 태그를 검색합니다.'); 
+				event.preventDefault();
+            });
+            
 		} else {
 			$.orderlist.execute();
 		}
@@ -254,6 +261,11 @@ $(document).ready(function() {
 
 	/* period button click event */
 	$('.span-period').click(function(){
+        if($('#panel').hasClass('preview')) {
+            alert('기간에 해당하는 주문목록이 출력됩니다.');
+			return;
+		}
+        
 		$.orderlist.execute( {'start_date' : getStartDate($(this).data('period'))} );
 		
 		$(this).addClass('plt-pn-btn-default').removeClass('plt-pn-btn-simple');
