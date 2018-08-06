@@ -140,8 +140,12 @@
 
 // ESC키 누르면 패널 닫힘.
 $(document).keyup(function(e) {
-	if (e.keyCode == 27) { // escape key maps to keycode `27`
-		if(!$('#panel-draggable-btn').is('.open')) { return; }
-		$.panel.close();
-	}
-});
+	   if (e.keyCode == 27) { // escape key maps to keycode `27`
+	      if($('.popupLayer').css('display') == 'block') {
+	         $('.popupLayer').css('display', 'none');
+	         return;
+	      }
+	      if(!$('#panel-draggable-btn').is('.open')) { return; }
+	      $.panel.nav('close');
+	   }
+	});

@@ -22,6 +22,6 @@ public interface ScriptRepository extends JpaRepository<Script, Long> {
 	@Query("select s from Script s where s.panelId != :id and s.isApply = true")
 	public Script findByExceptId(@Param("id") Long id);
 
-	@Query("SELECT s FROM Script s WHERE s.isApply = true")
-	public Script findByApplied();
+	@Query("SELECT s FROM Script s WHERE s.isApply = true and s.panelId = :id")
+	public Script findByApplied(@Param("id") Long id);
 }

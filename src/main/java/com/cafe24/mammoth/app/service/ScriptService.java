@@ -73,7 +73,7 @@ public class ScriptService {
 			ScripttagsTemplate scripttagsTemplate = cafe24Template.getOperation(ScripttagsTemplate.class);
 			
 			// 패널의 스크립트 적용에 관한 데이터 변경
-			Script appliedScript = scriptRepository.findByApplied();
+			Script appliedScript = scriptRepository.findByApplied(panelId);
 			String scripttagsNo;
 			
 			Optional<Script> script = scriptRepository.findById(panelId);
