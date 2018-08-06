@@ -136,7 +136,7 @@
 			resultDatas['datas'] = tmpDatas;
 			resultDatas['cut'] = $.orderlist.formatList;
 			$.orderlist.mustache(resultDatas);
-			$.orderlist.popup('open');
+			$.orderlist.popup('open'); 
 		},
 		execute : function(options) {
 			var opts = $.extend(true, {}, $.orderlist.defaults, options);
