@@ -31,6 +31,10 @@
 	margin: 0.313em auto;
 }
 
+#panel .container .row div {
+	width: 80%;
+}
+
 /* panel button */
 #panel-draggable-btn {
 	/* 180713 hwi top 추가 */
