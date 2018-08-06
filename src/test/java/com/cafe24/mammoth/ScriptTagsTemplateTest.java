@@ -27,7 +27,7 @@ public class ScriptTagsTemplateTest {
 	Cafe24Template cafe24Template;
 	
 	@SuppressWarnings("unused")
-	private static final String accessToken = "Eewx5toeNkiHOOvF138K6K";
+	private static final String accessToken = "VY97mwc0PpslvbCzRffKzF";
 	/*private Cafe24Template cafe24Template = new Cafe24Template(accessToken);*/
 	
 	private ScripttagsOperations scriptTagsTemplate = cafe24Template.getOperation(ScripttagsTemplate.class);
@@ -68,7 +68,7 @@ public class ScriptTagsTemplateTest {
 	
 	// create -> ok!
 	@Test
-	@Ignore
+	//@Ignore
 	public void scripttagsCreateTest() {
 		String src = "https://lee33397.cafe24.com/securityOAuth2/test.js";
 		Set<String> displayLocation = new HashSet<String>();

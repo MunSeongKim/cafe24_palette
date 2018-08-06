@@ -386,7 +386,7 @@ $(document).ready(function(){
 		
 		// form 수정
 		// ui-state-disabled가 없는 li --> 선택 된 li Element
-		$($("#sortable").children("li").siblings().not(".ui-state-disabled")).each(function(){
+		$($("#sortable").children("li").not(".ui-state-disabled")).each(function(){
 			var funcid = $(this).data("funcid");
 			var funcorder = $(this).attr("funcorder");
 			
@@ -402,7 +402,12 @@ $(document).ready(function(){
 		evt.preventDefault();
 		
 		/* 제출 여부 묻기 */
-		if(!confirm('패널을 저장하시겠습니까?')) return;
+		if(!confirm('패널을 저장하시겠습니까?')){
+			return;
+		}
+		
+		/* 세션 storage clear */
+		sessionStorage.clear();
 		
 		/* form 제출 */ 
 		console.log("before submit");

@@ -7,13 +7,15 @@
 /* border color */
 /* mobile button color */
 /* basic color*/
+/* <i> color */
+/* 일반적으로는 $themeColor 따라가지만, $themeColor가 #fff인 경우 #000으로 설정*/
 /* 
  * Tag 단위 css 
  */
 /* panel css */
 .plt-pn {
   font-family: sans-serif !important;
-  background-color: rgba(255, 255, 243, 1);
+  background-color: rgba(255, 255, 255, 1);
   color: #000;
   /* border: 1px solid #000; */
   text-shadow: none;
@@ -21,6 +23,11 @@
   /* 개별 단위 css */
   /****************************************************************/
   /* panel button 관련 css */
+}
+.plt-pn-block {
+  /* inline -> block */
+  display: block;
+  margin: 0 auto;
 }
 .plt-pn-box {
   padding: 1.063em 0;
@@ -37,17 +44,17 @@
 .plt-pn-a :hover {
   text-decoration: none !important;
   cursor: pointer !important;
-  color: #a593e0 !important;
+  color: #000 !important;
   font-weight: bold !important;
 }
 .plt-pn-li {
   /* <li> css*/
-  border: 1px solid #a593e0 !important;
-  background-color: #a593e0;
+  border: 1px solid #000 !important;
+  background-color: #000;
 }
 .plt-pn-i {
   /* <i> css */
-  color: #a593e0;
+  color: #000 !important;
 }
 .plt-pn-hr {
   /* <hr> css */
@@ -72,7 +79,7 @@
 }
 .plt-pn-bg {
   /* background */
-  background: #a593e0 !important;
+  background: #000 !important;
   color: #fff !important;
   font-weight: bold;
 }
@@ -86,11 +93,11 @@
   border: 0.125em solid #000 !important;
 }
 .plt-pn-border-color {
-  border-color: #a593e0 !important;
+  border-color: #000 !important;
 }
 .plt-pn-font {
   /* font */
-  color: #a593e0;
+  color: #000;
 }
 .plt-pn-font-l {
   font-size: 1.25em !important;
@@ -121,18 +128,14 @@
   text-align: center;
   /* mobile button */
 }
-.plt-pn-block {
-	display: block; 
-	margin: 0 auto; 
-}
 .plt-pn-btn-default {
   /* default btn css */
-  background-color: #a593e0 !important;
+  background-color: #000 !important;
   color: #fff !important;
 }
 .plt-pn-btn-default-empty {
   /* default 버튼의 비어있는 버전 */
-  border: 0.063em solid #a593e0 !important;
+  border: 0.063em solid #000 !important;
   color: #000 !important;
 }
 span.plt-pn-btn-default:hover {
@@ -141,7 +144,7 @@ span.plt-pn-btn-default:hover {
 }
 .plt-pn-btn-inverse {
   /* inverse btn css */
-  background-color: #e0e3da !important;
+  background-color: #fff !important;
   color: #fff !important;
 }
 span.plt-pn-btn-inverse:hover {
@@ -168,13 +171,13 @@ a.plt-pn-btn-simple {
 }
 a.plt-pn-btn-simple :hover {
   cursor: pointer;
-  color: #a593e0 !important;
+  color: #000 !important;
 }
 .plt-pn-btn-active, .plt-pn-btn-inactive {
-  border: 2px solid #a593e0 !important;
+  border: 2px solid #566270 !important;
 }
 .plt-pn-btn-active {
-  background-color: #a593e0 !important;
+  background-color: #566270 !important;
   color: #fff !important;
 }
 .plt-pn-btn-inactive {
