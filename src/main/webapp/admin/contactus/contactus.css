@@ -1,0 +1,51 @@
+@charset "EUC-KR";
+.cu.container {
+	margin: 0;
+	padding: 0;
+}
+.col {
+	padding: 5px;
+}
+
+.cu-header {
+	background-color: #563d7c;
+	color: white;
+}
+
+.cu-body {
+	padding: 15px 15px;
+}
+.cu-body .cu-contact {
+	/* padding-top: 1em;
+    padding-bottom: 1em; */
+    padding: 1em 0;
+}
+
+.cu-body .cu-contact > p {
+	margin-bottom: 5px;
+	font-size: 1.3em;
+}
+.textwrapper {
+	width: 100%;
+}
+.textwrapper textarea {
+	width: 100%;
+	resize: none;
+	overflow-y: hidden; /* prevents scroll bar flash */
+	padding: 0.6em; /* prevents text jump on Enter keypress */
+	padding-bottom: 0.2em;
+}
+.cu-btn-submit {
+	background-color: #843C89;
+	border-color: #843C89;
+	color: #fff;
+	border-radius: 4px;
+	width: 100%;
+}
+
+.cu-btn-submit:hover {
+	background-color: #fff;
+	border: 2px solid #843C89;
+	color: #333;
+	box-shadow: 2px 2px 5px;
+}

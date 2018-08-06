@@ -3,6 +3,9 @@
  * 중복되는 네임스페이스를 방지하기 위해 사용. recentProduct이라는 네임스페이스 지정.
  */
 
+var _host = "localhost:8080";
+var _protocol = "http";
+
 (function($){
 	
 	// 예시 데이터
@@ -11,7 +14,7 @@
 			"0" : {
 				"iProductNo" : "101470",
 				"sProductName" : "첫번째 상품",
-				"sImgSrc" : "localhost:8080/mammoth/function/recent/recent_product1.jpg",
+				"sImgSrc" : _host+"/mammoth/function/recent/recent_product1.jpg",
 				"isAdultProduct" : "F",
 				"link_product_detail" : "/product/린넨-suit-자켓/101470/display/2/",
 				"sParam" : "?product_no=101470&cate_no=39&display_group=2"
@@ -19,7 +22,7 @@
 			"1" : {
 				"iProductNo" : "98781",
 				"sProductName" : "두번째 상품",
-				"sImgSrc" : "localhost:8080/mammoth/function/recent/recent_product2.jpg",
+				"sImgSrc" : _host+"/mammoth/function/recent/recent_product2.jpg",
 				"isAdultProduct" : "F",
 				"link_product_detail" : "/product/cb-리얼플러스-어깨패드/98781/display/2/",
 				"sParam" : "?product_no=98781&cate_no=52&display_group=2"
@@ -27,7 +30,7 @@
 			"2" : {
 				"iProductNo" : "101479",
 				"sProductName" : "세번째 상품",
-				"sImgSrc" : "localhost:8080/mammoth/function/recent/recent_product3.jpg",
+				"sImgSrc" : _host+"/mammoth/function/recent/recent_product3.jpg",
 				"isAdultProduct" : "F",
 				"link_product_detail" : "/product/시원한-린넨-7부-셔츠/101479/display/2/",
 				"sParam" : "?product_no=101479&cate_no=2825&display_group=2"
@@ -198,7 +201,7 @@
 		sessionStorage.setItem("localRecentProduct1", JSON.stringify(tmpTestData));
 	//=========================================================================================
 	
-	$.recent = {	
+	$.recent = {
 		defaults : {
 			isPreview : true,
 			interval : 5000, 
@@ -207,7 +210,7 @@
 				layoutWidth : 300,
 				
 				// 미리보기 이미지 높이
-				imgHeight : "inherit" 
+				imgHeight : "inherit"
 			},
 			layoutBorderRadius : 20
 		},
@@ -239,7 +242,7 @@
 			return json;
 		},
 		 
-		// SessionStorate에 있는 값을 Array로 리턴.
+		// SessionStorage에 있는 값을 Array로 리턴.
 		getArray : function(){
 			var array = [];
 			var jsonData = this.getJson();
@@ -264,30 +267,51 @@
 			for(i in jsonData){
 				var iProductNo = jsonData[i].iProductNo;
 				var link = jsonData[i].link_product_detail;
-				var imgSrc = "http://"+jsonData[i].sImgSrc;
+				var imgSrc = _protocol+"://"+jsonData[i].sImgSrc;
 				var imgTag = '<img src="'+imgSrc+'" data-iProductNo="'+iProductNo+'" style="width: 100%;">';
 				var carouselItem = '<div class="carousel-item" style="height: 120px;">'+imgTag+'</div>';
 				$("#recentBox .carousel-inner").append(carouselItem);
+			}
+			
+			if($("#panel").hasClass("preview")){
+				$('.recent-product-title').click(function(evt){
+					evt.preventDefault();
+					alert("[쇼핑몰의 최근 본 상품 목록으로 이동 할 것 입니다.]");
+				});
 				
+				$('.recent-link-btn').click(function(evt){
+					evt.preventDefault();
+					alert("[쇼핑몰의 최근 본 상품 목록으로 이동 할 것 입니다.]");
+				});
 			}
 			
 			$(".recent_count").text(Object.keys(jsonData).length);
 			$("#recentBox .carousel-inner div.carousel-item:first").addClass("active");
 		},
 		
-		frontApi : function(productNo) {
+		// Front API 데이터 사용
+		frontApi : function(productNo, sessionData, options) {
 			CAFE24API.init('D0OdNNlzFdfWprppcum7NG'); //App Key
 
+			var productDatas = null;
+			var optDatas = null;
+			var hitDatas = null;
+			
 			CAFE24API.get('/api/v2/products/'+productNo, function(err, res){
-			    console.log(res);
-			});
+				productDatas = res;
+			}, 100);
+			
 			CAFE24API.get('/api/v2/products/'+productNo+'/options', function(err, res){
-			    console.log(res);
-			});
+				optDatas = res;
+			}, 100);
+			
 			CAFE24API.get('/api/v2/products/'+productNo+'/hits/count', function(err, res){
-			    console.log(res);
-			});
+				hitDatas = res;
+			}, 100);
+			
+			$.recent.setDetailData(productNo, productDatas, optDatas, hitDatas, sessionData, options);
 		},
+		
 		// 미리보기 레아이웃 준비
 		preview : function(options){
 			var array = $.recent.getArray();
@@ -295,69 +319,18 @@
 			$("#recentBox .carousel-inner").click(function(event){
 				var iProductNo = event.target.getAttribute("data-iProductNo");
 				var sessionData = $.recent.getOneArray(array, iProductNo);
-				
-				/* 실제 front api 사용 부분*/
-				/*$.recent.frontApi(iProductNo);*/
-				/* 가상 데이터 사용 부분 */
 				var productDatas = tmpProductData;
 				var optDatas = tmpOptData;
 				var hitDatas = tmpHitData;
 				
-				var productName = productDatas.product.product_name;
-				var simpleDescription = productDatas.product.simple_description;
-				var summaryDescription = productDatas.product.summary_description;
-				var opts = optDatas.options.option;
-				var hit = hitDatas.count;
-				console.log(opts);
-				
-				// product image
-				$(".recent-preview-img").attr({
-					"src" : "http://"+sessionData.sImgSrc,
-					"height" : options.preview.imgHeight+"px",
-				}).css({ 
-					"border-top-left-radius" : options.preview.layoutBorderRadius+"px", 
-					"border-top-right-radius" : options.preview.layoutBorderRadius+"px"
-				});
-				
-				// product hit
-				$('.recent-preview-hit').html(hit);
-				
-				// product name
-				$(".recent-preview-title").html(productName);
-				
-				// product options
-				var content = '';
-				for(var i in opts) {
-					content += opts[i].option_name;
-					content += '<br>[ ';
-					for(var j in opts[i].option_value) {
-						var color = opts[i].option_value[j].option_color;
-						if(color ==='#ffffff') {
-							color += ';background-color: #000000';
-						}
-						content += '<span style="color:'+color+'; font-weight: bold;">'
-						content += opts[i].option_value[j].option_text + '</span> ';
-					}
-					
-					content += ']<br>';
+				/* 가상 데이터 사용 부분 */
+				if($("#panel").hasClass("preview")){
+					$.recent.setDetailData(iProductNo, productDatas, optDatas, hitDatas, sessionData, options)
 				}
-				$('.recent-preview-options').html(content);
-				
-				// product detail info
-				if(simpleDescription != '') {
-					$('.recent-preview-content').html(simpleDescription);
-				} else if(summaryDescription != '') {
-					$('.recent-preview-content').html(summaryDescription);
-				} else {
-					$('.recent-preview-content').html('간략 설명이 없습니다.');
+				/* 실제 front api 사용 부분*/
+				else{
+					$.recent.frontApi(iProductNo, sessionData, options);
 				}
-				
-				// product link
-				$(".recent-link-btn").attr({
-					'href': 'http://'+window.location.hostname+'/product/detail.html?product_no='+iProductNo
-				}).css({
-					"border-radius" : options.preview.layoutBorderRadius+"px"
-				})
 				
 				$.recent.previewRender(options);
 			});
@@ -366,6 +339,64 @@
 			$('#recent_preview_layout_close > span').click(function() {
 				$.recent.popup('close');
 			});
+		},
+		
+		// 가상 데이터 혹은 Front Api 데이터를 통해 화면을 render하는 함수
+		setDetailData : function (iProductNo, productDatas, optDatas, hitDatas, sessionData, options){
+			var productName = productDatas.product.product_name;
+			var simpleDescription = productDatas.product.simple_description;
+			var summaryDescription = productDatas.product.summary_description;
+			var opts = optDatas.options.option;
+			var hit = hitDatas.count;
+			
+			// product image
+			$(".recent-preview-img").attr({
+				"src" : _protocol+"://"+sessionData.sImgSrc,
+				"height" : options.preview.imgHeight+"px",
+			}).css({ 
+				"border-top-left-radius" : options.preview.layoutBorderRadius+"px", 
+				"border-top-right-radius" : options.preview.layoutBorderRadius+"px"
+			});
+			
+			// product hit
+			$('.recent-preview-hit').html(hit);
+			
+			// product name
+			$(".recent-preview-title").html(productName);
+			
+			// product options
+			var content = '';
+			for(var i in opts) {
+				content += opts[i].option_name;
+				content += '<br>[ ';
+				for(var j in opts[i].option_value) {
+					var color = opts[i].option_value[j].option_color;
+					if(color ==='#ffffff') {
+						color += ';background-color: #000000';
+					}
+					content += '<span style="color:'+color+'; font-weight: bold;">'
+					content += opts[i].option_value[j].option_text + '</span> ';
+				}
+				
+				content += ']<br>';
+			}
+			$('.recent-preview-options').html(content);
+			
+			// product detail info
+			if(simpleDescription != '') {
+				$('.recent-preview-content').html(simpleDescription);
+			} else if(summaryDescription != '') {
+				$('.recent-preview-content').html(summaryDescription);
+			} else {
+				$('.recent-preview-content').html('간략 설명이 없습니다.');
+			}
+			
+			// product link
+			$(".recent-link-btn").attr({
+				'href': _protocol+'://'+window.location.hostname+'/product/detail.html?product_no='+iProductNo
+			}).css({
+				"border-radius" : options.preview.layoutBorderRadius+"px"
+			})
 		},
 		
 		// 미리보기 화면 출력 및 위치 결정

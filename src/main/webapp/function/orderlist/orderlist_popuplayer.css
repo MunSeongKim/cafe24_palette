@@ -46,6 +46,9 @@ a:hover {
 	margin-top: 0.625em;
 }
 /* card css */
+#popup-orderlist .card {
+	width: 100%;
+}
 #popup-orderlist .card .card-body {
 	font-size: 0.688em;
 	padding-top: 0px;

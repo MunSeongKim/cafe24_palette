@@ -71,7 +71,7 @@ public class ScriptTagsTemplateTest {
 	
 	// create -> ok!
 	@Test
-	@Ignore
+	//@Ignore
 	public void scripttagsCreateTest() {
 		String src = "https://lee33397.cafe24.com/securityOAuth2/test.js";
 		Set<String> displayLocation = new HashSet<String>();
