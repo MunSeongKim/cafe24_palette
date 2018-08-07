@@ -378,23 +378,24 @@ $(document).ready(function(){
 	            		Statistics</a>
 	            	</li>
 	            	
-	            	<li data-target="#adminTabContent" data-slide-to="2">
+	            	<!-- <li data-target="#adminTabContent" data-slide-to="2">
 	              		<a href="#">
 	              		<span class="current-nav"></span>
 	              		About</a>
+	            	</li> -->
+	            	
+	            	<li data-target="#adminTabContent" data-slide-to="2"> 
+	              		<a href="#">
+	              		<span class="current-nav"></span>
+	              		Contact Us</a>
 	            	</li>
 	            	
 	            	<li data-target="#adminTabContent" data-slide-to="3">
 	              		<a href="#">
 	              		<span class="current-nav"></span>
-	              		FileUpload</a>
+	              		Upload</a>
 	            	</li>
 	            	
-	            	<li data-target="#adminTabContent" data-slide-to="4">
-	              		<a href="#">
-	              		<span class="current-nav"></span>
-	              		Contact Us</a>
-	            	</li>
 	          	</ul>
 	      	</div>
     	</div>
@@ -574,51 +575,60 @@ $(document).ready(function(){
 			
 				<!-- Statistics Tab Start --> 
 				<div class="col-sm-12 col-md-12 carousel-item" id="stat">
+					<!-- Header -->
+					<div class="row justify-content-center"> 
+						<div class="col-12 card mt-5 rounded" id="header">
+							<h4>
+								<i class="fas fa-file-upload"></i> Statistics
+							</h4>
+						</div>
+					</div>
+				
 					<div class="row">
-					<!-- chart js 추가 -->
-					<!-- 1. doughnut chart -->
-					<div class="col-12 col-md-6 card mt-5 rounded">
-						<div id="canvas-holder" style="width:100%">
-							<canvas id="chart-area"></canvas>
+						<!-- chart js 추가 -->
+						<!-- 1. doughnut chart -->
+						<div class="col-12 col-md-6 card rounded">
+							<div id="canvas-holder" style="width:100%">
+								<canvas id="chart-area"></canvas>
+							</div>
 						</div>
-					</div>
-					<!-- 2. vertical chart 
-						    [- 전체 패널 개수
-						    - 사용자 평균 개수]
-						    - 내 패널 개수 -->
-					<div class="col-12 col-md-6 card mt-5 rounded">
-						<div id="container" style="width: 100%;">
-							<canvas id="canvas"></canvas>
+						<!-- 2. vertical chart 
+							    [- 전체 패널 개수
+							    - 사용자 평균 개수]
+							    - 내 패널 개수 -->
+						<div class="col-12 col-md-6 card rounded">
+							<div id="container" style="width: 100%;">
+								<canvas id="canvas"></canvas>
+							</div>
 						</div>
-					</div>
 					</div>
 				</div>
 				
 				<!-- about Tab Start -->
-				<div class="col-sm-12 col-md-12 carousel-item" id="about">
+				<!-- <div class="col-sm-12 col-md-12 carousel-item" id="about">
 					<div class="row">
 						<div class="col-sm-12 card mt-5 rounded">
 							<h1>About Palette</h1>
 						</div>
 					</div>
-				</div>
+				</div> -->
 				 
-				<!-- fileupload Tab Start -->
-				<div class="col-sm-12 col-md-12 carousel-item" id="fileupload"> 
-					<div class="row">
-						<div class="col-sm-12 card mt-5 rounded">
-							<!-- 파일 업로드 레이아웃 소스. -->
-							<jsp:include page="/admin/upload/index.jsp" />
-						</div>
-					</div>
-				</div>
-				
 				<!-- 영서 -->
 				<!-- Contact Us Tab Start -->
 				<div class="col-sm-12 col-md-12 carousel-item" id="contact">
 					<div class="row">
 						<div class="col-sm-12 card mt-5 rounded">
 							<jsp:include page="/admin/contactus/index.jsp" />
+						</div>
+					</div>
+				</div>
+				
+				<!-- fileupload Tab Start -->
+				<div class="col-sm-12 col-md-12 carousel-item" id="fileupload"> 
+					<div class="row">
+						<div class="col-sm-12 card mt-5 rounded">
+							<!-- 파일 업로드 레이아웃 소스. -->
+							<jsp:include page="/admin/upload/index.jsp" />
 						</div>
 					</div>
 				</div>

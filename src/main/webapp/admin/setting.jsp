@@ -124,7 +124,8 @@
 						<span aria-hidden="true" style="padding: 5px;">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body">
+				<!-- 180807 modal-body충돌나서 class 추가 - hwi -->
+				<div class="modal-body modal-setting">
 					<p></p>
 				</div>
 				<div class="palette-modal-footer modal-footer">
@@ -477,7 +478,8 @@ function funcNextProcess(currentPage){
 	if(currentPage == "type"){
 		
 		if($("#inputPanelName").val()=="" || $("#confirmFlag").val()=="false"){
-			$(".modal-body").text("패널 명을 입력&확인 해주세요.");
+			// 180807 hwi 충돌 떄문에 클래스 변경
+			$(".modal-setting").text("패널 명을 입력&확인 해주세요.");
 			$("#confirmModal").modal('show');
 			return false;
 		}
@@ -492,7 +494,8 @@ function funcNextProcess(currentPage){
 		});
 		
 		if(count==$li.length){
-			$(".modal-body").text("기능을 1개 이상 선택하세요.");
+			// 180807 hwi 충돌 떄문에 클래스 변경
+			$(".modal-setting").text("기능을 1개 이상 선택하세요.");
 			$("#confirmModal").modal('show');
 			return false;
 		}
@@ -506,7 +509,8 @@ function funcNextProcess(currentPage){
 		});
 		
 		if(seletedTheme == false){
-			$(".modal-body").text("테마를 선택하세요.");
+			// 180807 hwi 충돌 떄문에 클래스 변경
+			$(".modal-setting").text("테마를 선택하세요.");
 			$("#confirmModal").modal('show');
 			return false;
 		}

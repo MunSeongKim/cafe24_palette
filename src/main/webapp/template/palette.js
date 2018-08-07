@@ -13,55 +13,42 @@
             p = $.extend(true, {}, $.panel.defaults, positions);
         },
         
-        // 패널 버튼을 클릭하였을 때, action에 따라 패널, 패널 버튼, 스크롤의
-        // CSS를 변경한다.
-        nav : function(action) {
-            $('#panel-draggable-btn').toggleClass('open'); // 버튼 모양 변경
-            $.panel.changePanel(action);
-        },
+        getPosition: function() {
+			return p.position;
+		},
+		
+		open : function(){
+			$('#panel-draggable-btn').addClass('open');
+			$.panel.changePanel('open'); 
+		},
+		
+		close : function(){
+			$('#panel-draggable-btn').toggleClass('open');
+			$.panel.changePanel('close');
+		},
         
         // 패널, 버튼, 스크롤의 CSS 결정.
         changePanel : function(action){
-            var panelCss = {};
-            var draggableCss = {};
-            var scrollCss = {};
-            
-            panelCss[p.position] = '0';
-            panelCss[p.removePosition] = '';
-            panelCss['width'] = '15.625em';
-            
-            if(action == 'open') {
-                panelCss['margin-'+p.position] = '0';
-                draggableCss[p.position] ="15.625em";
-                draggableCss[p.removePosition]="";
-                
-                if(p.position == 'left'){
-                    scrollCss[p.position] ="16em";
-                }else{
-                    scrollCss[p.position] ="17.625em";
-                }
-                
-                scrollCss[p.removePosition]="";
-            }
-            // 패널을 닫았을 때.
-            else {
-                panelCss['margin-'+p.position] = '-15.625em';
-                draggableCss[p.position] ="0";
-                draggableCss[p.removePosition]="";
-                
-                if(p.position == 'left'){
-                    scrollCss[p.position] ="0em";
-                }else{
-                    scrollCss[p.position] ="2.5em";
-                }
-                
-                scrollCss[p.removePosition]="";
-            }
-            
-            // CSS 적용
-            $("#panel").css(panelCss);
-            $("#panel-draggable-btn").css(draggableCss);
-            $(".scroll_mm_div").css(scrollCss);
+        	if(action == 'open') {
+				$("#panel").removeClass("panel-"+p.position+"-close");
+				$("#panel-draggable-btn").removeClass("panel-"+p.position+"-draggable-close");
+				$(".scroll_mm_div").removeClass("panel-"+p.position+"-scroll-close");
+				
+				$("#panel").addClass("panel-"+p.position+"-open");
+				$("#panel-draggable-btn").addClass("panel-"+p.position+"-draggable-open");
+				$(".scroll_mm_div").addClass("panel-"+p.position+"-scroll-open");
+			}
+			
+			// 패널을 닫았을 때.
+			else if(action == 'close'){
+				$("#panel").removeClass("panel-"+p.position+"-open");
+				$("#panel-draggable-btn").removeClass("panel-"+p.position+"-draggable-open");
+				$(".scroll_mm_div").removeClass("panel-"+p.position+"-scroll-open");
+				
+				$("#panel").addClass("panel-"+p.position+"-close");
+				$("#panel-draggable-btn").addClass("panel-"+p.position+"-draggable-close");
+				$(".scroll_mm_div").addClass("panel-"+p.position+"-scroll-close");
+			}
         },
         
         // panel position에 따른 팝업 css 만들어줌.
@@ -76,19 +63,23 @@
         		$(layer).removeClass("popup-"+p.position+"-open");
         		$(layer).removeClass("popup-"+p.removePosition+"-open");
         		$(layer).addClass("popup-close");
-        	}
+        	} 
         }
     }
 }(jQuery));
 
 $(document).keyup(function(e) {
    if (e.keyCode == 27) { // escape key maps to keycode `27`
-      if($('.popupLayer').css('display') == 'block') {
-         $('.popupLayer').css('display', 'none');
-         return;
-      }
+	   var pos = $.panel.getPosition();
+		  
+	  if($('.popupLayer').hasClass("popup-"+pos+"-open")){
+		  $('.popupLayer').removeClass("popup-"+pos+"-open");
+	      return;
+	  }
+	  
       if(!$('#panel-draggable-btn').is('.open')) { return; }
-      $.panel.nav('close');
+      
+      $.panel.close();
    }
 });
 
@@ -100,22 +91,25 @@ $(document).ready(function() {
     if(position === 'left') { removePosition = 'right'; }
     
     $.panel.setPosition({'position': position, 'removePosition':removePosition});
-    $.panel.changePanel('close');
+    $.panel.close();
 	
 	$("#panel-draggable-btn").draggable({
 		axis : "y",
 		containment : "window" // 180713 hwi 추가
 	});
 	
-	$("#panel-draggable-btn").click(function() {
-		if ($('#panel-draggable-btn').is('.open') == true) {
-			if ($('.popupLayer').css('display') == 'block') {
-				$('.popupLayer').css('display', 'none');
-			}
-			$.panel.nav('close');
+	$("#panel-draggable-btn").on('click', function() {
+		if($(this).is('.open') == true) {
+			// 열려 있는 popup layer 모두 닫기.
+			$('.popupLayer').removeClass("popup-"+p.position+"-open");
+			
+			$.panel.close();
+			
 			return;
 		}
-		$.panel.nav('open');
+		
+		$(this).addClass('open');
+		$.panel.open();
 	});
 
 	/*
@@ -141,10 +135,10 @@ $(document).ready(function() {
 				// document max height value - window max height
 				// = 스크롤을 최대로 내릴 수 있는 height값이 나온다.
 				$("html, body").animate(
-						{
-							scrollTop : $(document).height()
-									- $(window).height()
-						}, 200);
+					{
+						scrollTop : $(document).height()
+								- $(window).height()
+					}, 200);
 			});
 	/* scroll end */
 });

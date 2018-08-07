@@ -10,7 +10,7 @@
 		    if (curr_date < 10) { curr_date = '0' + curr_date; }
 		    
 		    return [curr_year, curr_month, curr_date].join('-');
-		},
+		}, 
 		ago : function(options) {
 			var selectDate = this.now().split('-');
 			var changeDate = new Date();
