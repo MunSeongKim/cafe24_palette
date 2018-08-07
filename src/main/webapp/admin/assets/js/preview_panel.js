@@ -68,10 +68,6 @@
 					$.panel.displayNone();
 				}
 				
-				/*if(p.funcVisible == false){
-					$(".preview_func_div").addClass("hide");
-				}*/ 
-				
 			});
 
 		},

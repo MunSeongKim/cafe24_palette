@@ -236,10 +236,17 @@ var _protocol = "https";
 		
 		// SessionStorate에 있는 값을 JSON으로 리턴.
 		getJson : function(){
+			var jsonStr = null;
+			var json = null;
 			
+			if($("#panel").hasClass("preview")){
+				jsonStr = tmpTestData;
+			}else{
+				jsonStr = sessionStorage.getItem("localRecentProduct1");
+			}
 			
-			var jsonStr = sessionStorage.getItem("localRecentProduct1");
-			var json = JSON.parse(jsonStr);
+			json = JSON.parse(jsonStr);
+			
 			return json;
 		},
 		 
@@ -265,7 +272,9 @@ var _protocol = "https";
 		// carousel-inner class를 사용하는 div에 recent list 정보를 바탕으로 항목 리스트를 추가한다.
 		render : function(){
 			var jsonData = null;
+			
 			if($("#panel").hasClass("preview")){
+				
 				jsonData = tmpTestData;
 				
 				$('.recent-product-title').click(function(evt){
