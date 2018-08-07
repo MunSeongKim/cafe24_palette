@@ -136,20 +136,6 @@ body{
 	font-weight: 600;
 }
 
-/* 모달 CSS */
-.palette-modal-header{
-	padding: 0;
-	background-color: #563d7c;
-}
-
-.palette-modal-title{
-	padding-top : 5px;
-	padding-left : 0px; 
-	color : #fff;
-	border-top-left-radius: 12px;
-	margin-left: 10px;
-}
-
 /* #tblPanelList CSS start */
 #tblPanelList tr{
 	cursor: pointer;
@@ -161,6 +147,19 @@ body{
 	background-color: #563d7c;
 	color: white;
 }
+
+/* 모달 CSS */
+.palette-modal-header{
+	padding: 10px 5px;
+	background-color: #563d7c;
+}
+
+.palette-modal-title{
+	color : #fff;
+	border-top-left-radius: 12px;
+	margin-left: 10px;
+}
+
 
 </style>
 
@@ -493,6 +492,8 @@ $(document).ready(function(){
 									<p></p>
 								</div>
 							</div>
+							
+							<!-- /jQuery UI -->
 						</div>
 					</div>
 					
@@ -626,8 +627,46 @@ $(document).ready(function(){
 		</div>
 	</div>
 	
+	<!-- Apply Modal -->
+	<div class="modal fade main-modal" id="applyModal" tabindex="-1" role="dialog" aria-labelledby="applyModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="palette-modal-header modal-header">
+				  	<h5 class="palette-modal-title modal-title" style="margin-left: 10px;">
+				  		<i class="custom-i fas fa-palette"> Palette</i>
+				  	</h5>
+				</div>
+				<div class="modal-body">
+					<p class="">패널을 적용할 페이지를 선택해주세요.</p>
+					<p class="text-danger warning-msg" style="display: none">페이지를 하나 이상 선택해야 합니다.</p>
+					<form class="apply-form">
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-all" value="ALL">
+						  <label class="custom-control-label" for="chkbox-all">전체 페이지</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-main" value="MAIN">
+						  <label class="custom-control-label" for="chkbox-main">메인 페이지</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-product" value="PRODUCT_LIST">
+						  <label class="custom-control-label" for="chkbox-product" >상품목록 페이지</label>
+						</div>
+						<input type="hidden" id="modalPanelId" value="">
+					</form>
+					
+				</div>
+				<div class="palette-modal-footer modal-footer">
+					<button type="button" class="palette-modal-btn panel-apply-btn btn btn-sm btn-secondary bg-primary">적용</button>
+					<button type="button" class="palette-modal-btn btn btn-sm btn-secondary bg-info" data-dismiss="modal">취소</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /Apply Modal -->
+	
 	<!-- Modal -->
-	<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+	<div class="modal fade main-modal" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="palette-modal-header modal-header">
@@ -639,8 +678,8 @@ $(document).ready(function(){
 					<p></p>
 				</div>
 				<div class="palette-modal-footer modal-footer">
-					<button type="button" class="palette-modal-btn panel-delete-btn btn btn-sm btn-secondary bg-danger d-none" data-dismiss="modal"> 삭제</button>
-					<button type="button" class="palette-modal-btn btn btn-sm btn-secondary bg-info" data-dismiss="modal">Close</button>
+					<button type="button" class="palette-modal-btn panel-delete-btn btn btn-sm btn-secondary bg-danger d-none" data-dismiss="modal">삭제</button>
+					<button type="button" class="palette-modal-btn btn btn-sm btn-secondary bg-info" data-dismiss="modal">취소</button>
 				</div>
 			</div>
 		</div>
@@ -651,7 +690,6 @@ $(document).ready(function(){
 	function buttonChange(clickChangeState, autoChangeState) {
 		var clickStatePanelId = clickChangeState.panelId;
 		var clickStateIsApply = clickChangeState.isApply;
-		
 		if(clickStateIsApply == true) {
 			$('#state-td'+clickStatePanelId).text('Active');
 			$('#'+clickStatePanelId).html('<i class="fas fa-ban"></i> 해제');
@@ -676,7 +714,7 @@ $(document).ready(function(){
 	}
 	
 	/* 패널 적용,해제 ajax */
-	function stateChange(panelId, state, datas, dialog) {
+	function stateChange(panelId, state, datas) {
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		$.ajax({
@@ -691,7 +729,7 @@ $(document).ready(function(){
 			},
 			success: function(response) {
 				if(state == true){
-					dialog.dialog('close');	
+					$('#applyModal').modal('hide');
 				}
 				buttonChange(response.data.clickChangeState, response.data.autoChangeState);
 			}
@@ -699,6 +737,8 @@ $(document).ready(function(){
 	};
 	
 	$(function() {
+		
+		
 		/* panel 추가 시 페이지 선택 dialog */
 		var pageSelectDialog = $("#dialog-select-form").dialog({
 			autoOpen : false, //자동으로 띄우지 X
@@ -735,18 +775,47 @@ $(document).ready(function(){
 			}
 		});//pageSelectDialog
 		
-		/* 해제 버튼 클릭 */
+		
+		
+		/* 적용/해제 버튼 클릭 */
 		$('.state').click(function(evt) {
 			evt.stopPropagation();
 			var state = false;
 			var panelId = $(this).attr('id');
 			var aaa = $(this).data('apply');
-			if( aaa== true) {
-				pageSelectDialog.dialog('open').data("id", panelId);
+			
+			if( aaa == true) {
+				$("#applyModal").modal();
+				$('#modalPanelId').val(panelId);
+				return ;
+			}
+			
+			stateChange(panelId, false, {"state": false});
+		});
+
+		
+		/* modal 내 적용 버튼 눌렸을 때. */
+		$(".panel-apply-btn").on("click", function(){
+			if($('.chkbox:checked').length == 0) {
+				$('.warning-msg').show();
 				return;
 			}
 			
-			stateChange(panelId, false, {"state": false}, null);
+			var datas = {"state": true};
+			var list = [];
+			if($('#chkbox-all').prop('checked')){
+				console.log($('#chkbox-all').val());
+				list.push($('#chkbox-all').val());
+			} else {
+				$('.chkbox:checked').each(function(index, obj) {
+					list.push(obj.value);
+				});	
+			}
+			
+			datas['data'] = list; 
+			console.log($(this));
+			console.log($('#modalPanelId').val())
+			stateChange($('#modalPanelId').val(), true, datas);
 		});
 		
 		/* dialog checkbox event */

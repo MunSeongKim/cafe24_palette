@@ -53,11 +53,17 @@ public class ScriptService {
 			Scripttags requestScripttags = new Scripttags();
 			
 			// Theme들의 skin_no 목록 구해서 Set으로 변환
-			List<Themes> themes = cafe24Template.getOperation(ThemesTemplate.class).getList();
+			List<Themes> themes = cafe24Template.getOperation(ThemesTemplate.class).getList("pc");
 			Set<String> skinNo = new HashSet<>();
 			for (Themes t : themes) {
 				skinNo.add(t.getSkinNo());
 			}
+			
+			themes = cafe24Template.getOperation(ThemesTemplate.class).getList("mobile");
+			for (Themes t : themes) {
+				skinNo.add(t.getSkinNo());
+			}
+
 			// skin_no setting
 			requestScripttags.setSkinNo(skinNo);
 			

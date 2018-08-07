@@ -33,11 +33,15 @@ public class PaletteController {
 	
 	@Autowired
 	private PanelService panelService;
+	
 	@RequestMapping("/{mallUrl:(?!assets|static|admin).*}")
 	public String palette(@PathVariable("mallUrl") String mallUrl, Model model) {
 		System.out.println("=================== paletteController ===================");
-		System.out.println(mallUrl);
-		Member member = memberService.getOneByMallUrl(mallUrl);
+		// String tmp = mallUrl.replaceFirst("^(?i)(m.)$", "");
+		String tmp = mallUrl.replaceFirst("m.", "");
+		System.out.println(tmp);
+		
+		Member member = memberService.getOneByMallUrl(tmp);
 		Panel panel = panelService.getApplyPanel(member.getMallId());
 		List<SelectFunc> selectFuncs = panel.getSelectFuncs();
 		
@@ -66,5 +70,43 @@ public class PaletteController {
 		model.addAttribute("selectFuncs", selectFuncs);
 		
 		return "template/palette";
+	}
+	
+	@RequestMapping("/mobile/{mallUrl:(?!assets|static|admin).*}")
+	public String paletteMobile(@PathVariable("mallUrl") String mallUrl, Model model) {
+		System.out.println("=================== paletteController ===================");
+		// String tmp = mallUrl.replaceFirst("^(?i)(m.)$", "");
+		String tmp = mallUrl.replaceFirst("m.", "");
+		System.out.println(tmp);
+		
+		Member member = memberService.getOneByMallUrl(tmp);
+		Panel panel = panelService.getApplyPanel(member.getMallId());
+		List<SelectFunc> selectFuncs = panel.getSelectFuncs();
+		
+		// 기능 순서 내림차순 정렬
+		selectFuncs.sort(new Comparator<SelectFunc>() {
+			@Override
+			public int compare(SelectFunc source, SelectFunc target) {
+				if(source.getFuncOrder() < target.getFuncOrder()) {
+					return -1;
+				} else if(source.getFuncOrder() == target.getFuncOrder()) {
+					return 0;
+				} else {
+					return 1;
+				}
+			}
+		});
+		
+		System.out.println(panel);
+		System.out.println(panel.getTheme());
+		System.out.println(selectFuncs);
+		
+		System.out.println("=================== paletteController ===================");
+		
+		model.addAttribute("panel", panel);
+		model.addAttribute("theme", panel.getTheme());
+		model.addAttribute("selectFuncs", selectFuncs);
+		
+		return "template/palette_m";
 	}
 }

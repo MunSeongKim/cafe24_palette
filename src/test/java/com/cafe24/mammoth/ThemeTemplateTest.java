@@ -37,7 +37,7 @@ public class ThemeTemplateTest {
 		//Cafe24Template cafe24Template = new Cafe24Template("EqtlfWleeJo10yvVp3Phmc");
 		//ThemesOperations themesTemplate = cafe24Template.themesOperations();
 		ThemesTemplate themesTemplate = cafe24Template.getOperation(ThemesTemplate.class);
-		List<Themes> list = themesTemplate.getList();
+		List<Themes> list = themesTemplate.getList("pc");
 		for(Themes themes : list) {
 			System.out.println(themes);
 		}

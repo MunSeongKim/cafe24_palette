@@ -30,9 +30,9 @@ public class ThemesTemplate implements ThemesOperations{
 	 * @author qyuee
 	 */
 	@Override
-	public List<Themes> getList() {
+	public List<Themes> getList(String type) {
 		MultiValueMap<String, String> addtionalParam = new LinkedMultiValueMap<>();
-		addtionalParam.add("type", "pc");
+		addtionalParam.add("type", type);
 		apiUrl = URIBuilder.buildApiUri(baseUrl, addtionalParam);
 		String jsonStr = usingApiRestTemplate.getForObject(apiUrl, String.class);
 		Themes themes = Cafe24ApiJsonParser.parser(jsonStr, Themes.class);
