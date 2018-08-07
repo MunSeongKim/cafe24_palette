@@ -67,6 +67,8 @@
         // panel position에 따른 팝업 css 만들어줌.
         makePopupCss : function(layer, action) {
         	if(action === 'open'){
+        		// 현재 켜져있는 popup을 끄고 해당 layer의 popup만 켜준다.
+        		$('.popupLayer').removeClass("popup-"+p.position+"-open");
         		$(layer).removeClass("popup-close");
         		$(layer).removeClass("popup-"+p.removePosition+"-open");
         		$(layer).addClass("popup-"+p.position+"-open");

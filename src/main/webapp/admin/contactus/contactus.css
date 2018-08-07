@@ -3,13 +3,13 @@
 	margin: 0;
 	padding: 0;
 }
-.col {
+.cu .row .col {
 	padding: 5px;
 }
 
 .cu-header {
-	background-color: #563d7c;
-	color: white;
+	color: #563d7c;
+	padding: 15px;
 }
 
 .cu-body {
