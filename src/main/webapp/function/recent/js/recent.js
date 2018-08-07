@@ -3,8 +3,8 @@
  * 중복되는 네임스페이스를 방지하기 위해 사용. recentProduct이라는 네임스페이스 지정.
  */
 
-var _host = "devbit005.cafe24.com";
-var _protocol = "https";
+var _host = "localhost:8080";
+var _protocol = "http";
 
 (function($){
 	
@@ -240,12 +240,11 @@ var _protocol = "https";
 			var json = null;
 			
 			if($("#panel").hasClass("preview")){
-				jsonStr = tmpTestData;
+				json = tmpTestData;
 			}else{
 				jsonStr = sessionStorage.getItem("localRecentProduct1");
+                json = JSON.parse(jsonStr);
 			}
-			
-			json = JSON.parse(jsonStr);
 			
 			return json;
 		},
@@ -430,8 +429,6 @@ var _protocol = "https";
 			}
 		}
 	};
-	
-	
 	
 })(jQuery);
 $(document).ready(function() {   
