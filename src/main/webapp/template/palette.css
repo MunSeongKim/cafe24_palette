@@ -1,7 +1,5 @@
 @charset "UTF-8";
-
 /*******************[패널 우측 관련 CSS]****************/
-
 /* 패널 우측 기본 */
 .panel-right-default-setting{ 
 	right: 0em;
@@ -118,14 +116,21 @@
 }
 /*****************************************************************/
 
-#panel{
+/* #panel{
 	margin-right: 0;
+} */
+
+.panel-container{
+	width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 /* panel css */
 .panel {
 	height: 100%;
-	/* width: 0; */
 	position: fixed;
 	z-index: 249;
 	top: 0;
@@ -133,7 +138,6 @@
 	overflow-x: hidden;
 	transition: 0.5s;
 	padding-top: 3.750em;
-	/* margin-right: -15.625em; */
 }
 
 @media screen and (max-height: 28.125em) {
@@ -155,11 +159,9 @@
 
 /* panel button */
 #panel-draggable-btn {
-	/* 180713 hwi top 추가 */
 	top:1em;
 	width: 2.5em;
 	height: 1.563em;
-	/* right: 0; */
 	position: fixed;
 	margin: 3.125em 0.313em;
 	-webkit-transform: rotate(0deg);
@@ -233,29 +235,22 @@
 	width: auto; 
 	display: block;
 	position: fixed;
-	/* right: 2.5em;
-	position: fixed; */
 	top: 80%;
-	/*left:50%;*/
-	/* width: 0.625em; */
 	-webkit-transition: .3s ease-in-out;
 	-moz-transition: .3s ease-in-out;
 	-o-transition: .3s ease-in-out;
 	transition: .3s ease-in-out;
-	
 	z-index : 1;
 }
 
 .scroll_top {
 	display: block;
-	
 	cursor: pointer;
 	font-size: 2.5em
 }
 
 .scroll_bottom {
 	display: block;
-	
 	cursor: pointer;
 	font-size: 2.5em
 }

@@ -231,20 +231,17 @@
 	-moz-transition: .3s ease-in-out;
 	-o-transition: .3s ease-in-out;
 	transition: .3s ease-in-out;
-	
 	z-index : 1;
 }
 
 .scroll_top {
 	display: block;
-	
 	cursor: pointer;
 	font-size: 2.5em
 }
 
 .scroll_bottom {
 	display: block;
-	
 	cursor: pointer;
 	font-size: 2.5em
 }

@@ -32,9 +32,7 @@
 					if($(this).is('.open') == true) {
 						// 열려 있는 popup layer 모두 닫기.
 						$('.popupLayer').removeClass("popup-"+p.position+"-open");
-						
 						$.panel.close();
-						
 						return;
 					}
 					
