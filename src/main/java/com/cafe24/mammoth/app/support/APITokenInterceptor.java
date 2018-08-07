@@ -51,6 +51,7 @@ public class APITokenInterceptor implements HandlerInterceptor {
 				if (mallUrl.contains("localhost")) {
 					mallUrl = request.getParameter("mall_url");
 				}
+				mallUrl = mallUrl.replaceFirst("m.", "");
 				Member storedMember = memberService.getOneByMallUrl(mallUrl);
 				mallId = storedMember.getMallId();
 				request.getSession().setAttribute("mallId", mallId);

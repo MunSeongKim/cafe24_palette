@@ -37,7 +37,7 @@
 		<li class="${status.count}" data-id="func${selectFunc.id }">
 			<a class="zoom-fab zoom-btn-sm plt-pn-btn-inactive scale-transition scale-out" data-stat-id="func${selectFunc.id }">
 				<span class="zoom-icon zoom-icon-func${status.count }">
-					${fn:toUpperCase(selectFunc.function.nameEng)[0] }
+					${fn:split("", fn:toUpperCase(selectFunc.function.nameEng))[0] }
 				</span>
 			</a>
 		</li>
