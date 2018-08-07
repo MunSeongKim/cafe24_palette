@@ -1,10 +1,10 @@
 
 $(document).ready(function() {
-	 $('#func1').load("/mammoth/function/scroll/scroll_m_re.html");
+	 /*$('#func1').load("/mammoth/function/scroll/scroll_m_re.html");
      $('#func2').load("/mammoth/function/share/share.html");
-     /*$('#func3').load("/mammoth/function/recent/recent.html");*/
+     $('#func3').load("/mammoth/function/recent/recent.html");
      $('#func4').load("/mammoth/function/orderlist/orderlist_popuplayer_m.html");
-    
+*/    
      /* zoom 큰 메뉴 버튼 클릭 시 */
      $('#zoomBtn').click(function() {
     	 	console.log('zoom click');

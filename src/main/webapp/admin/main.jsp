@@ -456,7 +456,7 @@ $(document).ready(function(){
 												<td>
 													<c:choose>
 														<c:when test="${panel.script.isApply eq true}">
-															<button class="btn btn-default btn-sm state" id="${panel.panelId }" data-apply="false"> 해제</button>
+															<button class="btn btn-default btn-sm state" id="${panel.panelId }" data-apply="false"><i class="fas fa-ban"></i> 해제</button>
 														</c:when>
 														
 														<c:otherwise>
@@ -654,13 +654,13 @@ $(document).ready(function(){
 		
 		if(clickStateIsApply == true) {
 			$('#state-td'+clickStatePanelId).text('Active');
-			$('#'+clickStatePanelId).text('해제');
-			$('#'+clickStatePanelId).attr('class', 'btn btn-default state');
+			$('#'+clickStatePanelId).html('<i class="fas fa-ban"></i> 해제');
+			$('#'+clickStatePanelId).attr('class', 'btn btn-default btn-sm state');
 			$('#'+clickStatePanelId).data('apply', false);
 		} else {
 			$('#state-td'+clickStatePanelId).text('Inactive');
-			$('#'+clickStatePanelId).text('적용');
-			$('#'+clickStatePanelId).attr('class', 'btn btn-info state');
+			$('#'+clickStatePanelId).html('<i class="fas fa-play"></i> 적용');
+			$('#'+clickStatePanelId).attr('class', 'btn btn-info btn-sm state');
 			$('#'+clickStatePanelId).data('apply', true);
 		}
 		
@@ -669,8 +669,8 @@ $(document).ready(function(){
 			var autoStateIsApply = autoChangeState.isApply;
 			
 			$('#state-td'+autoStatePanelId).text('Inactive');
-			$('#'+autoStatePanelId).text('적용');
-			$('#'+autoStatePanelId).attr('class', 'btn btn-info state');
+			$('#'+autoStatePanelId).html('<i class="fas fa-play"></i> 적용');
+			$('#'+autoStatePanelId).attr('class', 'btn btn-info btn-sm state');
 			$('#'+autoStatePanelId).data('apply', true);
 		}
 	}
@@ -714,11 +714,8 @@ $(document).ready(function(){
 					var datas = {"state": true};
 					var list = [];
 					if($('#chkbox-all').prop('checked')){
-						$('.chkbox').each(function(index, obj){
-							if(!this.checked){
-								list.push(obj.value);
-							}
-						});
+						console.log($('#chkbox-all').val());
+						list.push($('#chkbox-all').val());
 					} else {
 						$('.chkbox:checked').each(function(index, obj) {
 							list.push(obj.value);

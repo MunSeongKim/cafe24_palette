@@ -26,8 +26,8 @@ public class StatisticAPIController {
 	@Autowired
 	private StatisticService statisticService;
 	
-	@Autowired
-	private StatisticDto statisticDto;
+/*	@Autowired
+	private StatisticDto statisticDto;*/
 	
 	@GetMapping(value="/pCount")
 	public JSONResult getPanelCount(/*@ModelAttribute("mallId") String mallId*/) {

@@ -146,6 +146,6 @@ $(document).keyup(function(e) {
 	         return;
 	      }
 	      if(!$('#panel-draggable-btn').is('.open')) { return; }
-	      $.panel.nav('close');
+	      $.panel.close();
 	   }
 	});

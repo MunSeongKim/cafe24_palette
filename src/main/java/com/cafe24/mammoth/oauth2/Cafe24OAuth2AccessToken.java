@@ -161,7 +161,7 @@ public class Cafe24OAuth2AccessToken implements Serializable, OAuth2AccessToken 
 
 	@Override
 	public boolean isExpired() {
-		return expiresAt != null && expiresAt.after(new Date());
+		return expiresAt != null && expiresAt.before(new Date());
 	}
 
 	@Override

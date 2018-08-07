@@ -28,7 +28,6 @@
 
 <div id="panel" class="panel plt-pn ">
 	<div class="container">
-		<c:set var="size" value="${fn:length(selectFuncs) }" />
 		<c:forEach var="selectFunc" items="${selectFuncs}" varStatus="idx">
 			<div class="row">
 				<div class="func${selectFunc.id }" id="func${selectFunc.id}"></div>
