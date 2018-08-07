@@ -7,7 +7,7 @@ var _host = "devbit005.cafe24.com";
 var _protocol = "https";
 
 (function($){
-	
+	 
 	// 예시 데이터
 	// For Test!===============================================================================
 		var tmpTestData = {

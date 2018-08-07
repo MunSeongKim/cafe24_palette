@@ -76,7 +76,7 @@
         		$(layer).removeClass("popup-"+p.position+"-open");
         		$(layer).removeClass("popup-"+p.removePosition+"-open");
         		$(layer).addClass("popup-close");
-        	}
+        	} 
         }
     }
 }(jQuery));
