@@ -3,8 +3,8 @@
  * 중복되는 네임스페이스를 방지하기 위해 사용. recentProduct이라는 네임스페이스 지정.
  */
 
-var _host = "localhost:8080";
-var _protocol = "http";
+var _host = "devbit005.cafe24.com";
+var _protocol = "https";
 
 (function($){
 	
