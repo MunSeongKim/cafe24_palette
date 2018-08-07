@@ -7,7 +7,7 @@
 
 <span id="btn-orderlist" class="func-orderlist plt-pn-btn plt-pn-block plt-pn-btn-default">ORDER LIST</span>
 <!-- 구매 목록 팝업 레이어  -->
-<div class="popupLayer plt-pn">
+<div class="popupLayer orderlist plt-pn">
 	<div id="popup-header">
 		<div id="popup-period">
 			<span class="plt-pn-btn plt-pn-btn-default plt-pn-font-l plt-pn-font-n span-period orderlist-click" data-period="week">1주일</span>
@@ -27,9 +27,9 @@
 	<div id="popup-orderlist">
 		<div class="container-layout">
 			<div class="container">
-				<div id="mustache-result"></div>
+				<div id="orderlist-mustache-result"></div>
 				<!-- 특정 주문일에 주문한 상품 리스트 -->
-				<script id="mustache-template" type="text/template">
+				<script id="orderlist-mustache-template" type="text/template">
 				{{^datas}}
 					<div class="row">
 					구매한 상품이 없습니다.
@@ -45,7 +45,7 @@
 										<div class="row order-pdt-info">
 											<div class="col-md-6">
 												{{^product.smallImage}}
-													<img class="img-fluid d-block info-smallimage" src="noimage.png" />
+													<img class="img-fluid d-block info-smallimage" src="https://devbit005.cafe24.com/mammoth/function/orderlist/noimage.png" />
 												{{/product.smallImage}}
 												{{#product.smallImage}}
 													<img class="img-fluid d-block info-smallimage" src="{{product.smallImage}}" />

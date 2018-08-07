@@ -22,13 +22,11 @@
 	height: 120px;
 	cursor: pointer;
 	padding-top: 50px;
+	font-size: 1em;
 }
 .recent-left-arrow:hover{
 	text-decoration: none;
-}
-.recent-left-arrow:before{
-	color : black;
-	font-size: 1.5em;
+	font-size: 1.25em;
 }
 .recent-right-arrow {
 	display: block;
@@ -41,11 +39,8 @@
 	font-size: 1em;
 }
 .recent-right-arrow:hover{
-	text-decoration: none; 
-}
-.recent-right-arrow:before{
-	color : black;
-	font-size: 1.5em;
+	text-decoration: none;
+	font-size: 1.25em; 
 }
 .recent-product-title {
 	color: #000;
@@ -112,20 +107,7 @@
 <script type="text/javascript" src="https://devbit005.cafe24.com/mammoth/function/recent/recent.js"></script>
 
 <script>
-$(document).ready(function() {   
-	$.recent.init({ 
-		isPreview : true,  // 미리보기 기능 사용 여부
-		interval : 3000,   // 슬라이드 자동 넘기기 속도
-		preview : {
-			layoutWidth : 200,  // 미리보기 레이아웃 크기 (px)
-			layoutBorderRadius : 0,   // 미리보기 레이아웃 border-radius 정도 (px)
-			imgHeight : 200,    // 미리보기 사진 높이 (px)
-		}
-	});
-	
-	// 최근 본 상품 링크
-	$('.recent-product-title').attr('href', window.location.hostname+'/product/recent_view_product.html');
-});
+
 </script>
 
 <div class="recent-main-div container plt-pn-default-empty plt-pn-border-color">
@@ -138,11 +120,15 @@ $(document).ready(function() {
 
 	<div id="recentBox" class="row-sm recent-row-product">
 		<div class="col-2" style="float: left;">
-			<a class="recent-left-arrow fas fa-angle-left" href="#myCarousel" role="button" data-slide="prev"></a>
+			<a class="recent-left-arrow " href="#myCarousel" role="button" data-slide="prev">
+				<i class="fas fa-angle-left plt-pn-i"></i>
+			</a>
 		</div>
 
 		<div class="col-2" style="float: right;">
-			<a class="recent-right-arrow fas fa-angle-right" href="#myCarousel" role="button" data-slide="next"></a>
+			<a class="recent-right-arrow" href="#myCarousel" role="button" data-slide="next">
+				<i class="fas fa-angle-right plt-pn-i"></i>
+			</a>
 		</div>
 
 		<div class="col-8 recent-content">
@@ -158,8 +144,8 @@ $(document).ready(function() {
 		</div>
 	</div>
 </div>
-<!-- 마우스 오버 시 확대 출력. -->
-<div class="recent-preview-layout plt-pn">
+<!-- 마우스 클릭 시 확대 출력. -->
+<div class="recent-preview-layout plt-pn popupLayer">
 	
 	<div id="recent_preview_layout_close">
 		<span>&times;</span>

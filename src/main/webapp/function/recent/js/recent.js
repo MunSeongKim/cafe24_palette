@@ -197,8 +197,7 @@ var _protocol = "http";
 					  }
 					};
 		var tmpHitData = { count : 6 };
-	 
-		sessionStorage.setItem("localRecentProduct1", JSON.stringify(tmpTestData));
+		
 	//=========================================================================================
 	
 	$.recent = {
@@ -237,8 +236,16 @@ var _protocol = "http";
 		
 		// SessionStorate에 있는 값을 JSON으로 리턴.
 		getJson : function(){
-			var jsonStr = sessionStorage.getItem("localRecentProduct1");
-			var json = JSON.parse(jsonStr);
+			var jsonStr = null;
+			var json = null;
+			
+			if($("#panel").hasClass("preview")){
+				json = tmpTestData;
+			}else{
+				jsonStr = sessionStorage.getItem("localRecentProduct1");
+                json = JSON.parse(jsonStr);
+			}
+			
 			return json;
 		},
 		 
@@ -263,17 +270,12 @@ var _protocol = "http";
 		
 		// carousel-inner class를 사용하는 div에 recent list 정보를 바탕으로 항목 리스트를 추가한다.
 		render : function(){
-			var jsonData = this.getJson();
-			for(i in jsonData){
-				var iProductNo = jsonData[i].iProductNo;
-				var link = jsonData[i].link_product_detail;
-				var imgSrc = _protocol+"://"+jsonData[i].sImgSrc;
-				var imgTag = '<img src="'+imgSrc+'" data-iProductNo="'+iProductNo+'" style="width: 100%;">';
-				var carouselItem = '<div class="carousel-item" style="height: 120px;">'+imgTag+'</div>';
-				$("#recentBox .carousel-inner").append(carouselItem);
-			}
+			var jsonData = null;
 			
 			if($("#panel").hasClass("preview")){
+				
+				jsonData = tmpTestData;
+				
 				$('.recent-product-title').click(function(evt){
 					evt.preventDefault();
 					alert("[쇼핑몰의 최근 본 상품 목록으로 이동 할 것 입니다.]");
@@ -283,6 +285,17 @@ var _protocol = "http";
 					evt.preventDefault();
 					alert("[쇼핑몰의 최근 본 상품 목록으로 이동 할 것 입니다.]");
 				});
+			} else {
+				jsonData = this.getJson();
+			}
+			
+			for(i in jsonData){
+				var iProductNo = jsonData[i].iProductNo;
+				var link = jsonData[i].link_product_detail;
+				var imgSrc = _protocol+"://"+jsonData[i].sImgSrc;
+				var imgTag = '<img src="'+imgSrc+'" data-iProductNo="'+iProductNo+'" style="width: 100%;">';
+				var carouselItem = '<div class="carousel-item" style="height: 120px;">'+imgTag+'</div>';
+				$("#recentBox .carousel-inner").append(carouselItem);
 			}
 			
 			$(".recent_count").text(Object.keys(jsonData).length);
@@ -309,7 +322,7 @@ var _protocol = "http";
 				hitDatas = res;
 			}, 100);
 			
-			$.recent.setDetailData(productNo, productDatas, optDatas, hitDatas, sessionData, options);
+			return {productDatas, optDatas, hitDatas};
 		},
 		
 		// 미리보기 레아이웃 준비
@@ -329,7 +342,8 @@ var _protocol = "http";
 				}
 				/* 실제 front api 사용 부분*/
 				else{
-					$.recent.frontApi(iProductNo, sessionData, options);
+					var results = $.recent.frontApi(iProductNo, sessionData, options);
+					$.recent.setDetailData(iProductNo, results.productDatas, results.optDatas, results.hitDatas, sessionData, options);
 				}
 				
 				$.recent.previewRender(options);
@@ -417,3 +431,17 @@ var _protocol = "http";
 	};
 	
 })(jQuery);
+$(document).ready(function() {   
+	$.recent.init({ 
+		isPreview : true,  // 미리보기 기능 사용 여부
+		interval : 3000,   // 슬라이드 자동 넘기기 속도
+		preview : {
+			layoutWidth : 200,  // 미리보기 레이아웃 크기 (px)
+			layoutBorderRadius : 0,   // 미리보기 레이아웃 border-radius 정도 (px)
+			imgHeight : 200,    // 미리보기 사진 높이 (px)
+		}
+	});
+	
+	// 최근 본 상품 링크
+	$('.recent-product-title').attr('href', window.location.hostname+'/product/recent_view_product.html');
+});
