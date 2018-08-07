@@ -234,6 +234,7 @@ var _protocol = "https";
 		},
 		
 		
+		
 		// 미리보기 레아이웃 준비
 		preview : function(options){
 			var array = $.recent.getArray();
