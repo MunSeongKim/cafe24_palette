@@ -67,9 +67,7 @@
 				}else if(p.visible == "hide"){
 					$.panel.displayNone();
 				}
-				
 			});
-
 		},
 		
 		// 다시 위치를 결정 할 때.

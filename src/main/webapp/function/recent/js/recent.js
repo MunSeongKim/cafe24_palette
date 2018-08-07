@@ -10,7 +10,7 @@ var _protocol = "https";
 	 
 	// 예시 데이터
 	// For Test!===============================================================================
-		var tmpTestData = {
+		var tmpProductData = {
 			"0" : {
 				"iProductNo" : "101470",
 				"sProductName" : "첫번째 상품",
@@ -38,69 +38,74 @@ var _protocol = "https";
 		};
 		
 		var tmpApiDatas = {
-				  "product_name": "샘플상품 2",
-				  "simple_description": "",
-				  "summary_description": "",
-				  "options": {
-				    "option": [
-				      {
-				        "option_code": "",
-				        "option_name": "색상",
-				        "option_value": [
-				          {
-				            "option_image_file": "",
-				            "option_color": "#000000",
-				            "option_text": "블랙",
-				            "value_no": null
-				          },
-				          {
-				            "option_image_file": "",
-				            "option_color": "#ff5a00",
-				            "option_text": "오렌지",
-				            "value_no": null
-				          },
-				          {
-				            "option_image_file": "",
-				            "option_color": "#ffffff",
-				            "option_text": "화이트",
-				            "value_no": null
-				          }
-				        ],
-				        "required_option": "T",
-				        "option_display_type": "S"
-				      },
-				      {
-				        "option_code": "",
-				        "option_name": "사이즈",
-				        "option_value": [
-				          {
-				            "option_image_file": "",
-				            "option_color": "",
-				            "option_text": "S",
-				            "value_no": null
-				          },
-				          {
-				            "option_image_file": "",
-				            "option_color": "",
-				            "option_text": "M",
-				            "value_no": null
-				          },
-				          {
-				            "option_image_file": "",
-				            "option_color": "",
-				            "option_text": "L",
-				            "value_no": null
-				          }
-				        ],
-				        "required_option": "T",
-				        "option_display_type": "S"
-				      }
-				    ]
-				  }
+				"count" : 777,
+				"product" : {
+					"product_name": "샘플상품 2",
+					  "simple_description": "",
+					  "summary_description": "",
+					  "options": {
+					    "option": [
+					      {
+					        "option_code": "",
+					        "option_name": "색상",
+					        "option_value": [
+					          {
+					            "option_image_file": "",
+					            "option_color": "#000000",
+					            "option_text": "블랙",
+					            "value_no": null
+					          },
+					          {
+					            "option_image_file": "",
+					            "option_color": "#ff5a00",
+					            "option_text": "오렌지",
+					            "value_no": null
+					          },
+					          {
+					            "option_image_file": "",
+					            "option_color": "#ffffff",
+					            "option_text": "화이트",
+					            "value_no": null
+					          }
+					        ],
+					        "required_option": "T",
+					        "option_display_type": "S"
+					      },
+					      {
+					        "option_code": "",
+					        "option_name": "사이즈",
+					        "option_value": [
+					          {
+					            "option_image_file": "",
+					            "option_color": "",
+					            "option_text": "S",
+					            "value_no": null
+					          },
+					          {
+					            "option_image_file": "",
+					            "option_color": "",
+					            "option_text": "M",
+					            "value_no": null
+					          },
+					          {
+					            "option_image_file": "",
+					            "option_color": "",
+					            "option_text": "L",
+					            "value_no": null
+					          }
+					        ],
+					        "required_option": "T",
+					        "option_display_type": "S"
+					      }
+					    ]
+					  }
 				}
+		}
 		
 		
 	//=========================================================================================
+	
+	var opts = {};	
 	
 	$.recent = {
 		defaults : {
@@ -123,16 +128,16 @@ var _protocol = "https";
 			// 같은 이름의 프로퍼티가 있을 때, 덮어 쓴다. object1에 objectN을 덮어쓴다.
 			// true : 깊은 복사
 			// target : 합쳐진 객체를 받을 객체.
-			var opts = $.extend(true, {}, $.recent.defaults, options);
+			opts = $.extend(true, {}, $.recent.defaults, options);
 			
 			// 화면 전환 속도 ms
 			$('#recentBox .carousel').carousel({ interval: opts.interval });
 						
 			// 최근 본 상품 목록 그리기.
-			this.render(opts);
+			this.render();
 			
 			if(opts.isPreview == true){
-				this.preview(opts);
+				this.preview();
 			}
 		},
 		
@@ -142,7 +147,7 @@ var _protocol = "https";
 			var json = null;
 			
 			if($("#panel").hasClass("preview")){
-				json = tmpTestData;
+				json = tmpProductData;
 			}else{
 				jsonStr = sessionStorage.getItem("localRecentProduct1");
                 json = JSON.parse(jsonStr);
@@ -176,7 +181,7 @@ var _protocol = "https";
 			
 			if($("#panel").hasClass("preview")){
 				
-				jsonData = tmpTestData;
+				jsonData = tmpProductData;
 				
 				$('.recent-product-title').click(function(evt){
 					evt.preventDefault();
@@ -203,14 +208,12 @@ var _protocol = "https";
 			$(".recent_count").text(Object.keys(jsonData).length);
 			$("#recentBox .carousel-inner div.carousel-item:first").addClass("active");
 		},
-
+		
 		// Front API 데이터 사용
-		frontApi : function(iProductNo, sessionData, options) {
+		frontApi : function(iProductNo, sessionData) {
 			CAFE24API.init('D0OdNNlzFdfWprppcum7NG'); //App Key
-
-			var productDatas = null;
-			var optDatas = null;
-			var hitDatas = null;
+			
+			console.log("iProductNo : "+ iProductNo); 
 			
 			// 옵션 정보 및 상품 정보 가져오기
 			CAFE24API.get('/api/v2/products/'+iProductNo+'?embed=options&fields=product_name, options, simple_description, summary_description', function(err, res){
@@ -228,32 +231,27 @@ var _protocol = "https";
 					console.log(apiDatas);
 					
 					$.recent.setDetailData(iProductNo, sessionData, apiDatas);
-					$.recent.previewRender(options);
+					$.recent.previewRender();
 				});
 			});
 		},
 		
-		
-		
 		// 미리보기 레아이웃 준비
-		preview : function(options){
+		preview : function(){
 			var array = $.recent.getArray();
 			
 			$("#recentBox .carousel-inner").click(function(event){
 				var iProductNo = event.target.getAttribute("data-iProductNo");
 				var sessionData = $.recent.getOneArray(array, iProductNo);
-				var productDatas = tmpProductData;
-				var optDatas = tmpOptData;
-				var hitDatas = tmpHitData;
 				
 				/* 가상 데이터 사용 부분 */
 				if($("#panel").hasClass("preview")){
 					$.recent.setDetailData(iProductNo, sessionData, tmpApiDatas)
-					$.recent.previewRender(options);
+					$.recent.previewRender(opts);
 				}
 				/* 실제 front api 사용 부분*/
 				else{
-					$.recent.frontApi(iProductNo, sessionData, options);
+					$.recent.frontApi(iProductNo, sessionData);
 				}
 			});
 			
@@ -265,19 +263,22 @@ var _protocol = "https";
 		
 		// 가상 데이터 혹은 Front Api 데이터를 통해 화면을 render하는 함수
 		setDetailData : function (iProductNo, sessionData, apiDatas){
-			var productName = apiDatas.product_name;
-			var simpleDescription = apiDatas.simple_description;
-			var summaryDescription = apiDatas.summary_description;
-			var opts = apiDatas.option;
+			var productName = apiDatas.product.product_name;
+			var simpleDescription = apiDatas.product.simple_description;
+			var summaryDescription = apiDatas.product.summary_description;
+			var pOpts = apiDatas.product.options.option;
 			var hit = apiDatas.count;
+			
+			console.log("productName : "+productName);
+			console.log("hit : "+hit);
 			
 			// product image
 			$(".recent-preview-img").attr({
 				"src" : _protocol+"://"+sessionData.sImgSrc,
-				"height" : options.preview.imgHeight+"px",
+				"height" : opts.preview.imgHeight+"px",
 			}).css({ 
-				"border-top-left-radius" : options.preview.layoutBorderRadius+"px", 
-				"border-top-right-radius" : options.preview.layoutBorderRadius+"px"
+				"border-top-left-radius" : opts.preview.layoutBorderRadius+"px", 
+				"border-top-right-radius" : opts.preview.layoutBorderRadius+"px"
 			});
 			
 			// product hit
@@ -288,20 +289,26 @@ var _protocol = "https";
 			
 			// product options
 			var content = '';
-			for(var i in opts) {
-				content += opts[i].option_name;
-				content += '<br>[ ';
-				for(var j in opts[i].option_value) {
-					var color = opts[i].option_value[j].option_color;
-					if(color ==='#ffffff') {
-						color += ';background-color: #000000';
+			
+			if(pOpts.has_option == 'T'){
+				content = '옵션이 없는 상품입니다.';
+			}else{
+				for(var i in pOpts) {
+					content += pOpts[i].option_name;
+					content += '<br>[ ';
+					for(var j in pOpts[i].option_value) {
+						var color = pOpts[i].option_value[j].option_color;
+						if(color ==='#ffffff') {
+							color += ';background-color: #000000';
+						}
+						content += '<span style="color:'+color+'; font-weight: bold;">'
+						content += pOpts[i].option_value[j].option_text + '</span> ';
 					}
-					content += '<span style="color:'+color+'; font-weight: bold;">'
-					content += opts[i].option_value[j].option_text + '</span> ';
+					
+					content += ']<br>';
 				}
-				
-				content += ']<br>';
 			}
+			
 			$('.recent-preview-options').html(content);
 			
 			// product detail info
@@ -317,12 +324,12 @@ var _protocol = "https";
 			$(".recent-link-btn").attr({
 				'href': _protocol+'://'+window.location.hostname+'/product/detail.html?product_no='+iProductNo
 			}).css({
-				"border-radius" : options.preview.layoutBorderRadius+"px"
+				"border-radius" : opts.preview.layoutBorderRadius+"px"
 			})
 		},
 		
 		// 미리보기 화면 출력 및 위치 결정
-		previewRender : function(options){		
+		previewRender : function(){		
 			// preview의 속성을 변경한다.
 			$.recent.popup('open');
 		},
