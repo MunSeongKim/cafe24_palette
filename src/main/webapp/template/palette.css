@@ -25,6 +25,7 @@
 	left : unset;
 	width: 15.625em;
 	margin-right: 0em;
+	display: block !important;
 }
 
 /* 패널 우측 닫기 */
