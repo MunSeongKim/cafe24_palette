@@ -4,7 +4,7 @@ a:hover {
 }
 
 /* popup css */
-.popupLayer {
+.popupLayer.orderlist {
 	display: none;
 	font-weight: normal;
 	/* width: 40%; */
@@ -14,35 +14,35 @@ a:hover {
 	padding: 0.2em 0.625em;
 	margin: 0 auto;
 }
-.popupLayer hr {
+.popupLayer.orderlist hr {
 	height: 1%;
 }
-.popupLayer hr, .popupLayer #popup-orderlist {
+.popupLayer.orderlist hr, .popupLayer.orderlist #popup-orderlist {
 	margin: 0 0;
 }
-.popupLayer #popup-header {
+.popupLayer.orderlist #popup-header {
 	font-size: 0.813em;
 }
-.popupLayer #popup-orderlist {
+.popupLayer.orderlist #popup-orderlist {
 	margin-top: 0.625em;
 	height: 77%;
     overflow: auto;
     overflow-x: hidden;
 }
-.popupLayer #popup-header #popup-period #popup-close {
+.popupLayer.orderlist #popup-header #popup-period #popup-close {
 	position: absolute;
 	top: 0;
 	right: 5%;
 	font-size: 2.25em;
 	text-decoration: none;
 }
-.popupLayer #popup-header #popup-period #popup-close:hover {
+.popupLayer.orderlist #popup-header #popup-period #popup-close:hover {
 	cursor: pointer;
 }
-.popupLayer #popup-period,
-.popupLayer #popup-header #popup-chkbox,
-.popupLayer #popup-orderlist .container-layout .container .row,
-.popupLayer #popup-close button {
+.popupLayer.orderlist #popup-period,
+.popupLayer.orderlist #popup-header #popup-chkbox,
+.popupLayer.orderlist #popup-orderlist .container-layout .container .row,
+.popupLayer.orderlist #popup-close button {
 	margin-top: 0.625em;
 }
 /* card css */
@@ -56,22 +56,23 @@ a:hover {
 	margin-top: 0.625em;
 }
 /* card 내부 */
-.order-pdt-info .info-title {
+#popup-orderlist .card .card-body .order-pdt-info .info-title {
 	font-size: 0.5em;
 	font-weight: bold;
 }
-.order-pdt-info p {
+#popup-orderlist .card .card-body .order-pdt-info p {
 	margin-bottom: 0.625em;
 }
-.order-pdt-info .info-tags {
+#popup-orderlist .card .card-body .order-pdt-info .info-tags {
  	color: #0e89ed;
  	font-size: 0.688em;
  }
-.order-pdt-info .info-smallimage, .order-pdt-info .info-detail-link{
+#popup-orderlist .card .card-body .order-pdt-info .info-smallimage, 
+#popup-orderlist .card .card-body .order-pdt-info .info-detail-link{
  	width:100%; 
  	max-width: 15.625em; 
  	min-width:7.5em;
  }
-.order-pdt-info .info-detail-link {
+#popup-orderlist .card .card-body .order-pdt-info .info-detail-link {
 	display: block;
 }

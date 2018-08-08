@@ -119,10 +119,10 @@
 			$.orderlist.mustache($.orderlist.originData);
 		},
 		mustache : function(data) {
-			var template = $('#mustache-template').html();
+			var template = $('#orderlist-mustache-template').html();
 			Mustache.parse(template);
 			var rendered = Mustache.render(template, data);
-			$('#mustache-result').html('').append(rendered);
+			$('#orderlist-mustache-result').html('').append(rendered);
 		},
 		popup : function(action) {
 			if(action === 'open') {
