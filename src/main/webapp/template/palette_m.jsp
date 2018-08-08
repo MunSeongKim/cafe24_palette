@@ -46,7 +46,7 @@
 </ul>
 
 <c:forEach var="selectFunc" items="${selectFuncs }" varStatus="status">
-   	<div class="zoom-card scale-transition scale-out" id="func${selectFunc.id }"></div>
+   	<div class="zoom-card scale-transition scale-out palette_m" id="func${selectFunc.id }"></div>
 </c:forEach>
 
 <script>

@@ -7,8 +7,8 @@ $(document).ready(function() {
 */    
      /* zoom 큰 메뉴 버튼 클릭 시 */
      $('#zoomBtn').click(function() {
-    	 	console.log('zoom click');
     	 	$('.zoom-btn-sm').toggleClass('scale-out');
+    	 	$('.zoom-card').addClass('scale-out')
      });
      
      /* zoom 큰 메뉴 내부의 작은 메뉴 버튼 클릭 시 */
