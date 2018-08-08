@@ -52,7 +52,7 @@
 			if(p.visible == true){
 				$.panel.open();
 			}else if(p.visible == false){
-				$.panel.close(); 
+				$.panel.close();
 			}else if(p.visible == "hide"){
 				$.panel.displayNone();
 			}
@@ -70,7 +70,7 @@
 		
 		open : function(){
 			$('#panel-draggable-btn').addClass('open');
-			$.panel.changePanel('open'); 
+			$.panel.changePanel('open');
 		},
 		
 		close : function(){
