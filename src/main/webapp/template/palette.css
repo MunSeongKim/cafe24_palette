@@ -1,5 +1,4 @@
 @charset "UTF-8";
-/*******************[패널 우측 관련 CSS]****************/
 
 #panel{
 	font-size: 16px;
@@ -11,6 +10,8 @@
 	padding-left: 0;
 	padding-right: 0;
 }
+
+/*******************[패널 우측 관련 CSS]****************/
 
 /* 패널 우측 기본 */
 .panel-right-default-setting{ 
