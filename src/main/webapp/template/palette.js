@@ -76,6 +76,7 @@
 		close : function(){
 			$('#panel-draggable-btn').removeClass('open');
 			$.panel.changePanel('close');
+			$("#panel").css("display", "unset");
 		},
         
         // 패널, 버튼, 스크롤의 CSS 결정.
