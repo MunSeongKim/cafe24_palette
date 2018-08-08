@@ -6,8 +6,8 @@
         defaults : {
         	visible : false,
 			funcVisible : false,
-            'position' : 'right',
-            'removePosition' : 'left'
+            position : 'right',
+            removePosition : 'left'
         },
         
         init : function(opts){
@@ -77,6 +77,11 @@
 			$('#panel-draggable-btn').removeClass('open');
 			$.panel.changePanel('close');
 		},
+		
+		displayNone : function(){
+			$('#panel-draggable-btn').addClass('open');
+			$("#panelArea").hide();
+		},
         
         // 패널, 버튼, 스크롤의 CSS 결정.
         changePanel : function(action){
@@ -141,7 +146,7 @@ $(document).ready(function() {
     
     // service panel 기본 동작 invisible
     $.panel.init({
-    	visible : false,
+    	visible : 'hide',
     	position : position,
     	removePosition : removePosition
     });
