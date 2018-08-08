@@ -14,7 +14,7 @@ h1 { margin:50px auto;}
 }
 
 .zoom-fab {
-	height:2.188em;
+	/* height:2.188em; */
  	display: inline-block;
  	width: 2.75em;
 	line-height: 2.500em;
