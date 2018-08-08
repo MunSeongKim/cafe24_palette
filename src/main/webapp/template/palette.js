@@ -130,8 +130,8 @@
 
 $(document).keyup(function(e) {
    if (e.keyCode == 27) { // escape key maps to keycode `27`
-	   var pos = $.panel.getPosition();
-		  
+	  var pos = $.panel.getPosition();
+	
 	  if($('.popupLayer').hasClass("popup-"+pos+"-open")){
 		  $('.popupLayer').removeClass("popup-"+pos+"-open");
 	      return;
