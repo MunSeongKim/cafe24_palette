@@ -15,7 +15,7 @@ var readyToExe = (function() {
 	   'https://devbit005.cafe24.com/mammoth/static/jquery/1.11.1/jquery.min.js',
 	   'https://devbit005.cafe24.com/mammoth/static/jquery-ui/1.12.1/jquery-ui.min.js',
 	   'https://devbit005.cafe24.com/mammoth/static/popper.js/1.14.1/umd/popper.min.js',
-	   'https://devbit005.cafe24.com/mammoth/static/bootstrap/4.1.1/js/bootstrap.min.js',
+	   'https://devbit005.cafe24.com/mammoth/assets/js/bootstrap.min.js',
 	   'https://devbit005.cafe24.com/mammoth/static/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js',
 	   'https://devbit005.cafe24.com/mammoth/static/mustachejs/2.2.1/mustache.min.js'
        ];

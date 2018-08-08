@@ -45,6 +45,7 @@ public class FunctionService {
 			savedFunction.setDesktopPath(desktopPath.replace("/cafe24/tmp", ""));
 			savedFunction.setMobilePath(mobilePath.replace("/cafe24/tmp", ""));
 			savedFunction.setCreatedDate(new Date());
+			savedFunction.setName(function.getName());
 			return true;
 		}
 		
