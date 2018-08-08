@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.mammoth.app.domain.dto.Order;
-import com.cafe24.mammoth.app.service.cafe24api.OrderAPIService;
+import com.cafe24.mammoth.app.service.OrderService;
 import com.cafe24.mammoth.app.support.JSONResult;
 
 
@@ -35,7 +35,7 @@ import com.cafe24.mammoth.app.support.JSONResult;
 @CrossOrigin
 public class OrderAPIController {
 	@Autowired
-	private OrderAPIService orderAPIService;
+	private OrderService orderService;
 	
 	
 	@GetMapping(value="/orders")
@@ -48,7 +48,7 @@ public class OrderAPIController {
 		params.add("end_date", endDate);
 		params.add("member_id", memberId);
 		System.out.println(params);
-		List<Order> orderList = orderAPIService.getOrderList(params);
+		List<Order> orderList = orderService.getOrderList(params);
 		return JSONResult.success(orderList != null ? orderList : "null");
 	}
 }

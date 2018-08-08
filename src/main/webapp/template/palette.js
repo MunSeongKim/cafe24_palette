@@ -1,14 +1,65 @@
 (function($) {
     var p = {};
+    
     $.panel = {
-        
         // p의 디폴트 값.
         defaults : {
+        	visible : false,
+			funcVisible : false,
             'position' : 'right',
             'removePosition' : 'left'
         },
         
+        init : function(opts){
+        	p = $.extend(true, {}, $.panel.defaults, opts);
+        	
+        	$("#panel-draggable-btn").draggable({
+				axis : "y", 
+				containment : "window" // 180713 hwi 추가
+			});
+			
+			$("#panel-draggable-btn").on('click', function() {
+				if($(this).is('.open') == true) {
+					// 열려 있는 popup layer 모두 닫기.
+					$('.popupLayer').removeClass("popup-"+p.position+"-open");
+					$.panel.close();
+					return;
+				}
+				
+				$(this).addClass('open');
+				$.panel.open();
+			});
+			
+			/*
+			 * 180712 hwi
+			 * 스크롤 맨 위, 아래 버튼 start 
+			 */
+			// draggable 참고사이트: https://api.jqueryui.com/draggable/#option-containment
+			$(".scroll_mm_div").draggable({
+				axis : "y",  // option : x, y
+				containment:"window"  // option : parent, document, window 화면에서 element나가는 것을 방지하기 위해 window선언
+			});
+			
+			$('.scroll_top').click(function(){
+				$('html, body').animate({scrollTop: 0}, 200); // 무조건 맨 위 scrollY value 0
+			});
+			
+			$('.scroll_bottom').click(function(){
+				// document max height value - window max height = 스크롤을 최대로 내릴 수 있는 height값이 나온다.
+				$("html, body").animate({scrollTop:$(document).height()- $(window).height()}, 200);
+			});
+			
+			if(p.visible == true){
+				$.panel.open();
+			}else if(p.visible == false){
+				$.panel.close(); 
+			}else if(p.visible == "hide"){
+				$.panel.displayNone();
+			}
+        },
+        
         // p에 default값 세팅 / 위치가 바뀌면 바뀐 위치+default를 p에 세팅
+        // palette.jsp나 js에서는 얘를 호출 할 이유가 없음. -> position이 변할 일이 없음.
         setPosition : function(positions){
             p = $.extend(true, {}, $.panel.defaults, positions);
         },
@@ -85,60 +136,13 @@ $(document).keyup(function(e) {
 
 $(document).ready(function() {
 	var position = pos.toLowerCase();
-	console.log(position);
     var removePosition = 'left';
-    
     if(position === 'left') { removePosition = 'right'; }
     
-    $.panel.setPosition({'position': position, 'removePosition':removePosition});
-    $.panel.close();
-	
-	$("#panel-draggable-btn").draggable({
-		axis : "y",
-		containment : "window" // 180713 hwi 추가
-	});
-	
-	$("#panel-draggable-btn").on('click', function() {
-		if($(this).is('.open') == true) {
-			// 열려 있는 popup layer 모두 닫기.
-			$('.popupLayer').removeClass("popup-"+p.position+"-open");
-			
-			$.panel.close();
-			
-			return;
-		}
-		
-		$(this).addClass('open');
-		$.panel.open();
-	});
-
-	/*
-	 * 180712 hwi 스크롤 맨 위, 아래 버튼 start
-	 */
-	$(".scroll_mm_div").draggable({
-		axis : "y", // option : x, y
-		containment : "window" // option : parent, document,
-								// window 화면에서 element나가는 것을
-								// 방지하기 위해 window선언
-	});
-	
-	$('.scroll_top').click(function() {
-		console.log('toptop');
-		$('html, body').animate({
-			scrollTop : 0
-		}, 200); // 무조건 맨 위 scrollY value 0
-	});
-
-	$('.scroll_bottom').click(
-			function() {
-				console.log('bottom');
-				// document max height value - window max height
-				// = 스크롤을 최대로 내릴 수 있는 height값이 나온다.
-				$("html, body").animate(
-					{
-						scrollTop : $(document).height()
-								- $(window).height()
-					}, 200);
-			});
-	/* scroll end */
+    // service panel 기본 동작 invisible
+    $.panel.init({
+    	visible : false,
+    	position : position,
+    	removePosition : removePosition
+    });
 });

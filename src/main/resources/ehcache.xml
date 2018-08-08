@@ -10,4 +10,10 @@
 		timeToLiveSeconds="3600" timeToIdleSeconds="0"
 		memoryStoreEvictionPolicy="LFU" transactionalMode="off">
 	</cache>
+	
+	<cache name="dashboard" maxEntriesLocalHeap="1000"
+		maxEntriesLocalDisk="1000" eternal="false" overflowToDisk="false"
+		timeToLiveSeconds="3600" timeToIdleSeconds="0"
+		memoryStoreEvictionPolicy="LFU" transactionalMode="off">
+	</cache>
 </ehcache>

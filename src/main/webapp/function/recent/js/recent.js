@@ -185,12 +185,12 @@ var _protocol = "https";
 				
 				$('.recent-product-title').click(function(evt){
 					evt.preventDefault();
-					alert("[쇼핑몰의 최근 본 상품 목록으로 이동 할 것 입니다.]");
+					alert("[쇼핑몰의 '최근 본 상품 목록'으로 이동 할 것 입니다.]");
 				});
 				
 				$('.recent-link-btn').click(function(evt){
 					evt.preventDefault();
-					alert("[쇼핑몰의 최근 본 상품 목록으로 이동 할 것 입니다.]");
+					alert("[해당 상품의 '상세보기 페이지'로 이동 할 것 입니다.]");
 				});
 			} else {
 				jsonData = this.getJson();
@@ -199,7 +199,14 @@ var _protocol = "https";
 			for(i in jsonData){
 				var iProductNo = jsonData[i].iProductNo;
 				var link = jsonData[i].link_product_detail;
-				var imgSrc = _protocol+"://"+jsonData[i].sImgSrc;
+				
+				var imgSrc = null;
+				if($("#panel").hasClass("preview")){
+					imgSrc = _protocol+"://"+jsonData[i].sImgSrc;
+				}else{
+					imgSrc = "/web/product/tiny/"+jsonData[i].sImgSrc;
+				}
+				
 				var imgTag = '<img src="'+imgSrc+'" data-iProductNo="'+iProductNo+'" style="width: 100%;">';
 				var carouselItem = '<div class="carousel-item" style="height: 120px;">'+imgTag+'</div>';
 				$("#recentBox .carousel-inner").append(carouselItem);
@@ -212,24 +219,11 @@ var _protocol = "https";
 		// Front API 데이터 사용
 		frontApi : function(iProductNo, sessionData) {
 			CAFE24API.init('D0OdNNlzFdfWprppcum7NG'); //App Key
-			
-			console.log("iProductNo : "+ iProductNo); 
-			
 			// 옵션 정보 및 상품 정보 가져오기
-			CAFE24API.get('/api/v2/products/'+iProductNo+'?embed=options&fields=product_name, options, simple_description, summary_description', function(err, res){
-				
+			CAFE24API.get('/api/v2/products/'+iProductNo+'?embed=options&fields=product_name, options, simple_description, summary_description, detail_image', function(err, res){
 				var apiDatas = res;
-				
-				console.log("test - 1");
-				console.log(apiDatas);
-				
 				CAFE24API.get('/api/v2/products/'+iProductNo+'/hits/count', function(err, res){
-					
 					apiDatas['count'] = res.count;
-					
-					console.log("test - 2");
-					console.log(apiDatas);
-					
 					$.recent.setDetailData(iProductNo, sessionData, apiDatas);
 					$.recent.previewRender();
 				});
@@ -268,13 +262,19 @@ var _protocol = "https";
 			var summaryDescription = apiDatas.product.summary_description;
 			var pOpts = apiDatas.product.options.option;
 			var hit = apiDatas.count;
+			var detailImageSrc = apiDatas.product.detail_image;
+
+			var imgSrc = null;
 			
-			console.log("productName : "+productName);
-			console.log("hit : "+hit);
+			if($("#panel").hasClass("preview")){
+				imgSrc = _protocol+"://"+sessionData.sImgSrc;
+			}else{
+				imgSrc = detailImageSrc;
+			}
 			
 			// product image
 			$(".recent-preview-img").attr({
-				"src" : _protocol+"://"+sessionData.sImgSrc,
+				"src" : imgSrc,
 				"height" : opts.preview.imgHeight+"px",
 			}).css({ 
 				"border-top-left-radius" : opts.preview.layoutBorderRadius+"px", 
@@ -359,5 +359,5 @@ $(document).ready(function() {
 	});
 	
 	// 최근 본 상품 링크
-	$('.recent-product-title').attr('href', window.location.hostname+'/product/recent_view_product.html');
+	$('.recent-product-title').attr('href', '/product/recent_view_product.html');
 });

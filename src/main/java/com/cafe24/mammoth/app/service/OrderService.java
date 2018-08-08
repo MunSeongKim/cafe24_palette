@@ -1,4 +1,4 @@
-package com.cafe24.mammoth.app.service.cafe24api;
+package com.cafe24.mammoth.app.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,7 @@ import com.cafe24.mammoth.oauth2.api.impl.ProductsTemplate;
  *
  */
 @Service
-public class OrderAPIService {
+public class OrderService {
 	
 	@Autowired
 	private Cafe24Template cafe24Template;

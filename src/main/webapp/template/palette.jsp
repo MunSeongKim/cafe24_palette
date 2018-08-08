@@ -19,15 +19,15 @@
 	<i class="fa fa-arrow-circle-o-down scroll_bottom"></i>			
 </div>
 
-<div id="panel-draggable-btn" class="draggable"> 
+<div id="panel-draggable-btn" class="draggable">
 	<span></span>
 	<span></span>
 	<span></span>
 	<span></span>
 </div>
 
-<div id="panel" class="panel plt-pn ">
-	<div class="container">
+<div id="panel" class="panel plt-pn">
+	<div class="panel-container">
 		<c:forEach var="selectFunc" items="${selectFuncs}" varStatus="idx">
 			<div class="row">
 				<div class="func${selectFunc.id }" id="func${selectFunc.id}"></div>
