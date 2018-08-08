@@ -204,7 +204,11 @@ var _protocol = "https";
 				if($("#panel").hasClass("preview")){
 					imgSrc = _protocol+"://"+jsonData[i].sImgSrc;
 				}else{
-					imgSrc = "/web/product/tiny/"+jsonData[i].sImgSrc;
+					if(jsonData[i].sImgSrc.match(window.location.hostname)){
+						imgSrc = jsonData[i].sImgSrc;
+					}else{
+						imgSrc = "/web/product/tiny/"+jsonData[i].sImgSrc;
+					}
 				}
 				
 				var imgTag = '<img src="'+imgSrc+'" data-iProductNo="'+iProductNo+'" style="width: 100%;">';
