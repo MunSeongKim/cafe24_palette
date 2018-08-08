@@ -80,7 +80,7 @@
 		
 		displayNone : function(){
 			$('#panel-draggable-btn').removeClass('open');
-			$("#panelArea").hide();
+			$("#panel").hide();
 			$.panel.changePanel('close');
 		},
         

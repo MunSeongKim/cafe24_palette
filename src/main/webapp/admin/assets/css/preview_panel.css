@@ -1,4 +1,16 @@
 @charset "UTF-8";
+
+#panel{
+	font-size: 16px;
+}
+
+#panel container {
+	margin-left : 0;
+	margin-right : 0;
+	padding-left: 0;
+	padding-right: 0;
+}
+
 /*******************[패널 우측 관련 CSS]****************/
 
 /* 패널 우측 기본 */
@@ -148,6 +160,7 @@
 
 /* panel button */
 #panel-draggable-btn {
+	font-size : 16px;
 	top:1em;
 	width: 2.5em;
 	height: 1.563em;
@@ -223,6 +236,7 @@
 
 
 .scroll_mm_div {
+	font-size : 16px;
 	width: auto; 
 	display: block;
 	position: fixed;
