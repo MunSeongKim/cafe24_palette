@@ -64,6 +64,10 @@ body{
 	background-color: #563d7c;
 }
 
+a {
+	text-decoration: none;
+}
+
 #mainNavbar .container, #mainContainer .container{
 	position: relative;
 }
