@@ -74,7 +74,7 @@
 		},
 		
 		close : function(){
-			$('#panel-draggable-btn').toggleClass('open');
+			$('#panel-draggable-btn').removeClass('open');
 			$.panel.changePanel('close');
 		},
         
