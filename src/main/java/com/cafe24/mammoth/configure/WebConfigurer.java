@@ -78,7 +78,7 @@ public class WebConfigurer extends WebMvcConfigurationSupport {
 		// JQuery, Bootstrap 등 프론트 라이브러리 리소스
 		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/META-INF/resources/webjars/")
 				.setCacheControl(CacheControl.maxAge(3L, TimeUnit.HOURS).cachePublic()).resourceChain(true);
-		registry.addResourceHandler("/assets/**").addResourceLocations("classpath:/assets/")
+		registry.addResourceHandler("/assets/**").addResourceLocations("classpath:/static/assets/")
 				.setCacheControl(CacheControl.maxAge(3L, TimeUnit.HOURS).cachePublic()).resourceChain(true);
 		
 		

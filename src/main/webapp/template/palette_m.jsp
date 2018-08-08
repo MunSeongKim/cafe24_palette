@@ -37,7 +37,7 @@
 		<li class="${status.count}" data-id="func${selectFunc.id }">
 			<a class="zoom-fab zoom-btn-sm plt-pn-btn-inactive scale-transition scale-out" data-stat-id="func${selectFunc.id }">
 				<span class="zoom-icon zoom-icon-func${status.count }">
-					<c:set var="functionCharacter" value="${selectFunc.function.nameEng[0] }" />
+					<c:set var="functionCharacter" value="${fn:substring(selectFunc.function.nameEng, 0, 1)}" />
 					${fn:toUpperCase(functionCharacter) }
 				</span>
 			</a>
