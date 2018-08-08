@@ -1,3 +1,7 @@
+.palette_m {
+	box-sizing: border-box;
+}
+
 body { background-color: #f5f7fa; font-family:'Roboto'; text-align:center; }
 h1 { margin:50px auto;}
 .zoom {
