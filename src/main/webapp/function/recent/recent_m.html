@@ -29,7 +29,7 @@
 .recent-row-card .carousel .carousel-inner,
 .recent-row-card .carousel .carousel-inner .carousel-item,
 .recent-row-card .card {
-	height: 100%;	
+	height: 100%;
 }
 .recent-row-card .carousel {
 	width: 100%;
@@ -48,26 +48,42 @@
 	color: black;
 }
 
+.card-img-top{
+	padding-top: 10px;
+}
+
 /* card-body 내부 내용 css */
 .recent-row-card .card .card-body .card-title, 
 .recent-row-card .card .card-body .card-options, 
 .recent-row-card .card .card-body .card-text {
-	font-size: 0.5em;
+	font-size: 0.9em;
 	font-weight: bold;
 }
 
+.recent-row-card .card .card-body {
+	padding-top: 
+}
+
+.card-body p{
+	text-align: left;
+}
+
+.recent-link-btn{
+	display: block;
+}
+
 /* left/right button css */
- .carousel-control-prev,
- .carousel-control-next {
+.carousel-control-prev,
+.carousel-control-next {
 	background-image: unset;
- }
- .carousel-control-prev-icon i,
- .carousel-control-next-icon i {
- 	font-size: 2em;
- }
+}
+.carousel-control-prev-icon i,
+.carousel-control-next-icon i {
+	font-size: 2em;
+}
 
 </style>
-<script type="text/javascript" src="/mammoth/function/recent/js/recent_m.js"></script>
+<script type="text/javascript" src="https://devbit005.cafe24.com/mammoth/function/recent/recent_m.js"></script>
 <div class="recent-main-div container">
 
 	<!-- title -->
@@ -99,52 +115,56 @@
 						{{/first}}
 							<div class="card">
 								<div class="card-img-top text-center ">
-									<img class="card-img img-fluid rounded" src="{{imgSrc}}" data-iProductNo="{{iProductNo}}" alt="Card image">
+									<img class="card-img img-fluid rounded" src="{{detailImage}}" data-iProductNo="{{iProductNo}}" alt="Card image">
 								</div>
 		
 								<div class="card-body">
 									<p>
-										<i class="fas fa-eye" style="font-size: 12px;"> {{count}}회</i>
+										<i class="fas fa-eye" style="font-size: 12px;"> 조회수-{{count}}회</i>
 									</p>
+									<br>
 									<p>
 										<span class="card-title">PRODUCT NAME</span><br> 
 										<span class="recent-product-name">{{productName}}</span>
 									</p>
 			
 									<p>
-										<span class="card-options">OPTIONS</span><br>
+										<span class="card-options">OPTIONS</span> <br>
 										<span class="recent-options"> 
-											{{#opts}}{{option_name}}<br>: 
-												{{#option_value}}<span>{{option_text}} </span> 
-												{{/option_value}}<br>
+											{{#opts}}
+												{{option_name}}<br>
+												[{{#option_value}}
+													<span>{{option_text}} </span> 
+												{{/option_value}}]
+												<br>
 											{{/opts}}
 										</span>
 									</p>
-			
+									
 									<p>
-										<span class="card-text">SUMMARY INFO</span><br> <span
-											class="card-content recent-detail-info"> {{summary}} </span>
+										<span class="card-text">SUMMARY INFO</span> <br>
+										<span class="card-content recent-detail-info"> {{summary}} </span>
 									</p>	
 									<a href="{{link}}"
-										class="recent-link-btn btn plt-pn-btn-default btn-sm btn-block">상품
+										class="recent-link-btn btn plt-pn-btn-default btn-sm">상품
 										페이지 이동</a>
 								</div>
-		
 							</div><!--card-->
 						</div>
 					{{/datas}}
 				</script>
 			</div>
 			<!-- left button -->
-			<a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
-				<span class="carousel-control-prev-icon">
+			<a class="carousel-control-prev" href="#myCarousel" data-slide="prev" role="button">
+				<span class="carousel-control-prev-icon" aria-hidden="true">
 					<i class="fas fa-angle-left plt-pn-i"></i>
 				</span>
 			</a>
 			<!-- right button -->
-			<a class="carousel-control-next" href="#myCarousel" data-slide="next">
-				 <span class="carousel-control-next-icon">
-				 <i class="fas fa-angle-right plt-pn-i"></i></span>
+			<a class="carousel-control-next" href="#myCarousel" data-slide="next" role="button">
+				 <span class="carousel-control-next-icon" aria-hidden="true">
+				 	<i class="fas fa-angle-right plt-pn-i"></i>
+				 </span>
 			</a>
 			<!-- button END -->
 		</div>
