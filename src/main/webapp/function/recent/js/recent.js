@@ -185,12 +185,12 @@ var _protocol = "https";
 				
 				$('.recent-product-title').click(function(evt){
 					evt.preventDefault();
-					alert("[쇼핑몰의 최근 본 상품 목록으로 이동 할 것 입니다.]");
+					alert("[쇼핑몰의 '최근 본 상품 목록'으로 이동 할 것 입니다.]");
 				});
 				
 				$('.recent-link-btn').click(function(evt){
 					evt.preventDefault();
-					alert("[쇼핑몰의 최근 본 상품 목록으로 이동 할 것 입니다.]");
+					alert("[해당 상품의 '상세보기 페이지'로 이동 할 것 입니다.]");
 				});
 			} else {
 				jsonData = this.getJson();
@@ -220,8 +220,7 @@ var _protocol = "https";
 		frontApi : function(iProductNo, sessionData) {
 			CAFE24API.init('D0OdNNlzFdfWprppcum7NG'); //App Key
 			// 옵션 정보 및 상품 정보 가져오기
-			CAFE24API.get('/api/v2/products/'+iProductNo+'?embed=options&fields=product_name, options, simple_description, summary_description', function(err, res){
-				
+			CAFE24API.get('/api/v2/products/'+iProductNo+'?embed=options&fields=product_name, options, simple_description, summary_description, detail_image', function(err, res){
 				var apiDatas = res;
 				CAFE24API.get('/api/v2/products/'+iProductNo+'/hits/count', function(err, res){
 					apiDatas['count'] = res.count;
@@ -263,13 +262,14 @@ var _protocol = "https";
 			var summaryDescription = apiDatas.product.summary_description;
 			var pOpts = apiDatas.product.options.option;
 			var hit = apiDatas.count;
+			var detailImageSrc = apiDatas.product.detail_image;
 
 			var imgSrc = null;
 			
 			if($("#panel").hasClass("preview")){
 				imgSrc = _protocol+"://"+sessionData.sImgSrc;
 			}else{
-				imgSrc = "/web/product/tiny/"+sessionData.sImgSrc;
+				imgSrc = detailImageSrc;
 			}
 			
 			// product image

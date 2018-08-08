@@ -3,6 +3,25 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
+<style>
+#basicInfo {
+	border-top: 1px solid #eee;
+}
+
+#basicInfo ul{
+	list-style: none;
+}
+
+#basicInfo li{
+	padding-left: 5px;
+}
+
+#basicInfo li a{
+	color: black;
+}
+
+</style>
+
 <div class="scroll_mm_div plt-pn-i">
 	<i class="fas fa-arrow-alt-circle-up scroll_top"></i>
 	<i class="fas fa-arrow-alt-circle-down scroll_bottom"></i>			
@@ -44,5 +63,15 @@
 				</c:otherwise> 
 			</c:choose>
 		</c:forEach>
+	</div>
+	
+	<div id="basicInfo" style="position: fixed; bottom: 0; width: 100%;">
+		<ul>
+			<li class="title"><a href="/newpage/customer.html">고객센터</a></li>
+			<li class="phone"><a href="/newpage/customer.html">1688-4758</a></li>
+			<li><a href="/newpage/customer.html">OPEN : am 09:00 - pm 06:00</a></li>
+			<li><a href="/newpage/customer.html">LUNCH : pm 12:00 - pm 01:00</a></li>
+			<li><a href="/newpage/customer.html">SAT/SUN ＆ HOLIDAY OFF</a></li>
+		</ul>
 	</div>
 </div>
