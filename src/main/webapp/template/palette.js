@@ -79,7 +79,7 @@
 		},
 		
 		displayNone : function(){
-			$('#panel-draggable-btn').addClass('open');
+			$('#panel-draggable-btn').removeClass('open');
 			$("#panelArea").hide();
 			$.panel.changePanel('close');
 		},
@@ -98,6 +98,9 @@
 			
 			// 패널을 닫았을 때.
 			else if(action == 'close'){
+				
+				console.log("palette posittion : "+p.position);
+				
 				$("#panel").removeClass("panel-"+p.position+"-open");
 				$("#panel-draggable-btn").removeClass("panel-"+p.position+"-draggable-open");
 				$(".scroll_mm_div").removeClass("panel-"+p.position+"-scroll-open");
@@ -127,8 +130,8 @@
 
 $(document).keyup(function(e) {
    if (e.keyCode == 27) { // escape key maps to keycode `27`
-	   var pos = $.panel.getPosition();
-		  
+	  var pos = $.panel.getPosition();
+	
 	  if($('.popupLayer').hasClass("popup-"+pos+"-open")){
 		  $('.popupLayer').removeClass("popup-"+pos+"-open");
 	      return;
