@@ -27,7 +27,7 @@
 </div>
 
 <div id="panel" class="panel plt-pn">
-	<div class="panel-container">
+	<div class="panel-container container">
 		<c:forEach var="selectFunc" items="${selectFuncs}" varStatus="idx">
 			<div class="row">
 				<div class="func${selectFunc.id }" id="func${selectFunc.id}"></div>

@@ -90,12 +90,12 @@
 		},
 		
 		close : function(){
-			$('#panel-draggable-btn').toggleClass('open');
+			$('#panel-draggable-btn').removeClass('open');
 			$.panel.changePanel('close');
 		},
 		
 		displayNone : function(){
-			$('#panel-draggable-btn').toggleClass('open');
+			$('#panel-draggable-btn').addClass('open');
 			$("#panelArea").hide();
 		},
 		// 패널, 버튼, 스크롤의 CSS 결정.
