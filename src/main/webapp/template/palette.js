@@ -77,12 +77,6 @@
 			$('#panel-draggable-btn').removeClass('open');
 			$.panel.changePanel('close');
 		},
-		
-		displayNone : function(){
-			$('#panel-draggable-btn').removeClass('open');
-			$("#panel").hide();
-			$.panel.changePanel('close');
-		},
         
         // 패널, 버튼, 스크롤의 CSS 결정.
         changePanel : function(action){
@@ -150,7 +144,7 @@ $(document).ready(function() {
     
     // service panel 기본 동작 invisible
     $.panel.init({
-    	visible : 'hide',
+    	visible : false,
     	position : position,
     	removePosition : removePosition
     });

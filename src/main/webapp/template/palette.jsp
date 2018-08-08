@@ -26,7 +26,7 @@
 	<span></span>
 </div>
 
-<div id="panel" class="panel plt-pn">
+<div id="panel" class="panel plt-pn" style="display: none;">
 	<div class="panel-container container">
 		<c:forEach var="selectFunc" items="${selectFuncs}" varStatus="idx">
 			<div class="row">
