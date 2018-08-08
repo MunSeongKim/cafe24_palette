@@ -81,6 +81,7 @@
 		displayNone : function(){
 			$('#panel-draggable-btn').addClass('open');
 			$("#panelArea").hide();
+			$.panel.changePanel('close');
 		},
         
         // 패널, 버튼, 스크롤의 CSS 결정.
