@@ -38,7 +38,7 @@ public class PaletteController {
 	public String palette(@PathVariable("mallUrl") String mallUrl, Model model) {
 		System.out.println("=================== paletteController ===================");
 		// String tmp = mallUrl.replaceFirst("^(?i)(m.)$", "");
-		String tmp = mallUrl.replaceFirst("m.", "");
+		String tmp = mallUrl.replaceFirst("^(m.)$", "");
 		System.out.println(tmp);
 		
 		Member member = memberService.getOneByMallUrl(tmp);

@@ -12,7 +12,7 @@
 <meta name="_csrf_header" content="${_csrf.headerName}" /> 
 
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.theme.min.css">
-<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/assets/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/font-awesome/5.1.0/css/all.css"/> 
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/admin/assets/css/preview_panel.css">
 
@@ -22,7 +22,7 @@
 <!-- jQuery library -->
 <script src="${pageContext.servletContext.contextPath }/static/jquery/1.11.1/jquery.min.js"></script>
 <script src="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.min.js"></script>
-<script src="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="${pageContext.servletContext.contextPath }/assets/js/bootstrap.min.js"></script>
 <script src="${pageContext.servletContext.contextPath }/static/mustachejs/2.2.1/mustache.min.js"></script>
 <script src="${pageContext.servletContext.contextPath }/static/popper.js/1.14.3/dist/umd/popper.min.js"></script>
 
