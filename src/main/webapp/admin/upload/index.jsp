@@ -29,7 +29,7 @@
 		<div class="row" id="body">
 			<!--<div class="col"><button class="btn btn-outline-secondary btn-lg btn-block">Functions Upload</button></div>
             <div class="col"><button class="btn btn-outline-success btn-lg btn-block">Themes Upload</button></div>-->
-			<div class="col col-4">
+			<div class="upload-col col-4">
 				<div class="list-group" role="tablist">
 					<a
 						class="list-group-item list-group-item-light list-group-item-action active"
@@ -38,7 +38,7 @@
 						data-toggle="list" href="#theme" data-name="theme" role="tab">Themes</a>
 				</div>
 			</div>
-			<div class="col col-8">
+			<div class="upload-col col-8">
 				<div class="tab-content">
 					<div class="tab-pane fade show active" id="function" role="tabpanel">
 						<div class="row">
