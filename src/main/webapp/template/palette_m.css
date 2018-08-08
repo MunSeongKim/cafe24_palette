@@ -6,20 +6,21 @@ h1 { margin:50px auto;}
 	left: 1.500em;
 	width: 3.750em;
 	height: 3.750em;
-	z-index: 100;
+	z-index: 101;
 }
 
 .zoom-fab {
- display: inline-block;
- width: 2.75em;
- line-height: 2.500em;
- border-radius: 50%;
- background-color: #009688;
- text-align: center;
- transition: 0.2s ease-out;
- box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
- cursor: pointer;
- color: #FFF;
+	height:2.188em;
+ 	display: inline-block;
+ 	width: 2.75em;
+	line-height: 2.500em;
+	border-radius: 50%;
+	background-color: #009688;
+	text-align: center;
+	transition: 0.2s ease-out;
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+	cursor: pointer;
+	color: #FFF;
 }
 
 .zoom-fab:hover {
@@ -36,8 +37,8 @@ h1 { margin:50px auto;}
 .zoom-menu {
 	 position: fixed;
 	 bottom: 4.688em;
-	 left: -0.75em;
-	 z-index: 100;
+	 left: 1.375em;
+	 z-index: 101;
 }
 
 .zoom-menu li {
@@ -46,6 +47,7 @@ h1 { margin:50px auto;}
 }
 
 .zoom-card {
+	z-index:100;
 	position: fixed;
 	top: 0;
 	left: 0;
