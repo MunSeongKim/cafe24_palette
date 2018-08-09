@@ -28,6 +28,9 @@ public class Orders implements EntityListStructure<Orders> {
 	@JsonProperty(value="member_id")
 	private String memberId;
 	
+	@JsonProperty(value="buyer_name")
+	private String buyerName;
+	
 	@JsonProperty(value="items")
 	private List<Map<String, String>> items;
 	
@@ -52,7 +55,7 @@ public class Orders implements EntityListStructure<Orders> {
 	@Override
 	public String toString() {
 		return "Orders [shopNo=" + shopNo + ", orderId=" + orderId + ", orderDate=" + orderDate + ", memberId="
-				+ memberId + "]";
+				+ memberId + ", buyerName=" + buyerName + ", items=" + items + "]";
 	}
 
 }

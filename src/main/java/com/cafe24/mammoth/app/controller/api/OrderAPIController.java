@@ -41,12 +41,16 @@ public class OrderAPIController {
 	@GetMapping(value="/orders")
 	public JSONResult orderList(@RequestParam("start_date") String startDate,
 			@RequestParam("end_date") String endDate,
-			@RequestParam("member_id") String memberId) {
+			@RequestParam(value="member_id", required=true) String member_id) {
+			//,@RequestParam(value="buyer_name", required=false, defaultValue="") String buyer_name) {
 		
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		params.add("start_date", startDate);
 		params.add("end_date", endDate);
-		params.add("member_id", memberId);
+		params.add("member_id", member_id);
+		
+		
+		//params.add("buyer_name", buyer_name);
 		System.out.println(params);
 		List<Order> orderList = orderService.getOrderList(params);
 		return JSONResult.success(orderList != null ? orderList : "null");
