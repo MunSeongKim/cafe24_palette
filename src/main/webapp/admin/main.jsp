@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.theme.min.css">
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/assets/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/font-awesome/5.1.0/css/all.css"/> 
-<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/admin/assets/css/preview_panel.css">
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/template/palette.css">
 
 <!-- preview_panel 기본 theme 적용 -->
 <link rel="stylesheet" id="themeEx" href="">

@@ -59,7 +59,6 @@
 	left : unset !important;
 }
 /********************************************************/
-
 /*******************[패널 좌측 관련 CSS]****************/
 /* 패널 좌측 기본 */
 .panel-left-default-setting{
@@ -128,12 +127,11 @@
 	right: unset !important;
 }
 /*****************************************************************/
-
-/* palette.css와 거의 흡사하지만 중간중간 변경이 있음.
-    이유는 panel을 통제하는 js 부분이 class로 모두 변경되었기 때문임.
- */
- 
 /* panel css */
+.panel-container{
+    background: none;
+}
+
 .panel {
 	height: 100%;
 	position: fixed;
@@ -142,7 +140,7 @@
 	right: 0;
 	overflow-x: hidden;
 	transition: 0.5s;
-	padding-top: 3.750em; 
+	padding-top: 35px; 
 }
 
 @media screen and (max-height: 28.125em) {
@@ -156,6 +154,10 @@
 
 #panel .container .row>* {
 	margin: 0.313em auto;
+}
+
+#panel .container .row > div {
+	width: 80%;
 }
 
 /* panel button */
@@ -175,7 +177,7 @@
 	-o-transition: .3s ease-in-out;
 	transition: .3s ease-in-out;
 	cursor: pointer;
-	z-index: 1;
+	z-index: 249;
 }
 
 #panel-draggable-btn span {
@@ -228,13 +230,20 @@
 	transform: rotate(-45deg);
 }
 
+#panel a{
+	font-size: 12px;
+}
+
+#panel a:hover {
+    text-decoration: none !important;
+    font-size: 12px !important;
+}
+
 /*
 	180712 hwi
 	스크롤 맨 위, 아래 버튼 이미지
 	start
 */
-
-
 .scroll_mm_div {
 	font-size : 16px;
 	width: auto; 

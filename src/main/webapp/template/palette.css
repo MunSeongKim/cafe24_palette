@@ -59,7 +59,6 @@
 	left : unset !important;
 }
 /********************************************************/
-
 /*******************[패널 좌측 관련 CSS]****************/
 /* 패널 좌측 기본 */
 .panel-left-default-setting{
@@ -128,16 +127,11 @@
 	right: unset !important;
 }
 /*****************************************************************/
-
-/* #panel{
-	margin-right: 0;
-} */
-
+/* panel css */
 .panel-container{
     background: none;
 }
 
-/* panel css */
 .panel {
 	height: 100%;
 	position: fixed;
