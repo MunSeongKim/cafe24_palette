@@ -49,6 +49,11 @@ canvas {
 /************/
 
 * { 
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
 	margin: 0;
 	padding: 0;
 	font-family: 'Noto Sans KR', 'Dotum', '돋움', 'arial', 'verdana', sans-serif; 
@@ -57,6 +62,10 @@ canvas {
 body{
 	height : 100%;
 	background-color: #563d7c;
+}
+
+a {
+	text-decoration: none;
 }
 
 #mainNavbar .container, #mainContainer .container{

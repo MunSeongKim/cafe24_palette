@@ -91,7 +91,8 @@ public class WebConfigurer extends WebMvcConfigurationSupport {
 		registry.addResourceHandler("/**/*.js").addResourceLocations("/").resourceChain(true);
 		registry.addResourceHandler("/**/*.css").addResourceLocations("/").resourceChain(true);
 		registry.addResourceHandler("/**/*.html").addResourceLocations("/").resourceChain(true);
-		
+		registry.addResourceHandler("/**/*.woff").addResourceLocations("/").resourceChain(true);
+		registry.addResourceHandler("/**/*.woff2").addResourceLocations("/").resourceChain(true);
 	}
 	
 	/**

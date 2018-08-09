@@ -182,6 +182,10 @@ h1 {
 	margin: 0;
 }
 
+.upload-col {
+	padding: 0 15px;
+}
+
 /***********************/
 #header {
 	color: #563d7c;

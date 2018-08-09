@@ -3,6 +3,7 @@ package com.cafe24.mammoth.app.support;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
@@ -40,8 +41,8 @@ public class APITokenInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		System.out.println("========================= API Token Interceptor ===================");
 		// 요청 URL로부터 User의 MallId를 가져오기 위한 작업
-
 		HttpSession session = request.getSession();
 		String mallId = null;
 		if (session != null) {
@@ -51,7 +52,8 @@ public class APITokenInterceptor implements HandlerInterceptor {
 				if (mallUrl.contains("localhost")) {
 					mallUrl = request.getParameter("mall_url");
 				}
-				mallUrl = mallUrl.replaceFirst("m.", "");
+				mallUrl = mallUrl.replaceFirst("^(m.)$", "");
+				System.out.println(mallUrl);
 				Member storedMember = memberService.getOneByMallUrl(mallUrl);
 				mallId = storedMember.getMallId();
 				request.getSession().setAttribute("mallId", mallId);

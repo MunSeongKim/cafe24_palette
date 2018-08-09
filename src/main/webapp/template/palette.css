@@ -236,6 +236,11 @@
 	transform: rotate(-45deg);
 }
 
+#panel a:hover {
+    text-decoration: none !important;
+    font-size: unset !important;
+}
+
 /*
 	180712 hwi
 	스크롤 맨 위, 아래 버튼 이미지

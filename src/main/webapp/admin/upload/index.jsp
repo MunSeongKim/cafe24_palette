@@ -29,7 +29,7 @@
 		<div class="row" id="body">
 			<!--<div class="col"><button class="btn btn-outline-secondary btn-lg btn-block">Functions Upload</button></div>
             <div class="col"><button class="btn btn-outline-success btn-lg btn-block">Themes Upload</button></div>-->
-			<div class="col col-4">
+			<div class="upload-col col-4">
 				<div class="list-group" role="tablist">
 					<a
 						class="list-group-item list-group-item-light list-group-item-action active"
@@ -38,7 +38,7 @@
 						data-toggle="list" href="#theme" data-name="theme" role="tab">Themes</a>
 				</div>
 			</div>
-			<div class="col col-8">
+			<div class="upload-col col-8">
 				<div class="tab-content">
 					<div class="tab-pane fade show active" id="function" role="tabpanel">
 						<div class="row">
@@ -50,26 +50,26 @@
 							<div class="col">
 								<form id="func-form" enctype="multipart/form-data" method="post">
 									<div class="form-group row">
-										<label for="name" class="col-sm-2 col-form-label text-right">국문명</label>
-										<div class="col-sm-10">
+										<label for="name" class="upload-col col-sm-2 col-form-label text-right">국문명</label>
+										<div class="upload-col col-sm-10">
 									    	<input type="text" class="form-control" name="name" id="func-name" placeholder="기능의 국문 이름을 입력하세요.">
 									    </div>
 									</div>
 									<div class="form-group row">
-										<label for="eng-name" class="col-sm-2 col-form-label text-right">영문명</label>
-										<div class="col-sm-10">
+										<label for="eng-name" class="upload-col col-sm-2 col-form-label text-right">영문명</label>
+										<div class="upload-col col-sm-10">
 									    	<input type="text" class="form-control" name="nameEng" id="func-eng-name" placeholder="기능의 영문 이름을 입력하세요.">
 									    </div>
 									</div>
 									<div class="form-group row">
-								    	<label for="description" class="col-sm-2 col-form-label text-right">설명</label>
-								    	<div class="col-sm-10">
+								    	<label for="description" class="upload-col col-sm-2 col-form-label text-right">설명</label>
+								    	<div class="upload-col col-sm-10">
 								    		<textarea class="form-control" name="description" id="func-description" rows="4" placeholder="간단한 기능 설명을 입력하세요.(100자)"></textarea>
 								    	</div>
 									</div>
 									<div class="form-group row">
-										<label for="is-button" class="col-sm-2 col-form-label text-right">버튼여부</label>
-										<div class="col-sm-4">
+										<label for="is-button" class="upload-col col-sm-2 col-form-label text-right">버튼여부</label>
+										<div class="upload-col col-sm-4">
 											<div class="btn-group-toggle" data-toggle="buttons">
 												<label class="btn btn-block btn-check">
 											    	<input type="checkbox" name="isButton" id="func-btn-check" autocomplete="off">
@@ -84,8 +84,8 @@
 									</div>
 									<hr>
 									<div class="form-group row">
-										<label for="func-desktop" class="col-sm-2 col-form-label text-right">Desktop</label>
-										<div class="col-sm-10">
+										<label for="func-desktop" class="upload-col col-sm-2 col-form-label text-right">Desktop</label>
+										<div class="upload-col col-sm-10">
 											<div class="custom-file">
 											  <input type="file" class="form-control custom-file-input" name="func-desktop-html" id="func-desktop-html" accept=".html, .jsp">
 											  <label class="custom-file-label" id="func-desktop-label" for="func-desktop-html">데스크탑 버전의 HTML 파일을 선택하세요.</label>
@@ -93,8 +93,8 @@
 										</div>
 									</div>
 									<div class="form-group row">
-										<label for="func-mobile" class="col-sm-2 col-form-label text-right">Mobile</label>
-										<div class="col-sm-10">
+										<label for="func-mobile" class="upload-col col-sm-2 col-form-label text-right">Mobile</label>
+										<div class="upload-col col-sm-10">
 											<div class="custom-file">
 											  <input type="file" class="form-control custom-file-input" name="func-mobile-html" id="func-mobile-html" accept=".html, .jsp">
 											  <label class="custom-file-label" id="func-mobile-label" for="func-mobile-html">모바일 버전의 HTML 파일을 선택하세요.</label>
@@ -105,7 +105,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col">
+							<div class="col mt-3 mb-2">
 								<form enctype="multipart/form-data" method="post">
 									<label for="fileUploader"
 										class="input-file-trigger">Select a files ...</label>
@@ -139,14 +139,14 @@
 							<div class="col">
 								<form id="theme-form" enctype="multipart/form-data" method="post">
 									<div class="form-group row">
-										<label for="title" class="col-sm-3 col-form-label text-right">테마명</label>
-										<div class="col-sm-9">
+										<label for="title" class="upload-col col-sm-3 col-form-label text-right">테마명</label>
+										<div class="upload-col col-sm-9">
 									    	<input type="text" class="form-control" name="title" id="theme-name" placeholder="테마 이름을 입력하세요.">
 									    </div>
 									</div>
 									<div class="form-group row">
-										<label for="img" class="col-sm-3 col-form-label text-right">대표이미지</label>
-										<div class="col-sm-9">
+										<label for="img" class="upload-col col-sm-3 col-form-label text-right">대표이미지</label>
+										<div class="upload-col col-sm-9">
 											<div class="custom-file">
 											  <input type="file" class="form-control custom-file-input" name="imgFile" id="theme-img-file" accept=".jpg, .png">
 											  <label class="custom-file-label" id="theme-img-label" for="imgFile">대표이미지 1장을 선택하세요.</label>
@@ -158,7 +158,7 @@
 						</div>
 						<hr>
 						<div class="row">
-							<div class="col">
+							<div class="col mt-3 mb-2">
 								<form enctype="multipart/form-data" method="post">
 									<label for="fileUploader" class="input-file-trigger">Select a files ...</label>
 									<input type="file" name="fileUploader" id="theme-btn-select" class="btn input-file" accept=".css" >

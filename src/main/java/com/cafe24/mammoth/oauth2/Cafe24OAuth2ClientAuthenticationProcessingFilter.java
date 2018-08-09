@@ -104,7 +104,6 @@ public class Cafe24OAuth2ClientAuthenticationProcessingFilter extends OAuth2Clie
 //				}
 //			}
 //		}
-		
 
 		return super.attemptAuthentication(request, response);
 	}

@@ -38,7 +38,7 @@ public class OrderService {
 	private CacheManager cacheManager;
 	
 	private final String orderStatus = "N00,N10,N20,N21,N22,N30,N40";
-	private final String fields = "shop_no,order_id,order_date,member_id,items";
+	private final String fields = "shop_no,order_id,order_date,member_id,buyer_name,items";
 	private final String embed = "items";
 	
 	public List<Order> getOrderList(MultiValueMap<String, String> params) {
