@@ -21,6 +21,11 @@ i {
 	margin-bottom: 0 !important;
 }
 
+li{
+	border-color: #c5c5c5;
+    background-color: #fff;
+}
+
 /* width가 570이하 일 때 css */
 @media(max-width:570px){
 	.inner {
@@ -31,13 +36,13 @@ i {
 		padding-top: 10px; 
 	}
 	
-	#panel-tabs .nav-pagination{
+	.nav-pagination{
 		position: absolute;
 		top : 29px;
 		right: 0;
 	}
 	
-	#panel-tabs .nav-pagination ul{
+	.nav-pagination ul{
 		width: 100%;
 	}
 	 
@@ -45,7 +50,7 @@ i {
 		width: 100%;
 	}
 	
-	#setting-container .palette-title{
+	.palette-title{
 		width: 100%;
 		padding : 15px; 
 		padding-bottom : 0; 
@@ -75,11 +80,11 @@ i {
 		padding-top: 10px; 
 	}
 	
-	#setting-container .palette-title{
+	.palette-title{
 		width : 100%; 
 		padding : 15px;
 		padding-bottom : 0; 
-		background-color: #563d7c;
+		background-color: #563d7c;  
 		color : #fff;
 		margin: 0px auto;
 	}
@@ -112,21 +117,22 @@ i {
     border-radius: 10px;
 } 
 
-#panel-tabs li{
-	border-color: #c5c5c5;
-    background-color: #fff;
+.container { 
+	margin-top: 50px;
+	position: relative;
+	border-radius: 10px;
 }
 
-#setting-container{
+.setting-container{
 	margin: 0;
 	padding: 0;
 }
 
-#setting-container .fouc{
+.fouc{
 	display: none;
 }
 
-#setting-container .palette-title{
+.palette-title{
 	width : 85%;
 	padding : 15px;
 	background-color: #563d7c;  
@@ -143,15 +149,15 @@ i {
 	border-bottom: 1px solid #ececec;
 } 
  
-#setting-container .tab-content{
+.tab-content{
 	height: 85%;
 }
 
-#setting-container .tab-pane{
+.tab-pane{
 	height: 100%;
 }
 
-#setting-container .palette-title > h1{
+.palette-title > h1{
 	font-size : 1.5rem;
 	padding-left: 10px;
 	font-weight: 500; 
@@ -166,7 +172,7 @@ i {
 	border-radius: 0;
 }
 
-#setting-container .button {
+.button {
 	background-color: white; /* Green */
 	border: 2px solid #555555;
 	color: black;
@@ -176,19 +182,19 @@ i {
 	font-size: 16px;
 }
 
-#setting-container .button:hover {
+.button:hover {
 	background-color: #555555;
 	color: white;
 }
 
-#setting-container .button:hover::after {
+.button:hover::after {
 	background-color: #555555;
 	color: white;
 	content: 'test';
 }
 
 /* Tab 비활성화 */
-#setting-container .disable{
+.disable{
 	cursor: not-allowed;
 }
 
@@ -216,15 +222,13 @@ i {
 	font-weight: 500;
 	padding-top: 3px;
 	padding-bottom: 3px;
-	text-decoration: none;
 }
  
-.nav-tabs>li{
+.nav-tabs>li{ 
     float: left;
     position: relative;
 	margin: 0px;
-	padding-left : 17px;
-	height: 30px; 
+	padding-left : 17px; 
 } 
 
 .nav-tabs>li.complete{ 
@@ -283,34 +287,34 @@ i {
 	content: "";
 }
 
-#setting-container .nav-pagination{
+.nav-pagination{
 	padding-bottom: 15px;
 }
 
-#setting-container .nav-pagination button{
+.nav-pagination button{
 	padding: 0;
 	margin: 0;
 }
 
-#setting-container .nav-pagination i{
+.nav-pagination i{
 	line-height: 0; 
 }
 
-#setting-container .nav-pagination ul li{
+.nav-pagination ul li{
 	border-radius: .25rem; 
 }
 
-#panel-tabs .custom-pagination-ul{
+.custom-pagination-ul{
 	width: 10%;
 	margin: 0px auto; 
 }
 
-#confirmModal .palette-modal-header{
+.palette-modal-header{
 	padding: 0;
 	background-color: #563d7c;
 }
 
-#confirmModal .palette-modal-title{
+.palette-modal-title{
 	padding-top : 5px;
 	padding-left : 0px; 
 	color : #fff;
@@ -318,11 +322,11 @@ i {
 	margin-left: 10px;
 }
 
-#confirmModal .palette-modal-footer{
+.palette-modal-footer{
 	padding: 5px;
 }
 
-#confirmModal .palette-modal-btn{
+.palette-modal-btn{
 	padding: 5px; 
 }
 
@@ -342,8 +346,6 @@ i {
 .preview_func_div{
 	display: none;
 }
-
-/*===================================================================*/
 
 #gomain:hover {
 	color: white !important;
