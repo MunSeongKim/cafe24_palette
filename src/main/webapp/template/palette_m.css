@@ -1,3 +1,7 @@
+.palette_m {
+	box-sizing: border-box;
+}
+
 body { background-color: #f5f7fa; font-family:'Roboto'; text-align:center; }
 h1 { margin:50px auto;}
 .zoom {
@@ -10,7 +14,7 @@ h1 { margin:50px auto;}
 }
 
 .zoom-fab {
-	height:2.188em;
+	/* height:2.188em; */
  	display: inline-block;
  	width: 2.75em;
 	line-height: 2.500em;
@@ -55,7 +59,7 @@ h1 { margin:50px auto;}
 	height: 100%;
 	max-height: 100%;
 	transition: box-shadow 0.25s;
-	padding: 1.500em;
+	/* padding: 1.500em; */
 	border-radius: 0.125em;
 	background-color: #fff;
 	border: 1px solid black;

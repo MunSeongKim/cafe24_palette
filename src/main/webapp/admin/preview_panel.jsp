@@ -65,7 +65,7 @@
 		</c:forEach>
 	</div>
 	
-	<div id="basicInfo" style="position: fixed; bottom: 0; width: 100%;">
+	<!-- <div id="basicInfo" style="position: fixed; bottom: 0; width: 100%;">
 		<ul>
 			<li class="title"><a href="/newpage/customer.html">고객센터</a></li>
 			<li class="phone"><a href="/newpage/customer.html">1688-4758</a></li>
@@ -73,5 +73,5 @@
 			<li><a href="/newpage/customer.html">LUNCH : pm 12:00 - pm 01:00</a></li>
 			<li><a href="/newpage/customer.html">SAT/SUN ＆ HOLIDAY OFF</a></li>
 		</ul>
-	</div>
+	</div> -->
 </div>

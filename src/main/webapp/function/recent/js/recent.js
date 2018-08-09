@@ -102,12 +102,13 @@ var _protocol = "https";
 				}
 		}
 		
-		
 	//=========================================================================================
 	
 	var opts = {};	
-	
+	var sessionData = sessionStorage.getItem("localRecentProduct1");
+		
 	$.recent = {
+		
 		defaults : {
 			isPreview : true,
 			interval : 5000, 
@@ -132,7 +133,18 @@ var _protocol = "https";
 			
 			// 화면 전환 속도 ms
 			$('#recentBox .carousel').carousel({ interval: opts.interval });
-						
+			
+			if($("#panel").hasClass("preview") != true && sessionData == null){
+				$(".recent-content .carousel-inner").append($("<img/>", {
+					src : _protocol+"://devbit005.cafe24.com/mammoth/function/recent/no_recent.png",
+					css : {
+						width : "100%",
+						height : "100%"
+					}
+				}));
+				return;
+			}
+			
 			// 최근 본 상품 목록 그리기.
 			this.render();
 			
@@ -149,8 +161,7 @@ var _protocol = "https";
 			if($("#panel").hasClass("preview")){
 				json = tmpProductData;
 			}else{
-				jsonStr = sessionStorage.getItem("localRecentProduct1");
-                json = JSON.parse(jsonStr);
+                json = JSON.parse(sessionData);
 			}
 			
 			return json;
@@ -192,6 +203,7 @@ var _protocol = "https";
 					evt.preventDefault();
 					alert("[해당 상품의 '상세보기 페이지'로 이동 할 것 입니다.]");
 				});
+				
 			} else {
 				jsonData = this.getJson();
 			}
@@ -211,7 +223,7 @@ var _protocol = "https";
 					}
 				}
 				
-				var imgTag = '<img src="'+imgSrc+'" data-iProductNo="'+iProductNo+'" style="width: 100%;">';
+				var imgTag = '<img src="'+imgSrc+'" data-iProductNo="'+iProductNo+'" style="width: 100%; height: 100%;">';
 				var carouselItem = '<div class="carousel-item" style="height: 120px;">'+imgTag+'</div>';
 				$("#recentBox .carousel-inner").append(carouselItem);
 			}

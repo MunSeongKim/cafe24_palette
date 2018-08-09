@@ -231,13 +231,15 @@ li{
 	font-weight: 500;
 	padding-top: 3px;
 	padding-bottom: 3px;
+	text-decoration: none;
 }
  
 .nav-tabs>li{ 
     float: left;
     position: relative;
 	margin: 0px;
-	padding-left : 17px; 
+	padding-left : 17px;
+	height: 30px;
 } 
 
 .nav-tabs>li.complete{ 
