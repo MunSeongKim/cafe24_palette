@@ -8,7 +8,9 @@ $(document).ready(function() {
      /* zoom 큰 메뉴 버튼 클릭 시 */
      $('#zoomBtn').click(function() {
     	 	$('.zoom-btn-sm').toggleClass('scale-out');
-    	 	$('.zoom-card').addClass('scale-out')
+    	 	// 180809 모바일 큰 메뉴 클릭시 모두 끌 때 밑에 2줄 쓰면됨.
+    	 	// $('.zoom-card').addClass('scale-out');
+    	 	// $('.zoom-btn-sm').removeClass('plt-pn-btn-active').addClass('plt-pn-btn-inactive');
      });
      
      /* zoom 큰 메뉴 내부의 작은 메뉴 버튼 클릭 시 */
