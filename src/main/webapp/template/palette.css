@@ -236,9 +236,13 @@
 	transform: rotate(-45deg);
 }
 
+#panel a{
+	font-size: 12px;
+}
+
 #panel a:hover {
     text-decoration: none !important;
-    font-size: unset !important;
+    font-size: 12px !important;
 }
 
 /*

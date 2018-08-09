@@ -9,6 +9,7 @@
 	var resultDatas = {}; //mustache에 넘겨줄 데이터 객체
 	var list = []; //resultDatas에 추가해줄 리스트 객체
 	var opts = {};
+	var jsonStr = sessionStorage.getItem("localRecentProduct1");
 	
 	CAFE24API.init('D0OdNNlzFdfWprppcum7NG'); //App Key
 	
@@ -35,24 +36,29 @@
 			// target : 합쳐진 객체를 받을 객체.
 			opts = $.extend(true, {}, $.recent.defaults, options);
 			
+			$('.carousel').carousel({ interval: opts.interval });
+			
+			// 최근 본 상품이 없을 때.
+			if(jsonStr == null){
+				$(".recent-row-card .carousel-inner").append($("<img/>", {
+					src : "https://devbit005.cafe24.com/mammoth/function/recent/no_recent.png",
+					css : {
+						width : "100%",
+						height : "100%"
+					}
+				}));
+				return;
+			}
+			
 			// 최근 본 상품 목록 그리기.
 			this.renderPreprocess();
 		},
 		
-		// SessionStorate에 있는 값을 JSON으로 리턴.
-		getJson : function(){
-			var jsonStr = sessionStorage.getItem("localRecentProduct1");
-			var json = JSON.parse(jsonStr);
-			return json;
-		},
-		 
 		renderPreprocess : function(){
-			var jsonData = this.getJson();
+			var jsonData = JSON.parse(jsonStr);
 			
 			// 최근 본 상품 목록 갯수
 			$(".recent-count").text(Object.keys(jsonData).length);
-			
-			console.log(jsonData);
 			
 			/* front api 가상 데이터 */
 			this.frontApi(jsonData);
@@ -60,9 +66,7 @@
 		
 		// Front API 데이터 사용
 		frontApi : function(jsonData) {
-			
 			jsonData = Object.values(jsonData); // json array를 Array로 변환.
-			
 			var count = 0;
 			
 			// 비동기 함수를 위한 callback 처리
@@ -79,8 +83,6 @@
 					});
 				});
 			});
-			
-			$('.carousel').carousel({ interval: opts.interval });
 		},
 		
 		load : function(data, callback){
@@ -127,9 +129,6 @@
 		},
 		
 		mustache : function() {
-			
-			console.log(resultDatas);
-			
 			var template = $('#recent-mustache-template').html();
 			Mustache.parse(template);
 			var rendered = Mustache.render(template, resultDatas);
