@@ -32,7 +32,7 @@
 </head>
 
 <body>
-<div class="setting-container container-fluid" style="height: 90%; padding-left: 0; min-width: 900px;">
+<div id="setting-container" class="container-fluid" style="height: 90%; padding-left: 0; min-width: 900px;">
 	<input type="hidden" class="panel-division-type" name="admin" value="admin">
 	 
 	<div class="palette-title row fouc fouc-flex"> 
