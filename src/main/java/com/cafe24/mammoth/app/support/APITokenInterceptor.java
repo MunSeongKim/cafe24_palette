@@ -52,7 +52,7 @@ public class APITokenInterceptor implements HandlerInterceptor {
 				if (mallUrl.contains("localhost")) {
 					mallUrl = request.getParameter("mall_url");
 				}
-				mallUrl = mallUrl.replaceFirst("^(m.)$", "");
+				mallUrl = mallUrl.replaceFirst("^(m\\.)", "");
 				System.out.println(mallUrl);
 				Member storedMember = memberService.getOneByMallUrl(mallUrl);
 				mallId = storedMember.getMallId();
