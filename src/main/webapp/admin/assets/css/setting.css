@@ -117,8 +117,7 @@ li{
     border-radius: 10px;
 } 
 
-.container { 
-	margin-top: 50px;
+.container {
 	position: relative;
 	border-radius: 10px;
 }
@@ -345,6 +344,20 @@ li{
 
 .preview_func_div{
 	display: none;
+}
+
+#panel a{
+	font-size: 12px;
+}
+
+#panel a:link {
+	text-decoration: none !important;
+    font-size: 12px !important;
+}
+
+#panel a:hover {
+    text-decoration: none !important;
+    font-size: 12px !important;
 }
 
 #gomain:hover {
