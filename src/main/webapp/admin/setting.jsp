@@ -12,7 +12,7 @@
 <meta name="_csrf_header" content="${_csrf.headerName}" />
 
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.min.css">
-<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"/>
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/font-awesome/5.1.0/css/all.css"/>
  
@@ -23,7 +23,7 @@
 <script src="${pageContext.servletContext.contextPath }/static/jquery/1.11.1/jquery.min.js"></script>
 <script src="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.js"></script>
 <script	src="${pageContext.servletContext.contextPath }/static/popper.js/1.14.3/dist/umd/popper.min.js"></script>
-<script	src="${pageContext.servletContext.contextPath }/assets/js/bootstrap.min.js"></script>
+<script	src="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script	src="${pageContext.servletContext.contextPath }/static/mustachejs/2.2.1/mustache.min.js"></script> 
 <script src="${pageContext.servletContext.contextPath }/admin/assets/js/preview_panel.js"></script>
 <script src="${pageContext.servletContext.contextPath }/static/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
@@ -243,6 +243,8 @@ function resizeDone(){
 
 /* DOM이 모두 준비되고 */
 $(document).ready(function(){
+	window.$Palette = $;
+	
 	
 	/* 패널 미리보기 수행 */
 	$.panel.init({

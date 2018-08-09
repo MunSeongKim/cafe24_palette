@@ -4,14 +4,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <head>
-	<link rel="stylesheet" href="https://devbit005.cafe24.com/mammoth/static/jquery-ui/1.12.1/jquery-ui.theme.min.css">
-	<link rel="stylesheet" href="https://devbit005.cafe24.com/mammoth/assets/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://devbit005.cafe24.com/mammoth/static/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"/>
+	<link rel="stylesheet" href="https://devbit005.cafe24.com/mammoth/assets/jquery-ui/jquery-ui.theme.min.css">
+	<link rel="stylesheet" href="https://devbit005.cafe24.com/mammoth/assets/bootstrap/css/bootstrap.min.css">
+	<!-- <link rel="stylesheet" href="https://devbit005.cafe24.com/mammoth/static/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"/> -->
 	<link rel="stylesheet" href="https://devbit005.cafe24.com/mammoth/static/font-awesome/5.1.0/css/all.css"/>
 
 	<link rel="stylesheet" type="text/css" href="https://devbit005.cafe24.com/mammoth/template/palette_m.css">
-	<!-- 이부분은 뭘까 -->
-	<link rel="stylesheet" type="text/css" href="https://devbit005.cafe24.com/mammoth/template/palette.css" />
 	<link rel="stylesheet" type="text/css" href="https://devbit005.cafe24.com/mammoth${theme.filePath }" />
 	
 	<script src="https://devbit005.cafe24.com/mammoth/template/palette_m.js" type="text/javascript"></script>

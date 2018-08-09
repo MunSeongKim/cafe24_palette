@@ -121,11 +121,11 @@
         	} 
         }
     }
-}(jQuery));
+}($Palette));
 
 $(document).keyup(function(e) {
    if (e.keyCode == 27) { // escape key maps to keycode `27`
-	  var pos = $.panel.getPosition();
+	  var pos = $Palette.panel.getPosition();
 	
 	  if($('.popupLayer').hasClass("popup-"+pos+"-open")){
 		  $('.popupLayer').removeClass("popup-"+pos+"-open");
@@ -134,7 +134,7 @@ $(document).keyup(function(e) {
 	  
       if(!$('#panel-draggable-btn').is('.open')) { return; }
       
-      $.panel.close();
+      $Palette.panel.close();
    }
 });
 
@@ -144,7 +144,7 @@ $(document).ready(function() {
     if(position === 'left') { removePosition = 'right'; }
     
     // service panel 기본 동작 invisible
-    $.panel.init({
+    $Palette.panel.init({
     	visible : false,
     	position : position,
     	removePosition : removePosition

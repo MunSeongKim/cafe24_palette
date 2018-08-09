@@ -3,10 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <head>
-	<link rel="stylesheet" href="https://devbit005.cafe24.com/mammoth/static/jquery-ui/1.12.1/jquery-ui.theme.min.css">
-	<link rel="stylesheet" href="https://devbit005.cafe24.com/mammoth/assets/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://devbit005.cafe24.com/mammoth/static/bootstrap-toggle/2.2.2/css/bootstrap-toggle.css"/>
-	
+	<link rel="stylesheet" href="https://devbit005.cafe24.com/mammoth/assets/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://devbit005.cafe24.com/mammoth/static/font-awesome/5.1.0/css/all.css"/>
 	<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/> -->
 	<link rel="stylesheet" type="text/css" href="https://devbit005.cafe24.com/mammoth${theme.filePath }" />
@@ -15,8 +12,8 @@
 </head>
 
 <div class="scroll_mm_div plt-pn-i">
-	<i class="fa fa-arrow-circle-o-up scroll_top"></i>
-	<i class="fa fa-arrow-circle-o-down scroll_bottom"></i>			
+	<i class="fas fa-angle-double-up scroll_top"></i>
+	<i class="fas fa-angle-double-down scroll_bottom"></i>			
 </div>
 
 <div id="panel-draggable-btn" class="draggable">

@@ -13,12 +13,9 @@ var readyToExe = (function() {
     *  https통신을 하기 때문에 요청도 https로 해야됨. 다행히 모든 js cdn서버는 https제공. (solved)
     */
    var files = [
-	   'https://devbit005.cafe24.com/mammoth/assets/js/cafe24Cookie.js',
 	   'https://devbit005.cafe24.com/mammoth/static/jquery/1.11.1/jquery.min.js',
-	   'https://devbit005.cafe24.com/mammoth/static/jquery-ui/1.12.1/jquery-ui.min.js',
-	   'https://devbit005.cafe24.com/mammoth/static/popper.js/1.14.1/umd/popper.min.js',
-	   'https://devbit005.cafe24.com/mammoth/assets/js/bootstrap.min.js',
-	   'https://devbit005.cafe24.com/mammoth/static/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js',
+	   'https://devbit005.cafe24.com/mammoth/assets/jquery-ui/jquery-ui.min.js',
+	   'https://devbit005.cafe24.com/mammoth/assets/bootstrap/js/bootstrap.bundle.min.js',
 	   'https://devbit005.cafe24.com/mammoth/static/mustachejs/2.2.1/mustache.min.js'
        ];
 
@@ -77,16 +74,8 @@ var readyToExe = (function() {
 	        	 // 나중에 풀어서 적용할 꺼
 	        	 // files 안에 있는 파일 개수 -1개 입력
 	        	 // jQuery UI 로드 문제 $, jQuery 모두 오버라이드 해줘야 해결된다.
-	            if(files.length == 4) {
-	            	
-	            	$dollar = $; // 1.4.4
-	            	$jQuery = jQuery; // 1.4.4
-	            	
-	            	$ = jQuery.noConflict(true);
-	            	jQuery = $;
-	            }else if(files.length == 2){
-	            	$ = $dollar;
-	            	jQuery = $jQuery;
+	            if(files.length == 3) {
+	            	$Palette = jQuery.noConflict(true);
 	            }
 	            
 	        	 element.onreadystatechange = element.onload = null; // kill memory leak in IE

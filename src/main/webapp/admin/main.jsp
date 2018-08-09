@@ -12,7 +12,7 @@
 <meta name="_csrf_header" content="${_csrf.headerName}" /> 
 
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.theme.min.css">
-<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/font-awesome/5.1.0/css/all.css"/> 
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/template/palette.css">
 
@@ -22,7 +22,7 @@
 <!-- jQuery library -->
 <script src="${pageContext.servletContext.contextPath }/static/jquery/1.11.1/jquery.min.js"></script>
 <script src="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.min.js"></script>
-<script src="${pageContext.servletContext.contextPath }/assets/js/bootstrap.min.js"></script>
+<script src="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="${pageContext.servletContext.contextPath }/static/mustachejs/2.2.1/mustache.min.js"></script>
 <script src="${pageContext.servletContext.contextPath }/static/popper.js/1.14.3/dist/umd/popper.min.js"></script>
 
@@ -218,6 +218,7 @@ function includeThemeFile(path) {
 }
 
 $(document).ready(function(){
+	window.$Palette = $;
 	
 	/* 패널 미리보기 초기화 */
 	$.panel.init({
@@ -491,12 +492,17 @@ $(document).ready(function(){
 									<p class="validateTips normal">방금 만들어진 패널이 동작할 페이지를 선택해주세요.</p>
 									<p class="validateTips error" style="display: none">하나 이상 선택해야 합니다.</p>
 									<form>
-										<input type="checkbox" class="chkbox" id="chkbox-all"
-											name="chkbox-activepage" value="ALL"> 전체 페이지 <br> <input
-											type="checkbox" class="chkbox" id="chkbox-main"
-											name="chkbox-activepage" value="MAIN"> 메인 페이지<br> <input
-											type="checkbox" class="chkbox" id="chkbox-product"
-											name="chkbox-activepage" value="PRODUCT_LIST"> 상품 페이지<br>
+										<input type="checkbox" class="chkbox" id="chkbox-all" name="chkbox-activepage" value="ALL"> 전체<br>
+										
+										<input type="checkbox" class="chkbox" id="chkbox-main" name="chkbox-activepage" value="MAIN"> 메인<br>
+										
+										<input type="checkbox" class="chkbox" id="chkbox-product-list" name="chkbox-activepage" value="PRODUCT_LIST"> 상품 분류<br>
+										<input type="checkbox" class="chkbox" id="chkbox-product-detail" name="chkbox-activepage" value="PRODUCT_DETAIL"> 상품 상세<br>
+										<input type="checkbox" class="chkbox" id="chkbox-product-search" name="chkbox-activepage" value="PRODUCT_SEARCH"> 상품 검색<br>
+										<input type="checkbox" class="chkbox" id="chkbox-product" name="chkbox-activepage" value="PRODUCT_PROJECT"> 상품 기획전<br>
+										<input type="checkbox" class="chkbox" id="chkbox-product" name="chkbox-activepage" value="PRODUCT_PROJECT"> 상품 기획전<br>
+										
+										
 									</form>
 								</div>
 					
@@ -663,16 +669,110 @@ $(document).ready(function(){
 					<form class="apply-form">
 						<div class="custom-control custom-checkbox">
 						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-all" value="ALL">
-						  <label class="custom-control-label" for="chkbox-all">전체 페이지</label>
+						  <label class="custom-control-label" for="chkbox-all">전체</label>
 						</div>
+						<hr>
 						<div class="custom-control custom-checkbox">
 						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-main" value="MAIN">
-						  <label class="custom-control-label" for="chkbox-main">메인 페이지</label>
+						  <label class="custom-control-label" for="chkbox-main">메인</label>
+						</div>
+						<hr>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-product-list" value="PRODUCT_LIST">
+						  <label class="custom-control-label" for="chkbox-product-list" >상품 분류</label>
 						</div>
 						<div class="custom-control custom-checkbox">
-						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-product" value="PRODUCT_LIST">
-						  <label class="custom-control-label" for="chkbox-product" >상품목록 페이지</label>
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-product-detail" value="PRODUCT_DETAIL">
+						  <label class="custom-control-label" for="chkbox-product-detail" >상품 상세</label>
 						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-product-search" value="PRODUCT_SEARCH">
+						  <label class="custom-control-label" for="chkbox-product-search" >상품 검색</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-product-project" value="PRODUCT_PROJECT">
+						  <label class="custom-control-label" for="chkbox-product-project" >상품 기획전</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-product-recent" value="PRODUCT_RECENT">
+						  <label class="custom-control-label" for="chkbox-product-recent" >최근 본 상품</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-product-compare" value="PRODUCT_COMPARE">
+						  <label class="custom-control-label" for="chkbox-product-compare" >상품 비교</label>
+						</div>
+						<hr>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-main" value="BOARD_MAIN">
+						  <label class="custom-control-label" for="chkbox-board-main" >게시판 메인</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-free-list" value="BOARD_FREE_LIST">
+						  <label class="custom-control-label" for="chkbox-board-free-list" >게시판 목록</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-free-detail" value="BOARD_FREE_DETAIL">
+						  <label class="custom-control-label" for="chkbox-board-free-detail" >게시판 상세 보기</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-free-write" value="BOARD_FREE_WRITE">
+						  <label class="custom-control-label" for="chkbox-board-free-write" >게시물 쓰기</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-free-modify" value="BOARD_FREE_MODIFY">
+						  <label class="custom-control-label" for="chkbox-board-free-modify" >게시물 수정</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-free-reply" value="BOARD_FREE_REPLY">
+						  <label class="custom-control-label" for="chkbox-board-free-reply" >게시물 답글</label>
+						</div>
+						<hr>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-product-list" value="BOARD_PRODUCT_LIST">
+						  <label class="custom-control-label" for="chkbox-board-product-list" >상품사용후기 목록</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-product-detail" value="BOARD_PRODUCT_DETAIL">
+						  <label class="custom-control-label" for="chkbox-board-product-detail" >상품사용후기 상세보기</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-product-write" value="BOARD_PRODUCT_WRITE">
+						  <label class="custom-control-label" for="chkbox-board-product-write" >상품사용후기 쓰기</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-product-modify" value="BOARD_PRODUCT_MODIFY">
+						  <label class="custom-control-label" for="chkbox-board-product-modify" >상품사용후기 수정</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-product-reply" value="BOARD_PRODUCT_REPLY">
+						  <label class="custom-control-label" for="chkbox-board-product-reply" >상품사용후기 답글</label>
+						</div>
+						<hr>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-gallery-list" value="BOARD_GALLERY_LIST">
+						  <label class="custom-control-label" for="chkbox-board-gallery-list" >갤러리 목록(갤러리 형)</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-gallery-detail" value="BOARD_GALLERY_DETAIL">
+						  <label class="custom-control-label" for="chkbox-board-gallery-detail" >갤러리 상세 보기</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-gallery-write" value="BOARD_GALLERY_WRITE">
+						  <label class="custom-control-label" for="chkbox-board-gallery-write" >갤러리 쓰기</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-gallery-modify" value="BOARD_GALLERY_MODIFY">
+						  <label class="custom-control-label" for="chkbox-board-gallery-modify" >갤러리 수정</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-gallery-reply" value="BOARD_GALLERY_REPLY">
+						  <label class="custom-control-label" for="chkbox-board-gallery-reply" >갤러리 답글</label>
+						</div>
+						<hr>
+						
+						
+						
+						
 						<input type="hidden" id="modalPanelId" value="">
 					</form>
 					
@@ -859,6 +959,7 @@ $(document).ready(function(){
 			
 			$('.chkbox:not(#chkbox-all)').removeAttr('disabled');
 		});
+		
 		$('.chkbox:not(#chkbox-all)').change(function() {
 			if($('.chkbox:checked:not(#chkbox-all)').length > 0) {
 				$('#chkbox-all').attr('disabled', 'true');
