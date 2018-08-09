@@ -79,7 +79,7 @@ public class ScriptService {
 			ScripttagsTemplate scripttagsTemplate = cafe24Template.getOperation(ScripttagsTemplate.class);
 			
 			// 패널의 스크립트 적용에 관한 데이터 변경
-			Script appliedScript = scriptRepository.findByApplied(panelId);
+//			Script appliedScript = scriptRepository.findByApplied(panelId);
 			String scripttagsNo;
 			
 			Optional<Script> script = scriptRepository.findById(panelId);
@@ -87,21 +87,20 @@ public class ScriptService {
 			
 			requestScripttags.setSrc( "https://devbit005.cafe24.com/mammoth" + savedScript.getFilepath() );
 			
-			System.out.println(appliedScript);
 			
 			// 이미 적용 된 상태에서 적용할 경우
-			if (appliedScript != null) {
-				scripttagsNo = appliedScript.getScripttagsNo();
-				scripttagsTemplate.update(scripttagsNo, requestScripttags);
-				appliedScript.setScripttagsNo(null);
-				appliedScript.setIsApply(false);
-			}
+//			if (appliedScript != null) {
+//				scripttagsNo = appliedScript.getScripttagsNo();
+//				scripttagsTemplate.update(scripttagsNo, requestScripttags);
+//				appliedScript.setScripttagsNo(null);
+//				appliedScript.setIsApply(false);
+//			}
 			// 적용 된 패널이 없을 때 적용 할 경우
-			else {
+//			else {
 				Scripttags tmp = scripttagsTemplate.create(requestScripttags);
 				System.out.println(tmp);
 				scripttagsNo = tmp.getScriptNo();
-			}
+//			}
 
 			
 			System.out.println(scripttagsNo);
@@ -120,12 +119,12 @@ public class ScriptService {
 			
 			clickChangeState.setPanelId(savedScript.getPanelId());
 			clickChangeState.setIsApply(savedScript.getIsApply());
-			if(appliedScript != null) {
-				autoChangeState.setPanelId(appliedScript.getPanelId());
-				autoChangeState.setIsApply(appliedScript.getIsApply());
-			} else {
+//			if(appliedScript != null) {
+//				autoChangeState.setPanelId(appliedScript.getPanelId());
+//				autoChangeState.setIsApply(appliedScript.getIsApply());
+//			} else {
 				autoChangeState = null;
-			}
+//			}
 			
 			
 			Map<String, Script> result = new HashMap<>();

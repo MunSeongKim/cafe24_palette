@@ -465,11 +465,11 @@ $(document).ready(function(){
 												<td>
 													<c:choose>
 														<c:when test="${panel.script.isApply eq true}">
-															<button class="btn btn-default btn-sm state" id="${panel.panelId }" data-apply="false"><i class="fas fa-ban"></i> 해제</button>
+															<button class="btn btn-default btn-sm btn-apply" id="${panel.panelId }" data-apply="false"><i class="fas fa-ban"></i> 해제</button>
 														</c:when>
 														
 														<c:otherwise>
-															<button class="btn btn-info btn-sm state" id="${panel.panelId }" data-apply="true"><i class="fas fa-play"></i> 적용</button>
+															<button class="btn btn-info btn-sm btn-apply" id="${panel.panelId }" data-apply="true"><i class="fas fa-play"></i> 적용</button>
 														</c:otherwise>
 													</c:choose>
 													
@@ -712,13 +712,15 @@ $(document).ready(function(){
 		if(clickStateIsApply == true) {
 			$('#state-td'+clickStatePanelId).text('Active');
 			$('#'+clickStatePanelId).html('<i class="fas fa-ban"></i> 해제');
-			$('#'+clickStatePanelId).attr('class', 'btn btn-default btn-sm state');
+			$('#'+clickStatePanelId).attr('class', 'btn btn-default btn-sm btn-apply');
 			$('#'+clickStatePanelId).data('apply', false);
+			$('#'+clickStatePanelId).attr('data-apply', 'false');
 		} else {
 			$('#state-td'+clickStatePanelId).text('Inactive');
 			$('#'+clickStatePanelId).html('<i class="fas fa-play"></i> 적용');
-			$('#'+clickStatePanelId).attr('class', 'btn btn-info btn-sm state');
+			$('#'+clickStatePanelId).attr('class', 'btn btn-info btn-sm btn-apply');
 			$('#'+clickStatePanelId).data('apply', true);
+			$('#'+clickStatePanelId).attr('data-apply', 'true');
 		}
 		
 		if(autoChangeState != null) {
@@ -727,8 +729,9 @@ $(document).ready(function(){
 			
 			$('#state-td'+autoStatePanelId).text('Inactive');
 			$('#'+autoStatePanelId).html('<i class="fas fa-play"></i> 적용');
-			$('#'+autoStatePanelId).attr('class', 'btn btn-info btn-sm state');
+			$('#'+autoStatePanelId).attr('class', 'btn btn-info btn-sm btn-apply');
 			$('#'+autoStatePanelId).data('apply', true);
+			$('#'+autoStatePanelId).attr('data-apply', 'true');
 		}
 	}
 	
@@ -797,13 +800,21 @@ $(document).ready(function(){
 		
 		
 		/* 적용/해제 버튼 클릭 */
-		$('.state').click(function(evt) {
+		$('button.btn-apply').click(function(evt) {
 			evt.stopPropagation();
 			var state = false;
 			var panelId = $(this).attr('id');
 			var aaa = $(this).data('apply');
 			
 			if( aaa == true) {
+				var btn = $('button.btn-apply');
+				for(var i = 0; i < btn.length; i++){
+					if($(btn[i]).data('apply') === false){
+						alert("이미 적용 된 패널이 있습니다.\n해제 후 적용해주세요.");
+						return false;
+					}
+				}
+				
 				$("#applyModal").modal();
 				$('#modalPanelId').val(panelId);
 				return ;
