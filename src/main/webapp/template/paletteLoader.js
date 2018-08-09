@@ -12,6 +12,7 @@ var readyToExe = (function() {
     *  https통신을 하기 때문에 요청도 https로 해야됨. 다행히 모든 js cdn서버는 https제공. (solved)
     */
    var files = [
+	   'https://devbit005.cafe24.com/mammoth/assets/js/cafe24Cookie.js',
 	   'https://devbit005.cafe24.com/mammoth/static/jquery/1.11.1/jquery.min.js',
 	   'https://devbit005.cafe24.com/mammoth/static/jquery-ui/1.12.1/jquery-ui.min.js',
 	   'https://devbit005.cafe24.com/mammoth/static/popper.js/1.14.1/umd/popper.min.js',

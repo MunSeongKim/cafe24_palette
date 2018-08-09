@@ -10,7 +10,6 @@
 	var list = []; //resultDatas에 추가해줄 리스트 객체
 	var opts = {};
 	var jsonStr = sessionStorage.getItem("localRecentProduct1");
-	
 	CAFE24API.init('D0OdNNlzFdfWprppcum7NG'); //App Key
 	
 	$.recent = {
@@ -124,7 +123,7 @@
 			if(index==0) { format['first'] = true; }
 			list.push(format);
 			
-			resultDatas['datas'] = list; 
+			resultDatas['datas'] = list;
 			resultDatas['cut'] = function(){ return function(t,render){ return render(t).replace(/,/gi,'<br>'); }};
 		},
 		
@@ -133,6 +132,10 @@
 			Mustache.parse(template);
 			var rendered = Mustache.render(template, resultDatas);
 			$('.carousel-inner').html('').append(rendered);
+			
+			$(".card-img").on('click', function(){
+				location.href = $(this).data('link');
+			});
 		},
 	};
 	
@@ -150,7 +153,7 @@ $(document).ready(function() {
 		});
 		
 		// 최근 본 상품 링크
-		$('.recent-row-title a').attr('href', '/product/recent_view_product.html');
+		$('.recent-row-title a').attr('href', '/myshop/recent_list.html');
 		
 		$('a[data-slide="prev"]').click(function() {
 		  $('#myCarousel').carousel('prev');
