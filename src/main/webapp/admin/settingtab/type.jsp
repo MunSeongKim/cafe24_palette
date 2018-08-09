@@ -9,6 +9,10 @@
 	display: inline-block;
 }
 
+#inputPanelName{
+	padding-right: 40px; 
+}
+
 </style>
 <script>
 
