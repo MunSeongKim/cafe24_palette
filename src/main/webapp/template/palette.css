@@ -234,6 +234,11 @@
 	font-size: 12px;
 }
 
+#panel a:link {
+	text-decoration: none !important;
+    font-size: 12px !important;
+}
+
 #panel a:hover {
     text-decoration: none !important;
     font-size: 12px !important;
