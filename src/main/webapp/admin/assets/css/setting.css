@@ -13,6 +13,10 @@ html, body{
 	height: 100%;
 }
 
+body{
+	background-color: #fff;
+}
+
 i {
 	margin-bottom: 0 !important;
 }
@@ -75,9 +79,7 @@ i {
 		width : 100%; 
 		padding : 15px;
 		padding-bottom : 0; 
-		background-color: #563d7c;  
-/* 		border-top-left-radius : 10px;
-		border-top-right-radius : 10px; */
+		background-color: #563d7c;
 		color : #fff;
 		margin: 0px auto;
 	}
@@ -109,15 +111,6 @@ i {
     background: #563d7c;; 
     border-radius: 10px;
 } 
-
-body{
-	background-color: #fff;
-}
-
-/* scrollbar 없애기 단, scroll 기능 가능 */
-body::-webkit-scrollbar{ 
-	/* display: none; */ 
-}
 
 #panel-tabs li{
 	border-color: #c5c5c5;
@@ -199,7 +192,7 @@ body::-webkit-scrollbar{
 	cursor: not-allowed;
 }
 
-#setting-container .nav-tabs>li>a{
+.nav-tabs>li>a{
 	pointer-events: none;
 	border: 0px; 
 	border-bottom : 2px solid #fff;
@@ -209,14 +202,14 @@ body::-webkit-scrollbar{
 	z-index : 0;
 }
 
-#setting-container .nav-tabs>li.active>a{
+.nav-tabs>li.active>a{
 	border: 0px;
 	background-color: #58C9B9;
 	border-radius: 0px;
 }
 
 /* a태그 방문 전 링크 상태 */
-#setting-container .nav-tabs>li>a:link{
+.nav-tabs>li>a:link{
 	border-radius: 0px;
 	border: 0px;
 	margin : 0px;
@@ -226,7 +219,7 @@ body::-webkit-scrollbar{
 	text-decoration: none;
 }
  
-#setting-container .nav-tabs>li{
+.nav-tabs>li{
     float: left;
     position: relative;
 	margin: 0px;
@@ -234,13 +227,13 @@ body::-webkit-scrollbar{
 	height: 30px; 
 } 
 
-#setting-container .nav-tabs>li.complete{ 
+.nav-tabs>li.complete{ 
 	padding-left: 0px;
 	border : none; 
 	padding-left: 17px;
 }
 
-#setting-container .nav-tabs>li.step{
+.nav-tabs>li.step{
 	background-color: #ededed;
 }
 
@@ -340,6 +333,17 @@ body::-webkit-scrollbar{
 #pager-previous, #pager-next, #pager-save {
 	padding: 5px 8px;
 }
+
+/*===================== preview_panel ==============================*/
+#preview_sortable{
+	list-style: none;
+}
+
+.preview_func_div{
+	display: none;
+}
+
+/*===================================================================*/
 
 #gomain:hover {
 	color: white !important;

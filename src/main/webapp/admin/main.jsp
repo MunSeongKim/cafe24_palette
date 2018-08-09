@@ -61,6 +61,8 @@ canvas {
 
 body{
 	height : 100%;
+	overflow : scroll;
+	margin-bottom : 40px;
 	background-color: #563d7c;
 }
 
