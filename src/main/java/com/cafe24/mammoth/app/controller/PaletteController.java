@@ -37,7 +37,6 @@ public class PaletteController {
 	@RequestMapping("/{mallUrl:(?!assets|static|admin).*}")
 	public String palette(@PathVariable("mallUrl") String mallUrl, Model model) {
 		System.out.println("=================== paletteController ===================");
-		// String tmp = mallUrl.replaceFirst("^(?i)(m.)$", "");
 		String tmp = mallUrl.replaceFirst("^(m.)$", "");
 		System.out.println(tmp);
 		
@@ -75,8 +74,7 @@ public class PaletteController {
 	@RequestMapping("/mobile/{mallUrl:(?!assets|static|admin).*}")
 	public String paletteMobile(@PathVariable("mallUrl") String mallUrl, Model model) {
 		System.out.println("=================== paletteController ===================");
-		// String tmp = mallUrl.replaceFirst("^(?i)(m.)$", "");
-		String tmp = mallUrl.replaceFirst("m.", "");
+		String tmp = mallUrl.replaceFirst("^(m.)$", "");
 		System.out.println(tmp);
 		
 		Member member = memberService.getOneByMallUrl(tmp);
