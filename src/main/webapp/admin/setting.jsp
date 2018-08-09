@@ -18,8 +18,7 @@
  
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/admin/assets/css/setting.css">
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/admin/assets/css/default-theme.css">
-<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/admin/assets/css/preview_panel.css">
-
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/template/palette.css">
 
 <script src="${pageContext.servletContext.contextPath }/static/jquery/1.11.1/jquery.min.js"></script>
 <script src="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.js"></script>
