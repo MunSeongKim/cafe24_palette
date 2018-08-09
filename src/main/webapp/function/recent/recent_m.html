@@ -10,7 +10,7 @@
 
 /* title css */
 .title{
-	padding-top: 30px;
+	/* padding-top: 30px; */
 }
 
 .recent-row-title {
@@ -24,7 +24,7 @@
 }
 /* card css */
 .recent-row-card {
- 	height: 80%; 
+ 	height: 99%;
 	margin-left: 0;
 	margin-right: 0;
 }
@@ -33,7 +33,7 @@
 .recent-row-card .carousel .carousel-inner,
 .recent-row-card .carousel .carousel-inner .carousel-item,
 .recent-row-card .card {
-	height: 100%;
+	height: 99%;
 }
 .recent-row-card .carousel {
 	width: 100%;
@@ -66,6 +66,10 @@
 
 .recent-row-card .card .card-body {
 	padding-top: 
+}
+
+.recent-row-card .card-body{
+	overflow: scroll;
 }
 
 .card-body p{
@@ -119,7 +123,7 @@
 						{{/first}}
 							<div class="card">
 								<div class="card-img-top text-center ">
-									<img class="card-img img-fluid rounded" src="{{detailImage}}" data-iProductNo="{{iProductNo}}" alt="Card image">
+									<img class="card-img img-fluid rounded" src="{{detailImage}}" data-iProductNo="{{iProductNo}}" data-link="{{link}}" alt="Card image">
 								</div>
 		
 								<div class="card-body">
@@ -149,11 +153,8 @@
 										<span class="card-text">SUMMARY INFO</span> <br>
 										<span class="card-content recent-detail-info"> {{summary}} </span>
 									</p>	
-									<a href="{{link}}"
-										class="recent-link-btn btn plt-pn-btn-default btn-sm">상품
-										페이지 이동</a>
 								</div>
-							</div><!--card-->
+							</div>
 						</div>
 					{{/datas}}
 				</script>
