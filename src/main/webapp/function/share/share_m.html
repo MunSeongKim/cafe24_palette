@@ -1,0 +1,99 @@
+<head>
+	<!-- meta info -->
+	<!-- <meta name="keywords" content="공유하기 test">
+	<meta name="description" content="공유하기 설명">
+	<meta property="og:title" content="페이지제목 "/>
+	<meta property="og:image" content="data:image/png;base64,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"/>
+	<meta property="og:url" content="원래 공유하려고 했던 페이지 URL"/>
+	<meta property="og:description" content="공유하기 구체설명"/> -->
+</head>
+
+<style>
+	.SNS_Share_Top {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width:100%;
+		/*height:70px;*/
+		line-height:4px;
+		text-align:center;
+		/* display:flex; */
+		padding:0.18em;
+	}
+	
+	.SNS_image {
+		cursor:pointer;
+		margin-left:5px;
+	}
+</style>
+
+<div class="SNS_Share_Top hidden-xs">	
+	<a class="SNS_image" onclick="share_on_sns(1)" alt="Share on Twitter">
+		<img src="/mammoth/function/share/images/share_twitter.png">
+	</a>
+	<a class="SNS_image" onclick="share_on_sns(2)" alt="Share on Facebook">
+		<img src="/mammoth/function/share/images/share_facebook.png">
+	</a>
+	
+	<a class="SNS_image" onclick="share_on_sns(3)" alt="Share on Google+">
+		<img src="/mammoth/function/share/images/share_google_plus.png">
+	</a>
+		
+	<a class="SNS_image" onclick="share_on_sns(4)" alt="Share on kakaostory">
+		<img src="/mammoth/function/share/images/share_kakao_story.png">
+	</a>
+	
+	<a class="SNS_image" onclick="share_on_sns(5)" alt="Share on Naver">
+		<img src="/mammoth/function/share/images/share_naver.png">
+	</a>
+</div>
+
+<script>
+	// integrate sns function
+	function share_on_sns(sns_type){
+		// scrollY value attach to current url
+		var url_chk_params = (location.href).split('?');
+		var scrollY = window.pageYOffset;
+		
+		var mixed_url = '';
+		
+		// no parameter in current url
+		if(url_chk_params.length > 1){
+			mixed_url = location.href + '&scrollY=' + window.pageYOffset;
+		}else{ // When parameter exist in current url
+			mixed_url = location.href + '?scrollY=' + window.pageYOffset;
+		}
+		
+		// share on twitter
+		if(sns_type == 1){
+			window.open('https://twitter.com/intent/tweet?text=[%EA%B3%B5%EC%9C%A0]%20'
+						+encodeURIComponent(mixed_url)+'%20-%20'
+						+encodeURIComponent(document.title), 
+						'twittersharedialog',
+					 	'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
+		}else if(sns_type == 2){// share on facebook
+			window.open('https://www.facebook.com/sharer/sharer.php?u='
+						+ encodeURIComponent(mixed_url) +'&amp;t='
+						+encodeURIComponent(document.title), 
+						'facebooksharedialog',
+				 		'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
+		}else if(sns_type == 3){ // share on google+
+			window.open('https://plus.google.com/share?url='
+						+encodeURIComponent(mixed_url), 
+						'googleplussharedialog',
+						'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=600');
+		}else if(sns_type == 4){ // share on kakao story
+			window.open('https://story.kakao.com/s/share?url='
+						+encodeURIComponent(mixed_url),
+						'kakaostorysharedialog',
+						'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600');
+		}else if(sns_type == 5){ // share on naver (it basically share on blog but you can also select cafe or pola)
+			window.open('http://share.naver.com/web/shareView.nhn?url='
+					+encodeURIComponent(mixed_url)+'&title='+encodeURIComponent(document.title), // when I typed &amp; it isn't change & so I changed &amp; to just &
+					 'naversharedialog', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
+		}
+		
+		return false;
+	}
+</script>

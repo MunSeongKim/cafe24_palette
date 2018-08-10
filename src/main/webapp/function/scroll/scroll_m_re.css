@@ -1,0 +1,62 @@
+.palette_m {
+	box-sizing: border-box;
+}
+/* *, ::after, ::before {
+	box-sizing: border-box;
+} */
+
+.row [class^='col-'], .row [class*='col-'] {
+	/* text-align: center; */
+	color: black;
+}
+
+.header-div {
+	overflow:hidden;
+	border-radius: 5px;
+	border: 1px solid black; 
+	margin: 15px 0 20px
+}
+
+.save-title {
+	text-align: center;
+}
+
+.scroll-m-item a[class^='scroll-item'], .scroll-m-item a[class*='scroll-item'] {
+	display:inline-block;
+	width:95%;
+	padding: 0rem 1.25rem 0.75rem;
+}
+
+.scroll-m-item {
+	overflow: hidden;
+	padding: 0;
+}
+
+.item-remove-i {
+	cursor: pointer;
+}
+
+.item-remove-div {
+	margin-right: 10px;
+	text-align: right;
+}
+
+.scroll-m-warning {
+		top: -3%;
+		left:15%;
+		display:block;
+	}
+	
+.scroll-m-warning { transition: transform 0.3s cubic-bezier(0.53, 0.01, 0.36, 1.63) !important; }
+.scroll-m-warning.scale-out {
+ transform: scale(0);
+ transition: transform 0.2s !important;
+}
+
+.kwd-font {
+	font-weight:800;
+}
+
+.scroll_m_re_contrainer {
+	text-align:left;
+}

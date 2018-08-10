@@ -1,0 +1,80 @@
+<!-- bootstrap css는 이전에 써놔야 내 css가 나중 처리되서 custom된 것을 이용할 수 있다. -->
+<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>-->
+<!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>-->
+
+<link href="https://devbit005.cafe24.com/mammoth/function/scroll/scroll.css" rel="stylesheet">
+<script src="https://devbit005.cafe24.com/mammoth/function/scroll/scroll.js"></script>
+<style>
+	.scroll_infiniteCarousel .scroll_wrapper {
+		/*width: 10.9em;*/
+        width: 174px;
+		overflow: auto;
+		min-height: 5em;
+		margin: 0 2.1em;
+		position: absolute;
+		top: 0;
+	}
+	
+	.scroll_infiniteCarousel .scroll_wrapper ul {
+		width: 9999px;
+		list-style-image: none;
+		list-style-position: outside;
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		position: absolute;
+		top: 35px;
+	}
+	
+	.scroll_infiniteCarousel ul li {
+		display: block;
+		float: left;
+		/* height: 3.3em; */
+		/* width: 3.31em; */
+		height: 52.8px;
+		width: 52.95px;
+		font-size:12px;
+	}
+</style>
+<!-- 내 기능 전체 묶음 -->
+<div class="scroll_function">
+	<div class="basic_div">
+	</div>
+	<!-- 스크롤 저장 버튼 -->
+	<div class="save_button_part">
+		<!-- 저장 버튼 회전 div -->
+		<div class="scroll_infiniteCarousel">
+			<div class="scroll_wrapper">
+				<ul class="list-group scroll_btn_ul" id="scroll_btn_ul">
+					<!-- 이 ul안으로 li들이 들어올꺼임 -->
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- <div class="modal scroll_pop_layer" id="layer1" tabindex="-1" role="dialog"> -->
+<div class="modal scroll_pop_layer" id="layer1" tabindex="-1"
+	role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-body">
+				<p class="ctxt mb20">키워드를 입력해주세요</p>
+				<input type="text" class="scroll_pop_input" />
+				<p class="scroll_pop_chk_p">키워드를 입력하셔야 저장할 수 있습니다.</p>
+				<!-- <div class="btn-r">
+				<a href="#" class="scroll_pop_layerSave">저장</a> <a href="#"
+					class="scroll_pop_layerClose">닫기</a>
+			</div> -->
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary scroll_pop_layerSave">저장</button>
+				<button type="button"
+					class="btn btn-secondary scroll_pop_layerClose"
+					data-dismiss="modal">취소</button>
+			</div>
+		</div>
+	</div>
+</div>

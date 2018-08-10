@@ -1,6 +1,5 @@
 @charset "EUC-KR";
-/* 180723 scss 파일 제작 - hwi */ 
-/* webapp file */
+/* 180723 scss 파일 제작 - hwi */
 /* complie site: http://www.cssportal.com/scss-to-css/ */
 /* themeColor: main color*/
 /* main color의 inverse*/
@@ -8,6 +7,8 @@
 /* border color */
 /* mobile button color */
 /* basic color*/
+/* <i> color */
+/* 일반적으로는 $themeColor 따라가지만, $themeColor가 #fff인 경우 #000으로 설정*/
 /* 
  * Tag 단위 css 
  */
@@ -22,6 +23,11 @@
   /* 개별 단위 css */
   /****************************************************************/
   /* panel button 관련 css */
+}
+.plt-pn-block {
+  /* inline -> block */
+  display: block;
+  margin: 0 auto;
 }
 .plt-pn-box {
   padding: 1.063em 0;
@@ -48,7 +54,7 @@
 }
 .plt-pn-i {
   /* <i> css */
-  color: #a593e0;
+  color: #a593e0 !important;
 }
 .plt-pn-hr {
   /* <hr> css */
@@ -117,14 +123,9 @@
 .plt-pn-btn {
   /* default, inverse btn commoness part */
   width: 80%;
-  padding: 0.25em 0.375em;
   border-radius: 0.25em;
   text-align: center;
   /* mobile button */
-}
-.plt-pn-block { 
-	display: block;
-	margin: 0 auto;
 }
 .plt-pn-btn-default {
   /* default btn css */
@@ -172,10 +173,10 @@ a.plt-pn-btn-simple :hover {
   color: #a593e0 !important;
 }
 .plt-pn-btn-active, .plt-pn-btn-inactive {
-  border: 2px solid #a593e0 !important;
+  border: 2px solid #566270 !important;
 }
 .plt-pn-btn-active {
-  background-color: #a593e0 !important;
+  background-color: #566270 !important;
   color: #fff !important;
 }
 .plt-pn-btn-inactive {
