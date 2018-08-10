@@ -1,5 +1,6 @@
 
 var readyToExe = (function() {
+	var $dollar, $jQuery;
 	var isMobile = false;
    /*
     * 파일 로드 순서는 건드리지 말아주셔여!
@@ -77,9 +78,17 @@ var readyToExe = (function() {
 	        	 // files 안에 있는 파일 개수 -1개 입력
 	        	 // jQuery UI 로드 문제 $, jQuery 모두 오버라이드 해줘야 해결된다.
 	            if(files.length == 4) {
+	            	
+	            	$dollar = $; // 1.4.4
+	            	$jQuery = jQuery; // 1.4.4
+	            	
 	            	$ = jQuery.noConflict(true);
 	            	jQuery = $;
+	            }else if(files.length == 2){
+	            	$ = $dollar;
+	            	jQuery = $jQuery;
 	            }
+	            
 	        	 element.onreadystatechange = element.onload = null; // kill memory leak in IE
 	            // done = true; //원래 여기에 true있는데 패턴 변경한 순간... 로직이 바뀐듯 나중에 확인해보자.
 	            if (files.length != 0) {
