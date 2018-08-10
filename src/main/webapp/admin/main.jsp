@@ -22,10 +22,8 @@
 <!-- jQuery library -->
 <script src="${pageContext.servletContext.contextPath }/static/jquery/1.11.1/jquery.min.js"></script>
 <script src="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.min.js"></script>
-<script src="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.servletContext.contextPath }/static/mustachejs/2.2.1/mustache.min.js"></script>
-<script src="${pageContext.servletContext.contextPath }/static/popper.js/1.14.3/dist/umd/popper.min.js"></script>
-
 <!-- 패널 미리보기 -->
 <script type="text/javascript" src="${pageContext.servletContext.contextPath }/admin/assets/js/preview_panel.js"></script>
 
@@ -59,8 +57,8 @@ canvas {
 	font-family: 'Noto Sans KR', 'Dotum', '돋움', 'arial', 'verdana', sans-serif; 
 }
 
-body{
-	height : 100%;
+body#main-body{
+	height : 1024px;
 	overflow : scroll;
 	margin-bottom : 40px;
 	background-color: #563d7c;
@@ -485,33 +483,6 @@ $(document).ready(function(){
 								</table>
 							</div>
 							
-							<!-- jQuery UI -->
-							<div id="dialog">
-								<div id="dialog-select-form" title="추가한 패널 동작 페이지 선택"
-									style="display: none">
-									<p class="validateTips normal">방금 만들어진 패널이 동작할 페이지를 선택해주세요.</p>
-									<p class="validateTips error" style="display: none">하나 이상 선택해야 합니다.</p>
-									<form>
-										<input type="checkbox" class="chkbox" id="chkbox-all" name="chkbox-activepage" value="ALL"> 전체<br>
-										
-										<input type="checkbox" class="chkbox" id="chkbox-main" name="chkbox-activepage" value="MAIN"> 메인<br>
-										
-										<input type="checkbox" class="chkbox" id="chkbox-product-list" name="chkbox-activepage" value="PRODUCT_LIST"> 상품 분류<br>
-										<input type="checkbox" class="chkbox" id="chkbox-product-detail" name="chkbox-activepage" value="PRODUCT_DETAIL"> 상품 상세<br>
-										<input type="checkbox" class="chkbox" id="chkbox-product-search" name="chkbox-activepage" value="PRODUCT_SEARCH"> 상품 검색<br>
-										<input type="checkbox" class="chkbox" id="chkbox-product" name="chkbox-activepage" value="PRODUCT_PROJECT"> 상품 기획전<br>
-										<input type="checkbox" class="chkbox" id="chkbox-product" name="chkbox-activepage" value="PRODUCT_PROJECT"> 상품 기획전<br>
-										
-										
-									</form>
-								</div>
-					
-								<div id="dialog-message" title="tets" style="display: none">
-									<p></p>
-								</div>
-							</div>
-							
-							<!-- /jQuery UI -->
 						</div>
 					</div>
 					
@@ -676,6 +647,10 @@ $(document).ready(function(){
 						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-main" value="MAIN">
 						  <label class="custom-control-label" for="chkbox-main">메인</label>
 						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-main-intro-member" value="MAIN_INTRO_MEMBER">
+						  <label class="custom-control-label" for="chkbox-main-intro-member">회원만 접근 가능 페이지</label>
+						</div>
 						<hr>
 						<div class="custom-control custom-checkbox">
 						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-product-list" value="PRODUCT_LIST">
@@ -726,6 +701,10 @@ $(document).ready(function(){
 						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-free-reply" value="BOARD_FREE_REPLY">
 						  <label class="custom-control-label" for="chkbox-board-free-reply" >게시물 답글</label>
 						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-free-secret" value="BOARD_FREE_SECRET">
+						  <label class="custom-control-label" for="chkbox-board-free-secret" >게시물 비밀글</label>
+						</div>
 						<hr>
 						<div class="custom-control custom-checkbox">
 						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-product-list" value="BOARD_PRODUCT_LIST">
@@ -768,10 +747,153 @@ $(document).ready(function(){
 						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-gallery-reply" value="BOARD_GALLERY_REPLY">
 						  <label class="custom-control-label" for="chkbox-board-gallery-reply" >갤러리 답글</label>
 						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-gallery-commentdel" value="BOARD_GALLERY_COMMENTDEL">
+						  <label class="custom-control-label" for="chkbox-board-gallery-commentdel" >갤러리 댓글삭제</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-gallery-secret" value="BOARD_GALLERY_SECRET">
+						  <label class="custom-control-label" for="chkbox-board-gallery-secret" >갤러리 비밀글</label>
+						</div>
 						<hr>
-						
-						
-						
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-consult-list" value="BOARD_CONSULT_LIST">
+						  <label class="custom-control-label" for="chkbox-board-consult-list" >1:1맞춤상담 목록</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-consult-detail" value="BOARD_CONSULT_DETAIL">
+						  <label class="custom-control-label" for="chkbox-board-consult-detail" >1:1맞춤상담 상세</label>          
+						</div>                                                                                              
+						<div class="custom-control custom-checkbox">                                                        
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-consult-write" value="BOARD_CONSULT_WRITE">
+						  <label class="custom-control-label" for="chkbox-board-consult-write" >1:1맞춤상담 쓰기</label>              
+						</div>                                                                                              
+						<div class="custom-control custom-checkbox">                                                        
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-consult-modify" value="BOARD_CONSULT_MODIFY">
+						  <label class="custom-control-label" for="chkbox-board-consult-modify" >1:1맞춤상담 수정</label>              
+						</div>                                                                                               
+						<div class="custom-control custom-checkbox">                                                         
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-consult-reply" value="BOARD_CONSULT_REPLY">
+						  <label class="custom-control-label" for="chkbox-board-consult-reply" >1:1맞춤상담 답글</label>
+						</div>
+						<hr>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-myshop-main" value="MYSHOP_MAIN">
+						  <label class="custom-control-label" for="chkbox-myshop-main" >마이쇼핑 메인 화면</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-myshop-order-list" value="MYSHOP_ORDER_LIST">
+						  <label class="custom-control-label" for="chkbox-myshop-order-list" >마이쇼핑 주문내역</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-myshop-order-detail" value="MYSHOP_ORDER_DETAIL">
+						  <label class="custom-control-label" for="chkbox-myshop-order-detail" >마이쇼핑 주문상세내역</label>          
+						</div>                                                                                              
+						<div class="custom-control custom-checkbox">                                                        
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-myshop-mileage-list" value="MYSHOP_MILEAGE_LIST">
+						  <label class="custom-control-label" for="chkbox-myshop-mileage-list" >마이쇼핑 적립금내역</label>              
+						</div>                                                                                              
+						<div class="custom-control custom-checkbox">                                                        
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-myshop-coupon-coupon" value="MYSHOP_COUPON_COUPON">
+						  <label class="custom-control-label" for="chkbox-myshop-coupon-coupon" >마이쇼핑 쿠폰내역</label>              
+						</div>                                                                                               
+						<div class="custom-control custom-checkbox">                                                         
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-myshop-deposit-list" value="MYSHOP_DEPOSIT_LIST">
+						  <label class="custom-control-label" for="chkbox-myshop-deposit-list" >마이쇼핑 예치금내역</label>
+						</div>
+						<div class="custom-control custom-checkbox">                                                         
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-myshop-wishlist" value="MYSHOP_WISHLIST">
+						  <label class="custom-control-label" for="chkbox-myshop-wishlist" >마이쇼핑 관심상품 목록</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-myshop-boardlist" value="MYSHOP_BOARDLIST">
+						  <label class="custom-control-label" for="chkbox-myshop-boardlist">나의 게시글</label>
+						</div>
+						<hr>
+						<div class="custom-control custom-checkbox">                                                         
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-myshop-addr-list" value="MYSHOP_ADDR_LIST">
+						  <label class="custom-control-label" for="chkbox-myshop-addr-list" >배송주소록목록</label>
+						</div>
+						<div class="custom-control custom-checkbox">                                                         
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-myshop-addr-regist" value="MYSHOP_ADDR_REGIST">
+						  <label class="custom-control-label" for="chkbox-myshop-addr-regist" >배송주소록등록</label>
+						</div>
+						<div class="custom-control custom-checkbox">                                                         
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-myshop-addr-modify" value="MYSHOP_ADDR_MODIFY">
+						  <label class="custom-control-label" for="chkbox-myshop-addr-modify" >배송주소록수정</label>
+						</div>
+						<hr>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-order-basket" value="ORDER_BASKET">
+						  <label class="custom-control-label" for="chkbox-order-basket" >장바구니 화면</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-order-giftlist" value="ORDER_GIFTLIST">
+						  <label class="custom-control-label" for="chkbox-order-giftlist" >사은품 안내</label>
+						</div>
+						<hr>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-inquiry-list" value="BOARD_INQUIRY_LIST">
+						  <label class="custom-control-label" for="chkbox-board-inquiry-list" >대량구매문의 목록</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-inquiry-modify" value="BOARD_INQUIRY_MODIFY">
+						  <label class="custom-control-label" for="chkbox-board-inquiry-modify" >대량구매문의 수정</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-inquiry-write" value="BOARD_INQUIRY_WRITE">
+						  <label class="custom-control-label" for="chkbox-board-inquiry-write" >대량구매문의 등록</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-inquiry-detail" value="BOARD_INQUIRY_DETAIL">
+						  <label class="custom-control-label" for="chkbox-board-inquiry-detail" >대량구매문의 상세보기</label>
+						</div>
+						<hr>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-attend-stamp" value="ATTEND_STAMP">
+						  <label class="custom-control-label" for="chkbox-attend-stamp">출석체크(달력형)</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-calendar-day" value="CALENDAR_DAY">
+						  <label class="custom-control-label" for="chkbox-calendar-day">캘린더게시판(일간)</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-calendar-field" value="CALENDAR_FIELD">
+						  <label class="custom-control-label" for="chkbox-calendar-field">캘린더게시판 추가항목</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-calendar-month" value="CALENDAR_MONTH">
+						  <label class="custom-control-label" for="chkbox-calendar-month">캘린더게시판(월간)</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-calendar-week" value="CALENDAR_WEEK">
+						  <label class="custom-control-label" for="chkbox-calendar-week">캘린더게시판(주간)</label>
+						</div>
+						<hr>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-member-adminfail" value="MEMBER_ADMINFAIL">
+						  <label class="custom-control-label" for="chkbox-member-adminfail">접근제한</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-memo-list" value="BOARD_MEMO_LIST">
+						  <label class="custom-control-label" for="chkbox-board-memo-list" >한줄메모 목록</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-coupon-couponzone" value="COUPON_COUPONZONE">
+						  <label class="custom-control-label" for="chkbox-coupon-couponzone" >쿠폰존</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-board-urgency" value="BOARD_URGENCY">
+						  <label class="custom-control-label" for="chkbox-board-urgency" >긴급문의접수</label>
+						</div>
+						<div class="custom-control custom-checkbox">                                                         
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-shopinfo-faq" value="SHOPINFO_FAQ">
+						  <label class="custom-control-label" for="chkbox-shopinfo-faq" >이용안내(FAQ)</label>
+						</div>
+						<div class="custom-control custom-checkbox">                                                         
+						  <input type="checkbox" class="custom-control-input chkbox" name="chkbox-activepage" id="chkbox-shopinfo-company" value="SHOPINFO_COMPANY">
+						  <label class="custom-control-label" for="chkbox-shopinfo-company" >회사소개</label>
+						</div>
 						
 						<input type="hidden" id="modalPanelId" value="">
 					</form>
@@ -864,7 +986,7 @@ $(document).ready(function(){
 		
 		
 		/* panel 추가 시 페이지 선택 dialog */
-		var pageSelectDialog = $("#dialog-select-form").dialog({
+		/* var pageSelectDialog = $("#dialog-select-form").dialog({
 			autoOpen : false, //자동으로 띄우지 X
 			modal : true,
 			buttons : {
@@ -897,7 +1019,7 @@ $(document).ready(function(){
 				$('.validateTips.normal').show();
 				$('.validateTips.error').hide();
 			}
-		});//pageSelectDialog
+		}); *///pageSelectDialog
 		
 		
 		
@@ -936,8 +1058,12 @@ $(document).ready(function(){
 			var datas = {"state": true};
 			var list = [];
 			if($('#chkbox-all').prop('checked')){
-				console.log($('#chkbox-all').val());
-				list.push($('#chkbox-all').val());
+				$('.chkbox:not(#chkbox-all)').each(function(index, obj){
+					console.log(obj.value)
+						list.push(obj.value);
+				});
+				/* console.log($('#chkbox-all').val());
+				list.push($('#chkbox-all').val()); */
 			} else {
 				$('.chkbox:checked').each(function(index, obj) {
 					list.push(obj.value);
@@ -945,8 +1071,6 @@ $(document).ready(function(){
 			}
 			
 			datas['data'] = list; 
-			console.log($(this));
-			console.log($('#modalPanelId').val())
 			stateChange($('#modalPanelId').val(), true, datas);
 		});
 		

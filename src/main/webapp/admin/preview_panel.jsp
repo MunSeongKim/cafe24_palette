@@ -29,10 +29,10 @@
 <!-- scroll top, bottom end -->
 
 <div id="panel-draggable-btn" class="draggable open">
-	<span></span>
-	<span></span>
-	<span></span>
-	<span></span>
+	<span class="plt-pn-bg"></span>
+	<span class="plt-pn-bg"></span>
+	<span class="plt-pn-bg"></span>
+	<span class="plt-pn-bg"></span>
 </div>
 
 <div id="panel" class="panel preview plt-pn">

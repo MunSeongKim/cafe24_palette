@@ -30,7 +30,7 @@ public class Script {
 	@Column(length = 20)
 	private String scripttagsNo;
 
-	@Column(nullable = true, length = 150)
+	@Column(nullable = true, length = 2048)
 	private String dpLocation;
 
 	@MapsId

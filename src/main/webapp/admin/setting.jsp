@@ -22,8 +22,7 @@
 
 <script src="${pageContext.servletContext.contextPath }/static/jquery/1.11.1/jquery.min.js"></script>
 <script src="${pageContext.servletContext.contextPath }/static/jquery-ui/1.12.1/jquery-ui.js"></script>
-<script	src="${pageContext.servletContext.contextPath }/static/popper.js/1.14.3/dist/umd/popper.min.js"></script>
-<script	src="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script	src="${pageContext.servletContext.contextPath }/static/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
 <script	src="${pageContext.servletContext.contextPath }/static/mustachejs/2.2.1/mustache.min.js"></script> 
 <script src="${pageContext.servletContext.contextPath }/admin/assets/js/preview_panel.js"></script>
 <script src="${pageContext.servletContext.contextPath }/static/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>

@@ -17,10 +17,10 @@
 </div>
 
 <div id="panel-draggable-btn" class="draggable">
-	<span></span>
-	<span></span>
-	<span></span>
-	<span></span>
+	<span class="plt-pn-bg"></span>
+	<span class="plt-pn-bg"></span>
+	<span class="plt-pn-bg"></span>
+	<span class="plt-pn-bg"></span>
 </div>
 
 <div id="panel" class="panel plt-pn" style="display: none;">
