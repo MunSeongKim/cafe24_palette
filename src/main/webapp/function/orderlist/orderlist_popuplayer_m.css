@@ -1,16 +1,10 @@
 @charset "UTF-8";
-a:hover {
-	text-decoration: none !important;
-}
-
 /* popup css */
 .popupLayer.orderlist {
 	display: none;
 	font-weight: normal;
-	/* width: 40%; */
 	height: 100%;
-	max-width: 34.375em;
-	min-width: 15.625em;
+	max-width: 40em;
 	padding: 0.2em 0.625em;
 	margin: 0 auto;
 }
@@ -21,7 +15,7 @@ a:hover {
 	margin: 0 0;
 }
 .popupLayer.orderlist #popup-header {
-	font-size: 0.813em;
+	font-size: 14px;
 }
 .popupLayer.orderlist #popup-orderlist {
 	margin-top: 0.625em;
@@ -46,31 +40,37 @@ a:hover {
 	margin-top: 0.625em;
 }
 /* card css */
+#popup-orderlist .card .card-header {
+	font-size: 16px;
+}
 #popup-orderlist .card .card-body {
-	font-size: 0.688em;
+	font-size: 16px;
 	padding-top: 0px;
 	padding-bottom: 0px;
 }
-
+#popup-orderlist .card .card-body .row div:nth-child(2) {
+	padding-top: 13px;
+}
 #popup-orderlist .card .card-body .order-pdt-info {
 	margin-top: 0.625em;
 }
 /* card 내부 */
 #popup-orderlist .card .card-body .order-pdt-info .info-title {
-	font-size: 0.5em;
+	font-size: 12px;
 	font-weight: bold;
 }
 #popup-orderlist .card .card-body .order-pdt-info p {
 	margin-bottom: 0.625em;
+	padding-left: 15px;
 }
 #popup-orderlist .card .card-body .order-pdt-info .info-tags {
  	color: #0e89ed;
- 	font-size: 0.688em;
+ 	font-size: 12px;
  }
 #popup-orderlist .card .card-body .order-pdt-info .info-smallimage, 
 #popup-orderlist .card .card-body .order-pdt-info .info-detail-link{
  	width:100%; 
- 	max-width: 15.625em; 
+ 	max-width: 30.625em; 
  	min-width:7.5em;
  }
 #popup-orderlist .card .card-body .order-pdt-info .info-detail-link {

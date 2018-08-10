@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+.personal-funcs {
+	border-left: none !important;
+	border-right: none !important;
+	padding-top: 1px;
+	padding-bottom: 1px;
+}
+.personal-funcs .container {
+	margin-top: 0;
+	background: none;
+}
+.personal-funcs .container .row div {
+	padding: 0;
+}
+.personal-funcs .container .row div > a:hover {
+	color: white;
+	/* text-decoration: none !important;
+	font-size: 12px; */
+}
+
+.w-100-extend {
+    margin-top: 1px !important;
+    margin-bottom: 1px !important;
+}
+
+
+    

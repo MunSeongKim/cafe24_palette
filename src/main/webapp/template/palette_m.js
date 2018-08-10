@@ -1,5 +1,22 @@
+function goHome(){
+	console.log('location.hostname => ' + location.hostname);
+	location.href = location.hostname;
+}
 
 $(document).ready(function() {
+	$('.m-scroll-top').click(function() {
+		$('html, body').animate({
+			scrollTop : 0
+		}, 200);
+	});
+
+	$('.m-scroll-bottom').click(function() {
+		$("html, body").animate(
+		{
+			scrollTop : $(document).height()
+					- $(window).height()
+		}, 200);
+	});
 	 /*$('#func1').load("/mammoth/function/scroll/scroll_m_re.html");
      $('#func2').load("/mammoth/function/share/share.html");
      $('#func3').load("/mammoth/function/recent/recent.html");

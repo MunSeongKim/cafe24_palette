@@ -41,6 +41,21 @@
 			</a>
 		</li>
 	</c:forEach>
+	<li class="palette-gohome">
+		<a class="zoom-fab zoom-btn-sm plt-pn-btn-inactive scale-transition scale-out" onclick="goHome()">
+			<span class="zoom-icon"><i class="fa fa-home" aria-hidden="true"></i></span>
+		</a>
+	</li>
+	<li class="palette-gotop">
+		<a class="zoom-fab zoom-btn-sm plt-pn-btn-inactive scale-transition scale-out m-scroll-top">
+			<span class="zoom-icon"><i class="fas fa-angle-double-up" aria-hidden="true"></i></span>
+		</a>
+	</li>
+	<li class="palette-gobottom">
+		<a class="zoom-fab zoom-btn-sm plt-pn-btn-inactive scale-transition scale-out m-scroll-bottom">
+			<span class="zoom-icon"><i class="fas fa-angle-double-down" aria-hidden="true"></i></span>
+		</a>
+	</li>
 </ul>
 
 <c:forEach var="selectFunc" items="${selectFuncs }" varStatus="status">

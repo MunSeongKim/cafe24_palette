@@ -1,0 +1,59 @@
+<link href="/mammoth/function/scroll/css/scroll_m_re.css" rel="stylesheet">
+<script src="/mammoth/function/scroll/js/scroll_m_re.js"></script>
+
+<div class="container scroll_m_re_contrainer">
+	<div class="header-div">
+		<!-- 위치 정보 -->
+		<div class="row scroll-m-info" style="margin-top: 5px">
+			<div class="col-8">
+				현재 사이트 <span id="scroll-info-site" style="color:black;"></span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-8">
+				 스크롤 위치: <span id="scroll-info-span" style="color:black;"></span>
+			</div>
+		</div>
+		<!-- 검색어 -->
+		<div class="row">
+			 <div class="col-12">
+		      <label for="scroll-m-kwd"></label>
+		      <input type="text" class="form-control" id="scroll-m-kwd" placeholder="검색어를 입력해주세요" required>
+		      <div class="invalid-tooltip scroll-m-warning scale-out">
+		           	키워드를 입력해주세요!!
+		      </div>
+		    </div>
+		</div>
+		<!-- 저장 버튼 -->
+		<div class="row">
+			<div class="col-12">
+				<button style="width: 100%; margin-top: 7px;" type="button" id="scroll-save-btn"
+					class="btn btn-secondary btn-lg">스크롤 저장 버튼</button>
+			</div>
+		</div>
+	</div>
+	<!-- 저장소 -->
+	<div class="row scroll-m-list">
+		<div class="col-12">
+			<ul class="list-group scroll-m-ul">
+				<li class="list-group-item save-title" style="font-weight: bold">위치 저장 정보</li>
+			</ul>
+		</div>
+	</div>
+	
+	<script id="mustache-scroll-m-template" type="text/template">
+		{{#same}}
+			<li class="list-group-item list-group-item-primary scroll-m-item">
+		{{/same}}
+		{{^same}}
+			<li class="list-group-item list-group-item-light scroll-m-item">
+		{{/same}}
+			<div class="item-remove-div">
+				<i class="fas fa-times item-remove-i {{key}}"></i>
+			</div>
+			<a class="{{key}}" onclick="href_parser('{{url}}')">
+				<span class="kwd-font">[키워드]</span> {{kwd}} <br>
+				<span class="kwd-font">[저장 URL]</span> {{realUrl}}</a>
+		</li>
+	</script>
+</div>

@@ -93,3 +93,20 @@ a.plt-pn-btn-inactive > .zoom-icon-func3 {
 a.plt-pn-btn-inactive > .zoom-icon-func4 {
 	color: blue;
 }
+
+/* 버튼 외적 기능 */
+.palette-gohome{
+	position:fixed;
+	left:95px;
+	bottom: 25px;
+}
+.m-scroll-top{
+	position:fixed;
+	left:150px;
+	bottom: 35px;
+}
+.m-scroll-bottom{
+	position:fixed;
+	left:205px;
+	bottom: 35px;
+}

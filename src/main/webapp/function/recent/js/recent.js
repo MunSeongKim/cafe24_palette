@@ -134,7 +134,7 @@ var _protocol = "https";
 			// 화면 전환 속도 ms
 			$('#recentBox .carousel').carousel({ interval: opts.interval });
 			
-			if($("#panel").hasClass("preview") != true && sessionData == null){
+			if($("#panel").hasClass("preview") != true && (sessionData == null || sessionData == "[]")){
 				$(".recent-content .carousel-inner").append($("<img/>", {
 					src : _protocol+"://devbit005.cafe24.com/mammoth/function/recent/no_recent.png",
 					css : {
@@ -211,6 +211,7 @@ var _protocol = "https";
 			for(i in jsonData){
 				var iProductNo = jsonData[i].iProductNo;
 				var link = jsonData[i].link_product_detail;
+				var sProductName = jsonData[i].sProductName;
 				
 				var imgSrc = null;
 				if($("#panel").hasClass("preview")){
@@ -224,7 +225,8 @@ var _protocol = "https";
 				}
 				
 				var imgTag = '<img src="'+imgSrc+'" data-iProductNo="'+iProductNo+'" style="width: 100%; height: 100%;">';
-				var carouselItem = '<div class="carousel-item" style="height: 120px;">'+imgTag+'</div>';
+				var productName = '<span>'+sProductName+'</span>';
+				var carouselItem = '<div class="carousel-item" style="height: 120px;">'+imgTag+productName+'</div>';
 				$("#recentBox .carousel-inner").append(carouselItem);
 			}
 			
@@ -361,10 +363,10 @@ var _protocol = "https";
 		}
 	};
 	
-})(jQuery);
+})($Palette);
 
 $(document).ready(function() {   
-	$.recent.init({ 
+	$Palette.recent.init({ 
 		isPreview : true,  // 미리보기 기능 사용 여부
 		interval : 3000,   // 슬라이드 자동 넘기기 속도
 		preview : {

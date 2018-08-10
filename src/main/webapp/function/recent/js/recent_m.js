@@ -9,7 +9,7 @@
 	var resultDatas = {}; //mustache에 넘겨줄 데이터 객체
 	var list = []; //resultDatas에 추가해줄 리스트 객체
 	var opts = {};
-	var jsonStr = sessionStorage.getItem("localRecentProduct1");
+	var sessionData = sessionStorage.getItem("localRecentProduct1");
 	CAFE24API.init('D0OdNNlzFdfWprppcum7NG'); //App Key
 	
 	$.recent = {
@@ -38,7 +38,7 @@
 			$('.carousel').carousel({ interval: opts.interval });
 			
 			// 최근 본 상품이 없을 때.
-			if(jsonStr == null){
+			if(sessionData == null || sessionData == "[]"){
 				$(".recent-row-card .carousel-inner").append($("<img/>", {
 					src : "https://devbit005.cafe24.com/mammoth/function/recent/no_recent.png",
 					css : {
@@ -54,7 +54,7 @@
 		},
 		
 		renderPreprocess : function(){
-			var jsonData = JSON.parse(jsonStr);
+			var jsonData = JSON.parse(sessionData);
 			
 			// 최근 본 상품 목록 갯수
 			$(".recent-count").text(Object.keys(jsonData).length);
@@ -85,7 +85,6 @@
 		},
 		
 		load : function(data, callback){
-			console.log("data.iProductNo : "+data.iProductNo);
 			CAFE24API.get('/api/v2/products/'+data.iProductNo+'?embed=options&fields=product_name, options, simple_description, summary_description, detail_image', function(err, res){
 				callback(res);
 			});
@@ -139,12 +138,13 @@
 		},
 	};
 	
-})(jQuery);
+})($Palette);
+
 $(document).ready(function() {
 	var dataId = $('.recent-main-div').parent().attr('id');
 	
 	$('.zoom-menu li[data-id='+dataId+']').click(function() {
-		$.recent.init({ 
+		$Palette.recent.init({ 
 			interval : false,   // 슬라이드 자동 넘기기 속도
 			preview : {
 				layoutBorderRadius : 0,   // 미리보기 레이아웃 border-radius 정도 (px)
@@ -156,11 +156,11 @@ $(document).ready(function() {
 		$('.recent-row-title a').attr('href', '/myshop/recent_list.html');
 		
 		$('a[data-slide="prev"]').click(function() {
-		  $('#myCarousel').carousel('prev');
+			$Palette('#myCarousel').carousel('prev');
 		});
 
 		$('a[data-slide="next"]').click(function() {
-		  $('#myCarousel').carousel('next');
+			$Palette('#myCarousel').carousel('next');
 		});
 	})
 	

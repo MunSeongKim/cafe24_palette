@@ -1,0 +1,113 @@
+.scroll-item-wrapper [class^='item-idx'], .scroll-item-wrapper [class*='item-idx'] {
+   margin: 1px;
+   width: 45px;
+   height: 30px;
+   float: left;
+   border-radius: 10%;
+}
+
+.scroll-item-wrapper [class^='item-inner-st'], .scroll-item-wrapper [class*='item-inner-st'] {
+   display: none;
+   position: absolute;
+   margin-top: -35px; /* 180806 -35px로 admin, 쇼핑몰 중간점으로 잡음. */
+   margin-left: 36px;
+   border-radius: 100%;
+   /* 값 저장이 안되있을 떄는 -13, 36*/
+}
+
+.scroll-item-wrapper [class^='item-inner-sv'], .scroll-item-wrapper [class*='item-inner-sv'] {
+   display: none;
+}
+
+/* i {
+   color: orange;
+} */
+
+/* 아이템 속 아이콘 */
+.fa-save {
+   /*margin-left:35%;*/
+   margin-top: 5px;
+}
+
+/* x 표시 */
+.fa-times-circle {
+	background:white;
+}
+
+/* 전체 감싸는 div */
+.scroll-total-wrapper {
+   height: 100px;
+   text-align: -webkit-center;
+   /*text-align:center;*/
+   border-radius: 10%:
+}
+
+.scroll-re-keyword {
+   width: 80%;
+   height: 30%;
+   /* border: 1px solid orange; */
+   margin-bottom: 6px;
+   border-radius: 7%;
+}
+
+/* modal 관련 css */
+.scroll-re-question-popup {
+   display: none;
+}
+
+.modal.scroll-re-question-popup {
+   top: 0px;
+   left: 0px;
+}
+
+.modal-dialog.scroll-re-dialog {
+   width: 350px;
+   max-width: 350px;
+   margin: 0px auto;
+   text-align: -webkit-center;
+   /*top:30%;*/
+}
+
+.modal-content.scroll-re-content {
+   width: 60%;
+}
+
+.modal-body.scroll-re-body {
+   align-text: center;
+}
+
+/* 키워드 입력 부분*/
+.scroll-re-pop-input {
+   width: 125px;
+   -webkit-transition: 0.5s; /* focus 받았을 때 시간을 두기 위함.*/
+   transition: 0.5s;
+   border: none !important; /* 180806 쇼핑몰 자체에 input css걸려있어서 important속성 부여 */
+   outline: none; /* chrome 기본 focus event를 제거하기 위함 */
+   border-bottom: 2px solid #2872BC !important;
+}
+
+/* 키워드 입력 부분 focus 이벤트 받았을 때 */
+.scroll-re-pop-input:focus {
+   border-bottom: 3px solid #070294;
+}
+
+/* 키워드 입력 안됬을 때 보이는 input */
+.scroll-re-pop-chk-p {
+   display: none;
+   font-color: red;
+   font-size: 12px;
+   padding: 10px;
+}
+
+/* 키워드 입력 안됬을 때 보이는 input preview*/
+.scroll-re-pop-chk-p-preview {
+   display: none;
+   font-color: red;
+   font-size: 12px;
+   padding: 10px;
+}
+
+
+.scroll-re-modal-header {
+	align-self:center;
+}
