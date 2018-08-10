@@ -42,10 +42,50 @@
 	};
 	
 	$.orderlist = {
+		defaults : {
+			'start_date' : $.format.ago(),
+			'end_date' : $.format.now(),
+			'member_id' : ''
+		},
+		originData : {},
+		formatList : {
+			'date' : function(){ return function(t,render){ return render(t).substr(0,10)+' '+render(t).substr(11,8);}}
+			,'price' : function(){ return function(t,render){ return render(t).split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");}}
+			,'options' : function(){ return function(t,render){ return render(t).replace(/,/gi,'<br>'); }}
+			,'tags' : function(){ return function(t,render){
+				var list = render(t).split(',');
+				var format= [];
+				for(var i in list) { 
+					format.push('<a class="info-tags info-title"' + 
+							' href="/product/search.html?keyword='
+							+list[i]+'"> #'
+							+list[i]+'</a>'); 
+				}
+				return format.toString().replace(/,/gi, ' ');
+				}
+			}
+		},
+		frontApi : function() {
+			CAFE24API.init('D0OdNNlzFdfWprppcum7NG');
+			
+			// front api : get member_id (현재 로그인한 고객 ID)
+			CAFE24API.get('/api/v2/customers/id', function(err, res) {
+				var member_id = res.id.member_id;
+				if(member_id == null) { 
+					$.orderlist.mustache({'datas' : []});
+					$.orderlist.popup('open');
+					return;
+				}
+				var opts = $.extend(true, {}, $.orderlist.defaults, {'member_id': member_id});
+				$.orderlist.defaults = opts;
+				$.orderlist.execute();
+			});
+		},
 		execute : function(options) {
+			if($.orderlist.defaults.member_id == '') { return; }
 			var opts = $.extend(true, {}, $.orderlist.defaults, options);
 			$.orderlist.defaults = opts;
-						 
+						
 			var resultDatas = {};
 			var formatList = {};
 			
@@ -57,23 +97,7 @@
 				data: opts,
 				success: function(response) {
 					resultDatas['datas'] = response.data;
-					formatList = {
-							'date' : function(){ return function(t,render){ return render(t).substr(0,10)+' '+render(t).substr(11,8);}}
-							,'price' : function(){ return function(t,render){ return render(t).split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");}}
-							,'options' : function(){ return function(t,render){ return render(t).replace(/,/gi,'<br>'); }}
-							,'tags' : function(){ return function(t,render){
-								var list = render(t).split(',');
-								var format= [];
-								for(var i in list) { 
-									format.push('<a class="info-tags info-title"' + 
-											' href="/product/search.html?keyword='
-											+list[i]+'"> #'
-											+list[i]+'</a>'); 
-								}
-								return format.toString().replace(/,/gi, ' ');
-								}
-							}
-					};
+					formatList = $.orderlist.formatList;
 					
 					resultDatas['cut'] = formatList;
 					$.orderlist.originData = resultDatas;
@@ -84,15 +108,18 @@
 				}
 			});//ajax
 		},
-		defaults : {
-			//'mall_url' : 'kimdudtj.cafe24.com',
-			'start_date' : $.format.ago(),
-			'end_date' : $.format.now(),
-			'member_id' : $('#crema-login-username').children('.xans-member-var-id').text()
-		},
-		originData : {},
 		checkedParse : function(checked) {
-			var cate_no = '38';
+			if($.orderlist.defaults.member_id == '') { return; }
+			var search= window.location.search;
+			var cate_no = '';
+			if(search != '') {
+				search = location.search.substring(1);
+				var objSearch = JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
+				cate_no = objSearch.cate_no;
+			} else {
+				var pathname = location.pathname.split("/");
+				cate_no = pathname[pathname.indexOf('category')+1];
+			}
 			var obj = $.extend(true, {}, $.orderlist.originData);
 			var orders = obj['datas'];
 			var tmp = {};
@@ -101,12 +128,13 @@
 			if(checked == true) {
 				for(var orderKey in orders){
 					var items = orders[orderKey].items;
+					
 					for(var itemKey in items){
 						var categories = items[itemKey].product.categories;
 						var categoryNoList = []; 
 						Array.from(categories, x => categoryNoList.push(x['category_no']))
 						if( $.inArray(cate_no, categoryNoList) == -1 ){
-							items.pop(items[itemKey]);
+							items[itemKey]={};
 						}
 					}
 					if($.type(items) != 'undefined') {
@@ -120,8 +148,16 @@
 		},
 		mustache : function(data) {
 			var template = $('#orderlist-mustache-template').html();
-			Mustache.parse(template);
-			var rendered = Mustache.render(template, data);
+			var noLoginTemplate = $('#orderlist-nologin-mustache-template').html();
+			var rendered = '';
+			if($.orderlist.defaults.member_id == '') {
+				Mustache.parse(noLoginTemplate);
+				rendered = Mustache.render(noLoginTemplate, data);
+			} else {
+				Mustache.parse(template);
+				rendered = Mustache.render(template, data);
+			}
+			
 			$('#orderlist-mustache-result').html('').append(rendered);
 		},
 		popup : function(action) {
@@ -132,32 +168,32 @@
 			else { return 0 };
 		}
 	};
-}(jQuery));
+}($Palette));
 
-$(document).ready(function() {
-	var dataId = $('.popupLayer').parent().attr('id');
+$Palette(document).ready(function() {
+	var dataId = $Palette('.popupLayer').parent().attr('id');
 	// mobile li 버튼 클릭 시 실행
-	$('.zoom-menu li[data-id='+dataId+']').click(function() {
-		$.orderlist.execute();
+	$Palette('.zoom-menu li[data-id='+dataId+']').click(function() {
+		$Palette.orderlist.frontApi();
 	});
 	
 	
 	/* popup X button event */
-	$('#popup-close > span').click(function() {
-		$.orderlist.popup('close');
+	$Palette('#popup-close > span').click(function() {
+		$Palette.orderlist.popup('close');
 	});
 	/* popup checkbox click event */
-	$('#ckbox').click(function() {
-		$.orderlist.checkedParse($(this).prop('checked'));
+	$Palette('#ckbox').click(function() {
+		$Palette.orderlist.checkedParse($Palette(this).prop('checked'));
 	});
 
 	/* period button click event */
-	$('.span-period').click(function(){
-		$.orderlist.execute( {'start_date' : getStartDate($(this).data('period'))} );
+	$Palette('.span-period').click(function(){
+		$Palette.orderlist.execute( {'start_date' : getStartDate($Palette(this).data('period'))} );
 		
-		$(this).addClass('plt-pn-btn-default').removeClass('plt-pn-btn-simple');
-		$('.span-period').not($(this)).removeClass('plt-pn-btn-default').addClass('plt-pn-btn-simple');
-		$('#ckbox').prop('checked', false);
+		$Palette(this).addClass('plt-pn-btn-default').removeClass('plt-pn-btn-simple');
+		$Palette('.span-period').not($Palette(this)).removeClass('plt-pn-btn-default').addClass('plt-pn-btn-simple');
+		$Palette('#ckbox').prop('checked', false);
 	});
 
 });
@@ -165,10 +201,10 @@ $(document).ready(function() {
 /* start_date setting */
 function getStartDate(period) {
 	if(period == 'week') {
-		return $.format.ago();
+		return $Palette.format.ago();
 	} else if(period == 'month') {
-		return $.format.ago( {'flag':'month', 'period':'1'} );
+		return $Palette.format.ago( {'flag':'month', 'period':'1'} );
 	} else {
-		return $.format.ago( {'flag':'month', 'period':'6'} );
+		return $Palette.format.ago( {'flag':'month', 'period':'6'} );
 	}
 };

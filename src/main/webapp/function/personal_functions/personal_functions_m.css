@@ -1,0 +1,44 @@
+@charset "UTF-8";
+
+.personal-funcs {
+	padding-top: 1px;
+	padding-bottom: 1px;
+}
+.personal-funcs .container {
+	margin-top: 0;
+	background: none;
+}
+.personal-funcs .container .row div {
+	padding: 0;
+}
+.personal-funcs .container .row div:hover {
+	cursor: pointer;
+}
+.personal-funcs .container .row .col {
+	height: 40px;
+	margin: 5px 5px;
+}
+.personal-funcs .container .row div > span {
+	color: #fff;
+	line-height: 40px;
+	font-size: 12px;
+	font-weight: bold;
+}
+.personal-funcs .container .row div > span:hover {
+	color: white;
+	cursor: pointer;
+}
+
+.w-100-extend {
+    margin-top: 1px !important;
+    margin-bottom: 1px !important;
+}
+
+/*personal-functions 기능 개별 card css*/
+.personal-funcs-zoom-card {
+	bottom: 205px;
+    height: auto;
+    width: 70%;
+    top: unset;
+    left: 70px;
+}
