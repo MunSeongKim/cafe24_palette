@@ -46,7 +46,7 @@ var handler_functions = (function() {
 				parent.bind('click', function() {
 					$('#saveItem').val($(this).attr('class').split(' ')[0]);
 					// insert item event here
-					$('.scroll-re-question-popup').position({
+					$Palette('.scroll-re-question-popup').position({
 						of : window,
 						my : 'center',
 						at : 'center',
@@ -72,36 +72,54 @@ var handler_functions = (function() {
 				parent.bind('click', function() {
 					if (target.css('display') == 'block') {
 						// scroll 이동 이벤트를 줘야됨.
-						modal_functions.scroll_move(url);
+						// modal_functions.scroll_move(url);
+						modal_functions.page_move(url);
 					} else { // none 상태
 						console.log('데이터 없는 상태');
 					}
 				});
 			});
 		}, // end i_mouseout_handler
-		add_handler : function (scroll_key, item_url, kwd_key, user_input, wrapper1, wrapper2, wrapper3) {
-			// save at sessionStorage (key = itemID, value = item_url)
-			sessionStorage.setItem(scroll_key, item_url);
-			// save at sessionStorage (keyword = user input value)
-			sessionStorage.setItem(kwd_key, user_input);
-
-			// generate click event in wrapper div
-			handler_functions.click_handler(wrapper3, wrapper1, item_url);
-
-			// generate mouseover event in wrapper div
-			handler_functions.mouseover_handler(wrapper2, wrapper3, user_input);
-
-			// generate mouseover event in wrapper div
-			handler_functions.mouseout_handler(wrapper2, wrapper3);
-
-			// generate click event in last class
-			handler_functions.i_click_handler(wrapper1, wrapper2, wrapper3, scroll_key, kwd_key);
-
-			// generate mouseover event in last class
-			handler_functions.i_mouseover_handler(wrapper2, wrapper3);
-
-			// generate mouseout event in last class
-			handler_functions.i_mouseout_handler(wrapper2, wrapper3, item_url);
+		add_handler : function (scroll_key, item_url, kwd_key, user_input, wrapper1, wrapper2, wrapper3, preview) {
+			// 미리보기가 아닐 경우
+			if(preview == false){
+				console.log('미리보기 ==> 아닌곳');
+				// save at sessionStorage (key = itemID, value = item_url)
+				sessionStorage.setItem(scroll_key, item_url);
+				// save at sessionStorage (keyword = user input value)
+				sessionStorage.setItem(kwd_key, user_input);
+	
+				// generate click event in wrapper div
+				handler_functions.click_handler(wrapper3, wrapper1, item_url);
+	
+				// generate mouseover event in wrapper div
+				handler_functions.mouseover_handler(wrapper2, wrapper3, user_input);
+	
+				// generate mouseover event in wrapper div
+				handler_functions.mouseout_handler(wrapper2, wrapper3);
+	
+				// generate click event in last class
+				handler_functions.i_click_handler(wrapper1, wrapper2, wrapper3, scroll_key, kwd_key);
+	
+				// generate mouseover event in last class
+				handler_functions.i_mouseover_handler(wrapper2, wrapper3);
+	
+				// generate mouseout event in last class
+				handler_functions.i_mouseout_handler(wrapper2, wrapper3, item_url);
+			}else{ // 미리보기
+				console.log('미리보기 ==> 맞아');
+				// generate mouseover event in wrapper div
+				handler_functions.mouseover_handler(wrapper2, wrapper3, user_input);
+	
+				// generate mouseover event in wrapper div
+				handler_functions.mouseout_handler(wrapper2, wrapper3);
+				
+				// generate mouseover event in last class
+				// handler_functions.i_mouseover_handler(wrapper2, wrapper3);
+	
+				// generate mouseout event in last class
+				// handler_functions.i_mouseout_handler(wrapper2, wrapper3, item_url);
+			}
 		}
 	}
 })();
@@ -123,7 +141,7 @@ var init_functions = (function() {
 		} else { // none 상태
 			console.log('init 데이터 없는 상태');
 			// insert item event here
-			$('.scroll-re-question-popup').position({
+			$Palette('.scroll-re-question-popup').position({
 				of : window,
 				my : 'center',
 				at : 'center',
@@ -168,7 +186,7 @@ var init_functions = (function() {
 
 					wrapper1.css('display', 'block');
 
-					handler_functions.add_handler(storage_key, session_value, kwd_key, session_keyword, wrapper1, wrapper2, wrapper3);
+					handler_functions.add_handler(storage_key, session_value, kwd_key, session_keyword, wrapper1, wrapper2, wrapper3, false);
 
 					// input keyword
 					$('#item-inner-kwd' + idx).val(session_keyword);
@@ -205,43 +223,50 @@ var modal_functions = (function() {
 			settings.modal.fadeOut(200);
 			// 검색어 입력값 초기화
 			settings.modalInput.val('');
+			// 미리보기상태에서 p값 초기화
+			$('.scroll-re-pop-chk-p-preview').hide();
 		},
 		save_popup : function() {
-			var current_page = location.href;
-			var url_chk_params = current_page.split('?');
-			
-			if (settings.modalInput.val() == '') {
-				settings.modalP.show();
-			} else {
-				var user_input = $('.scroll-re-pop-input').val();
-				// item count
-				var wrapper1 = $('.' + $('#saveItem').val() + ' div:first-child');
-				var wrapper2 = $('.' + $('#saveItem').val() + ' div:last-child');
-				var wrapper3 = $('.' + $('#saveItem').val() + '');
-
-				wrapper1.css('display', 'block');
-
-				// url에 이미 파라미터 값이 있을 경우
-				if (url_chk_params.length > 1) {
-					var item_url = current_page + '&scrollY=' + window.pageYOffset;
-				} else { // url에 파라미터가 없는 경우
-					var item_url = current_page + '?scrollY=' + window.pageYOffset;
-				}
-
-				var idx = $('#saveItem').val().split('-')[2];
-				var scroll_key = "scroll_item_url" + idx;
-				var kwd_key = "scroll_item_keyword" + idx;
+			if(!($('#panel').hasClass('preview'))){
+				var current_page = location.href;
+				var url_chk_params = current_page.split('?');
 				
-				handler_functions.add_handler(scroll_key, item_url, kwd_key, user_input, wrapper1, wrapper2, wrapper3);
-
-				// input keyword
-				$('#item-inner-kwd' + idx).val(user_input);
-
-				$('.scroll-re-question-popup').fadeOut(200);
-
-				// 검색어 입력값 초기화
-				$('.scroll-re-pop-input').val('');
-
+				if (settings.modalInput.val() == '') {
+					settings.modalP.show();
+				} else {
+					var user_input = $('.scroll-re-pop-input').val();
+					// item count
+					var wrapper1 = $('.' + $('#saveItem').val() + ' div:first-child');
+					var wrapper2 = $('.' + $('#saveItem').val() + ' div:last-child');
+					var wrapper3 = $('.' + $('#saveItem').val() + '');
+	
+					wrapper1.css('display', 'block');
+	
+					// url에 이미 파라미터 값이 있을 경우
+					if (url_chk_params.length > 1) {
+						var item_url = current_page + '&scrollY=' + window.pageYOffset;
+					} else { // url에 파라미터가 없는 경우
+						var item_url = current_page + '?scrollY=' + window.pageYOffset;
+					}
+	
+					var idx = $('#saveItem').val().split('-')[2];
+					var scroll_key = "scroll_item_url" + idx;
+					var kwd_key = "scroll_item_keyword" + idx;
+					
+					handler_functions.add_handler(scroll_key, item_url, kwd_key, user_input, wrapper1, wrapper2, wrapper3, false);
+	
+					// input keyword
+					$('#item-inner-kwd' + idx).val(user_input);
+	
+					$('.scroll-re-question-popup').fadeOut(200);
+	
+					// 검색어 입력값 초기화
+					$('.scroll-re-pop-input').val('');
+	
+				}
+			} // end if
+			else {
+				$('.scroll-re-pop-chk-p-preview').show();
 			}
 		},
 		scroll_move : function(url_scrollY) {
@@ -260,7 +285,7 @@ var modal_functions = (function() {
 
 			// scrollY값을 제외하고 다른 파라미터를 붙이기 위한 변수 준비
 			var ex_scroll_params = ' ';
-
+			
 			if (params[0].split("=")[1] != 'undefined'
 					&& params[0].split("=")[1] != null) {
 				for (var j = 0; j < size; j++) {
@@ -280,6 +305,7 @@ var modal_functions = (function() {
 						if (value > max_yvalue) {
 							value = max_yvalue;
 						}
+						
 						// scrollY위치로 이동.
 						$('html').animate({
 							scrollTop : value
@@ -309,9 +335,7 @@ var modal_functions = (function() {
 			var param = new Array();
 
 			// 현재 페이지의 url
-			var url = decodeURIComponent(url_scrollY);
-			// url이 encodeURIComponent 로 인코딩 되었을때는 다시 디코딩 해준다.
-			url = decodeURIComponent(url);
+			url = url_scrollY;
 
 			var params;
 			// url에서 '?' 문자 이후의 파라미터 문자열까지 자르기
@@ -331,26 +355,9 @@ var modal_functions = (function() {
 					key = params[j].split("=")[0];
 					value = params[j].split("=")[1];
 
-					// scrollY값에 엄청 큰 값을 입력했을 때 막기 위해서.
-					// 현재 페이지에서 가장 하단 부분 Yvalue를 구해준다.
-					var max_yvalue = $(document).height() - $(window).height();
-
 					// 파라미터에 scrollY값이 있을 경우
 					if (key == 'scrollY') {
-
-						// 현재 파라미터로 붙은 Y값이 최대값보다 클 경우
-						if (value > max_yvalue) {
-							value = max_yvalue;
-						}
-						// scrollY위치로 이동.
-						$('html').animate({
-							scrollTop : value
-						}, 200);
-
 						scrollY = value;
-
-						// scrollY파라미터는 없애줌.
-						// history.pushState({}, null, location.pathname);
 					} else {
 						if (j == 0) {
 							ex_scroll_params += '?' + key + '=' + value;
@@ -363,22 +370,14 @@ var modal_functions = (function() {
 								ex_scroll_params += '&' + key + '=' + value;
 						}
 					}
-					// history.pushState({}, null, ex_scroll_params);
 				} // end for
 			}
-			// scrollY파라미터 삭제하기 위해서. 클래스 패스만 남음.
-			// history.pushState({}, null, ex_scroll_params);
 
 			// 다른 페이지를 구분하기 위한 페이지
-			
-			console.log('ex_scroll_params ==> ' + ex_scroll_params);
-			
+			// 180806 페이지 이동되는 부분 위치 수정.
 			var url_chk_params = url.split('?');
 			
 			var origin_url = url_chk_params[0] + ex_scroll_params;
-			// current_site = origin_url;
-			
-			/////// 180731 파라미터 값 수정중
 			
 			var cur_url = location.href;
 			if (cur_url != origin_url) {
@@ -388,14 +387,72 @@ var modal_functions = (function() {
 				} else { // url에 파라미터가 없는 경우
 					location.href = origin_url + '?scrollY=' + scrollY;
 				}
+			}else{ // end if
+				// scrollY위치로 이동.
+				$('html').animate({
+					scrollTop : scrollY
+				}, 200);
 			}
 		}
 	}// end return
 })();
 
+var preview = (function(){
+	return {
+		set_item : function(){
+			var session_value = '1'; // 값이 null이 아닐 때까지 돌려주기 위해 임시 값 저장
+			var idx = 1; // index value
+			var idx_class = 1;
+
+			// save at sessionStorage (key = itemID, value = item_url)
+			sessionStorage.setItem('scroll_item_url3', 'preview');
+			// save at sessionStorage (keyword = user input value)
+			sessionStorage.setItem('scroll_item_keyword3', 'preview');
+			
+			// save at sessionStorage (key = itemID, value = item_url)
+			sessionStorage.setItem('scroll_item_url5', 'preview');
+			// save at sessionStorage (keyword = user input value)
+			sessionStorage.setItem('scroll_item_keyword5', 'preview');
+			
+			while (idx < 10) { //session에 없는 key로 요청을 할 경우 null을 반환받는다.
+				var storage_key = 'scroll_item_url' + idx;
+				var kwd_key = 'scroll_item_keyword' + idx;
+
+				session_value = sessionStorage.getItem(storage_key);
+				session_keyword = sessionStorage.getItem(kwd_key);
+
+				if (session_value != null) {
+					//session_value = "'" + session_value + "'";
+
+					// item count
+					var wrapper1 = $('.item-idx-' + idx + ' div:first-child');
+					var wrapper2 = $('.item-idx-' + idx + ' div:last-child');
+					var wrapper3 = $('.item-idx-' + idx + '');
+
+					wrapper1.css('display', 'block');
+
+					handler_functions.add_handler(storage_key, session_value, kwd_key, session_keyword, wrapper1, wrapper2, wrapper3, true);
+
+					// input keyword
+					$('#item-inner-kwd' + idx).val(session_keyword);
+				}
+				idx++;
+			} // end while
+		}
+	}
+})();
+
 // 실행부
 $(document).ready(function() {
-	init_functions.init();
-	init_functions.chk_sessionStorage();
-	modal_functions.scroll_move(location.href);
+	if($('#panel').hasClass('preview')){
+		// sessionStorage.clear();
+		// 미리보기 전용
+		// init_functions.init();
+		preview.set_item();
+	}else{
+		// 실제 서비스 전용
+		init_functions.init();
+		init_functions.chk_sessionStorage();
+		modal_functions.scroll_move(location.href);
+	}
 });
