@@ -1,18 +1,17 @@
 @charset "EUC-KR";
-/* 180723 scss 파일 제작 - hwi */
 /* complie site: http://www.cssportal.com/scss-to-css/ */
 
 /* themeColor: main color*/
-$themeColor: #000;
+$themeColor: #a593e0;
 
 /* main color의 inverse*/
-$themeInverseColor: #fff;
+$themeInverseColor: #e0e3da;
 
 /* panel font color */
 $panelFontColor: #fff;
 
 /* border color */
-$borderColor: #000000;
+$borderColor: #000;
 $borderBoxColor: #566270;
 /* mobile button color */
 $mobileColor: #566270;
@@ -23,7 +22,7 @@ $whiteColor: #ffffff;
 
 /* <i> color */
 /* 일반적으로는 $themeColor 따라가지만, $themeColor가 #fff인 경우 #000으로 설정*/
-$iColor: #000000;
+$iColor: #a593e0;
 /* 
  * Tag 단위 css 
  */
@@ -31,9 +30,8 @@ $iColor: #000000;
 /* panel css */
 .plt-pn {
 	font-family: sans-serif !important;
-	background-color: rgba(0, 0, 0, 1);
+	background-color: rgba(255, 255, 243, 1);
 	color: $blackColor;
-	/* border: 1px solid #000; */
 	text-shadow: none;
     &-block {
         /* inline -> block */
@@ -121,7 +119,6 @@ $iColor: #000000;
     &-btn{
         /* default, inverse btn commoness part */
         width: 80%;
-        padding: 0.250em 0.375em;
         border-radius: 0.250em;
         text-align: center;
         
@@ -157,7 +154,6 @@ $iColor: #000000;
         
         &-simple {
             /* button simple css (bg X, color: black, border X) */
-            /* background-color: $whiteColor !important; */ 
             color: #000000 !important;
             
             span&:hover{
@@ -174,7 +170,6 @@ $iColor: #000000;
             }
         }
         a&-simple {
-            /* border: 0.063em solid black; */
             :hover{
                 cursor: pointer;
                 color: $themeColor !important;

@@ -138,10 +138,51 @@
 			$.orderlist.mustache(resultDatas);
 			$.orderlist.popup('open'); 
 		},
+		defaults : {
+			'start_date' : $.format.ago(),
+			'end_date' : $.format.now(),
+			'member_id' : ''
+		},
+		originData : {},
+		formatList : {
+			'date' : function(){ return function(t,render){ return render(t).substr(0,10)+' '+render(t).substr(11,8);}}
+			,'price' : function(){ return function(t,render){ return render(t).split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");}}
+			,'options' : function(){ return function(t,render){ return render(t).replace(/,/gi,'<br>'); }}
+			,'tags' : function(){ return function(t,render){
+				var list = render(t).split(',');
+				var format= [];
+				for(var i in list) { 
+					format.push('<a class="info-tags info-title orderlist-click"' + 
+							' href="/product/search.html?keyword='
+							+list[i]+'"> #'
+							+list[i]+'</a>'); 
+				}
+				return format.toString().replace(/,/gi, ' ');
+				}
+			}
+		},
+		frontApi : function() {
+			CAFE24API.init('D0OdNNlzFdfWprppcum7NG');
+			
+			// front api : get member_id (현재 로그인한 고객 ID)
+			CAFE24API.get('/api/v2/customers/id', function(err, res) {
+				var member_id = res.id.member_id;
+				if(member_id == null) {
+					console.log('member id null');
+					$.orderlist.mustache({'datas' : []});
+					$.orderlist.popup('open');
+					return;
+				}
+				var opts = $.extend(true, {}, $.orderlist.defaults, {'member_id': member_id});
+				$.orderlist.defaults = opts;
+				$.orderlist.execute();
+			});
+		},
 		execute : function(options) {
+			if($.orderlist.defaults.member_id == '') { return; }
 			var opts = $.extend(true, {}, $.orderlist.defaults, options);
 			$.orderlist.defaults = opts;
-						 
+			
 			var resultDatas = {};
 			var formatList = {};
 			
@@ -164,32 +205,22 @@
 				}
 			});//ajax
 		},
-		formatList : {
-				'date' : function(){ return function(t,render){ return render(t).substr(0,10)+' '+render(t).substr(11,8);}}
-				,'price' : function(){ return function(t,render){ return render(t).split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");}}
-				,'options' : function(){ return function(t,render){ return render(t).replace(/,/gi,'<br>'); }}
-				,'tags' : function(){ return function(t,render){
-					var list = render(t).split(',');
-					var format= [];
-					for(var i in list) { 
-						format.push('<a class="info-tags info-title orderlist-click"' + 
-								' href="/product/search.html?keyword='
-								+list[i]+'"> #'
-								+list[i]+'</a>'); 
-					}
-					return format.toString().replace(/,/gi, ' ');
-					}
-				}
-		},
-		defaults : {
-			//'mall_url' : 'kimdudtj.cafe24.com',
-			'start_date' : $.format.ago(),
-			'end_date' : $.format.now(),
-			'member_id' : $('#crema-login-username').children('.xans-member-var-id').text()
-		},
-		originData : {},
 		checkedParse : function(checked) {
-			var cate_no = '38';
+			if($.orderlist.defaults.member_id == '') { return; }
+			var search= window.location.search;
+			var cate_no = '';
+			if(search != '') {
+				search = location.search.substring(1);
+				var objSearch = JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
+				cate_no = objSearch.cate_no;
+			} else {
+				var pathname = location.pathname.split("/");
+				cate_no = pathname[pathname.indexOf('category')+1];
+			}
+			if(cate_no == '' || cate_no == null || cate_no=='1') {
+				cate_no = null;
+			}
+			
 			var obj = $.extend(true, {}, $.orderlist.originData);
 			var orders = obj['datas'];
 			var tmp = {};
@@ -203,7 +234,7 @@
 						var categoryNoList = []; 
 						Array.from(categories, x => categoryNoList.push(x['category_no']))
 						if( $.inArray(cate_no, categoryNoList) == -1 ){
-							items.pop(items[itemKey]);
+							items[itemKey]={};
 						}
 					}
 					if($.type(items) != 'undefined') {
@@ -217,60 +248,78 @@
 		},
 		mustache : function(data) {
 			var template = $('#orderlist-mustache-template').html();
-			Mustache.parse(template);
-			var rendered = Mustache.render(template, data);
+			var noLoginTemplate = $('#orderlist-nologin-mustache-template').html();
+			var rendered = '';
+			if($.orderlist.defaults.member_id == '') {
+				Mustache.parse(noLoginTemplate);
+				rendered = Mustache.render(noLoginTemplate, data);
+			} else {
+				Mustache.parse(template);
+				rendered = Mustache.render(template, data);
+			}
+			
 			$('#orderlist-mustache-result').html('').append(rendered);
 		},
 		popup : function(action) {
 			$.panel.makePopupCss($('.popupLayer.orderlist'), action);
 		}
 	};
-}(jQuery));
+}($Palette));
 
-$(document).ready(function() {
+$Palette(document).ready(function() {
 	/* popup X button event */
-	$('#popup-close > span').click(function() {
-		$.orderlist.popup('close');
+	$Palette('#popup-close > span').click(function() {
+		$Palette.orderlist.popup('close');
 	});
 	
 	/* ORDER LIST button click event */
-	$('.func-orderlist').click(function() {
-		if($('#panel').hasClass('preview')) {
-			$.orderlist.preview();
+	$Palette('.func-orderlist').click(function() {
+		if($Palette('#panel').hasClass('preview')) {
+			$Palette.orderlist.preview();
             
-			$('.info-detail-link').on('click', function(event) {
+			$Palette('.info-detail-link').on('click', function(event) {
                 alert('상품 상세 페이지로 이동합니다.'); 
 				event.preventDefault();
 			});
-            $('.info-tags').on('click', function(event) {
+			$Palette('.info-tags').on('click', function(event) {
                 alert('상품 태그를 검색합니다.'); 
 				event.preventDefault();
             });
             
 		} else {
-			$.orderlist.execute();
+			/* writer: deo
+			 * orderlist 최초 실행 시,
+			 * $.orderlist.execute() 실행하지 않고
+			 * frontApi()를 실행하여 $.orderlist.defaults에 member_id 값을 세팅해준다.
+			 * frontApi() 내부에서 execute() 가 실행된다.
+			 * */
+			$Palette.orderlist.frontApi();
 		}
 	});
 	
 	/* popup checkbox click event */
-	$('#ckbox').click(function() {
-		if(!$('#panel').hasClass('preview')) {
-			$.orderlist.checkedParse($(this).prop('checked'));
+	$Palette('#ckbox').click(function() {
+		if(!$Palette('#panel').hasClass('preview')) {
+			$Palette.orderlist.checkedParse($Palette(this).prop('checked'));
 		}
 	});
 
 	/* period button click event */
-	$('.span-period').click(function(){
-        if($('#panel').hasClass('preview')) {
+	$Palette('.span-period').click(function(){
+        if($Palette('#panel').hasClass('preview')) {
             alert('기간에 해당하는 주문목록이 출력됩니다.');
 			return;
 		}
         
-		$.orderlist.execute( {'start_date' : getStartDate($(this).data('period'))} );
+        /* writer: deo
+         * 최초 실행이 아닌 경우, $.orderlist.defaults에 member_id 기본값이 세팅되어 있으므로,
+         * $.orderlist.frontApi를 실행하지 않고
+         * 날짜 데이터만 전달해주는 형태로 $.orderlist.execute를 실행한다.*/
+        $Palette.orderlist.execute( {'start_date' : getStartDate($Palette(this).data('period'))} );
 		
-		$(this).addClass('plt-pn-btn-default').removeClass('plt-pn-btn-simple');
-		$('.span-period').not($(this)).removeClass('plt-pn-btn-default').addClass('plt-pn-btn-simple');
-		$('#ckbox').prop('checked', false);
+        $Palette(this).addClass('plt-pn-btn-default').removeClass('plt-pn-btn-simple');
+        $Palette('.span-period').not($Palette(this)).removeClass('plt-pn-btn-default').addClass('plt-pn-btn-simple');
+        $Palette('#ckbox').prop('checked', false);
 	});
 
 });
@@ -278,10 +327,10 @@ $(document).ready(function() {
 /* start_date setting */
 function getStartDate(period) {
 	if(period == 'week') {
-		return $.format.ago();
+		return $Palette.format.ago();
 	} else if(period == 'month') {
-		return $.format.ago( {'flag':'month', 'period':'1'} );
+		return $Palette.format.ago( {'flag':'month', 'period':'1'} );
 	} else {
-		return $.format.ago( {'flag':'month', 'period':'6'} );
+		return $Palette.format.ago( {'flag':'month', 'period':'6'} );
 	}
 };

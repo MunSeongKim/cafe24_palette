@@ -23,46 +23,55 @@
 		<div class="container-layout">
 			<div class="container">
 				<div id="orderlist-mustache-result"></div>
+				<script id="orderlist-nologin-mustache-template" type="text/template">
+					<div class="row">
+						로그인 후 사용할 수 있는 서비스입니다.
+					</div>
+				</script>
 				<!-- 특정 주문일에 주문한 상품 리스트 -->
 				<script id="orderlist-mustache-template" type="text/template">
-				{{^datas}}
-					<div class="row">
-					구매한 상품이 없습니다.
-					</div>
-				{{/datas}}
-				{{#datas}}
-					<div class="row">
-						<div class="col-md-12">
-							<div class="card plt-pn-border-dotted mb-3">
-								<div class="card-header plt-pn-bg">{{#cut.date}}{{orderDate }}{{/cut.date}}</div>
-								{{#items}}
-								<div class="card-body">
-										<div class="row order-pdt-info">
-											<div class="col-md-6">
-												{{^product.smallImage}}
-													<img class="img-fluid d-block info-smallimage" src="noimage.png" />
-												{{/product.smallImage}}
-												{{#product.smallImage}}
-													<img class="img-fluid d-block info-smallimage" src="{{product.smallImage}}" />
-												{{/product.smallImage}}
-												<a href="/product/detail.html?product_no={{productNo}}" class="plt-pn-btn plt-pn-btn-default info-detail-link">상품 상세보기</a>
-											</div>
-											<div class="col-md-6">
-												<p>{{productName}}</p>
-												<p><span class="info-title">PRICE</span> <br> {{#cut.price}}{{productPrice}}{{/cut.price}} won</p>
-												{{#optionValue}}<p><span class="info-title">OPTION</span> <br> {{#cut.options}}{{optionValue}}{{/cut.options}}</p>{{/optionValue}}
+					{{^datas}}
+						<div class="row">
+							구매한 상품이 없습니다.
+						</div>
+					{{/datas}}
+					{{#datas}}
+						<div class="row">
+							<div class="col-md-12">
+								<div class="card plt-pn-border-dotted mb-3">
+									<div class="card-header plt-pn-bg">{{#cut.date}}{{orderDate }}{{/cut.date}}</div>
+									{{#items}}
+									{{^product}}
+									{{/product}}
+									{{#product}}
+									<div class="card-body">
+											<div class="row order-pdt-info">
+												<div class="col-md-6">
+													{{^product.smallImage}}
+														<img class="img-fluid d-block info-smallimage" src="https://devbit005.cafe24.com/mammoth/function/orderlist/noimage.png" />
+													{{/product.smallImage}}
+													{{#product.smallImage}}
+														<img class="img-fluid d-block info-smallimage" src="{{product.smallImage}}" />
+													{{/product.smallImage}}
+													<a href="/product/detail.html?product_no={{productNo}}" class="plt-pn-btn plt-pn-btn-default info-detail-link">상품 상세보기</a>
+												</div>
+												<div class="col-md-6">
+													<p>{{productName}}</p>
+													<p><span class="info-title">PRICE</span> <br> {{#cut.price}}{{productPrice}}{{/cut.price}} won</p>
+													{{#optionValue}}<p><span class="info-title">OPTION</span> <br> {{#cut.options}}{{optionValue}}{{/cut.options}}</p>{{/optionValue}}
 
-												{{#product.tags}}<p>{{#cut.tags}}{{product.tags}}{{/cut.tags}}</p>{{/product.tags}}
-												
+													{{#product.tags}}<p>{{#cut.tags}}{{product.tags}}{{/cut.tags}}</p>{{/product.tags}}
+													
+												</div>
 											</div>
-										</div>
+									</div>
+									<hr class="plt-pn-hr-thin plt-pn-hr-space-s">
+									{{/product}}
+									{{/items}}
 								</div>
-								<hr class="plt-pn-hr-thin plt-pn-hr-space-s">
-								{{/items}}
 							</div>
 						</div>
-					</div>
-				{{/datas}}	
+					{{/datas}}
 				</script>
 			</div>
 		</div>
