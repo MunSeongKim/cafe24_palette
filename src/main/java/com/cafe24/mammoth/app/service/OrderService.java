@@ -41,7 +41,7 @@ public class OrderService {
 	private final String fields = "shop_no,order_id,order_date,member_id,buyer_name,items";
 	private final String embed = "items";
 	
-	public List<Order> getOrderList(MultiValueMap<String, String> params) {
+	public List<Order> getOrderList(MultiValueMap<String, String> params, String mallId) {
 		Cache cache = (Cache) cacheManager.getCache("products");
 		
 		// 요청 파라미터 구성
@@ -60,10 +60,10 @@ public class OrderService {
 			order.setOrderDate(o.getOrderDate());
 			for(Map<String, String> i: o.getItems()) {
 				// 수동 캐시작업 - Cache 동작은 AOP 기반으로 동작하기 때문에 내부에서 호출하는 메소드에는 캐시가 적용될 수 없음
-				Product product = cache.get(i.get("product_no"), Product.class);
+				Product product = cache.get((mallId+i.get("product_no")), Product.class);
 				// 캐시에 없으면 product 정보 요청
 				if( product == null) {
-					product = getProduct(i.get("product_no"));
+					product = getProduct(mallId, i.get("product_no"));
 				}
 				
 				// orderItem 구성
@@ -89,7 +89,7 @@ public class OrderService {
 	}
 	
 	// product 정보 요청
-	private Product getProduct(String productNo) {
+	private Product getProduct(String mallId, String productNo) {
 		//Request Parameters
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		params.add("fields", "product_no,small_image,category,product_tag");
@@ -105,7 +105,7 @@ public class OrderService {
 		product.setTags(products.getProductTag());
 		
 		// 캐시에 데이터 삽입
-		cacheManager.getCache("products").put(productNo, product);
+		cacheManager.getCache("products").put((mallId + productNo), product);
 		return product;
 	}
 

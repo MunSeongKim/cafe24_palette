@@ -7,9 +7,11 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.cafe24.mammoth.app.domain.dto.Order;
 import com.cafe24.mammoth.app.service.OrderService;
@@ -33,6 +35,7 @@ import com.cafe24.mammoth.app.support.JSONResult;
 @RestController
 @RequestMapping("/api/cafe24")
 @CrossOrigin
+@SessionAttributes("mallId")
 public class OrderAPIController {
 	@Autowired
 	private OrderService orderService;
@@ -41,7 +44,7 @@ public class OrderAPIController {
 	@GetMapping(value="/orders")
 	public JSONResult orderList(@RequestParam("start_date") String startDate,
 			@RequestParam("end_date") String endDate,
-			@RequestParam(value="member_id", required=true) String member_id) {
+			@RequestParam(value="member_id", required=true) String member_id, @ModelAttribute String mallId) {
 			//,@RequestParam(value="buyer_name", required=false, defaultValue="") String buyer_name) {
 		
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
@@ -51,8 +54,7 @@ public class OrderAPIController {
 		
 		
 		//params.add("buyer_name", buyer_name);
-		System.out.println(params);
-		List<Order> orderList = orderService.getOrderList(params);
+		List<Order> orderList = orderService.getOrderList(params, mallId);
 		return JSONResult.success(orderList != null ? orderList : "null");
 	}
 }

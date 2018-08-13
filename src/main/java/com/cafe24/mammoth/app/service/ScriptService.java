@@ -98,12 +98,9 @@ public class ScriptService {
 			// 적용 된 패널이 없을 때 적용 할 경우
 //			else {
 				Scripttags tmp = scripttagsTemplate.create(requestScripttags);
-				System.out.println(tmp);
 				scripttagsNo = tmp.getScriptNo();
 //			}
 
-			
-			System.out.println(scripttagsNo);
 			
 			// API 적용 후 DB에 데이터 저장
 			String data = String.join(",", datas);
@@ -111,8 +108,7 @@ public class ScriptService {
 			savedScript.setDpLocation(data);
 			savedScript.setIsApply(true);
 			savedScript.setScripttagsNo(scripttagsNo);
-			
-			System.out.println(savedScript);
+			savedScript.getPanel().getMember().setPanelUsed(true);
 			
 			Script clickChangeState = new Script();
 			Script autoChangeState = new Script();
@@ -137,6 +133,8 @@ public class ScriptService {
 		ScripttagsTemplate scripttagsTemplate = cafe24Template.getOperation(ScripttagsTemplate.class);
 		Optional<Script> script = scriptRepository.findById(panelId);
 		Script unapplyScript = script.isPresent() ? script.get() : null;
+		
+		unapplyScript.getPanel().getMember().setPanelUsed(false);
 		
 		scripttagsTemplate.delete(unapplyScript.getScripttagsNo());
 		unapplyScript.setIsApply(false);

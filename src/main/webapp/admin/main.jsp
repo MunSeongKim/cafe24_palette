@@ -520,7 +520,7 @@ $(document).ready(function(){
 								<div class="row mt-4">
 									<div class="col-sm-8">
 										<p class="text-monospace">적용 화면:</p>
-										<p>{{^scriptDpLocation}}없음{{/scriptDpLocation}}{{#scriptDpLocation}}{{scriptDpLocation}}{{/scriptDpLocation}}</p>
+										<p id="dpLocation{{panelId}}">{{^scriptDpLocation}}없음{{/scriptDpLocation}}{{#scriptDpLocation}}{{scriptDpLocation}}{{/scriptDpLocation}}</p>
 									</div>
 								
 									<div class="col-sm-4">
@@ -960,7 +960,7 @@ $(document).ready(function(){
 	}
 	
 	/* 패널 적용,해제 ajax */
-	function stateChange(panelId, state, datas) {
+	function stateChange(panelId, state, datas, list) {
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		$.ajax({
@@ -976,6 +976,8 @@ $(document).ready(function(){
 			success: function(response) {
 				if(state == true){
 					$('#applyModal').modal('hide');
+					console.log(panelId);
+					$('#dpLocation'+panelId).text(list);
 				}
 				buttonChange(response.data.clickChangeState, response.data.autoChangeState);
 			}
@@ -984,6 +986,11 @@ $(document).ready(function(){
 	
 	$(function() {
 		
+		$('#applyModal').on('hidden.bs.modal', function() {
+			$('.chkbox').each(function(index, obj) {
+				$(obj).removeAttr('disabled').prop('checked', false);
+			});
+		});
 		
 		/* panel 추가 시 페이지 선택 dialog */
 		/* var pageSelectDialog = $("#dialog-select-form").dialog({
@@ -1071,7 +1078,7 @@ $(document).ready(function(){
 			}
 			
 			datas['data'] = list; 
-			stateChange($('#modalPanelId').val(), true, datas);
+			stateChange($('#modalPanelId').val(), true, datas, list);
 		});
 		
 		/* dialog checkbox event */

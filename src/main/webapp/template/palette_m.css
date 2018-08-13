@@ -2,7 +2,7 @@
 	box-sizing: border-box;
 }
 
-body { background-color: #f5f7fa; font-family:'Roboto'; text-align:center; }
+body { background-color: #f5f7fa; font-family:'Roboto'; /* text-align:center;  */}
 
 .zoom {
 	position: fixed;
@@ -79,20 +79,39 @@ body { background-color: #f5f7fa; font-family:'Roboto'; text-align:center; }
 	font-weight: bold;
 }
 a.plt-pn-btn-inactive > .zoom-icon-func1 {
-	color: red;
+	color: #133046;
 }
 
 a.plt-pn-btn-inactive > .zoom-icon-func2 {
-	color: orange;
+	color: #15959F;
 }
 
 a.plt-pn-btn-inactive > .zoom-icon-func3 {
-	color: green;
+	color: #F1E4B3;
 }
 
 a.plt-pn-btn-inactive > .zoom-icon-func4 {
-	color: blue;
+	color: #F4A090;
 }
+a.plt-pn-btn-inactive > .zoom-icon-func5 {
+	color: #F26144;
+}
+a.plt-pn-btn-inactive > .zoom-icon-func6 {
+	color: #592D36;
+}
+a.plt-pn-btn-inactive > .zoom-icon-func7 {
+	color: #E45A94;
+}
+a.plt-pn-btn-inactive > .zoom-icon-func8 {
+	color: #F5F6E8;
+}
+a.plt-pn-btn-inactive > .zoom-icon-func9 {
+	color: #EC9851;
+}
+a.plt-pn-btn-inactive > .zoom-icon-func10 {
+	color: #8EAA97;
+}
+
 
 /* 버튼 외적 기능 */
 .palette-gohome{

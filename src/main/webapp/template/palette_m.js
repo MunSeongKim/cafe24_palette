@@ -1,6 +1,6 @@
 function goHome(){
 	console.log('location.hostname => ' + location.hostname);
-	location.href = location.hostname;
+	location.href = '/index.html';
 }
 
 $(document).ready(function() {

@@ -23,8 +23,8 @@
 </style>
 
 <div class="scroll_mm_div plt-pn-i">
-	<i class="fas fa-arrow-alt-circle-up scroll_top"></i>
-	<i class="fas fa-arrow-alt-circle-down scroll_bottom"></i>			
+	<i class="fas fa-angle-double-up scroll_top"></i>
+	<i class="fas fa-angle-double-down scroll_bottom"></i>
 </div>
 <!-- scroll top, bottom end -->
 
