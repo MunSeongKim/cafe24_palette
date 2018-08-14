@@ -10,6 +10,11 @@ import lombok.Setter;
 import lombok.ToString;
 
 
+/**
+ * Cafe24 API의 Product 응답 정보를 담는 객체
+ * @author MoonStar
+ *
+ */
 @Getter @Setter @ToString
 @EqualsAndHashCode
 public class Product implements Serializable {

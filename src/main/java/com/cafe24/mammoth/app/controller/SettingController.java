@@ -36,6 +36,11 @@ import com.cafe24.mammoth.app.support.SettingTab;
  * 
  */
 
+/**
+ * 사용자 설정을 저장하기 위한 컨트롤러
+ * @author Qyuee
+ *
+ */
 @Controller
 @RequestMapping(value = "/setting")
 @SessionAttributes({"mallId", "mallUrl"})
@@ -73,12 +78,6 @@ public class SettingController {
 		panelService.createPanel(mallId, panelName, funcId, funcOrder, themeId, position);
 		
 		return "redirect:/"; 
-	}
-	
-	// iframne올 띄우기 
-	@GetMapping(value="/palette")
-	public String testPage() {
-		return "admin/palette"; 
 	}
 	
 	@Deprecated

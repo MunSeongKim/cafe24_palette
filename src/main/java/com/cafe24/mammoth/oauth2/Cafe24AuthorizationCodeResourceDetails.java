@@ -3,8 +3,8 @@ package com.cafe24.mammoth.oauth2;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 
 /**
- * mallId 저장, 
- * @author bit
+ * mallId 저장, isClientOnly를 사용하기 귀해 상속 구현한 ResourceDetails 클래스 
+ * @author MoonStar
  *
  */
 public class Cafe24AuthorizationCodeResourceDetails extends AuthorizationCodeResourceDetails {

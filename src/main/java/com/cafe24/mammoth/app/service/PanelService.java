@@ -19,7 +19,14 @@ import com.cafe24.mammoth.app.repository.PanelRepository;
 import com.cafe24.mammoth.app.repository.ScriptRepository;
 import com.cafe24.mammoth.app.repository.SelectFuncRepository;
 import com.cafe24.mammoth.app.repository.ThemeRepository;
-
+/**
+ * 
+ * 패널 CRUD에 서비스를 제공한다.
+ * 
+ * @since 2018-07-20
+ * @author qyuee
+ *
+ */
 @Service
 @Transactional
 public class PanelService {
@@ -66,8 +73,6 @@ public class PanelService {
 			Long themeId,
 			String position
 			) {
-		
-		System.out.println("mallId: " + mallId);
 		
 		Optional<Member> savedMember = memberRepository.findById(mallId);
 		Member member = savedMember.isPresent() ? savedMember.get() : null;

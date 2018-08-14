@@ -10,6 +10,11 @@ import org.springframework.stereotype.Service;
 import com.cafe24.mammoth.app.domain.Member;
 import com.cafe24.mammoth.app.repository.MemberRepository;
 
+/**
+ * 앱 사용자를 관리하는 서비스
+ * @author MoonStar
+ *
+ */
 @Service
 @Transactional
 public class MemberService {
@@ -17,6 +22,14 @@ public class MemberService {
 	@Autowired
 	private MemberRepository memberRepository;
 	
+	/**
+	 * 앱 사용자가 가진 도메인 주소들을 저장하기 위한 메소드
+	 * @param baseDomain
+	 * @param primaryDomain
+	 * @param mallUrl
+	 * @param mallId
+	 * @return 저장 성공 여부
+	 */
 	public boolean save(String baseDomain, String primaryDomain, String mallUrl, String mallId) {
 		Optional<Member> savedMember = memberRepository.findById(mallId);
 		Member member = null;
@@ -30,11 +43,15 @@ public class MemberService {
 		return member != null ? true : false;    
 	}
 	
+	/**
+	 * 앱 사용자 객체를 생성하고 저장하는 메소드
+	 * @param mallId
+	 * @return 저당 성공 여부
+	 */
 	public boolean save(String mallId) {
 		Member member = new Member();
 		member.setMallId(mallId);
 		member.setPanelUsed(false);
-		System.out.println("memberService.save(): " + member);
 		return memberRepository.save(member) != null ? true : false;
 	}
 

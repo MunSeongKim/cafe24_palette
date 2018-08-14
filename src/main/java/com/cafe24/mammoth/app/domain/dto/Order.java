@@ -9,6 +9,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Cafe24 API의 응답을 저장하는 DTO
+ * @author MoonStar
+ *
+ */
 @Setter
 @Getter
 @ToString

@@ -11,54 +11,56 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.cafe24.mammoth.app.domain.dto.StatisticDto;
+import com.cafe24.mammoth.app.domain.dto.Statistic;
 import com.cafe24.mammoth.app.service.StatisticService;
 import com.cafe24.mammoth.app.support.JSONResult;
 
-/*
- * 18.08.02 ?듦퀎??controller 異붽?
+/**
+ * 18.08.02 통계를 처리하는 API 컨트롤러
+ * @author Allan
  */
-
 @RestController
 @RequestMapping("/api/app")
-@SessionAttributes({"mallId", "mallUrl"})
+@SessionAttributes({ "mallId", "mallUrl" })
 public class StatisticAPIController {
+	
 	@Autowired
 	private StatisticService statisticService;
-	
-/*	@Autowired
-	private StatisticDto statisticDto;*/
-	
-	@GetMapping(value="/pCount")
-	public JSONResult getPanelCount(/*@ModelAttribute("mallId") String mallId*/) {
+
+	// panel 통계 관련 메소드
+	@GetMapping(value = "/pCount")
+	public JSONResult getPanelCount() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		// ?쇰떒 mallId ?꾩떆濡?諛뺤븘 ?볤쿋?? ?꾩떆?곗씠??1,2,3
-		Long panelCount = statisticService.getPanelCount(); // ?⑤꼸 珥?媛쒖닔
+		// 패널 총 개수
+		Long panelCount = statisticService.getPanelCount();
+		// 한 사람당 평균 패널 사용 개수
 		double perPersonPanelCount = statisticService.getPerPersonPanelCount();
-		System.out.println("statisticService.getPanelCount() ==> " + panelCount);
-		
+
 		map.put("totalPanelCount", panelCount);
 		map.put("perPersonPanelCount", perPersonPanelCount);
-		
+
 		return JSONResult.success(map);
 	}
-	
-	@GetMapping(value="/fCount")
-	public JSONResult getFunctionCount(/*@ModelAttribute("mallId") String mallId*/) {
+
+	// function 통계 관련 메소드
+	@GetMapping(value = "/fCount")
+	public JSONResult getFunctionCount() {
+		// 각 function의 사용 개수 - 여러개의 row가 나옴
 		List<Object[]> list = statisticService.getFunctionCount();
-		List<StatisticDto> list3 = new ArrayList<StatisticDto>();
-		
-		for(Object[] obj : list) {
-			StatisticDto tempObj = new StatisticDto();
-			tempObj.setFunctionId((Long)obj[0]);
-			tempObj.setFunctionName((String)obj[1]);
-			tempObj.setFunctionCount((Long)obj[2]);
+		// 여러 row를 받기 위한 list
+		List<Statistic> list3 = new ArrayList<Statistic>();
+
+		// 여러개의 row를 하나씩 돌리면서 list3에 넣어줌.
+		for (Object[] obj : list) {
+			Statistic tempObj = new Statistic();
+			tempObj.setFunctionId((Long) obj[0]); // functionId
+			tempObj.setFunctionName((String) obj[1]); // function Korean Name
+			tempObj.setFunctionCount((Long) obj[2]);  // function total count
 			list3.add(tempObj);
 		}
-			
-		//System.out.println("map ==> " + map);
-		
+
 		return JSONResult.success(list3);
 	}
+	
 }

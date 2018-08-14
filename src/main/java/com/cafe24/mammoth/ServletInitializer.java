@@ -40,14 +40,23 @@ public class ServletInitializer extends SpringBootServletInitializer {
 		return application.sources(ServletInitializer.class);
 	}
 	
+	/**
+	 * CacheManager 빈 설정
+	 * @return {@link CacheManager}
+	 */
 	@Bean
 	public CacheManager cacheManager() {
 		return new EhCacheCacheManager(ehCacheCacheManager().getObject());
 	}
 	
+	/**
+	 * EhcacheManager 빈 설정
+	 * @return {@link EhCacheManagerFactoryBean}
+	 */
 	@Bean
 	public EhCacheManagerFactoryBean ehCacheCacheManager() {
 		EhCacheManagerFactoryBean factory = new EhCacheManagerFactoryBean();
+		// EhCache의 설정을 클래스패스의 ehcache.xml에서 읽어옴
 		factory.setConfigLocation(new ClassPathResource("ehcache.xml"));
 		factory.setShared(true);
 		

@@ -34,10 +34,14 @@ public class PaletteController {
 	@Autowired
 	private PanelService panelService;
 	
+	/**
+	 * 쇼핑몰의 주소로 앱 사용자 인식하기 위해 mallUrl을 Path로 받음
+	 * @param mallUrl
+	 * @param model
+	 * @return 앱 사용자의 설정이 적용된 PC용 패널
+	 */
 	@RequestMapping("/{mallUrl:(?!assets|static|admin).*}")
 	public String palette(@PathVariable("mallUrl") String mallUrl, Model model) {
-		System.out.println("=================== paletteController ===================");
-		
 		Member member = memberService.getOneByMallUrl(mallUrl);
 		Panel panel = panelService.getApplyPanel(member.getMallId());
 		List<SelectFunc> selectFuncs = panel.getSelectFuncs();
@@ -56,12 +60,6 @@ public class PaletteController {
 			}
 		});
 		
-		System.out.println(panel);
-		System.out.println(panel.getTheme());
-		System.out.println(selectFuncs);
-		
-		System.out.println("=================== paletteController ===================");
-		
 		model.addAttribute("panel", panel);
 		model.addAttribute("theme", panel.getTheme());
 		model.addAttribute("selectFuncs", selectFuncs);
@@ -69,13 +67,15 @@ public class PaletteController {
 		return "template/palette";
 	}
 	
+	/**
+	 * 쇼핑몰의 주소로 앱 사용자 인식하기 위해 mallUrl을 Path로 받음
+	 * @param mallUrl
+	 * @param model
+	 * @return 앱 사용자의 설정이 적용된 Mobile 패널
+	 */
 	@RequestMapping("/mobile/{mallUrl:(?!assets|static|admin).*}")
 	public String paletteMobile(@PathVariable("mallUrl") String mallUrl, Model model) {
-		System.out.println("=================== paletteController ===================");
-		String tmp = mallUrl.replaceFirst("^(m\\.)", "");
-		System.out.println(tmp);
-		
-		Member member = memberService.getOneByMallUrl(tmp);
+		Member member = memberService.getOneByMallUrl( mallUrl.replaceFirst("^(m\\.)", ""));
 		Panel panel = panelService.getApplyPanel(member.getMallId());
 		List<SelectFunc> selectFuncs = panel.getSelectFuncs();
 		
@@ -92,12 +92,6 @@ public class PaletteController {
 				}
 			}
 		});
-		
-		System.out.println(panel);
-		System.out.println(panel.getTheme());
-		System.out.println(selectFuncs);
-		
-		System.out.println("=================== paletteController ===================");
 		
 		model.addAttribute("panel", panel);
 		model.addAttribute("theme", panel.getTheme());

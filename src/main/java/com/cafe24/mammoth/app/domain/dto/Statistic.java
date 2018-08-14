@@ -7,11 +7,15 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * 통계 정보를 전달하는 DTO
+ * @author Allen
+ *
+ */
 @Configuration
 @Getter @Setter @ToString
-//@AllArgsConstructor
 @EqualsAndHashCode
-public class StatisticDto {
+public class Statistic {
 	private Long functionId;
 	private String functionName;
 	private Long functionCount;

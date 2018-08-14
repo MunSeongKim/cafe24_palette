@@ -29,6 +29,11 @@ import com.cafe24.mammoth.app.domain.enumerate.Position;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * 패널 설정 정보 도메인 객체
+ * @author Deo
+ *
+ */
 @Entity
 @Table
 @Getter

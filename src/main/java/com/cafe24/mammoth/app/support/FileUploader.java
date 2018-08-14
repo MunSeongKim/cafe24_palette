@@ -9,6 +9,11 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * 파일 업로드 시 디렉토리 생성, 파일 저장을 지원하는 컴포넌트 클래스
+ * @author MoonStar, Allen
+ *
+ */
 @Component
 public class FileUploader {
 	@Deprecated

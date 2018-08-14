@@ -52,7 +52,6 @@ public class OrderAPIController {
 		params.add("end_date", endDate);
 		params.add("member_id", member_id);
 		
-		
 		//params.add("buyer_name", buyer_name);
 		List<Order> orderList = orderService.getOrderList(params, mallId);
 		return JSONResult.success(orderList != null ? orderList : "null");

@@ -14,6 +14,11 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * 앱 사용자 도메인 객체
+ * @author Deo
+ *
+ */
 @Entity
 @Table
 @Getter
@@ -38,7 +43,6 @@ public class Member {
 
 	@OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	private List<Panel> panels = new ArrayList<>();
-
 	
 	@Override
 	public String toString() {

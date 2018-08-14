@@ -13,6 +13,11 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * 패널에 적용한 기능 정보 도메인 객체
+ * @author Deo
+ *
+ */
 @Entity
 @Table
 @Getter

@@ -37,10 +37,10 @@ public class UploadAPIController {
 	private ThemeService themeService;
 
 	/**
-	 * 
+	 * 기능 업로드 전 같은 영문명 체크
 	 * 
 	 * @param engName
-	 * @return
+	 * @return JSON 결과
 	 */
 	@GetMapping("/check")
 	public JSONResult check(@RequestParam("engName") String engName) {
@@ -48,6 +48,16 @@ public class UploadAPIController {
 		return result ? JSONResult.fail("exist") : JSONResult.success("not exist");
 	}
 
+	/**
+	 * 기능 업로드 전 처리<br>
+	 * HTML 파일업로드를 위한 메소드<br>
+	 * 
+	 * @param function
+	 * @param desktopFile
+	 * @param mobileFile
+	 * @return {@link ResponseEntity}
+	 * @throws IOException
+	 */
 	@PostMapping("/function/pre")
 	public ResponseEntity<?> upload(@ModelAttribute Function function,
 			@RequestParam("desktopFile") MultipartFile desktopFile,
@@ -61,6 +71,13 @@ public class UploadAPIController {
 		return new ResponseEntity<>("Success to save", HttpStatus.OK);
 	}
 
+	/**
+	 * 기능 HTML 파일과 관련된 리소스 파일 업로드 처리
+	 * @param function
+	 * @param files
+	 * @return {@link ResponseEntity}
+	 * @throws IOException
+	 */
 	@PostMapping("/function")
 	public ResponseEntity<?> upload(@ModelAttribute Function function, @RequestParam("files") MultipartFile[] files)
 			throws IOException {
@@ -73,6 +90,13 @@ public class UploadAPIController {
 		return new ResponseEntity<>("Success to save", HttpStatus.OK);
 	}
 
+	/**
+	 * 테마 CSS 파일 업로드
+	 * @param theme
+	 * @param imgFile
+	 * @param files
+	 * @return {@link ResponseEntity}
+	 */
 	@PostMapping("/theme")
 	public ResponseEntity<?> upload(@ModelAttribute Theme theme,
 			@RequestParam("imgFile") MultipartFile imgFile,

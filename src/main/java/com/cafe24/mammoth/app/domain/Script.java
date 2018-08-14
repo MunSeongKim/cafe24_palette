@@ -11,6 +11,11 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * 스크립트 설정 정보 도메인 객체
+ * @author Deo
+ *
+ */
 @Entity
 @Table
 @Getter

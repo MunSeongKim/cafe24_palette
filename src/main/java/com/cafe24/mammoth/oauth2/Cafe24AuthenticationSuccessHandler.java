@@ -71,7 +71,6 @@ public class Cafe24AuthenticationSuccessHandler implements AuthenticationSuccess
 		String primaryDomain = (String) storeDetails.get("primary_domain");
 		String mallUrl = (String) storeDetails.get("mall_url");
 
-		System.out.println(mallId);
 		// 사용자 인증 객체 저장
 		clientTokenServices.saveAuthentication(authentication);
 

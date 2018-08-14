@@ -20,6 +20,11 @@ import org.hibernate.annotations.CreationTimestamp;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * 테마 도메인 객체
+ * @author Deo
+ *
+ */
 @Entity
 @Table
 @Getter

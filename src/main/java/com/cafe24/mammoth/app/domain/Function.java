@@ -21,6 +21,11 @@ import org.hibernate.annotations.CreationTimestamp;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * 기능 도메인 객체
+ * @author Deo
+ *
+ */
 @Entity
 @Table
 @Getter
@@ -64,13 +69,6 @@ public class Function {
 	@OneToMany(mappedBy = "function", cascade = CascadeType.REMOVE)
 	private List<SelectFunc> selectFuncs = new ArrayList<>();
 
-	/*public void setSelectFuncs(SelectFunc selectFunc) {
-		this.selectFuncs.add(selectFunc);
-		if(selectFunc.getFunction() != this) {
-			selectFunc.setFunction(this);
-		}
-	}*/
-	
 	@Override
 	public String toString() {
 		return "Function [funcId=" + funcId + ", name=" + name + ", nameEng=" + nameEng + ", desktopPath=" + desktopPath

@@ -16,7 +16,7 @@ import com.cafe24.mammoth.app.support.JSONResult;
 
 /**
  * Cafe24 API를 사용하지 않는 RESTController
- * {@link APITokenInterceptor}의 걸리지 않는다.
+ * {@link APITokenInterceptor}에 걸리지 않는다.
  * 
  * @author qyuee
  */

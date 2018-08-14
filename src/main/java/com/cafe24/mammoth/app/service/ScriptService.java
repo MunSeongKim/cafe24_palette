@@ -19,7 +19,11 @@ import com.cafe24.mammoth.oauth2.api.Themes;
 import com.cafe24.mammoth.oauth2.api.impl.Cafe24Template;
 import com.cafe24.mammoth.oauth2.api.impl.ScripttagsTemplate;
 import com.cafe24.mammoth.oauth2.api.impl.ThemesTemplate;
-
+/**
+ * Script 적용/해제 처리하는 서비스
+ * @author MoonStar
+ *
+ */
 @Service
 @Transactional
 public class ScriptService {
@@ -79,7 +83,6 @@ public class ScriptService {
 			ScripttagsTemplate scripttagsTemplate = cafe24Template.getOperation(ScripttagsTemplate.class);
 			
 			// 패널의 스크립트 적용에 관한 데이터 변경
-//			Script appliedScript = scriptRepository.findByApplied(panelId);
 			String scripttagsNo;
 			
 			Optional<Script> script = scriptRepository.findById(panelId);
@@ -88,18 +91,8 @@ public class ScriptService {
 			requestScripttags.setSrc( "https://devbit005.cafe24.com/mammoth" + savedScript.getFilepath() );
 			
 			
-			// 이미 적용 된 상태에서 적용할 경우
-//			if (appliedScript != null) {
-//				scripttagsNo = appliedScript.getScripttagsNo();
-//				scripttagsTemplate.update(scripttagsNo, requestScripttags);
-//				appliedScript.setScripttagsNo(null);
-//				appliedScript.setIsApply(false);
-//			}
-			// 적용 된 패널이 없을 때 적용 할 경우
-//			else {
-				Scripttags tmp = scripttagsTemplate.create(requestScripttags);
-				scripttagsNo = tmp.getScriptNo();
-//			}
+			Scripttags tmp = scripttagsTemplate.create(requestScripttags);
+			scripttagsNo = tmp.getScriptNo();
 
 			
 			// API 적용 후 DB에 데이터 저장
@@ -115,12 +108,7 @@ public class ScriptService {
 			
 			clickChangeState.setPanelId(savedScript.getPanelId());
 			clickChangeState.setIsApply(savedScript.getIsApply());
-//			if(appliedScript != null) {
-//				autoChangeState.setPanelId(appliedScript.getPanelId());
-//				autoChangeState.setIsApply(appliedScript.getIsApply());
-//			} else {
-				autoChangeState = null;
-//			}
+			autoChangeState = null;
 			
 			
 			Map<String, Script> result = new HashMap<>();

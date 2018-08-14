@@ -107,8 +107,11 @@ public class WebConfigurer extends WebMvcConfigurationSupport {
 		registrationBean.setOrder(5);
 		return registrationBean;
 	}
-
 	
+	/**
+	 * CORS 정책 설정<br>
+	 * 모든 도메인들의 GET 요청에 대해 CORS 허용, 최대 캐시 보관 시간 3600초 설정<br>
+	 */
 	@Override
 	protected void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**")
@@ -117,13 +120,13 @@ public class WebConfigurer extends WebMvcConfigurationSupport {
 				.allowedHeaders("*")
 				.allowCredentials(false).maxAge(3600);
 	}
-/*
-	*//**
+	/**
 	 * CORS 정책 설정<br>
 	 * 모든 도메인들의 GET 요청에 대해 CORS 허용, 최대 캐시 보관 시간 3600초 설정<br>
 	 * 
 	 * @return {@link CorsConfigurationSource}
-	 *//*
+	 */
+	/*
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();

@@ -13,6 +13,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.cafe24.mammoth.app.domain.Panel;
 import com.cafe24.mammoth.app.service.PanelService;
 
+
+/**
+ * 앱 관리 메인 페이지 컨트롤러
+ * @author MoonStar
+ *
+ */
 // @RestController : data return
 // -> 객체를 반환하면 객체 데이터는 JSON/XML 형식의 HTTP 응답 작성
 // -> @Controller + @ResponseBody
@@ -27,8 +33,6 @@ public class MainController {
 	@GetMapping(value = { "", "/" })
 	public String main(@ModelAttribute("mallId") String mallId, Model model) {
 		List<Panel> list = panelService.getPanelList(mallId);
-		System.out.println("--------------------------- MainController --------------------------");
-		System.out.println(list);
 		model.addAttribute("list", list); 
 		return "admin/main";
 	}
