@@ -126,9 +126,20 @@ var readyToExe = (function() {
 	  }; // end return
 })();
 
-
+/*
 window.addEventListener('load', function(){
 	readyToExe.chkMobile();
 	readyToExe.loadNextScript();	
-});
+});*/
+
+var paletteLoader = function () {
+	readyToExe.chkMobile();
+	readyToExe.loadNextScript();
+}; 
+
+if (document.readyState == 'complete') {
+   paletteLoader(); 
+} else {
+   window.addEventListener('load', paletteLoader);
+}
 

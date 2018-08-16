@@ -35,7 +35,7 @@ import com.cafe24.mammoth.app.support.JSONResult;
 @RestController
 @RequestMapping("/api/cafe24")
 @CrossOrigin
-@SessionAttributes("mallId")
+//@SessionAttributes("mallId")
 public class OrderAPIController {
 	@Autowired
 	private OrderService orderService;
@@ -44,7 +44,7 @@ public class OrderAPIController {
 	@GetMapping(value="/orders")
 	public JSONResult orderList(@RequestParam("start_date") String startDate,
 			@RequestParam("end_date") String endDate,
-			@RequestParam(value="member_id", required=true) String member_id, @ModelAttribute String mallId) {
+			@RequestParam(value="member_id", required=true) String member_id) {
 			//,@RequestParam(value="buyer_name", required=false, defaultValue="") String buyer_name) {
 		
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
@@ -53,7 +53,7 @@ public class OrderAPIController {
 		params.add("member_id", member_id);
 		
 		//params.add("buyer_name", buyer_name);
-		List<Order> orderList = orderService.getOrderList(params, mallId);
+		List<Order> orderList = orderService.getOrderList(params);
 		return JSONResult.success(orderList != null ? orderList : "null");
 	}
 }

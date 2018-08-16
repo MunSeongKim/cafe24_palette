@@ -41,8 +41,11 @@ public class OrderService {
 	private final String fields = "shop_no,order_id,order_date,member_id,buyer_name,items";
 	private final String embed = "items";
 	
-	public List<Order> getOrderList(MultiValueMap<String, String> params, String mallId) {
+	
+	public List<Order> getOrderList(MultiValueMap<String, String> params) {
 		Cache cache = (Cache) cacheManager.getCache("products");
+		
+		String mallId = cafe24Template.getMallId();
 		
 		// 요청 파라미터 구성
 		params.add("order_status", orderStatus);
@@ -63,7 +66,7 @@ public class OrderService {
 				Product product = cache.get((mallId+i.get("product_no")), Product.class);
 				// 캐시에 없으면 product 정보 요청
 				if( product == null) {
-					product = getProduct(mallId, i.get("product_no"));
+					product = getProduct(i.get("product_no"));
 				}
 				
 				// orderItem 구성
@@ -89,7 +92,9 @@ public class OrderService {
 	}
 	
 	// product 정보 요청
-	private Product getProduct(String mallId, String productNo) {
+	private Product getProduct(String productNo) {
+		Cache cache = (Cache) cacheManager.getCache("products");
+		String mallId = cafe24Template.getMallId();
 		//Request Parameters
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		params.add("fields", "product_no,small_image,category,product_tag");
@@ -105,7 +110,7 @@ public class OrderService {
 		product.setTags(products.getProductTag());
 		
 		// 캐시에 데이터 삽입
-		cacheManager.getCache("products").put((mallId + productNo), product);
+		cache.put((mallId + productNo), product);
 		return product;
 	}
 
