@@ -11,6 +11,8 @@ import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceS
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticationProcessingFilter;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.web.context.WebApplicationContext;
@@ -91,19 +93,23 @@ public class Cafe24OAuth2ClientAuthenticationProcessingFilter extends OAuth2Clie
 		if (!memberService.isExist(mallId)) {
 			memberService.save(mallId);
 		}
-		
-//		// 접속한 사용자의 mall_id와 토큰을 발급한 mall_id가 다르면 세션 초기화 후 토큰 재발급
-//		OAuth2ClientContext clientContext = (OAuth2ClientContext) session
-//				.getAttribute("scopedTarget.oauth2ClientContext");
-//		if (clientContext != null) {
-//			OAuth2AccessToken token = clientContext.getAccessToken();
-//			if (token != null) {
-//				String tokenMallId = (String) token.getAdditionalInformation().get("mall_id");
-//				if (mallId != tokenMallId) {
-//					session.invalidate();
-//				}
-//			}
-//		}
+		System.out.println("================================AUthenticationFIleter");
+		// 접속한 사용자의 mall_id와 토큰을 발급한 mall_id가 다르면 세션 초기화 후 토큰 재발급
+		OAuth2ClientContext clientContext = (OAuth2ClientContext) session
+				.getAttribute("scopedTarget.oauth2ClientContext");
+		if (clientContext != null) {
+			Cafe24OAuth2AccessToken token = (Cafe24OAuth2AccessToken) clientContext.getAccessToken();
+			System.out.println(token.print());
+			if (token != null) {
+				String tokenMallId = token.getMallId();
+				System.out.println(tokenMallId);
+				System.out.println(mallId);
+				if (!tokenMallId.equals(mallId)) {
+					clientContext.setAccessToken(null);
+					SecurityContextHolder.clearContext();
+				}
+			}
+		}
 
 		return super.attemptAuthentication(request, response);
 	}

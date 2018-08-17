@@ -86,9 +86,9 @@ public class Cafe24AccessTokenProviderChain extends OAuth2AccessTokenSupport imp
 
 		if (resource.isClientOnly() || (auth != null && auth.isAuthenticated())) {
 			existingToken = request.getExistingToken();
-			System.out.println(existingToken);
 			if (existingToken == null && clientTokenServices != null) {
 				existingToken = clientTokenServices.getAccessToken(resource, auth);
+				System.out.println(((Cafe24OAuth2AccessToken) existingToken).print());
 			}
 
 			if (existingToken != null) {
